@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2719 Selwyn Ave #13 — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+a { color: #7A3B14; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+#login-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+#page-content { display: none; }
+.login-box { background: #261A05; padding: 48px; border-radius: 12px; border: 1px solid #5C3D14; width: 100%; max-width: 380px; text-align: center; }
+.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+.login-box .sub { font-size: 13px; color: #857D52; margin-bottom: 32px; }
+.login-box input { width: 100%; padding: 14px 16px; background: #1a1408; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
+.login-box input:focus { border-color: #7A3B14; }
+.login-box button { width: 100%; padding: 14px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+.login-box button:hover { background: #9A4B1A; }
+.login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
+
+.back { padding: 16px 24px; font-size: 13px; }
+.back a { color: #857D52; }
+
+.deal-header { background: #261A05; padding: 24px; border-bottom: 3px solid #7A3B14; }
+.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
+.deal-client { font-size: 14px; color: #857D52; margin-top: 4px; }
+.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #7A3B14; margin-top: 8px; }
+.deal-stage { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; }
+.stage-listed { background: #46d67a; color: #1a1408; }
+.stage-pending { background: #fbd75b; color: #1a1408; }
+.stage-closed { background: #5C3D14; color: #857D52; }
+.stage-offer { background: #819cff; color: #1a1408; }
+.stage-buyer { background: #ffb878; color: #1a1408; }
+.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #a4bdfc; color: #1a1408; margin-left: 8px; margin-top: 12px; }
+
+.content { display: flex; gap: 32px; padding: 24px; flex-wrap: wrap; }
+.col-main { flex: 1; min-width: 300px; }
+.col-side { flex: 0 0 320px; }
+
+.progress-wrap { margin-bottom: 24px; }
+.progress-label { font-size: 13px; color: #857D52; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 10px; background: #261A05; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #7A3B14, #46d67a); transition: width 0.4s ease; }
+
+.checklist-section { margin-bottom: 20px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.08em; padding-bottom: 6px; border-bottom: 1px solid #5C3D14; margin-bottom: 6px; }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 8px 8px; font-size: 13px; cursor: pointer; border-radius: 4px; transition: background 0.15s; user-select: none; }
+.check-item:hover { background: rgba(255,255,255,0.04); }
+.check-item.done { color: #51b749; }
+.check-item.pending { color: #857D52; }
+.check-icon { font-size: 18px; width: 24px; height: 24px; text-align: center; line-height: 24px; flex-shrink: 0; border-radius: 4px; }
+.check-item.done .check-icon { background: rgba(81,183,73,0.15); color: #51b749; }
+.check-item.pending .check-icon { background: rgba(255,255,255,0.05); color: #5C3D14; }
+
+.detail-card { background: #261A05; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #FAFAFA; }
+.detail-line { font-size: 12px; color: #857D52; padding: 3px 0; }
+.note { border-bottom: 1px solid #3a3020; padding: 12px 0; }
+.note:last-child { border-bottom: none; }
+.note-date { font-size: 10px; color: #5C3D14; margin-bottom: 4px; }
+.note-body { font-size: 12px; color: #857D52; white-space: pre-wrap; line-height: 1.5; }
+
+.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #5C3D14; }
+
+@media (max-width: 768px) {
+  .deal-header { padding: 16px; }
+  .deal-name { font-size: 24px; }
+  .deal-price { font-size: 22px; }
+  .content { flex-direction: column; padding: 16px; gap: 20px; }
+  .col-side { flex: 1; }
+  .check-item { padding: 10px 8px; font-size: 14px; }
+  .check-icon { font-size: 20px; width: 28px; height: 28px; line-height: 28px; }
+  .back { padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div id="login-gate">
+  <div class="login-box">
+    <h1>Realty Ryan</h1>
+    <div class="sub">Transaction Dashboard</div>
+    <div class="login-error" id="login-error">Incorrect password</div>
+    <input type="password" id="pw-input" placeholder="Enter password" autofocus>
+    <button onclick="checkPw()">Access Dashboard</button>
+  </div>
+</div>
+
+<div id="page-content">
+
+<div class="back"><a href="../index.html">← Back to Dashboard</a></div>
+
+<div class="deal-header">
+  <div class="deal-name">2719 Selwyn Ave #13</div>
+  <div class="deal-client"></div>
+  <div class='deal-price'>$504,250</div>
+  <span class="deal-stage stage-closed">Closed</span>
+  <div class="closing-badge">Closing: Feb 16, 2026 (-1 days)</div>
+</div>
+
+<div class="content">
+  <div class="col-main">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Resale Listing Checklist</span>
+        <span id="progress-text">0 / 52 (0%)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+    
+    <div class="checklist-section">
+      <div class="section-title">PRE-LISTING</div>
+      <div class="check-item done" data-idx="0" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Signed Listing Agreement</span>
+      </div>
+      <div class="check-item done" data-idx="1" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send Residential Property Disclosure, MOG, and LBP Disclosure to Sign</span>
+      </div>
+      <div class="check-item done" data-idx="2" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Create Incomplete MLS Listing</span>
+      </div>
+      <div class="check-item done" data-idx="3" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Pull SkySlope Documents for Listing</span>
+      </div>
+      <div class="check-item done" data-idx="4" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send Client Showtime data on listing in area to set expectations</span>
+      </div>
+      <div class="check-item done" data-idx="5" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Market Analysis &amp; Comps (have seller initial)</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">MARKETING &amp; PREP</div>
+      <div class="check-item done" data-idx="6" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Complete MLS Listing With All Details</span>
+      </div>
+      <div class="check-item done" data-idx="7" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Arrange Staging</span>
+      </div>
+      <div class="check-item done" data-idx="8" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Arrange Photos</span>
+      </div>
+      <div class="check-item done" data-idx="9" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Arrange Videos</span>
+      </div>
+      <div class="check-item done" data-idx="10" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Arrange Matterport Photos</span>
+      </div>
+      <div class="check-item done" data-idx="11" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Received Photos</span>
+      </div>
+      <div class="check-item done" data-idx="12" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Upload Photos into MLS</span>
+      </div>
+      <div class="check-item done" data-idx="13" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send Email Invites for staging, photos, etc. and invite for Go Live Date</span>
+      </div>
+      <div class="check-item done" data-idx="14" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Finalize All SkySlope Documents</span>
+      </div>
+      <div class="check-item done" data-idx="15" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Text Ryan MLS Sheet and get sign off</span>
+      </div>
+      <div class="check-item done" data-idx="16" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send MLS Sheet to client to sign off on</span>
+      </div>
+      <div class="check-item done" data-idx="17" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Create Cribflyer Website</span>
+      </div>
+      <div class="check-item done" data-idx="18" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Verify Permits on Property</span>
+      </div>
+      <div class="check-item done" data-idx="19" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Ask Seller for recent upgrade documents, surveys, etc.</span>
+      </div>
+      <div class="check-item done" data-idx="20" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Create Upgrades Sheet</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">GO LIVE</div>
+      <div class="check-item done" data-idx="21" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Confirm Access to Home for Showings</span>
+      </div>
+      <div class="check-item done" data-idx="22" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Set Up Showingtime</span>
+      </div>
+      <div class="check-item done" data-idx="23" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Email/Text Client How Showingtime Works</span>
+      </div>
+      <div class="check-item done" data-idx="24" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Complete MLS</span>
+      </div>
+      <div class="check-item done" data-idx="25" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Put Listing Live</span>
+      </div>
+      <div class="check-item done" data-idx="26" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Set Up ListTrac</span>
+      </div>
+      <div class="check-item done" data-idx="27" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send Photos and Order Brochures from HM Support</span>
+      </div>
+      <div class="check-item done" data-idx="28" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Print Disclosures, Upgrades, and floor plans in folders</span>
+      </div>
+      <div class="check-item done" data-idx="29" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Put Out For Sale Sign</span>
+      </div>
+      <div class="check-item done" data-idx="30" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Coordinate Event for Property (Broker Event/Public)</span>
+      </div>
+      <div class="check-item done" data-idx="31" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Post Instagram Reel</span>
+      </div>
+      <div class="check-item done" data-idx="32" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Schedule Open House for First Weekend on Market</span>
+      </div>
+      <div class="check-item done" data-idx="33" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Add Website to LinkTree</span>
+      </div>
+      <div class="check-item done" data-idx="34" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Coordinate On-Going Open Houses</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">UNDER CONTRACT</div>
+      <div class="check-item done" data-idx="35" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Received Executed Contract from Buyers Agent</span>
+      </div>
+      <div class="check-item done" data-idx="36" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send email (template) to seller and attorneys</span>
+      </div>
+      <div class="check-item done" data-idx="37" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Coordinate DD</span>
+      </div>
+      <div class="check-item done" data-idx="38" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Send DD Acknowledgment to Buyers Agent</span>
+      </div>
+      <div class="check-item done" data-idx="39" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Intro to Buyers Agent</span>
+      </div>
+      <div class="check-item done" data-idx="40" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Under Contract Rider on For Sale Sign</span>
+      </div>
+      <div class="check-item done" data-idx="41" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Create Calendar Invites for DD and Closing</span>
+      </div>
+      <div class="check-item done" data-idx="42" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Create Calendar Reminder to Email Buyers Agent 5 days prior</span>
+      </div>
+      <div class="check-item done" data-idx="43" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Email Buyers Agent that we are Closing</span>
+      </div>
+      <div class="check-item done" data-idx="44" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Utilities Request &amp; Reminder to Turn Off</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">CLOSING</div>
+      <div class="check-item done" data-idx="45" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Final CD Sign Off from Ryan</span>
+      </div>
+      <div class="check-item done" data-idx="46" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Close out MLS on Closing Day</span>
+      </div>
+      <div class="check-item done" data-idx="47" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Pick Up Lock Box at Property</span>
+      </div>
+      <div class="check-item done" data-idx="48" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Turn off Showingtime</span>
+      </div>
+      <div class="check-item done" data-idx="49" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Upload ALTA into Skyslope</span>
+      </div>
+      <div class="check-item done" data-idx="50" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Request Review and Referral Via Email</span>
+      </div>
+      <div class="check-item done" data-idx="51" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Post-Closing Follow-Up (1 month check-in)</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-side">
+    <div class="detail-card">
+      <h3>Details</h3>
+      <div class='detail-line'>2719 Selwyn Ave #13 - Closed 2026</div>
+    </div>
+    <div class="detail-card">
+      <h3>Notes</h3>
+      <div class='detail-line'>No notes yet</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Realty Ryan & Associates · Powered by Jarvis</div>
+
+</div>
+
+<script>
+const DEAL_ID = 34;
+const TOTAL = 52;
+const H="5ae67553136b2ba571f41239f4646eb489bb393b7d25717bf28bbbcdb24f1c04";
+
+// Auth
+function sha256(m){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(m)).then(b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join(""))}
+function checkPw(){const p=document.getElementById("pw-input").value;sha256(p).then(h=>{if(h===H){localStorage.setItem("rr_dash_auth","1");show()}else{document.getElementById("login-error").style.display="block"}})}
+function show(){document.getElementById("login-gate").style.display="none";document.getElementById("page-content").style.display="block";loadState()}
+document.getElementById("pw-input").addEventListener("keydown",e=>{if(e.key==="Enter")checkPw()});
+if(localStorage.getItem("rr_dash_auth")==="1")show();
+
+// Checklist state
+function getKey(){ return "rr_deal_" + DEAL_ID; }
+
+function loadState() {
+  const saved = JSON.parse(localStorage.getItem(getKey()) || "{}");
+  document.querySelectorAll(".check-item").forEach(el => {
+    const idx = el.dataset.idx;
+    const isDone = saved.hasOwnProperty(idx) ? saved[idx] : el.dataset.default === "1";
+    setItemState(el, isDone);
+  });
+  updateProgress();
+}
+
+function toggle(el) {
+  const isDone = el.classList.contains("done");
+  setItemState(el, !isDone);
+  saveState();
+  updateProgress();
+}
+
+function setItemState(el, done) {
+  if (done) {
+    el.classList.remove("pending");
+    el.classList.add("done");
+    el.querySelector(".check-icon").textContent = "✓";
+  } else {
+    el.classList.remove("done");
+    el.classList.add("pending");
+    el.querySelector(".check-icon").textContent = "○";
+  }
+}
+
+function saveState() {
+  const state = {};
+  document.querySelectorAll(".check-item").forEach(el => {
+    state[el.dataset.idx] = el.classList.contains("done");
+  });
+  localStorage.setItem(getKey(), JSON.stringify(state));
+}
+
+function updateProgress() {
+  const done = document.querySelectorAll(".check-item.done").length;
+  const pct = Math.round((done / TOTAL) * 100);
+  document.getElementById("progress-text").textContent = done + " / " + TOTAL + " (" + pct + "%)";
+  document.getElementById("progress-fill").style.width = pct + "%";
+}
+</script>
+
+</body>
+</html>
