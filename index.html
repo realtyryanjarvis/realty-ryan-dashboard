@@ -92,7 +92,12 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 
 /* To-Do List */
 .todo-section { padding: 4px 24px 12px; }
+.todo-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.todo-column { background: rgba(38,26,5,0.5); border-radius: 8px; padding: 12px; }
+.todo-column-header { font-size: 14px; font-weight: 600; color: #C89B5B; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #3a2a10; }
+.todo-column-count { background: #3a2a10; color: #C89B5B; font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; }
 .todo-list { display: flex; flex-direction: column; gap: 6px; }
+@media (max-width: 768px) { .todo-columns { grid-template-columns: 1fr; } }
 .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: #261A05; border-radius: 6px; border-left: 3px solid #5C3D14; font-size: 13px; line-height: 1.4; }
 .todo-item.high { border-left-color: #ff887c; }
 .todo-item.medium { border-left-color: #fbd75b; }
@@ -201,13 +206,48 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
     <div class="hn-divider"></div>
     <div class="hn"><span class="hn-num">5</span><span class="hn-lbl">Closed</span></div>
     <div class="hn-divider"></div>
-    <div class="hn"><span class="hn-num">7</span><span class="hn-lbl">Buyers</span></div>
+    <div class="hn"><span class="hn-num">8</span><span class="hn-lbl">Buyers</span></div>
     <div class="hn-divider"></div>
     <div class="hn vol"><span class="hn-num">$3.8M</span><span class="hn-lbl">2026 Volume</span></div>
   </div>
 </div>
 
 
+<div class="section-header">
+  <h2>This Week</h2>
+</div>
+<div class="weekly-cal">
+<div class="cal-day cal-today">
+  <div class="cal-day-label">Today</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Tue Feb 17</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Wed Feb 18</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Thu Feb 19</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Fri Feb 20</div>
+  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsoun...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sat Feb 21</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sun Feb 22</div>
+  <div class="cal-empty">-</div>
+</div>
+</div>
 
 
 <div class="section-header">
@@ -215,24 +255,27 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   <span class="section-badge" id="todo-count">6</span>
 </div>
 <div class="todo-section">
-  <div class="todo-list" id="todo-list">
-      <div class="todo-item high" data-id="1" onclick="toggleTodo('1')"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
-      <div class="todo-item high" data-id="2" onclick="toggleTodo('2')"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
-      <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
-      <div class="todo-item high" data-id="4" onclick="toggleTodo('4')"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
-      <div class="todo-item medium" data-id="5" onclick="toggleTodo('5')"><div class="todo-check"></div><div class="todo-text">Have Ally update FUB pipeline stages (back Feb 20)</div></div>
-      <div class="todo-item medium" data-id="6" onclick="toggleTodo('6')"><div class="todo-check"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts for realtor event campaigns</div></div>
-  </div>
-  <div class="todo-add" id="todo-add">
-    <div class="todo-add-row">
-      <input type="text" id="todo-input" placeholder="Add a to-do..." class="todo-add-input">
-      <select id="todo-priority" class="todo-add-select">
-        <option value="high">🔴 High</option>
-        <option value="medium" selected>🟡 Medium</option>
-        <option value="low">🟢 Low</option>
-      </select>
-      <input type="text" id="todo-deal" placeholder="Deal (optional)" class="todo-add-deal">
-      <button onclick="addTodo()" class="todo-add-btn">+ Add</button>
+  <div class="todo-columns">
+    <div class="todo-column">
+      <div class="todo-column-header">👤 Ryan <span class="todo-column-count">3</span></div>
+      <div class="todo-list">
+        <div class="todo-item high" data-id="1" onclick="toggleTodo('1')"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
+        <div class="todo-item high" data-id="2" onclick="toggleTodo('2')"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
+        <div class="todo-item high" data-id="4" onclick="toggleTodo('4')"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
+      </div>
+    </div>
+    <div class="todo-column">
+      <div class="todo-column-header">👩‍💼 Ally <span class="todo-column-count">2</span></div>
+      <div class="todo-list">
+        <div class="todo-item medium" data-id="5" onclick="toggleTodo('5')"><div class="todo-check"></div><div class="todo-text">Update FUB pipeline stages in Admin (back Feb 20)</div></div>
+        <div class="todo-item medium" data-id="6" onclick="toggleTodo('6')"><div class="todo-check"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts</div></div>
+      </div>
+    </div>
+    <div class="todo-column">
+      <div class="todo-column-header">👩 Alexis <span class="todo-column-count">1</span></div>
+      <div class="todo-list">
+        <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -403,10 +446,10 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   </div>
 </div>
 
-<div class="section-label">Buyers <span class="sl-count">7</span></div>
+<div class="section-label">Buyers <span class="sl-count">8</span></div>
 <div class="kanban">
   <div class="kanban-col col-leads">
-    <div class="kanban-col-header">Leads <span class="count">6</span></div>
+    <div class="kanban-col-header">Leads <span class="count">7</span></div>
     <div class="kanban-cards">
       <a href="deals/22.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">Alexa &amp; Matt Evans - Buyer</div>
@@ -431,6 +474,10 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
         <div class="card-client">Matt Houser, Nina Houser</div>
         <div class="card-price">$250,000</div>
         <div class="card-note">Budget: $200K-$300K for land · Owners of Green Life Charlotte (matt@greenlifeclt.com)</div>
+      </a>
+      <a href="deals/39.html" class="card" style="text-decoration:none;color:inherit;">
+        <div class="card-address">Max &amp; Lauren Sandquist - Buyer</div>
+        <div class="card-client">Max Sandquist</div>
       </a>
       <a href="deals/37.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">Caroline Piper - Buyer</div>
