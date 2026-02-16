@@ -614,11 +614,42 @@ function addInlineTodo(input){
   initDragDrop();
   input.value="";
   updateTodoCount();
-  // Send to Jarvis via SMS
+  // Track unsent items for Jarvis sync
+  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
   const personName=person.charAt(0).toUpperCase()+person.slice(1);
-  const msg=encodeURIComponent("📌 NEW TODO for "+personName+"\nTask: "+text);
-  window.open("sms:+15089542159&body="+msg,"_blank");
+  unsent.push({person:personName,text:text,time:new Date().toLocaleString()});
+  localStorage.setItem("rr_todo_unsent",JSON.stringify(unsent));
+  showSyncBadge();
 }
+
+// Sync badge — shows when there are unsent todos for Jarvis
+function showSyncBadge(){
+  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
+  let badge=document.getElementById("jarvis-sync-badge");
+  if(unsent.length===0){if(badge)badge.style.display="none";return}
+  if(!badge){
+    badge=document.createElement("div");
+    badge.id="jarvis-sync-badge";
+    badge.style.cssText="position:fixed;bottom:20px;right:20px;background:#7A3B14;color:#FAFAFA;padding:10px 16px;border-radius:24px;cursor:pointer;font-size:13px;font-family:Work Sans,sans-serif;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,0.4);display:flex;align-items:center;gap:8px;";
+    badge.onclick=syncToJarvis;
+    document.body.appendChild(badge);
+  }
+  badge.innerHTML=`🤖 <span>${unsent.length} new todo${unsent.length>1?"s":""}</span> <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:12px;font-weight:600;">Send to Jarvis</span>`;
+  badge.style.display="flex";
+}
+
+function syncToJarvis(){
+  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
+  if(unsent.length===0)return;
+  let msg="📌 NEW TODOS from dashboard:\n";
+  unsent.forEach(t=>{msg+=`\n• ${t.person}: ${t.text}`});
+  window.open("sms:+15089542159&body="+encodeURIComponent(msg),"_blank");
+  localStorage.setItem("rr_todo_unsent","[]");
+  showSyncBadge();
+}
+
+// Show badge on load if unsent items exist
+showSyncBadge();
 
 function toggleTodo(id){
   const el=document.querySelector(`.todo-item[data-id="${id}"]`);
