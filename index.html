@@ -89,7 +89,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .col-pending .card { border-left-color: #fbd75b; }
 
 /* To-Do List */
-.todo-section { padding: 0; }
+.todo-section { padding: 4px 24px 12px; }
 .todo-list { display: flex; flex-direction: column; gap: 6px; }
 .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: #261A05; border-radius: 6px; border-left: 3px solid #5C3D14; font-size: 13px; line-height: 1.4; }
 .todo-item.high { border-left-color: #ff887c; }
@@ -114,7 +114,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
 /* Weekly Calendar */
-.weekly-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.weekly-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; padding: 8px 24px; }
 .cal-day { background: #261A05; border-radius: 6px; padding: 8px 6px; min-height: 70px; }
 .cal-today { border: 1px solid #7A3B14; background: #2a1e0a; }
 .cal-day-label { font-family: 'Work Sans', sans-serif; font-size: 11px; font-weight: 600; color: #857D52; margin-bottom: 6px; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -204,6 +204,73 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
     <div class="hn vol"><span class="hn-num">$3.8M</span><span class="hn-lbl">2026 Volume</span></div>
   </div>
 </div>
+
+
+<div class="section-header">
+  <h2>This Week</h2>
+</div>
+<div class="weekly-cal">
+<div class="cal-day cal-today">
+  <div class="cal-day-label">Today</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Tue Feb 17</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Wed Feb 18</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Thu Feb 19</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Fri Feb 20</div>
+  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsoun...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sat Feb 21</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sun Feb 22</div>
+  <div class="cal-empty">-</div>
+</div>
+</div>
+
+
+<div class="section-header">
+  <h2>📌 To-Do</h2>
+  <span class="section-badge" id="todo-count">6</span>
+</div>
+<div class="todo-section">
+  <div class="todo-list" id="todo-list">
+      <div class="todo-item high" data-id="1" onclick="toggleTodo('1')"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
+      <div class="todo-item high" data-id="2" onclick="toggleTodo('2')"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
+      <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
+      <div class="todo-item high" data-id="4" onclick="toggleTodo('4')"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
+      <div class="todo-item medium" data-id="5" onclick="toggleTodo('5')"><div class="todo-check"></div><div class="todo-text">Have Ally update FUB pipeline stages (back Feb 20)</div></div>
+      <div class="todo-item medium" data-id="6" onclick="toggleTodo('6')"><div class="todo-check"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts for realtor event campaigns</div></div>
+  </div>
+  <div class="todo-add" id="todo-add">
+    <div class="todo-add-row">
+      <input type="text" id="todo-input" placeholder="Add a to-do..." class="todo-add-input">
+      <select id="todo-priority" class="todo-add-select">
+        <option value="high">🔴 High</option>
+        <option value="medium" selected>🟡 Medium</option>
+        <option value="low">🟢 Low</option>
+      </select>
+      <input type="text" id="todo-deal" placeholder="Deal (optional)" class="todo-add-deal">
+      <button onclick="addTodo()" class="todo-add-btn">+ Add</button>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
 
 <div class="section-label">Listings <span class="sl-count">21</span></div>
 <div class="kanban">
@@ -445,78 +512,6 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
         <div class="ref-detail">Moving to NC — June 2026 &middot; Agent: TBD (incoming) &middot; Fee: 25%</div>
         <div class="ref-notes">Referred out, moving to NC ~June 2026. Send housewarming gift when they close.</div>
       </div>
-</div>
-
-<div class="bottom-section">
-  <div class="bottom-left">
-
-<div class="section-header">
-  <h2>This Week</h2>
-</div>
-<div class="weekly-cal">
-<div class="cal-day cal-today">
-  <div class="cal-day-label">Today</div>
-  <div class="cal-empty">-</div>
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Tue Feb 17</div>
-  <div class="cal-empty">-</div>
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Wed Feb 18</div>
-  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
-
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Thu Feb 19</div>
-  <div class="cal-empty">-</div>
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Fri Feb 20</div>
-  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsoun...</div>
-
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Sat Feb 21</div>
-  <div class="cal-empty">-</div>
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Sun Feb 22</div>
-  <div class="cal-empty">-</div>
-</div>
-</div>
-  </div>
-  <div class="bottom-right">
-
-<div class="section-header">
-  <h2>📌 To-Do</h2>
-  <span class="section-badge" id="todo-count">6</span>
-</div>
-<div class="todo-section">
-  <div class="todo-list" id="todo-list">
-      <div class="todo-item high" data-id="1" onclick="toggleTodo('1')"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
-      <div class="todo-item high" data-id="2" onclick="toggleTodo('2')"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
-      <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
-      <div class="todo-item high" data-id="4" onclick="toggleTodo('4')"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
-      <div class="todo-item medium" data-id="5" onclick="toggleTodo('5')"><div class="todo-check"></div><div class="todo-text">Have Ally update FUB pipeline stages (back Feb 20)</div></div>
-      <div class="todo-item medium" data-id="6" onclick="toggleTodo('6')"><div class="todo-check"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts for realtor event campaigns</div></div>
-  </div>
-  <div class="todo-add" id="todo-add">
-    <div class="todo-add-row">
-      <input type="text" id="todo-input" placeholder="Add a to-do..." class="todo-add-input">
-      <select id="todo-priority" class="todo-add-select">
-        <option value="high">🔴 High</option>
-        <option value="medium" selected>🟡 Medium</option>
-        <option value="low">🟢 Low</option>
-      </select>
-      <input type="text" id="todo-deal" placeholder="Deal (optional)" class="todo-add-deal">
-      <button onclick="addTodo()" class="todo-add-btn">+ Add</button>
-    </div>
-  </div>
-</div>
-<div class="divider"></div>
-
-  </div>
 </div>
 
 <div class="footer">Realty Ryan & Associates · Powered by Jarvis</div>
