@@ -116,6 +116,8 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .todo-inline-input { width: 100%; padding: 8px 12px; background: #1a1408; border: 1px dashed #3a2a10; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
 .todo-inline-input:focus { border-color: #7A3B14; border-style: solid; }
 .todo-inline-input::placeholder { color: #5C3D14; }
+.todo-edit-input { width: 100%; padding: 6px 8px; background: #1a1408; border: 1px solid #7A3B14; border-radius: 4px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
+.todo-text { cursor: text; }
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
@@ -623,6 +625,69 @@ function updateTodoCount(){
     if(badge)badge.textContent=activeCol;
   });
 }
+
+// Edit todo on double-click
+document.addEventListener("dblclick",function(e){
+  const textEl=e.target.closest(".todo-text");
+  if(!textEl)return;
+  const item=textEl.closest(".todo-item");
+  if(!item||item.querySelector(".todo-edit-input"))return;
+  const currentText=textEl.childNodes[0]?textEl.childNodes[0].textContent.trim():textEl.textContent.trim();
+  const input=document.createElement("input");
+  input.type="text";
+  input.className="todo-edit-input";
+  input.value=currentText;
+  const dealSpan=textEl.querySelector(".todo-deal");
+  textEl.innerHTML="";
+  textEl.appendChild(input);
+  if(dealSpan)textEl.appendChild(dealSpan);
+  input.focus();
+  input.select();
+  function save(){
+    const newText=input.value.trim();
+    if(!newText)return cancel();
+    textEl.innerHTML="";
+    textEl.appendChild(document.createTextNode(newText));
+    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
+    // Save edit to localStorage
+    const id=item.dataset.id;
+    const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
+    edits[id]=newText;
+    localStorage.setItem("rr_todo_edits",JSON.stringify(edits));
+    // Also update local todos if applicable
+    const person=item.dataset.person;
+    const local=getLocalTodos();
+    if(local[person]){
+      const lt=local[person].find(t=>t.id===id);
+      if(lt){lt.text=newText;saveLocalTodos(local)}
+    }
+  }
+  function cancel(){
+    textEl.innerHTML="";
+    textEl.appendChild(document.createTextNode(currentText));
+    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
+  }
+  input.addEventListener("keydown",function(ev){
+    if(ev.key==="Enter"){ev.preventDefault();save()}
+    if(ev.key==="Escape")cancel();
+  });
+  input.addEventListener("blur",save);
+});
+
+// Apply saved edits on load
+(function(){
+  const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
+  Object.keys(edits).forEach(id=>{
+    const item=document.querySelector(`.todo-item[data-id="${id}"]`);
+    if(item){
+      const textEl=item.querySelector(".todo-text");
+      const dealSpan=textEl.querySelector(".todo-deal");
+      textEl.innerHTML="";
+      textEl.appendChild(document.createTextNode(edits[id]));
+      if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
+    }
+  });
+})();
 
 // Drag & Drop
 let dragItem=null;
