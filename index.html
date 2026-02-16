@@ -69,6 +69,17 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .col-pending .kanban-col-header { border-color: #fbd75b; color: #fbd75b; }
 .col-pending .card { border-left-color: #fbd75b; }
 
+/* To-Do List */
+.todo-section { padding: 12px 24px; }
+.todo-list { display: flex; flex-direction: column; gap: 6px; }
+.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: #261A05; border-radius: 6px; border-left: 3px solid #5C3D14; font-size: 13px; line-height: 1.4; }
+.todo-item.high { border-left-color: #ff887c; }
+.todo-item.medium { border-left-color: #fbd75b; }
+.todo-item.low { border-left-color: #46d67a; }
+.todo-check { width: 16px; height: 16px; border: 2px solid #5C3D14; border-radius: 3px; flex-shrink: 0; margin-top: 1px; cursor: pointer; }
+.todo-text { flex: 1; color: #FAFAFA; }
+.todo-deal { font-size: 10px; color: #7A3B14; background: rgba(122,59,20,0.2); padding: 1px 8px; border-radius: 10px; white-space: nowrap; margin-left: 8px; }
+
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
 .footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #5C3D14; }
@@ -118,25 +129,47 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="header">
   <div>
     <h1>Transaction Dashboard</h1>
-    <div class="date">Updated: February 16, 2026 · 02:01 PM</div>
+    <div class="date">Updated: February 16, 2026 · 02:06 PM</div>
   </div>
   <a href="new-listing.html" class="new-listing-btn">📋 New Listing</a>
   <div class="stats">
     <div class="stat"><div class="stat-num">7</div><div class="stat-label">Active</div></div>
-    <div class="stat"><div class="stat-num">2</div><div class="stat-label">WIP</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">WIP</div></div>
     <div class="stat"><div class="stat-num">4</div><div class="stat-label">Under Contract</div></div>
     <div class="stat"><div class="stat-num">5</div><div class="stat-label">Buyers</div></div>
   </div>
 </div>
 
+
+<div class="section-header">
+  <h2>📌 To-Do</h2>
+  <span class="section-badge">5</span>
+</div>
+<div class="todo-section">
+  <div class="todo-list">
+      <div class="todo-item high"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
+      <div class="todo-item high"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
+      <div class="todo-item medium"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
+      <div class="todo-item high"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
+      <div class="todo-item medium"><div class="todo-check"></div><div class="todo-text">Have Ally update FUB pipeline stages (back Feb 20)</div></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+
 <div class="section-header">
   <h2>Listings</h2>
-  <span class="section-badge">14</span>
+  <span class="section-badge">15</span>
 </div>
 <div class="kanban">
   <div class="kanban-col col-prep">
-    <div class="kanban-col-header">WIP / Pre-List <span class="count">2</span></div>
+    <div class="kanban-col-header">WIP / Pre-List <span class="count">3</span></div>
     <div class="kanban-cards">
+      <a href="deals/27.html" class="card" style="text-decoration:none;color:inherit;">
+        <div class="card-address">4309 The Plaza</div>
+        <div class="card-client">Viktor Bogun</div>
+        <div class="card-note">Co-listing — Marish just got her RE license · Listing Prospect — needs drive-by assessment</div>
+      </a>
       <a href="deals/26.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">113 Scottsmoor</div>
         <div class="card-client">Brett Cockerham</div>
