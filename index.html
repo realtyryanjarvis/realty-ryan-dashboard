@@ -95,6 +95,14 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
+/* Top Grid - Calendar + To-Do side by side */
+.top-grid { display: flex; gap: 16px; padding: 0 24px; }
+.top-grid-left { flex: 3; min-width: 0; }
+.top-grid-right { flex: 1; min-width: 280px; }
+.top-grid .section-header { padding: 8px 0 6px; }
+.top-grid .weekly-cal { padding: 8px 0 0; }
+.top-grid .todo-section { padding: 0; }
+
 /* Weekly Calendar */
 .weekly-cal { display: flex; gap: 4px; padding: 8px 24px 16px; overflow-x: auto; }
 .cal-day { flex: 1; min-width: 100px; background: #261A05; border-radius: 8px; padding: 10px; }
@@ -125,7 +133,9 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   .section-header h2 { font-size: 18px; }
   .kanban { padding: 8px 16px 20px; gap: 10px; }
   .kanban-col { flex: 0 0 200px; }
-  .weekly-cal { padding: 8px 16px; gap: 3px; }
+  .top-grid { flex-direction: column; padding: 0 16px; }
+  .top-grid-right { min-width: unset; }
+  .weekly-cal { padding: 8px 0; gap: 3px; }
   .cal-day { min-width: 80px; padding: 8px; }
   .cal-day-label { font-size: 11px; }
   .card { padding: 10px; }
@@ -163,7 +173,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="header">
   <div>
     <h1>Transaction Dashboard</h1>
-    <div class="date">Updated: February 16, 2026 · 05:11 PM</div>
+    <div class="date">Updated: February 16, 2026 · 05:12 PM</div>
   </div>
   <a href="new-listing.html" class="new-listing-btn">📋 New Listing</a>
   <a href="new-buyer.html" class="new-listing-btn" style="background:#2a5a3a;">🏡 New Buyer</a>
@@ -176,6 +186,8 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   </div>
 </div>
 
+<div class="top-grid">
+  <div class="top-grid-left">
 
 <div class="section-header">
   <h2>This Week</h2>
@@ -211,7 +223,8 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   <div class="cal-empty">-</div>
 </div>
 </div>
-
+  </div>
+  <div class="top-grid-right">
 
 <div class="section-header">
   <h2>📌 To-Do</h2>
@@ -241,6 +254,8 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 <div class="divider"></div>
 
+  </div>
+</div>
 
 <div class="section-header">
   <h2>Listings</h2>
