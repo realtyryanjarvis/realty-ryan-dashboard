@@ -67,6 +67,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .card { background: #1a1408; border-radius: 6px; padding: 12px; border-left: 3px solid; cursor: pointer; transition: transform 0.15s; display: block; }
 .card:hover { transform: translateY(-1px); }
 .card-address { font-weight: 600; font-size: 13px; color: #FAFAFA; margin-bottom: 3px; }
+.card-sublabel { font-size: 10px; font-weight: 600; color: #7A3B14; text-transform: uppercase; letter-spacing: 1px; padding: 4px 0 6px; border-bottom: 1px solid #3a2a10; margin-bottom: 6px; }
 .card-client { font-size: 11px; color: #857D52; margin-bottom: 4px; }
 .card-price { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #7A3B14; }
 .card-note { font-size: 10px; color: #857D52; margin-top: 4px; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
@@ -224,6 +225,41 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 
 
+<div class="section-header">
+  <h2>This Week</h2>
+</div>
+<div class="weekly-cal">
+<div class="cal-day cal-today">
+  <div class="cal-day-label">Today</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Tue Feb 17</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Wed Feb 18</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Thu Feb 19</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Fri Feb 20</div>
+  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsoun...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sat Feb 21</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sun Feb 22</div>
+  <div class="cal-empty">-</div>
+</div>
+</div>
 
 
 <div class="section-header">
@@ -311,12 +347,14 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   <div class="kanban-col col-live">
     <div class="kanban-col-header">Active <span class="count">6</span></div>
     <div class="kanban-cards">
+      <div class="card-sublabel">Existing Homes</div>
       <a href="deals/12.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">4041 Hiddenbrook Dr</div>
         <div class="card-client">Fiorella Freile</div>
         <div class="card-price">$1.50M</div>
         <div class="card-note">New build, completed. Active listing - Just on market, lots of showings</div>
       </a>
+      <div class="card-sublabel" style="margin-top:10px;">To Be Built</div>
       <a href="deals/6.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">626 Shelton</div>
         <div class="card-client">Alex Bailey</div>
@@ -430,6 +468,13 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
         <div class="card-price">$3M</div>
         <div class="card-note">Budget: $3M target (stretch to $3.5M) · Lot: 0.4+ acres, flat, pool, walkable</div>
       </a>
+      <a href="deals/28.html" class="card" style="text-decoration:none;color:inherit;">
+        <div class="card-address">Matt Connelly - Buyer</div>
+        <div class="card-client">Matt Connelly</div>
+        <div class="card-price">$700,000</div>
+        <div class="card-note">timeline: Now — actively looking · hotlead: yes</div>
+        <div class="card-timeline" style="color:#ff887c;font-size:11px;margin-top:4px;">🔥 Now — actively looking</div>
+      </a>
       <a href="deals/21.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">Lindsey Anderson - Buyer</div>
         <div class="card-client">Lindsey Anderson</div>
@@ -442,17 +487,18 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
         <div class="card-price">$250,000</div>
         <div class="card-note">Budget: $200K-$300K for land · Owners of Green Life Charlotte (matt@greenlifeclt.com)</div>
       </a>
-      <a href="deals/28.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Matt Connelly - Buyer</div>
-        <div class="card-client">Matt Connelly</div>
-        <div class="card-note">timeline: Now — actively looking · hotlead: yes</div>
-        <div class="card-timeline" style="color:#ff887c;font-size:11px;margin-top:4px;">🔥 Now — actively looking</div>
-      </a>
     </div>
   </div>
   <div class="kanban-col col-leads">
     <div class="kanban-col-header">Leads <span class="count">3</span></div>
     <div class="kanban-cards">
+      <a href="deals/37.html" class="card" style="text-decoration:none;color:inherit;">
+        <div class="card-address">Caroline Piper - Buyer</div>
+        <div class="card-client">Caroline Piper</div>
+        <div class="card-price">$350,000</div>
+        <div class="card-note">timeline: Flexible — signed a lease, browsing</div>
+        <div class="card-timeline" style="color:#46d6db;font-size:11px;margin-top:4px;">📅 Flexible — signed a lease, browsing</div>
+      </a>
       <a href="deals/40.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">Nathan &amp; Lauren Holbrook - Buyer</div>
         <div class="card-client">Nathan Holbrook</div>
@@ -464,11 +510,6 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
         <div class="card-client">Max Sandquist</div>
         <div class="card-note">timeline: May 2026 — lease ends</div>
         <div class="card-timeline" style="color:#46d6db;font-size:11px;margin-top:4px;">📅 May 2026 — lease ends</div>
-      </a>
-      <a href="deals/37.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Caroline Piper - Buyer</div>
-        <div class="card-client">Caroline Piper</div>
-        <div class="card-note">Looking to buy next. Follow up in 2 weeks.</div>
       </a>
     </div>
   </div>

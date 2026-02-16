@@ -97,7 +97,7 @@ a:hover { text-decoration: underline; }
 <div class="deal-header">
   <div class="deal-name">Caroline Piper - Buyer</div>
   <div class="deal-client">Caroline Piper</div>
-  
+  <div class='deal-price'>$350,000</div>
   <span class="deal-stage stage-buyer">Buyer Contract</span>
   
 </div>
@@ -116,8 +116,8 @@ a:hover { text-decoration: underline; }
     
     <div class="checklist-section">
       <div class="section-title">GETTING STARTED</div>
-      <div class="check-item pending" data-idx="0" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
+      <div class="check-item done" data-idx="0" data-default="1" onclick="toggle(this)">
+        <span class="check-icon">✓</span>
         <span class="check-text">Signed Buyer Representation Agreement</span>
       </div>
       <div class="check-item pending" data-idx="1" data-default="0" onclick="toggle(this)">
@@ -269,11 +269,15 @@ a:hover { text-decoration: underline; }
   <div class="col-side">
     <div class="detail-card">
       <h3>Details</h3>
-      <div class='detail-line'>Caroline Piper - Past client (sold 2719 Selwyn Ave #13)</div><div class='detail-line'>Looking to buy next. Follow up in 2 weeks.</div>
+      <div class='detail-line'>Looking for a condo in South End/Elizabeth area. Budget ~$350K. Signed a lease so not urgent but actively browsing.</div><div class='detail-line'>timeline: Flexible — signed a lease, browsing</div>
     </div>
     <div class="detail-card">
       <h3>Notes</h3>
-      <div class='detail-line'>No notes yet</div>
+      
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">Signed a lease but still looking to buy. Wants a condo in South End/Elizabeth area, budget around $350K.</div>
+      </div>
     </div>
   </div>
 </div>
