@@ -95,6 +95,17 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
+/* Weekly Calendar */
+.weekly-cal { display: flex; gap: 4px; padding: 8px 24px 16px; overflow-x: auto; }
+.cal-day { flex: 1; min-width: 100px; background: #261A05; border-radius: 8px; padding: 10px; }
+.cal-today { border: 1px solid #7A3B14; }
+.cal-day-label { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; color: #FAFAFA; margin-bottom: 6px; text-align: center; }
+.cal-today .cal-day-label { color: #7A3B14; }
+.cal-event { font-size: 10px; color: #857D52; padding: 3px 0; border-bottom: 1px solid #3a3020; line-height: 1.4; }
+.cal-event:last-child { border-bottom: none; }
+.cal-time { color: #a67c52; font-weight: 500; }
+.cal-empty { font-size: 10px; color: #3a3020; text-align: center; }
+
 /* Referrals */
 .referrals-section { padding: 8px 24px 16px; }
 .ref-row { background: #261A05; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; border-left: 3px solid #a67c52; }
@@ -114,6 +125,9 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   .section-header h2 { font-size: 18px; }
   .kanban { padding: 8px 16px 20px; gap: 10px; }
   .kanban-col { flex: 0 0 200px; }
+  .weekly-cal { padding: 8px 16px; gap: 3px; }
+  .cal-day { min-width: 80px; padding: 8px; }
+  .cal-day-label { font-size: 11px; }
   .card { padding: 10px; }
   .card-address { font-size: 12px; }
   .card-price { font-size: 16px; }
@@ -149,17 +163,53 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="header">
   <div>
     <h1>Transaction Dashboard</h1>
-    <div class="date">Updated: February 16, 2026 · 05:07 PM</div>
+    <div class="date">Updated: February 16, 2026 · 05:10 PM</div>
   </div>
   <a href="new-listing.html" class="new-listing-btn">📋 New Listing</a>
   <a href="new-buyer.html" class="new-listing-btn" style="background:#2a5a3a;">🏡 New Buyer</a>
   <a href="listing-appointment.html" class="new-listing-btn" style="background:#3a2a5a;">📊 Listing Appt</a>
   <div class="stats">
-    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Active</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Active</div></div>
     <div class="stat"><div class="stat-num">3</div><div class="stat-label">WIP</div></div>
     <div class="stat"><div class="stat-num">4</div><div class="stat-label">Under Contract</div></div>
     <div class="stat"><div class="stat-num">6</div><div class="stat-label">Buyers</div></div>
   </div>
+</div>
+
+
+<div class="section-header">
+  <h2>This Week</h2>
+</div>
+<div class="weekly-cal">
+<div class="cal-day cal-today">
+  <div class="cal-day-label">Today</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Tue Feb 17</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Wed Feb 18</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr (Seals)</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Thu Feb 19</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Fri Feb 20</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sat Feb 21</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sun Feb 22</div>
+  <div class="cal-empty">-</div>
+</div>
 </div>
 
 
@@ -197,6 +247,17 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   <span class="section-badge">15</span>
 </div>
 <div class="kanban">
+  <div class="kanban-col" style="border-top-color:#c97a3b;">
+    <div class="kanban-col-header">Listing Appts <span class="count">1</span></div>
+    <div class="kanban-cards">
+      <a href="deals/20.html" class="card" style="text-decoration:none;color:inherit;">
+        <div class="card-address">4601 General Pershing Dr</div>
+        <div class="card-client">Nathan Holbrook, Lauren Holbrook</div>
+        <div class="card-price">$650,000</div>
+        <div class="card-note">Listing lead</div>
+      </a>
+    </div>
+  </div>
   <div class="kanban-col col-prep">
     <div class="kanban-col-header">WIP / Pre-List <span class="count">3</span></div>
     <div class="kanban-cards">
@@ -218,20 +279,13 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
     </div>
   </div>
   <div class="kanban-col col-live">
-    <div class="kanban-col-header">Existing Homes <span class="count">2</span></div>
+    <div class="kanban-col-header">Existing Homes <span class="count">1</span></div>
     <div class="kanban-cards">
       <a href="deals/12.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">4041 Hiddenbrook Dr</div>
         <div class="card-client">Fiorella Freile</div>
         <div class="card-price">$1.50M</div>
         <div class="card-note">New build, completed. Active listing - Just on market, lots of showings</div>
-        <div class="card-meta"><span style="color:#51b749">0 DOM</span></div>
-      </a>
-      <a href="deals/20.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">4601 General Pershing Dr</div>
-        <div class="card-client">Nathan Holbrook, Lauren Holbrook</div>
-        <div class="card-price">$650,000</div>
-        <div class="card-note">Listing lead</div>
         <div class="card-meta"><span style="color:#51b749">0 DOM</span></div>
       </a>
     </div>
