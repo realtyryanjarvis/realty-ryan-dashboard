@@ -79,6 +79,18 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .todo-check { width: 16px; height: 16px; border: 2px solid #5C3D14; border-radius: 3px; flex-shrink: 0; margin-top: 1px; cursor: pointer; }
 .todo-text { flex: 1; color: #FAFAFA; }
 .todo-deal { font-size: 10px; color: #7A3B14; background: rgba(122,59,20,0.2); padding: 1px 8px; border-radius: 10px; white-space: nowrap; margin-left: 8px; }
+.todo-item .todo-check:hover { border-color: #7A3B14; background: rgba(122,59,20,0.2); }
+.todo-item.done { opacity: 0.4; }
+.todo-item.done .todo-text { text-decoration: line-through; }
+.todo-add { margin-top: 10px; }
+.todo-add-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.todo-add-input { flex: 1; min-width: 200px; padding: 10px 12px; background: #261A05; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
+.todo-add-input:focus { border-color: #7A3B14; }
+.todo-add-select { padding: 10px 8px; background: #261A05; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 12px; outline: none; appearance: none; }
+.todo-add-deal { width: 140px; padding: 10px 12px; background: #261A05; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
+.todo-add-deal:focus { border-color: #7A3B14; }
+.todo-add-btn { padding: 10px 18px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.todo-add-btn:hover { background: #9A4B1A; }
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
@@ -129,7 +141,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="header">
   <div>
     <h1>Transaction Dashboard</h1>
-    <div class="date">Updated: February 16, 2026 · 02:15 PM</div>
+    <div class="date">Updated: February 16, 2026 · 02:17 PM</div>
   </div>
   <a href="new-listing.html" class="new-listing-btn">📋 New Listing</a>
   <a href="new-buyer.html" class="new-listing-btn" style="background:#2a5a3a;">🏡 New Buyer</a>
@@ -144,15 +156,27 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 
 <div class="section-header">
   <h2>📌 To-Do</h2>
-  <span class="section-badge">5</span>
+  <span class="section-badge" id="todo-count">5</span>
 </div>
 <div class="todo-section">
-  <div class="todo-list">
-      <div class="todo-item high"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
-      <div class="todo-item high"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
-      <div class="todo-item medium"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
-      <div class="todo-item high"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
-      <div class="todo-item medium"><div class="todo-check"></div><div class="todo-text">Have Ally update FUB pipeline stages (back Feb 20)</div></div>
+  <div class="todo-list" id="todo-list">
+      <div class="todo-item high" data-id="1" onclick="toggleTodo('1')"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
+      <div class="todo-item high" data-id="2" onclick="toggleTodo('2')"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
+      <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
+      <div class="todo-item high" data-id="4" onclick="toggleTodo('4')"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
+      <div class="todo-item medium" data-id="5" onclick="toggleTodo('5')"><div class="todo-check"></div><div class="todo-text">Have Ally update FUB pipeline stages (back Feb 20)</div></div>
+  </div>
+  <div class="todo-add" id="todo-add">
+    <div class="todo-add-row">
+      <input type="text" id="todo-input" placeholder="Add a to-do..." class="todo-add-input">
+      <select id="todo-priority" class="todo-add-select">
+        <option value="high">🔴 High</option>
+        <option value="medium" selected>🟡 Medium</option>
+        <option value="low">🟢 Low</option>
+      </select>
+      <input type="text" id="todo-deal" placeholder="Deal (optional)" class="todo-add-deal">
+      <button onclick="addTodo()" class="todo-add-btn">+ Add</button>
+    </div>
   </div>
 </div>
 <div class="divider"></div>
@@ -348,6 +372,81 @@ function checkPw(){const p=document.getElementById("pw-input").value;sha256(p).t
 function show(){document.getElementById("login-gate").style.display="none";document.getElementById("dashboard").style.display="block"}
 document.getElementById("pw-input").addEventListener("keydown",e=>{if(e.key==="Enter")checkPw()});
 if(localStorage.getItem("rr_dash_auth")==="1")show();
+
+// To-Do functionality
+function getLocalTodos(){try{return JSON.parse(localStorage.getItem("rr_todos")||"[]")}catch(e){return[]}}
+function saveLocalTodos(t){localStorage.setItem("rr_todos",JSON.stringify(t))}
+
+function renderTodoItem(t){
+  const deal=t.deal?`<span class="todo-deal">${t.deal}</span>`:"";
+  const done=t.done?"done":"";
+  return `<div class="todo-item ${t.priority} ${done}" data-id="${t.id}" onclick="toggleTodo('${t.id}')"><div class="todo-check"></div><div class="todo-text">${t.text}${deal}</div></div>`;
+}
+
+// Load local todos on page load
+(function(){
+  const localTodos=getLocalTodos();
+  if(localTodos.length>0){
+    const list=document.getElementById("todo-list");
+    if(list){
+      localTodos.forEach(t=>{list.insertAdjacentHTML("beforeend",renderTodoItem(t))});
+      const ct=document.getElementById("todo-count");
+      if(ct)ct.textContent=parseInt(ct.textContent||"0")+localTodos.filter(t=>!t.done).length;
+    }
+  }
+  // Apply done state to server-rendered todos
+  const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
+  document.querySelectorAll(".todo-item[data-id]").forEach(el=>{
+    if(doneTodos[el.dataset.id])el.classList.add("done");
+  });
+})();
+
+function addTodo(){
+  const input=document.getElementById("todo-input");
+  const text=input.value.trim();
+  if(!text)return;
+  const pri=document.getElementById("todo-priority").value;
+  const deal=document.getElementById("todo-deal").value.trim();
+  const id="local-"+Date.now();
+  const todo={id:id,text:text,priority:pri,deal:deal,done:false};
+  const localTodos=getLocalTodos();
+  localTodos.push(todo);
+  saveLocalTodos(localTodos);
+  const list=document.getElementById("todo-list");
+  list.insertAdjacentHTML("beforeend",renderTodoItem(todo));
+  const ct=document.getElementById("todo-count");
+  if(ct)ct.textContent=parseInt(ct.textContent||"0")+1;
+  input.value="";
+  document.getElementById("todo-deal").value="";
+  // Send to Jarvis via SMS
+  const msg=encodeURIComponent("📌 NEW TODO\nTask: "+text+"\nPriority: "+pri+(deal?"\nDeal: "+deal:""));
+  window.open("sms:+15089542159&body="+msg,"_blank");
+}
+
+function toggleTodo(id){
+  const el=document.querySelector(`.todo-item[data-id="${id}"]`);
+  if(!el)return;
+  el.classList.toggle("done");
+  // Save done state
+  const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
+  if(el.classList.contains("done")){doneTodos[id]=true}else{delete doneTodos[id]}
+  localStorage.setItem("rr_todos_done",JSON.stringify(doneTodos));
+  // For local todos
+  const localTodos=getLocalTodos();
+  const lt=localTodos.find(t=>t.id===id);
+  if(lt){lt.done=!lt.done;saveLocalTodos(localTodos)}
+  // Update count
+  updateTodoCount();
+}
+
+function updateTodoCount(){
+  const all=document.querySelectorAll(".todo-item");
+  const active=[...all].filter(e=>!e.classList.contains("done")).length;
+  const ct=document.getElementById("todo-count");
+  if(ct)ct.textContent=active;
+}
+
+document.getElementById("todo-input")&&document.getElementById("todo-input").addEventListener("keydown",function(e){if(e.key==="Enter")addTodo()});
 </script>
 
 </body>
