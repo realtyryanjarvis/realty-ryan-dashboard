@@ -255,12 +255,13 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   <span class="section-badge" id="todo-count">6</span>
 </div>
 <div class="todo-section">
-  <div class="todo-columns">
+  <div class="todo-columns" style="grid-template-columns: 1fr 1fr;">
     <div class="todo-column">
-      <div class="todo-column-header">👤 Ryan <span class="todo-column-count">3</span></div>
+      <div class="todo-column-header">👤 Ryan <span class="todo-column-count">4</span></div>
       <div class="todo-list">
         <div class="todo-item high" data-id="1" onclick="toggleTodo('1')"><div class="todo-check"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div></div>
         <div class="todo-item high" data-id="2" onclick="toggleTodo('2')"><div class="todo-check"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div></div>
+        <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
         <div class="todo-item high" data-id="4" onclick="toggleTodo('4')"><div class="todo-check"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div></div>
       </div>
     </div>
@@ -269,12 +270,6 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
       <div class="todo-list">
         <div class="todo-item medium" data-id="5" onclick="toggleTodo('5')"><div class="todo-check"></div><div class="todo-text">Update FUB pipeline stages in Admin (back Feb 20)</div></div>
         <div class="todo-item medium" data-id="6" onclick="toggleTodo('6')"><div class="todo-check"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts</div></div>
-      </div>
-    </div>
-    <div class="todo-column">
-      <div class="todo-column-header">👩 Alexis <span class="todo-column-count">1</span></div>
-      <div class="todo-list">
-        <div class="todo-item medium" data-id="3" onclick="toggleTodo('3')"><div class="todo-check"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div></div>
       </div>
     </div>
   </div>
