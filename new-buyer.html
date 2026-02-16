@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Buyer Intake — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+
+#login-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+#main-content { display: none; }
+.login-box { background: #261A05; padding: 48px; border-radius: 12px; border: 1px solid #5C3D14; width: 100%; max-width: 380px; text-align: center; }
+.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+.login-box .sub { font-size: 13px; color: #857D52; margin-bottom: 32px; }
+.login-box input { width: 100%; padding: 14px 16px; background: #1a1408; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
+.login-box input:focus { border-color: #7A3B14; }
+.login-box button { width: 100%; padding: 14px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+.login-box button:hover { background: #9A4B1A; }
+.login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
+
+.header { background: #261A05; padding: 20px 24px; border-bottom: 3px solid #7A3B14; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; }
+.back-link { color: #7A3B14; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.back-link:hover { color: #9A4B1A; }
+
+.form-container { max-width: 640px; margin: 0 auto; padding: 32px 24px; }
+.form-intro { font-size: 14px; color: #857D52; margin-bottom: 32px; line-height: 1.6; }
+
+.form-section { margin-bottom: 32px; }
+.form-section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #7A3B14; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #5C3D14; }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #857D52; margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 12px 14px; background: #261A05; border: 1px solid #5C3D14;
+  border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #7A3B14; }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23857D52' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+.form-group select option { background: #261A05; color: #FAFAFA; }
+
+.form-row { display: flex; gap: 12px; }
+.form-row .form-group { flex: 1; }
+
+.required::after { content: " *"; color: #ff887c; }
+
+.submit-btn {
+  width: 100%; padding: 16px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 8px;
+  font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.12em; margin-top: 16px; transition: background 0.2s;
+}
+.submit-btn:hover { background: #9A4B1A; }
+.submit-btn:disabled { background: #5C3D14; cursor: not-allowed; }
+
+.success-msg { display: none; background: #1a2a1a; border: 1px solid #46d67a; border-radius: 8px; padding: 24px; text-align: center; margin-top: 24px; }
+.success-msg h3 { color: #46d67a; font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 8px; }
+.success-msg p { color: #857D52; font-size: 13px; line-height: 1.5; }
+
+.checklist-preview { background: #261A05; border: 1px solid #5C3D14; border-radius: 8px; padding: 16px; margin-top: 24px; }
+.checklist-preview h4 { font-family: 'Cormorant Garamond', serif; color: #7A3B14; font-size: 16px; margin-bottom: 12px; }
+.checklist-preview li { font-size: 12px; color: #857D52; margin-bottom: 6px; list-style: none; }
+.checklist-preview li::before { content: "📄 "; }
+
+@media (max-width: 480px) {
+  .form-row { flex-direction: column; gap: 0; }
+  .header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div id="login-gate">
+  <div class="login-box">
+    <h1>Realty Ryan</h1>
+    <div class="sub">New Buyer Intake</div>
+    <div class="login-error" id="login-error">Incorrect password</div>
+    <input type="password" id="pw-input" placeholder="Enter password" autofocus>
+    <button onclick="checkPw()">Access Form</button>
+  </div>
+</div>
+
+<div id="main-content">
+
+<div class="header">
+  <h1>🏡 New Buyer Intake</h1>
+  <a href="index.html" class="back-link">← Dashboard</a>
+</div>
+
+<div class="form-container">
+  <div class="form-intro">
+    Fill out the buyer's info below. Jarvis will create their FUB contact, generate a personalized buyer welcome packet (PDF), and prepare all required forms for digital signature — Working with Real Estate Agents, Buyer Agency Agreement, and Sample Offer to Purchase.
+  </div>
+
+  <form id="buyer-form" onsubmit="return false;">
+
+    <!-- BUYER INFO -->
+    <div class="form-section">
+      <div class="form-section-title">Buyer Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">Buyer 1 First Name</label>
+          <input type="text" id="firstName1" placeholder="John" required>
+        </div>
+        <div class="form-group">
+          <label class="required">Buyer 1 Last Name</label>
+          <input type="text" id="lastName1" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">Email</label>
+          <input type="email" id="email1" placeholder="john@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="required">Phone</label>
+          <input type="tel" id="phone1" placeholder="704-555-1234" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Current Address</label>
+        <input type="text" id="currentAddr" placeholder="123 Main St, Charlotte, NC 28202">
+      </div>
+    </div>
+
+    <!-- BUYER 2 (OPTIONAL) -->
+    <div class="form-section">
+      <div class="form-section-title">Buyer 2 (Spouse / Partner — Optional)</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstName2" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastName2" placeholder="Smith">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email2" placeholder="jane@email.com">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="phone2" placeholder="704-555-5678">
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH CRITERIA -->
+    <div class="form-section">
+      <div class="form-section-title">Search Criteria</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Max Budget</label>
+          <input type="text" id="budget" placeholder="$500,000">
+        </div>
+        <div class="form-group">
+          <label>Pre-Approved?</label>
+          <select id="preApproved">
+            <option value="No">No</option>
+            <option value="Yes">Yes — have lender</option>
+            <option value="Need Referral">No — need lender referral</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Min Beds</label>
+          <input type="number" id="minBeds" placeholder="3">
+        </div>
+        <div class="form-group">
+          <label>Min Baths</label>
+          <input type="text" id="minBaths" placeholder="2">
+        </div>
+        <div class="form-group">
+          <label>Min Sq Ft</label>
+          <input type="number" id="minSqft" placeholder="2000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Target Areas / Neighborhoods</label>
+        <input type="text" id="areas" placeholder="South Charlotte, Ballantyne, Myers Park, etc.">
+      </div>
+      <div class="form-group">
+        <label>Property Type</label>
+        <select id="propType">
+          <option value="Single Family">Single Family</option>
+          <option value="Townhome">Townhome</option>
+          <option value="Condo">Condo</option>
+          <option value="New Construction">New Construction</option>
+          <option value="Land/Lot">Land / Lot (Build)</option>
+          <option value="Any">Open to All</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Timeline</label>
+        <select id="timeline">
+          <option value="ASAP">ASAP — Ready Now</option>
+          <option value="1-3 months">1-3 Months</option>
+          <option value="3-6 months">3-6 Months</option>
+          <option value="6-12 months">6-12 Months</option>
+          <option value="Just exploring">Just Exploring</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Must-Haves / Dealbreakers / Notes</label>
+        <textarea id="notes" placeholder="Garage, fenced yard, good schools, no HOA, etc."></textarea>
+      </div>
+    </div>
+
+    <!-- REFERRAL -->
+    <div class="form-section">
+      <div class="form-section-title">Source & Notes</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>How'd They Find Us?</label>
+          <select id="source">
+            <option value="Referral">Referral</option>
+            <option value="Open House">Open House</option>
+            <option value="Website">Website</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Zillow/Realtor.com">Zillow / Realtor.com</option>
+            <option value="Sphere">Personal Sphere</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Referral Name (if applicable)</label>
+          <input type="text" id="referralName" placeholder="Who referred them?">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Additional Notes</label>
+        <textarea id="addlNotes" placeholder="Anything else Jarvis should know..."></textarea>
+      </div>
+    </div>
+
+    <div class="checklist-preview">
+      <h4>📋 What Jarvis Will Prepare:</h4>
+      <ul>
+        <li>Working with Real Estate Agents Disclosure (WWREA)</li>
+        <li>Exclusive Buyer Agency Agreement</li>
+        <li>Sample Offer to Purchase & Contract (Form 2-T)</li>
+        <li>Buyer Welcome Packet — Ryan's bio, team intro, buying process guide</li>
+        <li>Home Inspection Q&A Guide</li>
+        <li>FUB contact + deal creation</li>
+        <li>Lender intro email (if needed)</li>
+        <li>Start buyer drip campaign</li>
+      </ul>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">🚀 Submit to Jarvis</button>
+
+    <div class="success-msg" id="successMsg">
+      <h3>✅ Submitted!</h3>
+      <p>Jarvis is preparing the buyer packet now. He'll create the FUB contact, generate all forms pre-populated with the buyer's info, and send you the documents for digital signature. You'll get a confirmation shortly.</p>
+    </div>
+
+  </form>
+</div>
+
+</div>
+
+<script>
+const PW_HASH = "a0f6e710e52adab53e4016c4f9fe9a18acb14b03a5a3a516f7eab8b1fed5eb50";
+
+async function sha256(m) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+}
+
+async function checkPw() {
+  const p = document.getElementById("pw-input").value;
+  const h = await sha256(p);
+  if (h === PW_HASH) { localStorage.setItem("rr_dash_auth", "1"); show(); }
+  else { document.getElementById("login-error").style.display = "block"; }
+}
+
+function show() {
+  document.getElementById("login-gate").style.display = "none";
+  document.getElementById("main-content").style.display = "block";
+}
+
+document.getElementById("pw-input").addEventListener("keydown", e => { if (e.key === "Enter") checkPw(); });
+if (localStorage.getItem("rr_dash_auth") === "1") show();
+
+function submitForm() {
+  const fn1 = document.getElementById("firstName1").value.trim();
+  const ln1 = document.getElementById("lastName1").value.trim();
+  const em1 = document.getElementById("email1").value.trim();
+  const ph1 = document.getElementById("phone1").value.trim();
+
+  if (!fn1 || !ln1 || !em1 || !ph1) {
+    alert("Please fill in all required Buyer 1 fields.");
+    return;
+  }
+
+  let msg = `🏡 NEW BUYER INTAKE\n`;
+  msg += `Buyer 1: ${fn1} ${ln1}\n`;
+  msg += `Email: ${em1}\n`;
+  msg += `Phone: ${ph1}\n`;
+
+  const addr = document.getElementById("currentAddr").value.trim();
+  if (addr) msg += `Current Address: ${addr}\n`;
+
+  const fn2 = document.getElementById("firstName2").value.trim();
+  const ln2 = document.getElementById("lastName2").value.trim();
+  if (fn2 || ln2) {
+    msg += `\nBuyer 2: ${fn2} ${ln2}\n`;
+    const em2 = document.getElementById("email2").value.trim();
+    const ph2 = document.getElementById("phone2").value.trim();
+    if (em2) msg += `Email 2: ${em2}\n`;
+    if (ph2) msg += `Phone 2: ${ph2}\n`;
+  }
+
+  msg += `\nBudget: ${document.getElementById("budget").value.trim() || "TBD"}\n`;
+  msg += `Pre-Approved: ${document.getElementById("preApproved").value}\n`;
+
+  const beds = document.getElementById("minBeds").value;
+  const baths = document.getElementById("minBaths").value;
+  const sqft = document.getElementById("minSqft").value;
+  if (beds || baths || sqft) msg += `Min Specs: ${beds || "?"}BR / ${baths || "?"}BA / ${sqft || "?"}sqft\n`;
+
+  const areas = document.getElementById("areas").value.trim();
+  if (areas) msg += `Areas: ${areas}\n`;
+  msg += `Type: ${document.getElementById("propType").value}\n`;
+  msg += `Timeline: ${document.getElementById("timeline").value}\n`;
+
+  const notes = document.getElementById("notes").value.trim();
+  if (notes) msg += `Must-Haves: ${notes}\n`;
+
+  msg += `\nSource: ${document.getElementById("source").value}\n`;
+  const ref = document.getElementById("referralName").value.trim();
+  if (ref) msg += `Referral: ${ref}\n`;
+
+  const addl = document.getElementById("addlNotes").value.trim();
+  if (addl) msg += `Notes: ${addl}\n`;
+
+  navigator.clipboard.writeText(msg).then(() => {
+    const smsBody = encodeURIComponent(msg);
+    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "✅ Sent!";
+    document.getElementById("successMsg").style.display = "block";
+  }).catch(() => {
+    const smsBody = encodeURIComponent(msg);
+    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "✅ Sent!";
+    document.getElementById("successMsg").style.display = "block";
+  });
+}
+</script>
+
+</body>
+</html>
