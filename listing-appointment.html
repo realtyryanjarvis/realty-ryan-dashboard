@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listing Appointment Prep — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+
+#login-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+#main-content { display: none; }
+.login-box { background: #261A05; padding: 48px; border-radius: 12px; border: 1px solid #5C3D14; width: 100%; max-width: 380px; text-align: center; }
+.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+.login-box .sub { font-size: 13px; color: #857D52; margin-bottom: 32px; }
+.login-box input { width: 100%; padding: 14px 16px; background: #1a1408; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
+.login-box input:focus { border-color: #7A3B14; }
+.login-box button { width: 100%; padding: 14px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+.login-box button:hover { background: #9A4B1A; }
+.login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
+
+.header { background: #261A05; padding: 20px 24px; border-bottom: 3px solid #7A3B14; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; }
+.back-link { color: #7A3B14; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.back-link:hover { color: #9A4B1A; }
+
+.form-container { max-width: 640px; margin: 0 auto; padding: 32px 24px; }
+.form-intro { font-size: 14px; color: #857D52; margin-bottom: 32px; line-height: 1.6; }
+
+.form-section { margin-bottom: 32px; }
+.form-section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #7A3B14; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #5C3D14; }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #857D52; margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 12px 14px; background: #261A05; border: 1px solid #5C3D14;
+  border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #7A3B14; }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23857D52' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+.form-group select option { background: #261A05; color: #FAFAFA; }
+
+.form-row { display: flex; gap: 12px; }
+.form-row .form-group { flex: 1; }
+
+.required::after { content: " *"; color: #ff887c; }
+
+.submit-btn {
+  width: 100%; padding: 16px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 8px;
+  font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.12em; margin-top: 16px; transition: background 0.2s;
+}
+.submit-btn:hover { background: #9A4B1A; }
+.submit-btn:disabled { background: #5C3D14; cursor: not-allowed; }
+
+.success-msg { display: none; background: #1a2a1a; border: 1px solid #46d67a; border-radius: 8px; padding: 24px; text-align: center; margin-top: 24px; }
+.success-msg h3 { color: #46d67a; font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 8px; }
+.success-msg p { color: #857D52; font-size: 13px; line-height: 1.5; }
+
+.checklist-preview { background: #261A05; border: 1px solid #5C3D14; border-radius: 8px; padding: 16px; margin-top: 24px; }
+.checklist-preview h4 { font-family: 'Cormorant Garamond', serif; color: #7A3B14; font-size: 16px; margin-bottom: 12px; }
+.checklist-preview li { font-size: 12px; color: #857D52; margin-bottom: 6px; list-style: none; }
+.checklist-preview li::before { content: "📄 "; }
+
+@media (max-width: 480px) {
+  .form-row { flex-direction: column; gap: 0; }
+  .header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div id="login-gate">
+  <div class="login-box">
+    <h1>Realty Ryan</h1>
+    <div class="sub">Listing Appointment Prep</div>
+    <div class="login-error" id="login-error">Incorrect password</div>
+    <input type="password" id="pw-input" placeholder="Enter password" autofocus>
+    <button onclick="checkPw()">Access Form</button>
+  </div>
+</div>
+
+<div id="main-content">
+
+<div class="header">
+  <h1>📊 Listing Appointment Prep</h1>
+  <a href="index.html" class="back-link">← Dashboard</a>
+</div>
+
+<div class="form-container">
+  <div class="form-intro">
+    Fill in the property details for your listing appointment. Jarvis will pull comps from county records, build a branded CMA with map, and prepare all the listing paperwork — ready to print.
+  </div>
+
+  <form id="appt-form" onsubmit="return false;">
+
+    <!-- PROPERTY -->
+    <div class="form-section">
+      <div class="form-section-title">Subject Property</div>
+      <div class="form-group">
+        <label class="required">Property Address</label>
+        <input type="text" id="address" placeholder="123 Main St, Charlotte, NC 28202" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Zip Code</label>
+          <input type="text" id="zipcode" placeholder="28202">
+        </div>
+        <div class="form-group">
+          <label>Neighborhood / Subdivision</label>
+          <input type="text" id="neighborhood" placeholder="Myers Park">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Beds</label>
+          <input type="number" id="beds" placeholder="4">
+        </div>
+        <div class="form-group">
+          <label>Baths</label>
+          <input type="text" id="baths" placeholder="3.5">
+        </div>
+        <div class="form-group">
+          <label>Sq Ft</label>
+          <input type="number" id="sqft" placeholder="2800">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Year Built</label>
+          <input type="number" id="yearBuilt" placeholder="1998">
+        </div>
+        <div class="form-group">
+          <label>Lot Size (acres)</label>
+          <input type="text" id="lotSize" placeholder="0.45">
+        </div>
+        <div class="form-group">
+          <label>Garage</label>
+          <select id="garage">
+            <option value="">Select</option>
+            <option value="None">None</option>
+            <option value="1-Car">1-Car</option>
+            <option value="2-Car">2-Car</option>
+            <option value="3-Car">3-Car</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Property Type</label>
+          <select id="propType">
+            <option value="Single Family">Single Family</option>
+            <option value="Townhome">Townhome</option>
+            <option value="Condo">Condo</option>
+            <option value="Multi-Family">Multi-Family</option>
+            <option value="Land">Land / Lot</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Seller's Target Price</label>
+          <input type="text" id="targetPrice" placeholder="$450,000 (if known)">
+        </div>
+      </div>
+    </div>
+
+    <!-- SELLER -->
+    <div class="form-section">
+      <div class="form-section-title">Seller Info</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">Seller Name(s)</label>
+          <input type="text" id="sellerName" placeholder="John & Jane Smith" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Seller Phone</label>
+          <input type="tel" id="sellerPhone" placeholder="704-555-1234">
+        </div>
+        <div class="form-group">
+          <label>Seller Email</label>
+          <input type="email" id="sellerEmail" placeholder="seller@email.com">
+        </div>
+      </div>
+    </div>
+
+    <!-- APPOINTMENT -->
+    <div class="form-section">
+      <div class="form-section-title">Appointment Details</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">Appointment Date & Time</label>
+          <input type="datetime-local" id="apptDate" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Key Features / Upgrades</label>
+        <textarea id="features" placeholder="Pool, renovated kitchen, new roof 2024, hardwoods throughout..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Known Issues / Concerns</label>
+        <textarea id="concerns" placeholder="Needs new HVAC, foundation crack, dated bathrooms..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Notes for CMA / Appointment</label>
+        <textarea id="notes" placeholder="Seller wants to net $X, competing with new construction, etc."></textarea>
+      </div>
+    </div>
+
+    <!-- CMA PREFERENCES -->
+    <div class="form-section">
+      <div class="form-section-title">CMA Preferences</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Comp Radius</label>
+          <select id="compRadius">
+            <option value="0.5">0.5 miles</option>
+            <option value="1" selected>1 mile</option>
+            <option value="2">2 miles</option>
+            <option value="3">3 miles</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Comp Timeframe</label>
+          <select id="compTime">
+            <option value="3">Last 3 months</option>
+            <option value="6" selected>Last 6 months</option>
+            <option value="12">Last 12 months</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Sqft Range (+/-)</label>
+          <select id="sqftRange">
+            <option value="300">+/- 300 sqft</option>
+            <option value="500" selected>+/- 500 sqft</option>
+            <option value="750">+/- 750 sqft</option>
+            <option value="1000">+/- 1000 sqft</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Include Active Listings?</label>
+          <select id="includeActive">
+            <option value="Yes" selected>Yes</option>
+            <option value="No">No — Sold Only</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist-preview">
+      <h4>📋 What Jarvis Will Prepare:</h4>
+      <ul>
+        <li>Branded CMA Report with comparable sales data</li>
+        <li>Map showing subject property + all comps</li>
+        <li>Price per sqft analysis & suggested price range</li>
+        <li>Market trend snapshot (DOM, inventory, absorption)</li>
+        <li>Listing Welcome Packet (thank-you letter, process guide)</li>
+        <li>Pre-populated Listing Agreement (ready for signature)</li>
+        <li>Seller Disclosure forms</li>
+        <li>Calendar event for the appointment</li>
+      </ul>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">📊 Build My CMA & Prep Packet</button>
+
+    <div class="success-msg" id="successMsg">
+      <h3>✅ Submitted!</h3>
+      <p>Jarvis is pulling comps and building your CMA now. He'll generate the full packet (CMA + listing paperwork) and drop it on your Desktop ready to print. You'll get a text when it's ready.</p>
+    </div>
+
+  </form>
+</div>
+
+</div>
+
+<script>
+const PW_HASH = "a0f6e710e52adab53e4016c4f9fe9a18acb14b03a5a3a516f7eab8b1fed5eb50";
+
+async function sha256(m) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+}
+
+async function checkPw() {
+  const p = document.getElementById("pw-input").value;
+  const h = await sha256(p);
+  if (h === PW_HASH) { localStorage.setItem("rr_dash_auth", "1"); show(); }
+  else { document.getElementById("login-error").style.display = "block"; }
+}
+
+function show() {
+  document.getElementById("login-gate").style.display = "none";
+  document.getElementById("main-content").style.display = "block";
+}
+
+document.getElementById("pw-input").addEventListener("keydown", e => { if (e.key === "Enter") checkPw(); });
+if (localStorage.getItem("rr_dash_auth") === "1") show();
+
+function submitForm() {
+  const addr = document.getElementById("address").value.trim();
+  const seller = document.getElementById("sellerName").value.trim();
+  const apptDate = document.getElementById("apptDate").value;
+
+  if (!addr || !seller || !apptDate) {
+    alert("Please fill in address, seller name, and appointment date.");
+    return;
+  }
+
+  let msg = `📊 LISTING APPOINTMENT PREP\n`;
+  msg += `Address: ${addr}\n`;
+  msg += `Zip: ${document.getElementById("zipcode").value.trim() || "N/A"}\n`;
+  msg += `Neighborhood: ${document.getElementById("neighborhood").value.trim() || "N/A"}\n`;
+
+  const beds = document.getElementById("beds").value;
+  const baths = document.getElementById("baths").value;
+  const sqft = document.getElementById("sqft").value;
+  if (beds || baths || sqft) msg += `Specs: ${beds || "?"}BR / ${baths || "?"}BA / ${sqft || "?"}sqft\n`;
+
+  const yb = document.getElementById("yearBuilt").value;
+  const lot = document.getElementById("lotSize").value;
+  const gar = document.getElementById("garage").value;
+  if (yb) msg += `Year Built: ${yb}\n`;
+  if (lot) msg += `Lot: ${lot} acres\n`;
+  if (gar) msg += `Garage: ${gar}\n`;
+
+  msg += `Type: ${document.getElementById("propType").value}\n`;
+  const tp = document.getElementById("targetPrice").value.trim();
+  if (tp) msg += `Seller Target: ${tp}\n`;
+
+  msg += `\nSeller: ${seller}\n`;
+  const ph = document.getElementById("sellerPhone").value.trim();
+  const em = document.getElementById("sellerEmail").value.trim();
+  if (ph) msg += `Phone: ${ph}\n`;
+  if (em) msg += `Email: ${em}\n`;
+
+  const d = new Date(apptDate);
+  const dateStr = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) + " " +
+                  d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  msg += `\nAppointment: ${dateStr}\n`;
+
+  const features = document.getElementById("features").value.trim();
+  const concerns = document.getElementById("concerns").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+  if (features) msg += `Features: ${features}\n`;
+  if (concerns) msg += `Concerns: ${concerns}\n`;
+  if (notes) msg += `Notes: ${notes}\n`;
+
+  msg += `\nCMA Settings:\n`;
+  msg += `Radius: ${document.getElementById("compRadius").value} mi\n`;
+  msg += `Timeframe: ${document.getElementById("compTime").value} months\n`;
+  msg += `Sqft Range: +/- ${document.getElementById("sqftRange").value}\n`;
+  msg += `Include Active: ${document.getElementById("includeActive").value}\n`;
+
+  navigator.clipboard.writeText(msg).then(() => {
+    const smsBody = encodeURIComponent(msg);
+    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "✅ Sent!";
+    document.getElementById("successMsg").style.display = "block";
+  }).catch(() => {
+    const smsBody = encodeURIComponent(msg);
+    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "✅ Sent!";
+    document.getElementById("successMsg").style.display = "block";
+  });
+}
+</script>
+
+</body>
+</html>
