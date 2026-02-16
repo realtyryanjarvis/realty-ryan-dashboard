@@ -71,7 +71,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .col-pending .card { border-left-color: #fbd75b; }
 
 /* To-Do List */
-.todo-section { padding: 12px 24px; }
+.todo-section { padding: 0; }
 .todo-list { display: flex; flex-direction: column; gap: 6px; }
 .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: #261A05; border-radius: 6px; border-left: 3px solid #5C3D14; font-size: 13px; line-height: 1.4; }
 .todo-item.high { border-left-color: #ff887c; }
@@ -95,24 +95,21 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
-/* Top Grid - Calendar + To-Do side by side */
-.top-grid { display: flex; gap: 16px; padding: 0 24px; }
-.top-grid-left { flex: 3; min-width: 0; }
-.top-grid-right { flex: 1; min-width: 280px; }
-.top-grid .section-header { padding: 8px 0 6px; }
-.top-grid .weekly-cal { padding: 8px 0 0; }
-.top-grid .todo-section { padding: 0; }
+/* Top Section */
+.top-section { display: flex; gap: 20px; padding: 0 24px 12px; }
+.top-left { flex: 2; min-width: 0; }
+.top-right { flex: 1; min-width: 260px; max-width: 340px; }
+.top-left .section-header, .top-right .section-header { padding: 8px 0 6px; }
 
 /* Weekly Calendar */
-.weekly-cal { display: flex; gap: 4px; padding: 8px 24px 16px; overflow-x: auto; }
-.cal-day { flex: 1; min-width: 100px; background: #261A05; border-radius: 8px; padding: 10px; }
-.cal-today { border: 1px solid #7A3B14; }
-.cal-day-label { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; color: #FAFAFA; margin-bottom: 8px; text-align: center; }
+.weekly-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.cal-day { background: #261A05; border-radius: 6px; padding: 8px 6px; min-height: 70px; }
+.cal-today { border: 1px solid #7A3B14; background: #2a1e0a; }
+.cal-day-label { font-family: 'Work Sans', sans-serif; font-size: 11px; font-weight: 600; color: #857D52; margin-bottom: 6px; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
 .cal-today .cal-day-label { color: #7A3B14; }
-.cal-event { font-size: 13px; color: #857D52; padding: 5px 0; border-bottom: 1px solid #3a3020; line-height: 1.5; }
-.cal-event:last-child { border-bottom: none; }
-.cal-time { color: #a67c52; font-weight: 600; display: block; font-size: 11px; }
-.cal-empty { font-size: 12px; color: #3a3020; text-align: center; }
+.cal-event { font-size: 11px; color: #FAFAFA; padding: 3px 4px; margin-bottom: 3px; background: #3a2a10; border-radius: 3px; line-height: 1.3; }
+.cal-time { color: #a67c52; font-weight: 600; font-size: 9px; }
+.cal-empty { font-size: 10px; color: #3a3020; text-align: center; padding-top: 10px; }
 
 /* Referrals */
 .referrals-section { padding: 8px 24px 16px; }
@@ -133,9 +130,11 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   .section-header h2 { font-size: 18px; }
   .kanban { padding: 8px 16px 20px; gap: 10px; }
   .kanban-col { flex: 0 0 200px; }
-  .top-grid { flex-direction: column; padding: 0 16px; }
-  .top-grid-right { min-width: unset; }
-  .weekly-cal { padding: 8px 0; gap: 3px; }
+  .top-section { flex-direction: column; padding: 0 16px; }
+  .top-right { max-width: unset; min-width: unset; }
+  .weekly-cal { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .cal-day { padding: 6px 4px; min-height: 60px; }
+  .cal-event { font-size: 9px; padding: 2px 3px; }
   .cal-day { min-width: 80px; padding: 8px; }
   .cal-day-label { font-size: 11px; }
   .card { padding: 10px; }
@@ -173,7 +172,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="header">
   <div>
     <h1>Transaction Dashboard</h1>
-    <div class="date">Updated: February 16, 2026 · 05:15 PM</div>
+    <div class="date">Updated: February 16, 2026 · 05:17 PM</div>
   </div>
   <a href="new-listing.html" class="new-listing-btn">📋 New Listing</a>
   <a href="new-buyer.html" class="new-listing-btn" style="background:#2a5a3a;">🏡 New Buyer</a>
@@ -186,8 +185,8 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   </div>
 </div>
 
-<div class="top-grid">
-  <div class="top-grid-left">
+<div class="top-section">
+  <div class="top-left">
 
 <div class="section-header">
   <h2>This Week</h2>
@@ -203,7 +202,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 <div class="cal-day">
   <div class="cal-day-label">Wed Feb 18</div>
-  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr (Seals)</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
 
 </div>
 <div class="cal-day">
@@ -212,7 +211,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 <div class="cal-day">
   <div class="cal-day-label">Fri Feb 20</div>
-  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsound Pl, Mooresville</div>
+  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsoun...</div>
 
 </div>
 <div class="cal-day">
@@ -225,7 +224,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 </div>
   </div>
-  <div class="top-grid-right">
+  <div class="top-right">
 
 <div class="section-header">
   <h2>📌 To-Do</h2>
