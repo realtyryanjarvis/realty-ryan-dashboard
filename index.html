@@ -118,6 +118,12 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .todo-inline-input::placeholder { color: #5C3D14; }
 .todo-edit-input { width: 100%; padding: 6px 8px; background: #1a1408; border: 1px solid #7A3B14; border-radius: 4px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
 .todo-text { cursor: text; }
+.todo-actions { display: none; gap: 4px; align-items: center; margin-left: 6px; flex-shrink: 0; }
+.todo-item:hover .todo-actions { display: flex; }
+.todo-action-btn { background: none; border: none; cursor: pointer; font-size: 12px; padding: 2px 4px; border-radius: 3px; opacity: 0.6; }
+.todo-action-btn:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+.todo-pri-cycle { font-size: 10px; }
+.todo-delete { color: #ff887c; font-size: 13px; }
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
@@ -260,10 +266,10 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
     <div class="todo-column" data-person="ryan">
       <div class="todo-column-header">👤 Ryan <span class="todo-column-count">4</span></div>
       <div class="todo-list" data-person="ryan">
-        <div class="todo-item high" draggable="true" data-id="1" data-person="ryan"><div class="todo-check" onclick="toggleTodo('1')"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item high" draggable="true" data-id="2" data-person="ryan"><div class="todo-check" onclick="toggleTodo('2')"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item medium" draggable="true" data-id="3" data-person="ryan"><div class="todo-check" onclick="toggleTodo('3')"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item high" draggable="true" data-id="4" data-person="ryan"><div class="todo-check" onclick="toggleTodo('4')"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div><div class="todo-drag-handle">⠿</div></div>
+        <div class="todo-item high" draggable="true" data-id="1" data-person="ryan" data-priority="high"><div class="todo-check" onclick="toggleTodo('1')"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('1')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('1')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
+        <div class="todo-item high" draggable="true" data-id="2" data-person="ryan" data-priority="high"><div class="todo-check" onclick="toggleTodo('2')"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('2')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('2')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
+        <div class="todo-item medium" draggable="true" data-id="3" data-person="ryan" data-priority="medium"><div class="todo-check" onclick="toggleTodo('3')"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('3')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('3')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
+        <div class="todo-item high" draggable="true" data-id="4" data-person="ryan" data-priority="high"><div class="todo-check" onclick="toggleTodo('4')"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('4')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('4')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
       </div>
       <div class="todo-add-inline">
         <input type="text" placeholder="+ Add to-do..." class="todo-inline-input" data-person="ryan" onkeydown="if(event.key==='Enter')addInlineTodo(this)">
@@ -272,8 +278,8 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
     <div class="todo-column" data-person="ally">
       <div class="todo-column-header">👩‍💼 Ally <span class="todo-column-count">2</span></div>
       <div class="todo-list" data-person="ally">
-        <div class="todo-item medium" draggable="true" data-id="5" data-person="ally"><div class="todo-check" onclick="toggleTodo('5')"></div><div class="todo-text">Update FUB pipeline stages in Admin (back Feb 20)</div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item medium" draggable="true" data-id="6" data-person="ally"><div class="todo-check" onclick="toggleTodo('6')"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts</div><div class="todo-drag-handle">⠿</div></div>
+        <div class="todo-item medium" draggable="true" data-id="5" data-person="ally" data-priority="medium"><div class="todo-check" onclick="toggleTodo('5')"></div><div class="todo-text">Update FUB pipeline stages in Admin (back Feb 20)</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('5')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('5')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
+        <div class="todo-item medium" draggable="true" data-id="6" data-person="ally" data-priority="medium"><div class="todo-check" onclick="toggleTodo('6')"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('6')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('6')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
       </div>
       <div class="todo-add-inline">
         <input type="text" placeholder="+ Add to-do..." class="todo-inline-input" data-person="ally" onkeydown="if(event.key==='Enter')addInlineTodo(this)">
@@ -549,7 +555,7 @@ function saveLocalTodos(t){localStorage.setItem("rr_todos_v2",JSON.stringify(t))
 function renderTodoItem(t, person){
   const deal=t.deal?`<span class="todo-deal">${t.deal}</span>`:"";
   const done=t.done?"done":"";
-  return `<div class="todo-item ${t.priority} ${done}" draggable="true" data-id="${t.id}" data-person="${person}"><div class="todo-check" onclick="toggleTodo('${t.id}')"></div><div class="todo-text">${t.text}${deal}</div><div class="todo-drag-handle">⠿</div></div>`;
+  return `<div class="todo-item ${t.priority} ${done}" draggable="true" data-id="${t.id}" data-person="${person}" data-priority="${t.priority}"><div class="todo-check" onclick="toggleTodo('${t.id}')"></div><div class="todo-text">${t.text}${deal}</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('${t.id}')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('${t.id}')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>`;
 }
 
 // Apply done state + load local todos
@@ -625,6 +631,69 @@ function updateTodoCount(){
     if(badge)badge.textContent=activeCol;
   });
 }
+
+// Delete todo
+function deleteTodo(id){
+  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
+  if(!item)return;
+  item.style.transition="opacity 0.2s";item.style.opacity="0";
+  setTimeout(()=>{
+    item.remove();
+    // Remove from local todos
+    const person=item.dataset.person;
+    const local=getLocalTodos();
+    if(local[person]){
+      local[person]=local[person].filter(t=>t.id!==id);
+      saveLocalTodos(local);
+    }
+    // Track server-rendered deletions
+    const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
+    if(!dels.includes(id))dels.push(id);
+    localStorage.setItem("rr_todo_deletes",JSON.stringify(dels));
+    updateTodoCount();
+  },200);
+}
+
+// Cycle priority: high → medium → low → high
+function cyclePriority(id){
+  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
+  if(!item)return;
+  const order=["high","medium","low"];
+  const current=item.dataset.priority||"medium";
+  const next=order[(order.indexOf(current)+1)%3];
+  item.classList.remove("high","medium","low");
+  item.classList.add(next);
+  item.dataset.priority=next;
+  // Save priority change
+  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
+  pris[id]=next;
+  localStorage.setItem("rr_todo_priorities",JSON.stringify(pris));
+  // Update local todos
+  const person=item.dataset.person;
+  const local=getLocalTodos();
+  if(local[person]){
+    const lt=local[person].find(t=>t.id===id);
+    if(lt){lt.priority=next;saveLocalTodos(local)}
+  }
+}
+
+// Apply saved deletions and priorities on load
+(function(){
+  const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
+  dels.forEach(id=>{
+    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
+    if(el)el.remove();
+  });
+  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
+  Object.keys(pris).forEach(id=>{
+    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
+    if(el){
+      el.classList.remove("high","medium","low");
+      el.classList.add(pris[id]);
+      el.dataset.priority=pris[id];
+    }
+  });
+})();
 
 // Edit todo on double-click
 document.addEventListener("dblclick",function(e){
