@@ -23,14 +23,9 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
 
 /* Header */
-.header-compact { background: #261A05; padding: 14px 24px; border-bottom: 2px solid #7A3B14; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.hdr-left h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; margin: 0; }
-.hdr-left .date { font-size: 10px; color: #5C3D14; }
-.hdr-stats { display: flex; gap: 20px; flex: 1; justify-content: center; }
-.hs { text-align: center; }
-.hs-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: #FAFAFA; display: block; line-height: 1; }
-.hs-lbl { font-size: 9px; color: #857D52; text-transform: uppercase; letter-spacing: 0.1em; }
-.hs.vol .hs-num { color: #7A3B14; font-size: 28px; }
+.header-compact { background: #261A05; border-bottom: 2px solid #7A3B14; }
+.hdr-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 10px; }
+.hdr-top h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; margin: 0; }
 .hdr-actions { display: flex; gap: 6px; }
 .btn-action { padding: 6px 12px; background: #7A3B14; color: #FAFAFA; border-radius: 4px; font-size: 11px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
 .btn-action:hover { background: #9A4B1A; text-decoration: none; }
@@ -38,6 +33,12 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .btn-green:hover { background: #3a7a4a; }
 .btn-purple { background: #3a2a5a; }
 .btn-purple:hover { background: #4a3a7a; }
+.hdr-numbers { display: flex; justify-content: center; align-items: center; gap: 0; padding: 8px 24px 14px; }
+.hn { text-align: center; padding: 0 24px; }
+.hn-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: #FAFAFA; display: block; line-height: 1; }
+.hn-lbl { font-size: 10px; color: #857D52; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; display: block; }
+.hn.vol .hn-num { color: #7A3B14; }
+.hn-divider { width: 1px; height: 36px; background: #3a2a10; }
 .section-label { padding: 10px 24px 4px; font-family: 'Work Sans', sans-serif; font-size: 13px; font-weight: 600; color: #857D52; text-transform: uppercase; letter-spacing: 0.1em; }
 .sl-count { color: #5C3D14; font-weight: 400; }
 .new-listing-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; background: #7A3B14; color: #FAFAFA; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; transition: background 0.2s; }
@@ -133,10 +134,11 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 
 /* MOBILE */
 @media (max-width: 768px) {
-  .header-compact { flex-direction: column; align-items: center; padding: 12px 16px; gap: 12px; }
-  .hdr-stats { gap: 12px; }
-  .hs-num { font-size: 24px; }
-  .hs.vol .hs-num { font-size: 22px; }
+  .hdr-top { flex-direction: column; align-items: center; gap: 10px; padding: 12px 16px 8px; }
+  .hdr-numbers { flex-wrap: wrap; gap: 4px; padding: 4px 16px 12px; }
+  .hn { padding: 0 14px; }
+  .hn-num { font-size: 28px; }
+  .hn-divider { height: 28px; }
   .stat-num { font-size: 24px; }
   .section-header { padding: 12px 16px 6px; }
   .section-header h2 { font-size: 18px; }
@@ -182,22 +184,24 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div id="dashboard">
 
 <div class="header-compact">
-  <div class="hdr-left">
+  <div class="hdr-top">
     <h1>Realty Ryan</h1>
-    <div class="date">Updated February 16, 2026 · 05:33 PM</div>
+    <div class="hdr-actions">
+      <a href="new-listing.html" class="btn-action">+ Listing</a>
+      <a href="new-buyer.html" class="btn-action btn-green">+ Buyer</a>
+      <a href="listing-appointment.html" class="btn-action btn-purple">+ Appt</a>
+    </div>
   </div>
-  <div class="hdr-stats">
-    <div class="hs"><span class="hs-num">3</span><span class="hs-lbl">Appts</span></div>
-    <div class="hs"><span class="hs-num">9</span><span class="hs-lbl">Listed</span></div>
-    <div class="hs"><span class="hs-num">4</span><span class="hs-lbl">UC</span></div>
-    <div class="hs"><span class="hs-num">5</span><span class="hs-lbl">Closed</span></div>
-    <div class="hs"><span class="hs-num">7</span><span class="hs-lbl">Buyers</span></div>
-    <div class="hs vol"><span class="hs-num">$3.8M</span><span class="hs-lbl">2026</span></div>
-  </div>
-  <div class="hdr-actions">
-    <a href="new-listing.html" class="btn-action">+ Listing</a>
-    <a href="new-buyer.html" class="btn-action btn-green">+ Buyer</a>
-    <a href="listing-appointment.html" class="btn-action btn-purple">+ Appt</a>
+  <div class="hdr-numbers">
+    <div class="hn"><span class="hn-num">9</span><span class="hn-lbl">Active Listings</span></div>
+    <div class="hn-divider"></div>
+    <div class="hn"><span class="hn-num">4</span><span class="hn-lbl">Under Contract</span></div>
+    <div class="hn-divider"></div>
+    <div class="hn"><span class="hn-num">5</span><span class="hn-lbl">Closed</span></div>
+    <div class="hn-divider"></div>
+    <div class="hn"><span class="hn-num">7</span><span class="hn-lbl">Buyers</span></div>
+    <div class="hn-divider"></div>
+    <div class="hn vol"><span class="hn-num">$3.8M</span><span class="hn-lbl">2026 Volume</span></div>
   </div>
 </div>
 
