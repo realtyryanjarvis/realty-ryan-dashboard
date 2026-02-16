@@ -108,15 +108,14 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .todo-item .todo-check:hover { border-color: #7A3B14; background: rgba(122,59,20,0.2); }
 .todo-item.done { opacity: 0.4; }
 .todo-item.done .todo-text { text-decoration: line-through; }
-.todo-add { margin-top: 10px; }
-.todo-add-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.todo-add-input { flex: 1; min-width: 200px; padding: 10px 12px; background: #261A05; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
-.todo-add-input:focus { border-color: #7A3B14; }
-.todo-add-select { padding: 10px 8px; background: #261A05; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 12px; outline: none; appearance: none; }
-.todo-add-deal { width: 140px; padding: 10px 12px; background: #261A05; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
-.todo-add-deal:focus { border-color: #7A3B14; }
-.todo-add-btn { padding: 10px 18px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-.todo-add-btn:hover { background: #9A4B1A; }
+.todo-drag-handle { color: #5C3D14; cursor: grab; font-size: 14px; padding: 0 4px; user-select: none; }
+.todo-drag-handle:active { cursor: grabbing; }
+.todo-item.dragging { opacity: 0.4; }
+.todo-list.drag-over { background: rgba(122,59,20,0.15); border-radius: 6px; min-height: 40px; }
+.todo-add-inline { margin-top: 8px; }
+.todo-inline-input { width: 100%; padding: 8px 12px; background: #1a1408; border: 1px dashed #3a2a10; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 13px; outline: none; }
+.todo-inline-input:focus { border-color: #7A3B14; border-style: solid; }
+.todo-inline-input::placeholder { color: #5C3D14; }
 
 /* Divider */
 .divider { height: 1px; background: #5C3D14; margin: 8px 24px; }
@@ -213,6 +212,41 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 
 
+<div class="section-header">
+  <h2>This Week</h2>
+</div>
+<div class="weekly-cal">
+<div class="cal-day cal-today">
+  <div class="cal-day-label">Today</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Tue Feb 17</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Wed Feb 18</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Thu Feb 19</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Fri Feb 20</div>
+  <div class="cal-event"><span class="cal-time">10:00 AM</span> Listing Appointment — 168 Broadsoun...</div>
+
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sat Feb 21</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Sun Feb 22</div>
+  <div class="cal-empty">-</div>
+</div>
+</div>
 
 
 <div class="section-header">
@@ -506,53 +540,56 @@ function show(){document.getElementById("login-gate").style.display="none";docum
 document.getElementById("pw-input").addEventListener("keydown",e=>{if(e.key==="Enter")checkPw()});
 if(localStorage.getItem("rr_dash_auth")==="1")show();
 
-// To-Do functionality
-function getLocalTodos(){try{return JSON.parse(localStorage.getItem("rr_todos")||"[]")}catch(e){return[]}}
-function saveLocalTodos(t){localStorage.setItem("rr_todos",JSON.stringify(t))}
+// To-Do functionality — drag & drop + inline add
+function getLocalTodos(){try{return JSON.parse(localStorage.getItem("rr_todos_v2")||"{}")}catch(e){return{}}}
+function saveLocalTodos(t){localStorage.setItem("rr_todos_v2",JSON.stringify(t))}
 
-function renderTodoItem(t){
+function renderTodoItem(t, person){
   const deal=t.deal?`<span class="todo-deal">${t.deal}</span>`:"";
   const done=t.done?"done":"";
-  return `<div class="todo-item ${t.priority} ${done}" data-id="${t.id}" onclick="toggleTodo('${t.id}')"><div class="todo-check"></div><div class="todo-text">${t.text}${deal}</div></div>`;
+  return `<div class="todo-item ${t.priority} ${done}" draggable="true" data-id="${t.id}" data-person="${person}"><div class="todo-check" onclick="toggleTodo('${t.id}')"></div><div class="todo-text">${t.text}${deal}</div><div class="todo-drag-handle">⠿</div></div>`;
 }
 
-// Load local todos on page load
+// Apply done state + load local todos
 (function(){
-  const localTodos=getLocalTodos();
-  if(localTodos.length>0){
-    const list=document.getElementById("todo-list");
-    if(list){
-      localTodos.forEach(t=>{list.insertAdjacentHTML("beforeend",renderTodoItem(t))});
-      const ct=document.getElementById("todo-count");
-      if(ct)ct.textContent=parseInt(ct.textContent||"0")+localTodos.filter(t=>!t.done).length;
-    }
-  }
-  // Apply done state to server-rendered todos
   const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
   document.querySelectorAll(".todo-item[data-id]").forEach(el=>{
     if(doneTodos[el.dataset.id])el.classList.add("done");
   });
+  // Load locally-added todos into correct columns
+  const local=getLocalTodos();
+  Object.keys(local).forEach(person=>{
+    const list=document.querySelector(`.todo-list[data-person="${person}"]`);
+    if(list){
+      local[person].forEach(t=>{
+        if(!document.querySelector(`.todo-item[data-id="${t.id}"]`)){
+          list.insertAdjacentHTML("beforeend",renderTodoItem(t,person));
+        }
+      });
+    }
+  });
+  updateTodoCount();
+  initDragDrop();
 })();
 
-function addTodo(){
-  const input=document.getElementById("todo-input");
+function addInlineTodo(input){
   const text=input.value.trim();
   if(!text)return;
-  const pri=document.getElementById("todo-priority").value;
-  const deal=document.getElementById("todo-deal").value.trim();
+  const person=input.dataset.person;
   const id="local-"+Date.now();
-  const todo={id:id,text:text,priority:pri,deal:deal,done:false};
-  const localTodos=getLocalTodos();
-  localTodos.push(todo);
-  saveLocalTodos(localTodos);
-  const list=document.getElementById("todo-list");
-  list.insertAdjacentHTML("beforeend",renderTodoItem(todo));
-  const ct=document.getElementById("todo-count");
-  if(ct)ct.textContent=parseInt(ct.textContent||"0")+1;
+  const todo={id:id,text:text,priority:"medium",deal:"",done:false};
+  const local=getLocalTodos();
+  if(!local[person])local[person]=[];
+  local[person].push(todo);
+  saveLocalTodos(local);
+  const list=input.closest(".todo-column").querySelector(".todo-list");
+  list.insertAdjacentHTML("beforeend",renderTodoItem(todo,person));
+  initDragDrop();
   input.value="";
-  document.getElementById("todo-deal").value="";
+  updateTodoCount();
   // Send to Jarvis via SMS
-  const msg=encodeURIComponent("📌 NEW TODO\nTask: "+text+"\nPriority: "+pri+(deal?"\nDeal: "+deal:""));
+  const personName=person.charAt(0).toUpperCase()+person.slice(1);
+  const msg=encodeURIComponent("📌 NEW TODO for "+personName+"\nTask: "+text);
   window.open("sms:+15089542159&body="+msg,"_blank");
 }
 
@@ -560,15 +597,16 @@ function toggleTodo(id){
   const el=document.querySelector(`.todo-item[data-id="${id}"]`);
   if(!el)return;
   el.classList.toggle("done");
-  // Save done state
   const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
   if(el.classList.contains("done")){doneTodos[id]=true}else{delete doneTodos[id]}
   localStorage.setItem("rr_todos_done",JSON.stringify(doneTodos));
   // For local todos
-  const localTodos=getLocalTodos();
-  const lt=localTodos.find(t=>t.id===id);
-  if(lt){lt.done=!lt.done;saveLocalTodos(localTodos)}
-  // Update count
+  const local=getLocalTodos();
+  const person=el.dataset.person;
+  if(local[person]){
+    const lt=local[person].find(t=>t.id===id);
+    if(lt){lt.done=!lt.done;saveLocalTodos(local)}
+  }
   updateTodoCount();
 }
 
@@ -577,9 +615,68 @@ function updateTodoCount(){
   const active=[...all].filter(e=>!e.classList.contains("done")).length;
   const ct=document.getElementById("todo-count");
   if(ct)ct.textContent=active;
+  // Update per-column counts
+  document.querySelectorAll(".todo-column").forEach(col=>{
+    const items=col.querySelectorAll(".todo-item");
+    const activeCol=[...items].filter(e=>!e.classList.contains("done")).length;
+    const badge=col.querySelector(".todo-column-count");
+    if(badge)badge.textContent=activeCol;
+  });
 }
 
-document.getElementById("todo-input")&&document.getElementById("todo-input").addEventListener("keydown",function(e){if(e.key==="Enter")addTodo()});
+// Drag & Drop
+let dragItem=null;
+function initDragDrop(){
+  document.querySelectorAll(".todo-item[draggable]").forEach(item=>{
+    item.ondragstart=function(e){
+      dragItem=this;
+      this.classList.add("dragging");
+      e.dataTransfer.effectAllowed="move";
+      e.dataTransfer.setData("text/plain",this.dataset.id);
+    };
+    item.ondragend=function(){
+      this.classList.remove("dragging");
+      document.querySelectorAll(".todo-list").forEach(l=>l.classList.remove("drag-over"));
+      dragItem=null;
+    };
+  });
+  document.querySelectorAll(".todo-list[data-person]").forEach(list=>{
+    list.ondragover=function(e){
+      e.preventDefault();
+      e.dataTransfer.dropEffect="move";
+      this.classList.add("drag-over");
+    };
+    list.ondragleave=function(){this.classList.remove("drag-over")};
+    list.ondrop=function(e){
+      e.preventDefault();
+      this.classList.remove("drag-over");
+      if(!dragItem)return;
+      const newPerson=this.dataset.person;
+      const oldPerson=dragItem.dataset.person;
+      dragItem.dataset.person=newPerson;
+      this.appendChild(dragItem);
+      // Update local storage for moved items
+      if(dragItem.dataset.id.startsWith("local-")){
+        const local=getLocalTodos();
+        if(local[oldPerson]){
+          const idx=local[oldPerson].findIndex(t=>t.id===dragItem.dataset.id);
+          if(idx>-1){
+            const [moved]=local[oldPerson].splice(idx,1);
+            if(!local[newPerson])local[newPerson]=[];
+            local[newPerson].push(moved);
+            saveLocalTodos(local);
+          }
+        }
+      }else{
+        // Track server-rendered item moves
+        const moves=JSON.parse(localStorage.getItem("rr_todo_moves")||"{}");
+        moves[dragItem.dataset.id]=newPerson;
+        localStorage.setItem("rr_todo_moves",JSON.stringify(moves));
+      }
+      updateTodoCount();
+    };
+  });
+}
 </script>
 
 </body>
