@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3321 Auburn Ave — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+a { color: #7A3B14; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.back { padding: 16px 32px; font-size: 13px; }
+.back a { color: #857D52; }
+
+.deal-header { background: #261A05; padding: 32px; border-bottom: 3px solid #7A3B14; }
+.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
+.deal-client { font-size: 14px; color: #857D52; margin-top: 4px; }
+.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #7A3B14; margin-top: 8px; }
+.deal-stage { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; }
+.stage-listed { background: #46d67a; color: #1a1408; }
+.stage-pending { background: #fbd75b; color: #1a1408; }
+.stage-closed { background: #5C3D14; color: #857D52; }
+.stage-offer { background: #819cff; color: #1a1408; }
+.stage-buyer { background: #ffb878; color: #1a1408; }
+.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #a4bdfc; color: #1a1408; margin-left: 8px; margin-top: 12px; }
+
+.content { display: flex; gap: 32px; padding: 32px; flex-wrap: wrap; }
+.col-main { flex: 1; min-width: 400px; }
+.col-side { flex: 0 0 340px; }
+
+/* Progress Bar */
+.progress-wrap { margin-bottom: 24px; }
+.progress-label { font-size: 13px; color: #857D52; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 8px; background: #261A05; border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #7A3B14, #46d67a); transition: width 0.5s; }
+
+/* Checklist */
+.checklist-section { margin-bottom: 24px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.08em; padding-bottom: 8px; border-bottom: 1px solid #5C3D14; margin-bottom: 8px; }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; }
+.check-item.done { color: #51b749; }
+.check-item.pending { color: #857D52; }
+.check-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.check-item.done .check-icon { color: #51b749; }
+.check-item.pending .check-icon { color: #3a3020; }
+
+/* Details & Notes */
+.detail-card { background: #261A05; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #FAFAFA; }
+.detail-line { font-size: 12px; color: #857D52; padding: 3px 0; }
+.note { border-bottom: 1px solid #3a3020; padding: 12px 0; }
+.note:last-child { border-bottom: none; }
+.note-date { font-size: 10px; color: #5C3D14; margin-bottom: 4px; }
+.note-body { font-size: 12px; color: #857D52; white-space: pre-wrap; line-height: 1.5; }
+
+.footer { padding: 16px 32px; text-align: center; font-size: 11px; color: #5C3D14; }
+</style>
+</head>
+<body>
+
+<div class="back"><a href="../transaction-kanban.html">← Back to Dashboard</a></div>
+
+<div class="deal-header">
+  <div class="deal-name">3321 Auburn Ave</div>
+  <div class="deal-client">Alex Bailey</div>
+  <div class='deal-price'>$2.88M</div>
+  <span class="deal-stage stage-listed">Listed</span>
+  
+</div>
+
+<div class="content">
+  <div class="col-main">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Listing Checklist</span>
+        <span>5 / 52 (9%)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:9%"></div>
+      </div>
+    </div>
+    
+    <div class="checklist-section">
+      <div class="section-title">PRE-LISTING</div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Signed Listing Agreement</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send Residential Property Disclosure, MOG, and LBP Disclosure to Sign</span>
+      </div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Create Incomplete MLS Listing</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull SkySlope Documents for Listing</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send Client Showtime data on listing in area to set expectations</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Market Analysis &amp; Comps (have seller initial)</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">MARKETING &amp; PREP</div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Complete MLS Listing With All Details</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Arrange Staging</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Arrange Photos</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Arrange Videos</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Arrange Matterport Photos</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Received Photos</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Upload Photos into MLS</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send Email Invites for staging, photos, etc. and invite for Go Live Date</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Finalize All SkySlope Documents</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Text Ryan MLS Sheet and get sign off</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send MLS Sheet to client to sign off on</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create Cribflyer Website</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Verify Permits on Property</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Ask Seller for recent upgrade documents, surveys, etc.</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create Upgrades Sheet</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">GO LIVE</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm Access to Home for Showings</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Set Up Showingtime</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Email/Text Client How Showingtime Works</span>
+      </div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Complete MLS</span>
+      </div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Put Listing Live</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Set Up ListTrac</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send Photos and Order Brochures from HM Support</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Print Disclosures, Upgrades, and floor plans in folders</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Put Out For Sale Sign</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate Event for Property (Broker Event/Public)</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Post Instagram Reel</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule Open House for First Weekend on Market</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Add Website to LinkTree</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate On-Going Open Houses</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">UNDER CONTRACT</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Received Executed Contract from Buyers Agent</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send email (template) to seller and attorneys</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate DD</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send DD Acknowledgment to Buyers Agent</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Intro to Buyers Agent</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Under Contract Rider on For Sale Sign</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create Calendar Invites for DD and Closing</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create Calendar Reminder to Email Buyers Agent 5 days prior</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Email Buyers Agent that we are Closing</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Utilities Request &amp; Reminder to Turn Off</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">CLOSING</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final CD Sign Off from Ryan</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Close out MLS on Closing Day</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pick Up Lock Box at Property</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Turn off Showingtime</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Upload ALTA into Skyslope</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Request Review and Referral Via Email</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Post-Closing Follow-Up (1 month check-in)</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-side">
+    <div class="detail-card">
+      <h3>Details</h3>
+      <div class='detail-line'>3321 Auburn Ave, Charlotte, NC - Keen Builders (Alex Bailey)</div><div class='detail-line'>Active listing - Framing stage, expected completion early fall 2026</div>
+    </div>
+    <div class="detail-card">
+      <h3>Notes</h3>
+      
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">Keen Builders Construction Timeline (as of Feb 2026):
+• 626 Shelton — Framing, done end of summer/early fall 2026
+• 3321 Auburn Ave — Framing, done early fall 2026
+• 1820 Parson — Framing, done fall 2026
+• 3208 Mayfield — ~12 months out (early 2027)
+• 3320 Mayfield — ~12 months out (early 2027)
+• 1437 Montford — Under contract, closing in 2-3 months
+• 1816 Parson — Under contract at $1.45M
+• 1817 Union — Closed at $1.45M</div>
+      </div>
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">Alex Bailey is the owner of Keen Builders. All Keen Builders listings should be under his contact.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Realty Ryan & Associates · Transaction Management · Powered by Jarvis</div>
+
+</body>
+</html>

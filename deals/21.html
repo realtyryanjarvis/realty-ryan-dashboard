@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lindsey Anderson - Buyer — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+a { color: #7A3B14; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.back { padding: 16px 32px; font-size: 13px; }
+.back a { color: #857D52; }
+
+.deal-header { background: #261A05; padding: 32px; border-bottom: 3px solid #7A3B14; }
+.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
+.deal-client { font-size: 14px; color: #857D52; margin-top: 4px; }
+.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #7A3B14; margin-top: 8px; }
+.deal-stage { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; }
+.stage-listed { background: #46d67a; color: #1a1408; }
+.stage-pending { background: #fbd75b; color: #1a1408; }
+.stage-closed { background: #5C3D14; color: #857D52; }
+.stage-offer { background: #819cff; color: #1a1408; }
+.stage-buyer { background: #ffb878; color: #1a1408; }
+.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #a4bdfc; color: #1a1408; margin-left: 8px; margin-top: 12px; }
+
+.content { display: flex; gap: 32px; padding: 32px; flex-wrap: wrap; }
+.col-main { flex: 1; min-width: 400px; }
+.col-side { flex: 0 0 340px; }
+
+/* Progress Bar */
+.progress-wrap { margin-bottom: 24px; }
+.progress-label { font-size: 13px; color: #857D52; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 8px; background: #261A05; border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #7A3B14, #46d67a); transition: width 0.5s; }
+
+/* Checklist */
+.checklist-section { margin-bottom: 24px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.08em; padding-bottom: 8px; border-bottom: 1px solid #5C3D14; margin-bottom: 8px; }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; }
+.check-item.done { color: #51b749; }
+.check-item.pending { color: #857D52; }
+.check-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.check-item.done .check-icon { color: #51b749; }
+.check-item.pending .check-icon { color: #3a3020; }
+
+/* Details & Notes */
+.detail-card { background: #261A05; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #FAFAFA; }
+.detail-line { font-size: 12px; color: #857D52; padding: 3px 0; }
+.note { border-bottom: 1px solid #3a3020; padding: 12px 0; }
+.note:last-child { border-bottom: none; }
+.note-date { font-size: 10px; color: #5C3D14; margin-bottom: 4px; }
+.note-body { font-size: 12px; color: #857D52; white-space: pre-wrap; line-height: 1.5; }
+
+.footer { padding: 16px 32px; text-align: center; font-size: 11px; color: #5C3D14; }
+</style>
+</head>
+<body>
+
+<div class="back"><a href="../transaction-kanban.html">← Back to Dashboard</a></div>
+
+<div class="deal-header">
+  <div class="deal-name">Lindsey Anderson - Buyer</div>
+  <div class="deal-client">Lindsey Anderson</div>
+  
+  <span class="deal-stage stage-offer">Offer</span>
+  
+</div>
+
+<div class="content">
+  <div class="col-main">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Buyer Checklist</span>
+        <span>4 / 34 (11%)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:11%"></div>
+      </div>
+    </div>
+    
+    <div class="checklist-section">
+      <div class="section-title">GETTING STARTED</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Signed Buyer Representation Agreement</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pre-Approval Letter Received</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Buyer Consultation Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Set Up Property Search Alerts</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Identify Target Neighborhoods</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">ACTIVELY SHOPPING</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Showings Scheduled</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Properties Toured</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Offer Strategy Discussion</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">OFFER &amp; NEGOTIATION</div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Offer Submitted</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Counter-Offer / Negotiation</span>
+      </div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Offer Accepted / Under Contract</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">DUE DILIGENCE</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Earnest Money Deposited</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Home Inspection Scheduled</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Home Inspection Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Inspection Negotiations / Repairs</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Appraisal Ordered</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Appraisal Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Survey Ordered</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Survey Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Title Search Initiated</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">HOA Documents Reviewed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Homeowners Insurance Bound</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Wire Fraud Warning Sent</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">CLOSING</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Clear to Close from Lender</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Closing Disclosure Reviewed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final CD Sign Off from Ryan</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final Walk-Through Scheduled</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final Walk-Through Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Closing Day</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Keys Handed Off</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">MLS Updated to Closed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Commission Confirmed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Request Review and Referral Via Email</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">90-Day Post-Close Follow-Up</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-side">
+    <div class="detail-card">
+      <h3>Details</h3>
+      <div class='detail-line'>Lindsey Anderson — Actively shopping for homes</div><div class='detail-line'>Tags: investor-interest, new-construction</div>
+    </div>
+    <div class="detail-card">
+      <h3>Notes</h3>
+      
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">🏠 ACTIVE BUYER — Week of Feb 9-15, 2026
+
+SEARCH 1: KEYSTONE CUSTOM HOMES — WINDERMERE FARMS (Mooresville/Davidson area)
+• Builder: Keystone Custom Homes
+• Community: Windermere Farms
+• Rep: David Shuart (248) 535-2604 / dshuart@keystonecustomhome.com
+• Model home: 11314 James Coy Rd, Huntersville, NC 28078
+
+Timeline:
+• 2/9 — Initial Zoom call with David (30 min intro)
+• 2/10 — Lindsey reviewed info with partner Nathan, requested in-person follow-up
+• 2/14 — In-person meeting at model home in Davidson (full 2.5hr session)
+• 2/14 — David sent detailed pricing estimate for Sebastian Heritage on Lot 19
+• 2/15 — David following up with pricing on Covington and Magnolia floorplans too
+
+Floorplan: Sebastian Heritage (primary choice)
+• Base price: $723,670
+• Lot 19 premium: $32,430
+• Options: $184,842
+• February incentives: ~$72K in savings (3% lender, 4% community, 3% KCH)
+• TOTAL ESTIMATED: $868,575 after incentives
+• Elevation: Switching to Farmhouse style
+• Key customizations discussed: sunroom, side-load garage (possibly rotated on lot), jack &amp; jill bath, office nook, upgraded island
+• Also looking at Covington and Magnolia floorplans for comparison
+
+Lots of interest: Lot 19 (primary), Lot 21 (backup — asked about flipping home to right side)
+Open lots available: 1, 12, 17, 19, 21, 22
+
+Preferred lenders provided by Keystone:
+• Bob Sargent — Impact Mortgage (864) 734-7599
+• Leo Yepes — First National Bank (516) 637-0027
+• Brooks Grasso — Fulton Bank (410) 427-3525
+• 1st Colony = lender of month (2% additional credit)
+
+SEARCH 2: LAND — Under $200K, 1+ Acre
+• OneHome search set up by Ryan: Huntersville, Cornelius, Mooresville, Davidson, Waxhaw, Indian Trail, Fort Mill, Rock Hill, Tega Cay
+• Interested in: 39 Eutaw Dr, Waxhaw (no HOA, well/septic, but only 3BR septic permit — dealbreaker, needs 4+ BR)
+• Also looked at: Glenola Dr lot, Waxhaw
+• Passed on both lots 2/6 — septic limitations and clearing costs too high
+• Monitoring land search for right opportunity
+
+SEARCH 3: TAYLOR MORRISON
+• Meeting scheduled Sun 2/15 at noon with Timisha Richardson (704-479-6655)
+• Pre-qualification through Taylor Morrison in-house lender
+• Also exploring Foxridge Meadow community (coming soon from Keystone) as backup if Windermere timing doesn't work
+
+BUYER PROFILE:
+• Lindsey + Nathan (partner)
+• Planning for growing family (need 4+ bedrooms)
+• Want 1+ acre lot, no HOA preferred
+• New construction focused — custom build or semi-custom
+• Budget: $800K-$900K range (based on Keystone estimate)
+• Very detail-oriented — asks thorough questions about finishes, layouts, lot placement
+• Interested in both primary residence AND investment properties
+• Previously purchased 2119 Electric Lane, NoDa (Empire Communities, 2021)</div>
+      </div>
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">📋 CLIENT NOTES — Lindsey Anderson
+
+🏠 PAST TRANSACTION:
+• Purchased 2119 Electric Lane, Charlotte NC 28205 (Landings at NoDa — Empire Communities new construction)
+• Closed ~mid 2021
+• Had pre-drywall walkthrough June 2021 with Empire builder rep Asa Gottlieb
+• Dealt with warranty issues post-closing (flooring, windows, mail service)
+• 30-day warranty work completed March 2022
+
+🔍 ACTIVE BUYER INTERESTS:
+• Interested in new construction / builder communities
+• Asked about Fifteen 15 Cannon community (March 2022) — pricing in the $200s
+• Asked specifically about investor eligibility (&quot;are they allowing investors?&quot;)
+• Shows interest in investment properties, not just primary residence
+
+📞 CONTACT:
+• Email: lindanderson@outlook.com
+• Phone: (678) 764-6234
+
+💡 KEY NOTES:
+• Repeat buyer potential — already purchased new construction through Ryan
+• Investment-minded — actively looking at new communities for investor opportunities
+• Familiar with the new construction process (pre-drywall walks, warranty work, builder reps)
+• Originally from Georgia area (678 area code)
+• Hands-on client — asks detailed questions, holds builders accountable on quality</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Realty Ryan & Associates · Transaction Management · Powered by Jarvis</div>
+
+</body>
+</html>

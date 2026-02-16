@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt &amp; Nina Houser - Buyer — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+a { color: #7A3B14; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.back { padding: 16px 32px; font-size: 13px; }
+.back a { color: #857D52; }
+
+.deal-header { background: #261A05; padding: 32px; border-bottom: 3px solid #7A3B14; }
+.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
+.deal-client { font-size: 14px; color: #857D52; margin-top: 4px; }
+.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #7A3B14; margin-top: 8px; }
+.deal-stage { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; }
+.stage-listed { background: #46d67a; color: #1a1408; }
+.stage-pending { background: #fbd75b; color: #1a1408; }
+.stage-closed { background: #5C3D14; color: #857D52; }
+.stage-offer { background: #819cff; color: #1a1408; }
+.stage-buyer { background: #ffb878; color: #1a1408; }
+.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #a4bdfc; color: #1a1408; margin-left: 8px; margin-top: 12px; }
+
+.content { display: flex; gap: 32px; padding: 32px; flex-wrap: wrap; }
+.col-main { flex: 1; min-width: 400px; }
+.col-side { flex: 0 0 340px; }
+
+/* Progress Bar */
+.progress-wrap { margin-bottom: 24px; }
+.progress-label { font-size: 13px; color: #857D52; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 8px; background: #261A05; border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #7A3B14, #46d67a); transition: width 0.5s; }
+
+/* Checklist */
+.checklist-section { margin-bottom: 24px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.08em; padding-bottom: 8px; border-bottom: 1px solid #5C3D14; margin-bottom: 8px; }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; }
+.check-item.done { color: #51b749; }
+.check-item.pending { color: #857D52; }
+.check-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.check-item.done .check-icon { color: #51b749; }
+.check-item.pending .check-icon { color: #3a3020; }
+
+/* Details & Notes */
+.detail-card { background: #261A05; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #FAFAFA; }
+.detail-line { font-size: 12px; color: #857D52; padding: 3px 0; }
+.note { border-bottom: 1px solid #3a3020; padding: 12px 0; }
+.note:last-child { border-bottom: none; }
+.note-date { font-size: 10px; color: #5C3D14; margin-bottom: 4px; }
+.note-body { font-size: 12px; color: #857D52; white-space: pre-wrap; line-height: 1.5; }
+
+.footer { padding: 16px 32px; text-align: center; font-size: 11px; color: #5C3D14; }
+</style>
+</head>
+<body>
+
+<div class="back"><a href="../transaction-kanban.html">← Back to Dashboard</a></div>
+
+<div class="deal-header">
+  <div class="deal-name">Matt &amp; Nina Houser - Buyer</div>
+  <div class="deal-client">Matt Houser, Nina Houser</div>
+  
+  <span class="deal-stage stage-offer">Offer</span>
+  
+</div>
+
+<div class="content">
+  <div class="col-main">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Buyer Checklist</span>
+        <span>4 / 34 (11%)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:11%"></div>
+      </div>
+    </div>
+    
+    <div class="checklist-section">
+      <div class="section-title">GETTING STARTED</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Signed Buyer Representation Agreement</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pre-Approval Letter Received</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Buyer Consultation Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Set Up Property Search Alerts</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Identify Target Neighborhoods</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">ACTIVELY SHOPPING</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Showings Scheduled</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Properties Toured</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Offer Strategy Discussion</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">OFFER &amp; NEGOTIATION</div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Offer Submitted</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Counter-Offer / Negotiation</span>
+      </div>
+      <div class="check-item done">
+        <span class="check-icon">✓</span>
+        <span class="check-text">Offer Accepted / Under Contract</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">DUE DILIGENCE</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Earnest Money Deposited</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Home Inspection Scheduled</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Home Inspection Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Inspection Negotiations / Repairs</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Appraisal Ordered</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Appraisal Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Survey Ordered</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Survey Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Title Search Initiated</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">HOA Documents Reviewed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Homeowners Insurance Bound</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Wire Fraud Warning Sent</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="section-title">CLOSING</div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Clear to Close from Lender</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Closing Disclosure Reviewed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final CD Sign Off from Ryan</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final Walk-Through Scheduled</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Final Walk-Through Complete</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Closing Day</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Keys Handed Off</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">MLS Updated to Closed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Commission Confirmed</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">Request Review and Referral Via Email</span>
+      </div>
+      <div class="check-item pending">
+        <span class="check-icon">○</span>
+        <span class="check-text">90-Day Post-Close Follow-Up</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-side">
+    <div class="detail-card">
+      <h3>Details</h3>
+      <div class='detail-line'>Matt &amp; Nina Houser — Actively shopping for land</div><div class='detail-line'>Green Life Charlotte</div>
+    </div>
+    <div class="detail-card">
+      <h3>Notes</h3>
+      
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">The following 1 contacts were merged into this person:
+
+Nina Houser</div>
+      </div>
+      <div class="note">
+        <div class="note-date"></div>
+        <div class="note-body">Matt &amp; Nina Houser — Own Green Life Charlotte. Active buyer, needs info sent over. Wife: Nina Houser.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Realty Ryan & Associates · Transaction Management · Powered by Jarvis</div>
+
+</body>
+</html>
