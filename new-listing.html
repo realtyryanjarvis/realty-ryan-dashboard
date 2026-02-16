@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Listing Intake — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+
+/* Password Gate */
+#login-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+#main-content { display: none; }
+.login-box { background: #261A05; padding: 48px; border-radius: 12px; border: 1px solid #5C3D14; width: 100%; max-width: 380px; text-align: center; }
+.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+.login-box .sub { font-size: 13px; color: #857D52; margin-bottom: 32px; }
+.login-box input { width: 100%; padding: 14px 16px; background: #1a1408; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
+.login-box input:focus { border-color: #7A3B14; }
+.login-box button { width: 100%; padding: 14px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+.login-box button:hover { background: #9A4B1A; }
+.login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
+
+/* Header */
+.header { background: #261A05; padding: 20px 24px; border-bottom: 3px solid #7A3B14; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; }
+.back-link { color: #7A3B14; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.back-link:hover { color: #9A4B1A; }
+
+/* Form Container */
+.form-container { max-width: 640px; margin: 0 auto; padding: 32px 24px; }
+.form-intro { font-size: 14px; color: #857D52; margin-bottom: 32px; line-height: 1.6; }
+
+/* Form Groups */
+.form-section { margin-bottom: 32px; }
+.form-section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #7A3B14; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #5C3D14; }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #857D52; margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 12px 14px; background: #261A05; border: 1px solid #5C3D14;
+  border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #7A3B14; }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23857D52' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+.form-group select option { background: #261A05; color: #FAFAFA; }
+
+.form-row { display: flex; gap: 12px; }
+.form-row .form-group { flex: 1; }
+
+.required::after { content: " *"; color: #ff887c; }
+
+/* Submit */
+.submit-btn {
+  width: 100%; padding: 16px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 8px;
+  font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.12em; margin-top: 16px; transition: background 0.2s;
+}
+.submit-btn:hover { background: #9A4B1A; }
+.submit-btn:disabled { background: #5C3D14; cursor: not-allowed; }
+
+/* Success */
+.success-msg { display: none; background: #1a2a1a; border: 1px solid #46d67a; border-radius: 8px; padding: 24px; text-align: center; margin-top: 24px; }
+.success-msg h3 { color: #46d67a; font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 8px; }
+.success-msg p { color: #857D52; font-size: 13px; }
+
+/* Also Buyer */
+.toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; cursor: pointer; }
+.toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #7A3B14; cursor: pointer; }
+.toggle-row label { font-size: 13px; color: #FAFAFA; cursor: pointer; }
+.buyer-section { display: none; }
+
+@media (max-width: 480px) {
+  .form-row { flex-direction: column; gap: 0; }
+  .header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="login-gate">
+  <div class="login-box">
+    <h1>Realty Ryan</h1>
+    <div class="sub">New Listing Intake</div>
+    <div class="login-error" id="login-error">Incorrect password</div>
+    <input type="password" id="pw-input" placeholder="Enter password" autofocus>
+    <button onclick="checkPw()">Access Form</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
+
+<div class="header">
+  <h1>📋 New Listing Intake</h1>
+  <a href="index.html" class="back-link">← Dashboard</a>
+</div>
+
+<div class="form-container">
+  <div class="form-intro">
+    Fill this out and hit submit. Jarvis will handle the rest — FUB contact + deal creation, calendar events (photos, video, open houses), intro emails, and listing checklist kickoff.
+  </div>
+
+  <form id="listing-form" onsubmit="return false;">
+
+    <!-- PROPERTY INFO -->
+    <div class="form-section">
+      <div class="form-section-title">Property Details</div>
+      <div class="form-group">
+        <label class="required">Property Address</label>
+        <input type="text" id="address" placeholder="123 Main St, Charlotte, NC 28202" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">List Price</label>
+          <input type="text" id="price" placeholder="$450,000">
+        </div>
+        <div class="form-group">
+          <label>MLS #</label>
+          <input type="text" id="mls" placeholder="If available">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Beds</label>
+          <input type="number" id="beds" placeholder="4">
+        </div>
+        <div class="form-group">
+          <label>Baths</label>
+          <input type="text" id="baths" placeholder="3.5">
+        </div>
+        <div class="form-group">
+          <label>Sq Ft</label>
+          <input type="number" id="sqft" placeholder="2800">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Property Type</label>
+        <select id="propType">
+          <option value="Single Family">Single Family</option>
+          <option value="Townhome">Townhome</option>
+          <option value="Condo">Condo</option>
+          <option value="Land/Lot">Land / Lot</option>
+          <option value="New Construction">New Construction</option>
+          <option value="Multi-Family">Multi-Family</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SELLER INFO -->
+    <div class="form-section">
+      <div class="form-section-title">Seller Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">Seller Name(s)</label>
+          <input type="text" id="sellerName" placeholder="John & Jane Smith" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="required">Seller Email</label>
+          <input type="email" id="sellerEmail" placeholder="seller@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="required">Seller Phone</label>
+          <input type="tel" id="sellerPhone" placeholder="704-555-1234" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Second Seller Email</label>
+        <input type="email" id="sellerEmail2" placeholder="Optional — spouse/partner">
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="form-section">
+      <div class="form-section-title">Timeline & Strategy</div>
+      <div class="form-group">
+        <label>Listing Status</label>
+        <select id="listingStatus">
+          <option value="WIP / Pre-List">WIP / Pre-List (prep phase)</option>
+          <option value="Coming Soon">Coming Soon</option>
+          <option value="Ready to List">Ready to List Now</option>
+          <option value="Active">Already Active on MLS</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Target List Date</label>
+          <input type="date" id="listDate">
+        </div>
+        <div class="form-group">
+          <label>Listing Agreement Signed?</label>
+          <select id="agreementSigned">
+            <option value="Yes">Yes</option>
+            <option value="No">No — need to send</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Photo Shoot Date</label>
+          <input type="datetime-local" id="photoDate">
+        </div>
+        <div class="form-group">
+          <label>Video / Reels Date</label>
+          <input type="datetime-local" id="videoDate">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Open House Date 1</label>
+          <input type="datetime-local" id="ohDate1">
+        </div>
+        <div class="form-group">
+          <label>Open House Date 2</label>
+          <input type="datetime-local" id="ohDate2">
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPERTY DETAILS -->
+    <div class="form-section">
+      <div class="form-section-title">Listing Notes</div>
+      <div class="form-group">
+        <label>Key Features / Selling Points</label>
+        <textarea id="features" placeholder="Pool, renovated kitchen, large lot, great schools, etc."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Special Instructions / Notes</label>
+        <textarea id="notes" placeholder="Anything Jarvis should know — staging notes, HOA info, tenant situations, etc."></textarea>
+      </div>
+    </div>
+
+    <!-- ALSO BUYER? -->
+    <div class="form-section">
+      <div class="toggle-row">
+        <input type="checkbox" id="alsoBuyer" onchange="toggleBuyer()">
+        <label for="alsoBuyer">Seller is also buying (dual client)</label>
+      </div>
+      <div class="buyer-section" id="buyerSection">
+        <div class="form-section-title">Buyer Search Criteria</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Max Budget</label>
+            <input type="text" id="buyerBudget" placeholder="$500,000">
+          </div>
+          <div class="form-group">
+            <label>Min Beds</label>
+            <input type="number" id="buyerBeds" placeholder="3">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Target Areas / Neighborhoods</label>
+          <input type="text" id="buyerAreas" placeholder="South Charlotte, Ballantyne, etc.">
+        </div>
+        <div class="form-group">
+          <label>Buyer Notes</label>
+          <textarea id="buyerNotes" placeholder="Must-haves, dealbreakers, timeline, etc."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">🚀 Submit to Jarvis</button>
+
+    <div class="success-msg" id="successMsg">
+      <h3>✅ Submitted!</h3>
+      <p>Jarvis has the details. He'll create the FUB deal, set up calendar events, and kick off the listing checklist. You'll get a confirmation shortly.</p>
+    </div>
+
+  </form>
+</div>
+
+</div>
+
+<script>
+const PW_HASH = "a0f6e710e52adab53e4016c4f9fe9a18acb14b03a5a3a516f7eab8b1fed5eb50";
+
+async function sha256(m) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+}
+
+async function checkPw() {
+  const p = document.getElementById("pw-input").value;
+  const h = await sha256(p);
+  if (h === PW_HASH) {
+    localStorage.setItem("rr_dash_auth", "1");
+    show();
+  } else {
+    document.getElementById("login-error").style.display = "block";
+  }
+}
+
+function show() {
+  document.getElementById("login-gate").style.display = "none";
+  document.getElementById("main-content").style.display = "block";
+}
+
+document.getElementById("pw-input").addEventListener("keydown", e => { if (e.key === "Enter") checkPw(); });
+if (localStorage.getItem("rr_dash_auth") === "1") show();
+
+function toggleBuyer() {
+  document.getElementById("buyerSection").style.display = document.getElementById("alsoBuyer").checked ? "block" : "none";
+}
+
+function submitForm() {
+  const addr = document.getElementById("address").value.trim();
+  const seller = document.getElementById("sellerName").value.trim();
+  const email = document.getElementById("sellerEmail").value.trim();
+  const phone = document.getElementById("sellerPhone").value.trim();
+
+  if (!addr || !seller || !email || !phone) {
+    alert("Please fill in all required fields (address, seller name, email, phone).");
+    return;
+  }
+
+  // Build structured message
+  let msg = `🏠 NEW LISTING INTAKE\n`;
+  msg += `Address: ${addr}\n`;
+  msg += `Price: ${document.getElementById("price").value.trim() || "TBD"}\n`;
+  msg += `MLS: ${document.getElementById("mls").value.trim() || "N/A"}\n`;
+
+  const beds = document.getElementById("beds").value;
+  const baths = document.getElementById("baths").value;
+  const sqft = document.getElementById("sqft").value;
+  if (beds || baths || sqft) msg += `Specs: ${beds || "?"}BR / ${baths || "?"}BA / ${sqft || "?"}sqft\n`;
+
+  msg += `Type: ${document.getElementById("propType").value}\n`;
+  msg += `\nSeller: ${seller}\n`;
+  msg += `Email: ${email}\n`;
+  msg += `Phone: ${phone}\n`;
+  const email2 = document.getElementById("sellerEmail2").value.trim();
+  if (email2) msg += `Email 2: ${email2}\n`;
+
+  msg += `\nStatus: ${document.getElementById("listingStatus").value}\n`;
+  const listDate = document.getElementById("listDate").value;
+  if (listDate) msg += `Target List Date: ${listDate}\n`;
+  msg += `Agreement Signed: ${document.getElementById("agreementSigned").value}\n`;
+
+  const photoDate = document.getElementById("photoDate").value;
+  const videoDate = document.getElementById("videoDate").value;
+  const oh1 = document.getElementById("ohDate1").value;
+  const oh2 = document.getElementById("ohDate2").value;
+  if (photoDate) msg += `Photos: ${formatDT(photoDate)}\n`;
+  if (videoDate) msg += `Video: ${formatDT(videoDate)}\n`;
+  if (oh1) msg += `Open House 1: ${formatDT(oh1)}\n`;
+  if (oh2) msg += `Open House 2: ${formatDT(oh2)}\n`;
+
+  const features = document.getElementById("features").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+  if (features) msg += `\nFeatures: ${features}\n`;
+  if (notes) msg += `Notes: ${notes}\n`;
+
+  if (document.getElementById("alsoBuyer").checked) {
+    msg += `\n🛒 ALSO BUYING\n`;
+    msg += `Budget: ${document.getElementById("buyerBudget").value.trim() || "TBD"}\n`;
+    msg += `Min Beds: ${document.getElementById("buyerBeds").value || "?"}\n`;
+    msg += `Areas: ${document.getElementById("buyerAreas").value.trim() || "TBD"}\n`;
+    const bn = document.getElementById("buyerNotes").value.trim();
+    if (bn) msg += `Buyer Notes: ${bn}\n`;
+  }
+
+  // Copy to clipboard and open SMS
+  navigator.clipboard.writeText(msg).then(() => {
+    // Open iMessage with pre-filled body
+    const smsBody = encodeURIComponent(msg);
+    window.location.href = `sms:+15089542159&body=${smsBody}`;
+
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "✅ Sent!";
+    document.getElementById("successMsg").style.display = "block";
+  }).catch(() => {
+    // Fallback: just open SMS
+    const smsBody = encodeURIComponent(msg);
+    window.location.href = `sms:+15089542159&body=${smsBody}`;
+
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "✅ Sent!";
+    document.getElementById("successMsg").style.display = "block";
+  });
+}
+
+function formatDT(dt) {
+  if (!dt) return "";
+  const d = new Date(dt);
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) + " " +
+         d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+}
+</script>
+
+</body>
+</html>
