@@ -62,8 +62,10 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 .col-dd .card { border-left-color: #fbd75b; }
 .col-closed .kanban-col-header { border-color: #5C3D14; color: #5C3D14; }
 .col-closed .card { border-left-color: #5C3D14; }
-.col-shopping .kanban-col-header { border-color: #46d6db; color: #46d6db; }
-.col-shopping .card { border-left-color: #46d6db; }
+.col-signed .kanban-col-header { border-color: #46d6db; color: #46d6db; }
+.col-signed .card { border-left-color: #46d6db; }
+.col-unsigned .kanban-col-header { border-color: #ff887c; color: #ff887c; }
+.col-unsigned .card { border-left-color: #ff887c; }
 .col-pending .kanban-col-header { border-color: #fbd75b; color: #fbd75b; }
 .col-pending .card { border-left-color: #fbd75b; }
 
@@ -116,7 +118,7 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="header">
   <div>
     <h1>Transaction Dashboard</h1>
-    <div class="date">Updated: February 16, 2026 · 02:00 PM</div>
+    <div class="date">Updated: February 16, 2026 · 02:01 PM</div>
   </div>
   <a href="new-listing.html" class="new-listing-btn">📋 New Listing</a>
   <div class="stats">
@@ -247,8 +249,14 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
   <span class="section-badge">5</span>
 </div>
 <div class="kanban">
-  <div class="kanban-col col-shopping">
-    <div class="kanban-col-header">Actively Shopping <span class="count">4</span></div>
+  <div class="kanban-col col-signed">
+    <div class="kanban-col-header">BAA Signed ✅ <span class="count">0</span></div>
+    <div class="kanban-cards">
+
+    </div>
+  </div>
+  <div class="kanban-col col-unsigned">
+    <div class="kanban-col-header">No BAA ⚠️ <span class="count">4</span></div>
     <div class="kanban-cards">
       <a href="deals/22.html" class="card" style="text-decoration:none;color:inherit;">
         <div class="card-address">Alexa &amp; Matt Evans - Buyer</div>
