@@ -132,6 +132,10 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
     <div class="field"><label>Or % of Purchase Price</label><input type="text" id="sellerConcessionsPercent" placeholder="e.g. 3%"></div>
   </div>
   <div class="field"><label>Escrow Agent</label><input type="text" id="escrowAgent" placeholder="Norwood Armstrong and Stokes" value="Norwood Armstrong and Stokes"></div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="hasPropertyToSell" style="width:auto;">
+    <label for="hasPropertyToSell" style="font-size:14px;color:#FAFAFA;margin:0;">Buyer has property to sell/lease to complete purchase</label>
+  </div>
   <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
 </div>
 
@@ -371,6 +375,8 @@ function submitOffer() {
     const addText = document.getElementById('addendumText').value.trim();
     if(addText) msg += `Provisions: ${addText}\n`;
   }
+  const hpts = document.getElementById('hasPropertyToSell').checked;
+  msg += `Has Property to Sell: ${hpts ? 'YES' : 'NO'}\n`;
   const il = document.getElementById('itemsLeased').value.trim();
   const inc = document.getElementById('itemsNotConvey').value.trim();
   msg += `Items Leased/Not Owned: ${il || 'N/A'}\n`;
