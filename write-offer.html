@@ -37,6 +37,14 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
 .back:hover { color:#C89B5B; }
 .required::after { content:" *"; color:#ff887c; }
 .note { font-size:11px; color:#5C3D14; margin-top:4px; }
+@media (max-width: 480px) {
+  body { padding:12px; }
+  .header h1 { font-size:22px; }
+  .row, .row3, .upload-grid { grid-template-columns:1fr; }
+  .field input, .field select, .field textarea { font-size:16px; padding:12px; }
+  .btn { padding:16px; font-size:17px; min-height:50px; }
+  .section { padding:14px 12px; }
+}
 </style>
 </head>
 <body>
