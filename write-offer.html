@@ -340,13 +340,39 @@ function submitOffer() {
   msg += `\nAttachments: ${fileCount} files`;
   if(fileNames.length > 0) msg += ` (${fileNames.join(', ')})`;
 
-  window.open("sms:+15089542159&body=" + encodeURIComponent(msg), "_blank");
+  // Submit to webhook — Jarvis picks it up directly
+  const btn = document.querySelector('.btn');
+  btn.textContent = '⏳ Sending to Jarvis...';
+  btn.disabled = true;
 
-  // Show confirmation
-  document.querySelector('.btn').textContent = '✅ Sent to Jarvis — Offer Package Building...';
-  document.querySelector('.btn').style.background = '#46d67a';
-  document.querySelector('.btn').style.color = '#1a1408';
-  document.querySelector('.btn').disabled = true;
+  // Save offer locally as backup
+  const offers = JSON.parse(localStorage.getItem('pendingOffers') || '[]');
+  offers.push({ timestamp: new Date().toISOString(), data: msg });
+  localStorage.setItem('pendingOffers', JSON.stringify(offers));
+
+  // POST to webhook
+  fetch('https://ntfy.sh/realtyryan-jarvis-offers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: msg
+  }).then(r => {
+    if (r.ok) {
+      btn.textContent = '✅ Sent to Jarvis — Offer Package Building...';
+      btn.style.background = '#46d67a';
+      btn.style.color = '#1a1408';
+    } else { throw new Error('fail'); }
+  }).catch(() => {
+    // Fallback to SMS if webhook fails
+    btn.textContent = '📱 Webhook down — Tap to text Jarvis';
+    btn.style.background = '#C89B5B';
+    btn.disabled = false;
+    btn.onclick = function() {
+      window.open("sms:+15089542159&body=" + encodeURIComponent(msg), "_blank");
+      btn.textContent = '✅ Sent to Jarvis — Offer Package Building...';
+      btn.style.background = '#46d67a';
+      btn.disabled = true;
+    };
+  });
 }
 </script>
 </body>
