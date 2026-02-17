@@ -163,6 +163,24 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
   <p class="note">Jarvis will read this and adjust the offer package accordingly — custom clauses, special terms, whatever you need.</p>
 </div>
 
+<!-- Disclosures Received -->
+<div class="section">
+  <div class="section-title">Disclosures Received</div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="recvPropertyDisclosure" style="width:auto;" checked>
+    <label for="recvPropertyDisclosure" style="font-size:14px;color:#FAFAFA;margin:0;">Residential Property Disclosure received</label>
+  </div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="recvMineralDisclosure" style="width:auto;" checked>
+    <label for="recvMineralDisclosure" style="font-size:14px;color:#FAFAFA;margin:0;">Mineral, Oil & Gas Rights Disclosure received</label>
+  </div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="leadPaint" style="width:auto;">
+    <label for="leadPaint" style="font-size:14px;color:#FAFAFA;margin:0;">Lead-Based Paint Disclosure required (built before 1978)</label>
+  </div>
+  <p class="note">Lead paint auto-checks if MLS shows year built before 1978</p>
+</div>
+
 <!-- Fixtures & Exclusions -->
 <div class="section">
   <div class="section-title">Fixtures & Exclusions</div>
@@ -375,6 +393,9 @@ function submitOffer() {
     const addText = document.getElementById('addendumText').value.trim();
     if(addText) msg += `Provisions: ${addText}\n`;
   }
+  msg += `Recv Property Disclosure: ${document.getElementById('recvPropertyDisclosure').checked ? 'YES' : 'NO'}\n`;
+  msg += `Recv Mineral Disclosure: ${document.getElementById('recvMineralDisclosure').checked ? 'YES' : 'NO'}\n`;
+  msg += `Lead Paint Required: ${document.getElementById('leadPaint').checked ? 'YES' : 'NO'}\n`;
   const hpts = document.getElementById('hasPropertyToSell').checked;
   msg += `Has Property to Sell: ${hpts ? 'YES' : 'NO'}\n`;
   const il = document.getElementById('itemsLeased').value.trim();
