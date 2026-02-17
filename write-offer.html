@@ -122,6 +122,7 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
     <div class="field"><label>Seller Concessions ($)</label><input type="text" id="sellerConcessions" placeholder="$0"></div>
     <div class="field"><label>Or % of Purchase Price</label><input type="text" id="sellerConcessionsPercent" placeholder="e.g. 3%"></div>
   </div>
+  <div class="field"><label>Escrow Agent</label><input type="text" id="escrowAgent" placeholder="Norwood Armstrong and Stokes" value="Norwood Armstrong and Stokes"></div>
   <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
 </div>
 
@@ -330,6 +331,8 @@ function submitOffer() {
   if(sc) msg += `Seller Concessions: ${sc}\n`;
   else if(scp) msg += `Seller Concessions: ${scp}\n`;
   else msg += `Seller Concessions: None\n`;
+  const ea = document.getElementById('escrowAgent').value.trim();
+  if(ea) msg += `Escrow Agent: ${ea}\n`;
   if(data.additionalTerms) msg += `Notes: ${data.additionalTerms}\n`;
   // Addendum
   const hasAddendum = document.getElementById('includeAddendum').checked;
