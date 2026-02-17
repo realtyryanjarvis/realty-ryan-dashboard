@@ -121,6 +121,30 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
   <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
 </div>
 
+<!-- Additional Provisions Addendum -->
+<div class="section">
+  <div class="section-title">Additional Provisions Addendum</div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="includeAddendum" style="width:auto;" onchange="toggleAddendum()">
+    <label for="includeAddendum" style="font-size:14px;color:#FAFAFA;margin:0;">Include Additional Provisions Addendum</label>
+  </div>
+  <div id="addendumFields" style="display:none;margin-top:12px;">
+    <div class="row">
+      <div class="field"><label>Offer Expiration Date</label><input type="date" id="offerExpDate"></div>
+      <div class="field"><label>Expiration Time</label><input type="time" id="offerExpTime" value="17:00"></div>
+    </div>
+    <div class="field"><label>Additional Provisions</label><textarea id="addendumText" placeholder="e.g. Seller to provide home warranty at closing, offer expires 2/20/2026 at 5:00 PM..." style="min-height:100px;"></textarea></div>
+    <p class="note">NC Additional Provisions Addendum (Form 2A12-T) will be auto-attached to the offer package.</p>
+  </div>
+</div>
+
+<!-- Special Instructions -->
+<div class="section">
+  <div class="section-title">🤖 Special Instructions for Jarvis</div>
+  <div class="field"><textarea id="jarvisPrompt" placeholder="Anything unusual or out of the ordinary about this offer? Write it here in plain English and Jarvis will handle it.&#10;&#10;Examples:&#10;• Buyer wants to close in 14 days, make sure that's reflected everywhere&#10;• Include a kick-out clause — seller can keep marketing&#10;• Buyer is selling their home first, needs a contingency&#10;• We need to escalate to $520K if there are competing offers" style="min-height:120px;"></textarea></div>
+  <p class="note">Jarvis will read this and adjust the offer package accordingly — custom clauses, special terms, whatever you need.</p>
+</div>
+
 <!-- Personal Property -->
 <div class="section">
   <div class="section-title">Personal Property to Convey</div>
@@ -223,6 +247,9 @@ function removeBuyer2() {
 function toggleEntity() {
   document.getElementById('entityFields').style.display = document.getElementById('entityBuyer').checked ? 'block' : 'none';
 }
+function toggleAddendum() {
+  document.getElementById('addendumFields').style.display = document.getElementById('includeAddendum').checked ? 'block' : 'none';
+}
 
 function submitOffer() {
   const data = {
@@ -295,8 +322,21 @@ function submitOffer() {
   msg += `Settlement: ${data.settlementDate}\n`;
   msg += `Financing: ${data.financingType}\n`;
   if(data.additionalTerms) msg += `Notes: ${data.additionalTerms}\n`;
+  // Addendum
+  const hasAddendum = document.getElementById('includeAddendum').checked;
+  if(hasAddendum) {
+    msg += `\n📎 ADDITIONAL PROVISIONS ADDENDUM\n`;
+    const expDate = document.getElementById('offerExpDate').value;
+    const expTime = document.getElementById('offerExpTime').value;
+    if(expDate) msg += `Offer Expires: ${expDate} at ${expTime || '5:00 PM'}\n`;
+    const addText = document.getElementById('addendumText').value.trim();
+    if(addText) msg += `Provisions: ${addText}\n`;
+  }
   const pp = document.getElementById('personalProperty').value.trim();
   if(pp) msg += `\nPERSONAL PROPERTY TO CONVEY:\n${pp}\n`;
+  // Jarvis special instructions
+  const jarvis = document.getElementById('jarvisPrompt').value.trim();
+  if(jarvis) msg += `\n🤖 SPECIAL INSTRUCTIONS:\n${jarvis}\n`;
   msg += `\nAttachments: ${fileCount} files`;
   if(fileNames.length > 0) msg += ` (${fileNames.join(', ')})`;
 
