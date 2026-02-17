@@ -50,11 +50,38 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
 
 <!-- Buyer Info -->
 <div class="section">
-  <div class="section-title">Buyer Information</div>
-  <div class="field"><label class="required">Buyer Name(s)</label><input type="text" id="buyerName" placeholder="e.g. John & Jane Smith"></div>
+  <div class="section-title">Buyer 1</div>
+  <div class="field"><label class="required">Full Legal Name</label><input type="text" id="buyer1Name" placeholder="e.g. John Smith"></div>
   <div class="row">
-    <div class="field"><label class="required">Buyer Email</label><input type="email" id="buyerEmail" placeholder="buyer@email.com"></div>
-    <div class="field"><label>Buyer Phone</label><input type="tel" id="buyerPhone" placeholder="704-555-1234"></div>
+    <div class="field"><label class="required">Email</label><input type="email" id="buyer1Email" placeholder="buyer@email.com"></div>
+    <div class="field"><label>Phone</label><input type="tel" id="buyer1Phone" placeholder="704-555-1234"></div>
+  </div>
+</div>
+
+<div class="section" id="buyer2Section" style="display:none;">
+  <div class="section-title">Buyer 2 <span onclick="removeBuyer2()" style="float:right;cursor:pointer;font-size:12px;color:#ff887c;">✕ Remove</span></div>
+  <div class="field"><label>Full Legal Name</label><input type="text" id="buyer2Name" placeholder="e.g. Jane Smith"></div>
+  <div class="row">
+    <div class="field"><label>Email</label><input type="email" id="buyer2Email" placeholder="buyer2@email.com"></div>
+    <div class="field"><label>Phone</label><input type="tel" id="buyer2Phone" placeholder="704-555-5678"></div>
+  </div>
+</div>
+
+<div id="addBuyer2Btn" class="section" style="padding:12px;text-align:center;cursor:pointer;border:2px dashed #3a2a10;background:transparent;" onclick="addBuyer2()">
+  <span style="color:#7A3B14;font-weight:500;">+ Add Second Buyer</span>
+</div>
+
+<!-- Entity / LLC -->
+<div class="section">
+  <div class="section-title">Purchasing Entity</div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="entityBuyer" style="width:auto;" onchange="toggleEntity()">
+    <label for="entityBuyer" style="font-size:14px;color:#FAFAFA;margin:0;">Buying as an LLC / Entity</label>
+  </div>
+  <div id="entityFields" style="display:none;margin-top:12px;">
+    <div class="field"><label class="required">Entity Name</label><input type="text" id="entityName" placeholder="e.g. Smith Properties LLC"></div>
+    <div class="field"><label>State of Formation</label><input type="text" id="entityState" placeholder="e.g. North Carolina"></div>
+    <p class="note">Buyer(s) will sign in their personal name as authorized member/manager of the entity. Entity buyer signature block will be used on Page 13 of Form 2-T.</p>
   </div>
 </div>
 
@@ -182,11 +209,32 @@ function fileSelected(input) {
   }
 }
 
+function addBuyer2() {
+  document.getElementById('buyer2Section').style.display = 'block';
+  document.getElementById('addBuyer2Btn').style.display = 'none';
+}
+function removeBuyer2() {
+  document.getElementById('buyer2Section').style.display = 'none';
+  document.getElementById('addBuyer2Btn').style.display = 'block';
+  document.getElementById('buyer2Name').value = '';
+  document.getElementById('buyer2Email').value = '';
+  document.getElementById('buyer2Phone').value = '';
+}
+function toggleEntity() {
+  document.getElementById('entityFields').style.display = document.getElementById('entityBuyer').checked ? 'block' : 'none';
+}
+
 function submitOffer() {
   const data = {
-    buyerName: document.getElementById('buyerName').value,
-    buyerEmail: document.getElementById('buyerEmail').value,
-    buyerPhone: document.getElementById('buyerPhone').value,
+    buyer1Name: document.getElementById('buyer1Name').value,
+    buyer1Email: document.getElementById('buyer1Email').value,
+    buyer1Phone: document.getElementById('buyer1Phone').value,
+    buyer2Name: document.getElementById('buyer2Name').value,
+    buyer2Email: document.getElementById('buyer2Email').value,
+    buyer2Phone: document.getElementById('buyer2Phone').value,
+    entityBuyer: document.getElementById('entityBuyer').checked,
+    entityName: document.getElementById('entityName').value,
+    entityState: document.getElementById('entityState').value,
     propertyAddress: document.getElementById('propertyAddress').value,
     mlsNumber: document.getElementById('mlsNumber').value,
     listingAgentEmail: document.getElementById('listingAgentEmail').value,
@@ -200,13 +248,18 @@ function submitOffer() {
   };
 
   // Validate required fields
-  const required = ['buyerName','buyerEmail','propertyAddress','offerPrice','earnestMoney','ddFee','ddPeriod','settlementDate'];
+  const required = ['buyer1Name','buyer1Email','propertyAddress','offerPrice','earnestMoney','ddFee','ddPeriod','settlementDate'];
   for (const f of required) {
     if (!data[f]) {
       alert('Please fill in all required fields');
       document.getElementById(f).focus();
       return;
     }
+  }
+  if (data.entityBuyer && !data.entityName) {
+    alert('Please enter the entity name');
+    document.getElementById('entityName').focus();
+    return;
   }
 
   // Count attached files
@@ -217,10 +270,21 @@ function submitOffer() {
 
   // Build message for Jarvis
   let msg = `📝 NEW OFFER\n`;
-  msg += `Buyer: ${data.buyerName}\n`;
-  msg += `Email: ${data.buyerEmail}\n`;
-  if(data.buyerPhone) msg += `Phone: ${data.buyerPhone}\n`;
-  msg += `Property: ${data.propertyAddress}\n`;
+  msg += `Buyer 1: ${data.buyer1Name}\n`;
+  msg += `Email: ${data.buyer1Email}\n`;
+  if(data.buyer1Phone) msg += `Phone: ${data.buyer1Phone}\n`;
+  if(data.buyer2Name) {
+    msg += `Buyer 2: ${data.buyer2Name}\n`;
+    if(data.buyer2Email) msg += `Email 2: ${data.buyer2Email}\n`;
+    if(data.buyer2Phone) msg += `Phone 2: ${data.buyer2Phone}\n`;
+  }
+  if(data.entityBuyer) {
+    msg += `\n🏢 ENTITY PURCHASE\n`;
+    msg += `Entity: ${data.entityName}\n`;
+    if(data.entityState) msg += `State: ${data.entityState}\n`;
+    msg += `(Pg 13 entity buyer signature block)\n`;
+  }
+  msg += `\nProperty: ${data.propertyAddress}\n`;
   if(data.mlsNumber) msg += `MLS#: ${data.mlsNumber}\n`;
   if(data.listingAgentEmail) msg += `Listing Agent: ${data.listingAgentEmail}\n`;
   msg += `\nOFFER TERMS:\n`;
