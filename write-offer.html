@@ -136,15 +136,7 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
     <input type="checkbox" id="hasPropertyToSell" style="width:auto;">
     <label for="hasPropertyToSell" style="font-size:14px;color:#FAFAFA;margin:0;">Buyer has property to sell/lease to complete purchase</label>
   </div>
-  <div class="field"><label>Home Warranty</label>
-    <select id="homeWarranty" onchange="toggleWarranty()" style="padding:10px;border-radius:8px;border:1px solid #333;background:#1E1E1E;color:#FAFAFA;font-size:14px;">
-      <option value="none" selected>No home warranty</option>
-      <option value="buyer">Buyer may obtain (Seller pays)</option>
-      <option value="seller">Seller has obtained &amp; will provide</option>
-    </select>
-  </div>
-  <div id="warrantyAmountRow" class="field" style="display:none;"><label>Warranty Cost (max $)</label><input type="text" id="warrantyCost" placeholder="e.g. $600"></div>
-  <div id="warrantyProviderRow" class="field" style="display:none;"><label>Warranty Provider</label><input type="text" id="warrantyProvider" placeholder="e.g. American Home Shield"></div>
+  <!-- Home warranty: always No, hardcoded in Form 2-T -->
   <div class="field" style="display:flex;align-items:center;gap:10px;">
     <input type="checkbox" id="subjectToLeases" style="width:auto;">
     <label for="subjectToLeases" style="font-size:14px;color:#FAFAFA;margin:0;">Property is subject to any lease(s)</label>
@@ -314,11 +306,7 @@ function toggleFinancing() {
 function toggleAddendum() {
   document.getElementById('addendumFields').style.display = document.getElementById('includeAddendum').checked ? 'block' : 'none';
 }
-function toggleWarranty() {
-  const v = document.getElementById('homeWarranty').value;
-  document.getElementById('warrantyAmountRow').style.display = v !== 'none' ? 'block' : 'none';
-  document.getElementById('warrantyProviderRow').style.display = v === 'seller' ? 'block' : 'none';
-}
+// Home warranty removed — always "No home warranty" (hardcoded)
 
 function submitOffer() {
   const data = {
@@ -420,12 +408,7 @@ function submitOffer() {
   msg += `Lead Paint Required: ${document.getElementById('leadPaint').checked ? 'YES' : 'NO'}\n`;
   const hpts = document.getElementById('hasPropertyToSell').checked;
   msg += `Has Property to Sell: ${hpts ? 'YES' : 'NO'}\n`;
-  const hw = document.getElementById('homeWarranty').value;
-  const hwCost = document.getElementById('warrantyCost').value.trim();
-  const hwProvider = document.getElementById('warrantyProvider').value.trim();
-  if (hw === 'none') { msg += `Home Warranty: No\n`; }
-  else if (hw === 'buyer') { msg += `Home Warranty: Buyer Obtain, Max Cost: ${hwCost || 'TBD'}\n`; }
-  else { msg += `Home Warranty: Seller Provides, Provider: ${hwProvider || 'TBD'}, Cost: ${hwCost || 'TBD'}\n`; }
+  msg += `Home Warranty: No\n`;
   msg += `Subject to Leases: ${document.getElementById('subjectToLeases').checked ? 'YES' : 'NO'}\n`;
   msg += `Fuel Tank: ${document.getElementById('hasFuelTank').checked ? 'YES' : 'NO'}\n`;
   const il = document.getElementById('itemsLeased').value.trim();
