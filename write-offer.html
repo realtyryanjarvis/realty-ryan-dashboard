@@ -94,24 +94,31 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
   <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
 </div>
 
-<!-- Required Docs -->
+<!-- Personal Property -->
 <div class="section">
-  <div class="section-title">Required Documents</div>
-  <p class="note" style="margin-bottom:12px;">Form 2-T will be auto-attached. Upload the following from the listing agent:</p>
+  <div class="section-title">Personal Property to Convey</div>
+  <p class="note" style="margin-bottom:12px;">Appliances, fixtures, and items included in the offer</p>
+  <div class="field"><textarea id="personalProperty" placeholder="e.g. Refrigerator, washer, dryer, mounted TV in living room, window treatments, storage shed..."></textarea></div>
+</div>
+
+<!-- Documents -->
+<div class="section">
+  <div class="section-title">Documents</div>
+  <p class="note" style="margin-bottom:12px;">Form 2-T will be auto-attached. All uploads are optional.</p>
   <div class="upload-grid">
-    <div class="upload-area" onclick="this.querySelector('input').click()">
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
       <input type="file" accept=".pdf" onchange="fileSelected(this)">
       <div class="icon">📄</div>
       <div class="label">Form 220 (Compensation)</div>
       <div class="filename"></div>
     </div>
-    <div class="upload-area" onclick="this.querySelector('input').click()">
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
       <input type="file" accept=".pdf" onchange="fileSelected(this)">
       <div class="icon">🏠</div>
       <div class="label">Property Disclosure</div>
       <div class="filename"></div>
     </div>
-    <div class="upload-area" onclick="this.querySelector('input').click()">
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
       <input type="file" accept=".pdf" onchange="fileSelected(this)">
       <div class="icon">⛏️</div>
       <div class="label">Mineral/Oil & Gas Disclosure</div>
@@ -224,6 +231,8 @@ function submitOffer() {
   msg += `Settlement: ${data.settlementDate}\n`;
   msg += `Financing: ${data.financingType}\n`;
   if(data.additionalTerms) msg += `Notes: ${data.additionalTerms}\n`;
+  const pp = document.getElementById('personalProperty').value.trim();
+  if(pp) msg += `\nPERSONAL PROPERTY TO CONVEY:\n${pp}\n`;
   msg += `\nAttachments: ${fileCount} files`;
   if(fileNames.length > 0) msg += ` (${fileNames.join(', ')})`;
 
