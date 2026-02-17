@@ -108,15 +108,24 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
   </div>
   <div class="row">
     <div class="field"><label class="required">Settlement Date</label><input type="date" id="settlementDate"></div>
-    <div class="field"><label>Financing Type</label>
+    <div class="field"><label class="required">Purchase Type</label>
+      <select id="purchaseType" onchange="toggleFinancing()">
+        <option value="loan">Loan (Financed)</option>
+        <option value="cash">Cash — No Loan</option>
+      </select>
+    </div>
+  </div>
+  <div id="loanTypeRow" class="row">
+    <div class="field"><label>Loan Type</label>
       <select id="financingType">
         <option value="conventional">Conventional</option>
         <option value="fha">FHA</option>
         <option value="va">VA</option>
-        <option value="cash">Cash</option>
+        <option value="usda">USDA</option>
         <option value="other">Other</option>
       </select>
     </div>
+    <div class="field"><label>Lender</label><input type="text" id="lender" placeholder="e.g. Atlantic Bay Mortgage"></div>
   </div>
   <div class="row">
     <div class="field"><label>Seller Concessions ($)</label><input type="text" id="sellerConcessions" placeholder="$0"></div>
@@ -259,6 +268,10 @@ function removeBuyer2() {
 function toggleEntity() {
   document.getElementById('entityFields').style.display = document.getElementById('entityBuyer').checked ? 'block' : 'none';
 }
+function toggleFinancing() {
+  const isCash = document.getElementById('purchaseType').value === 'cash';
+  document.getElementById('loanTypeRow').style.display = isCash ? 'none' : 'grid';
+}
 function toggleAddendum() {
   document.getElementById('addendumFields').style.display = document.getElementById('includeAddendum').checked ? 'block' : 'none';
 }
@@ -332,7 +345,14 @@ function submitOffer() {
   msg += `DD Fee: ${data.ddFee}\n`;
   msg += `DD Period: ${data.ddPeriod} days\n`;
   msg += `Settlement: ${data.settlementDate}\n`;
-  msg += `Financing: ${data.financingType}\n`;
+  const purchaseType = document.getElementById('purchaseType').value;
+  if (purchaseType === 'cash') {
+    msg += `Financing: cash\n`;
+  } else {
+    msg += `Financing: ${data.financingType}\n`;
+    const lender = document.getElementById('lender').value.trim();
+    if(lender) msg += `Lender: ${lender}\n`;
+  }
   const sc = document.getElementById('sellerConcessions').value.trim();
   const scp = document.getElementById('sellerConcessionsPercent').value.trim();
   if(sc) msg += `Seller Concessions: ${sc}\n`;
