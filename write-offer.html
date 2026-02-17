@@ -150,6 +150,13 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
   <p class="note">Jarvis will read this and adjust the offer package accordingly — custom clauses, special terms, whatever you need.</p>
 </div>
 
+<!-- Fixtures & Exclusions -->
+<div class="section">
+  <div class="section-title">Fixtures & Exclusions</div>
+  <div class="field"><label>Items Leased or Not Owned (2d)</label><input type="text" id="itemsLeased" placeholder="N/A" value="N/A"></div>
+  <div class="field"><label>Other Items That Do Not Convey (2e)</label><input type="text" id="itemsNotConvey" placeholder="N/A" value="N/A"></div>
+</div>
+
 <!-- Personal Property -->
 <div class="section">
   <div class="section-title">Personal Property to Convey</div>
@@ -344,6 +351,10 @@ function submitOffer() {
     const addText = document.getElementById('addendumText').value.trim();
     if(addText) msg += `Provisions: ${addText}\n`;
   }
+  const il = document.getElementById('itemsLeased').value.trim();
+  const inc = document.getElementById('itemsNotConvey').value.trim();
+  msg += `Items Leased/Not Owned: ${il || 'N/A'}\n`;
+  msg += `Items Not Conveying: ${inc || 'N/A'}\n`;
   const pp = document.getElementById('personalProperty').value.trim();
   if(pp) msg += `\nPERSONAL PROPERTY TO CONVEY:\n${pp}\n`;
   // Jarvis special instructions
