@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write Offer — Realty Ryan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; min-height:100vh; padding:20px; }
+.container { max-width:600px; margin:0 auto; }
+.header { text-align:center; margin-bottom:24px; padding-bottom:16px; border-bottom:2px solid #7A3B14; }
+.header h1 { font-family:'Cormorant Garamond',Georgia,serif; font-size:28px; font-weight:600; color:#C89B5B; }
+.header p { font-size:13px; color:#857D52; margin-top:4px; }
+.section { background:#261A05; border-radius:8px; padding:16px; margin-bottom:16px; }
+.section-title { font-size:14px; font-weight:600; color:#7A3B14; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #3a2a10; }
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:12px; color:#857D52; margin-bottom:4px; font-weight:500; }
+.field input, .field select, .field textarea { width:100%; padding:10px 12px; background:#1a1408; border:1px solid #3a2a10; border-radius:6px; color:#FAFAFA; font-family:'Work Sans',sans-serif; font-size:14px; outline:none; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color:#7A3B14; }
+.field textarea { min-height:80px; resize:vertical; }
+.row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.upload-area { border:2px dashed #3a2a10; border-radius:8px; padding:20px; text-align:center; cursor:pointer; transition:border-color 0.2s; }
+.upload-area:hover { border-color:#7A3B14; }
+.upload-area.has-file { border-color:#46d67a; border-style:solid; }
+.upload-area input[type=file] { display:none; }
+.upload-area .icon { font-size:24px; margin-bottom:4px; }
+.upload-area .label { font-size:12px; color:#857D52; }
+.upload-area .filename { font-size:12px; color:#46d67a; margin-top:4px; word-break:break-all; }
+.upload-area.optional .label::after { content:" (optional)"; color:#5C3D14; }
+.upload-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.btn { width:100%; padding:14px; background:#7A3B14; color:#FAFAFA; border:none; border-radius:8px; font-family:'Work Sans',sans-serif; font-size:16px; font-weight:600; cursor:pointer; margin-top:8px; }
+.btn:hover { background:#9A4B1A; }
+.btn:active { transform:scale(0.98); }
+.back { display:inline-block; color:#7A3B14; text-decoration:none; font-size:13px; margin-bottom:16px; }
+.back:hover { color:#C89B5B; }
+.required::after { content:" *"; color:#ff887c; }
+.note { font-size:11px; color:#5C3D14; margin-top:4px; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="back">← Back to Dashboard</a>
+
+<div class="header">
+  <h1>📝 Write Offer</h1>
+  <p>Build and send an offer package via Dropbox Sign</p>
+</div>
+
+<!-- Buyer Info -->
+<div class="section">
+  <div class="section-title">Buyer Information</div>
+  <div class="field"><label class="required">Buyer Name(s)</label><input type="text" id="buyerName" placeholder="e.g. John & Jane Smith"></div>
+  <div class="row">
+    <div class="field"><label class="required">Buyer Email</label><input type="email" id="buyerEmail" placeholder="buyer@email.com"></div>
+    <div class="field"><label>Buyer Phone</label><input type="tel" id="buyerPhone" placeholder="704-555-1234"></div>
+  </div>
+</div>
+
+<!-- Property Info -->
+<div class="section">
+  <div class="section-title">Property</div>
+  <div class="field"><label class="required">Property Address</label><input type="text" id="propertyAddress" placeholder="123 Main St, Charlotte, NC 28202"></div>
+  <div class="row">
+    <div class="field"><label>MLS #</label><input type="text" id="mlsNumber" placeholder="MLS#"></div>
+    <div class="field"><label>Listing Agent Email</label><input type="email" id="listingAgentEmail" placeholder="agent@email.com"></div>
+  </div>
+</div>
+
+<!-- Offer Terms -->
+<div class="section">
+  <div class="section-title">Offer Terms</div>
+  <div class="row">
+    <div class="field"><label class="required">Offer Price</label><input type="text" id="offerPrice" placeholder="$500,000"></div>
+    <div class="field"><label class="required">Earnest Money</label><input type="text" id="earnestMoney" placeholder="$5,000"></div>
+  </div>
+  <div class="row">
+    <div class="field"><label class="required">Due Diligence Fee</label><input type="text" id="ddFee" placeholder="$3,000"></div>
+    <div class="field"><label class="required">DD Period (days)</label><input type="number" id="ddPeriod" placeholder="21"></div>
+  </div>
+  <div class="row">
+    <div class="field"><label class="required">Settlement Date</label><input type="date" id="settlementDate"></div>
+    <div class="field"><label>Financing Type</label>
+      <select id="financingType">
+        <option value="conventional">Conventional</option>
+        <option value="fha">FHA</option>
+        <option value="va">VA</option>
+        <option value="cash">Cash</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
+</div>
+
+<!-- Required Docs -->
+<div class="section">
+  <div class="section-title">Required Documents</div>
+  <p class="note" style="margin-bottom:12px;">Form 2-T will be auto-attached. Upload the following from the listing agent:</p>
+  <div class="upload-grid">
+    <div class="upload-area" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf" onchange="fileSelected(this)">
+      <div class="icon">📄</div>
+      <div class="label">Form 220 (Compensation)</div>
+      <div class="filename"></div>
+    </div>
+    <div class="upload-area" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf" onchange="fileSelected(this)">
+      <div class="icon">🏠</div>
+      <div class="label">Property Disclosure</div>
+      <div class="filename"></div>
+    </div>
+    <div class="upload-area" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf" onchange="fileSelected(this)">
+      <div class="icon">⛏️</div>
+      <div class="label">Mineral/Oil & Gas Disclosure</div>
+      <div class="filename"></div>
+    </div>
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf" onchange="fileSelected(this)">
+      <div class="icon">🎨</div>
+      <div class="label">Lead Based Paint</div>
+      <div class="filename"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Optional Docs (initials) -->
+<div class="section">
+  <div class="section-title">Optional Attachments (Buyer Initials)</div>
+  <p class="note" style="margin-bottom:12px;">These will be attached for buyer to initial at the top</p>
+  <div class="upload-grid">
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
+      <div class="icon">📐</div>
+      <div class="label">Survey</div>
+      <div class="filename"></div>
+    </div>
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
+      <div class="icon">🏘️</div>
+      <div class="label">HOA Documents</div>
+      <div class="filename"></div>
+    </div>
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
+      <div class="icon">📏</div>
+      <div class="label">Floor Plan</div>
+      <div class="filename"></div>
+    </div>
+    <div class="upload-area optional" onclick="this.querySelector('input').click()">
+      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
+      <div class="icon">📋</div>
+      <div class="label">Current MLS Sheet</div>
+      <div class="filename"></div>
+    </div>
+  </div>
+</div>
+
+<button class="btn" onclick="submitOffer()">📝 Send Offer Package</button>
+
+</div>
+
+<script>
+function fileSelected(input) {
+  const area = input.closest('.upload-area');
+  const fn = area.querySelector('.filename');
+  if (input.files.length > 0) {
+    fn.textContent = input.files[0].name;
+    area.classList.add('has-file');
+  } else {
+    fn.textContent = '';
+    area.classList.remove('has-file');
+  }
+}
+
+function submitOffer() {
+  const data = {
+    buyerName: document.getElementById('buyerName').value,
+    buyerEmail: document.getElementById('buyerEmail').value,
+    buyerPhone: document.getElementById('buyerPhone').value,
+    propertyAddress: document.getElementById('propertyAddress').value,
+    mlsNumber: document.getElementById('mlsNumber').value,
+    listingAgentEmail: document.getElementById('listingAgentEmail').value,
+    offerPrice: document.getElementById('offerPrice').value,
+    earnestMoney: document.getElementById('earnestMoney').value,
+    ddFee: document.getElementById('ddFee').value,
+    ddPeriod: document.getElementById('ddPeriod').value,
+    settlementDate: document.getElementById('settlementDate').value,
+    financingType: document.getElementById('financingType').value,
+    additionalTerms: document.getElementById('additionalTerms').value
+  };
+
+  // Validate required fields
+  const required = ['buyerName','buyerEmail','propertyAddress','offerPrice','earnestMoney','ddFee','ddPeriod','settlementDate'];
+  for (const f of required) {
+    if (!data[f]) {
+      alert('Please fill in all required fields');
+      document.getElementById(f).focus();
+      return;
+    }
+  }
+
+  // Count attached files
+  const files = document.querySelectorAll('.upload-area input[type=file]');
+  let fileCount = 0;
+  let fileNames = [];
+  files.forEach(f => { if(f.files.length > 0) { fileCount++; fileNames.push(f.files[0].name); } });
+
+  // Build message for Jarvis
+  let msg = `📝 NEW OFFER\n`;
+  msg += `Buyer: ${data.buyerName}\n`;
+  msg += `Email: ${data.buyerEmail}\n`;
+  if(data.buyerPhone) msg += `Phone: ${data.buyerPhone}\n`;
+  msg += `Property: ${data.propertyAddress}\n`;
+  if(data.mlsNumber) msg += `MLS#: ${data.mlsNumber}\n`;
+  if(data.listingAgentEmail) msg += `Listing Agent: ${data.listingAgentEmail}\n`;
+  msg += `\nOFFER TERMS:\n`;
+  msg += `Price: ${data.offerPrice}\n`;
+  msg += `Earnest Money: ${data.earnestMoney}\n`;
+  msg += `DD Fee: ${data.ddFee}\n`;
+  msg += `DD Period: ${data.ddPeriod} days\n`;
+  msg += `Settlement: ${data.settlementDate}\n`;
+  msg += `Financing: ${data.financingType}\n`;
+  if(data.additionalTerms) msg += `Notes: ${data.additionalTerms}\n`;
+  msg += `\nAttachments: ${fileCount} files`;
+  if(fileNames.length > 0) msg += ` (${fileNames.join(', ')})`;
+
+  window.open("sms:+15089542159&body=" + encodeURIComponent(msg), "_blank");
+
+  // Show confirmation
+  document.querySelector('.btn').textContent = '✅ Sent to Jarvis — Offer Package Building...';
+  document.querySelector('.btn').style.background = '#46d67a';
+  document.querySelector('.btn').style.color = '#1a1408';
+  document.querySelector('.btn').disabled = true;
+}
+</script>
+</body>
+</html>
