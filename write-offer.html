@@ -118,6 +118,10 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
       </select>
     </div>
   </div>
+  <div class="row">
+    <div class="field"><label>Seller Concessions ($)</label><input type="text" id="sellerConcessions" placeholder="$0"></div>
+    <div class="field"><label>Or % of Purchase Price</label><input type="text" id="sellerConcessionsPercent" placeholder="e.g. 3%"></div>
+  </div>
   <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
 </div>
 
@@ -321,6 +325,11 @@ function submitOffer() {
   msg += `DD Period: ${data.ddPeriod} days\n`;
   msg += `Settlement: ${data.settlementDate}\n`;
   msg += `Financing: ${data.financingType}\n`;
+  const sc = document.getElementById('sellerConcessions').value.trim();
+  const scp = document.getElementById('sellerConcessionsPercent').value.trim();
+  if(sc) msg += `Seller Concessions: ${sc}\n`;
+  else if(scp) msg += `Seller Concessions: ${scp}\n`;
+  else msg += `Seller Concessions: None\n`;
   if(data.additionalTerms) msg += `Notes: ${data.additionalTerms}\n`;
   // Addendum
   const hasAddendum = document.getElementById('includeAddendum').checked;
