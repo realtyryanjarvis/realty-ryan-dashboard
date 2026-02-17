@@ -357,13 +357,13 @@ function submitForm() {
 
   navigator.clipboard.writeText(msg).then(() => {
     const smsBody = encodeURIComponent(msg);
-    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    window.location.href = `sms:+17044529982&body=${smsBody}`;
     document.getElementById("submitBtn").disabled = true;
     document.getElementById("submitBtn").textContent = "✅ Sent!";
     document.getElementById("successMsg").style.display = "block";
   }).catch(() => {
     const smsBody = encodeURIComponent(msg);
-    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    window.location.href = `sms:+17044529982&body=${smsBody}`;
     document.getElementById("submitBtn").disabled = true;
     document.getElementById("submitBtn").textContent = "✅ Sent!";
     document.getElementById("successMsg").style.display = "block";

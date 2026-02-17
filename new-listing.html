@@ -367,7 +367,7 @@ function submitForm() {
   navigator.clipboard.writeText(msg).then(() => {
     // Open iMessage with pre-filled body
     const smsBody = encodeURIComponent(msg);
-    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    window.location.href = `sms:+17044529982&body=${smsBody}`;
 
     document.getElementById("submitBtn").disabled = true;
     document.getElementById("submitBtn").textContent = "✅ Sent!";
@@ -375,7 +375,7 @@ function submitForm() {
   }).catch(() => {
     // Fallback: just open SMS
     const smsBody = encodeURIComponent(msg);
-    window.location.href = `sms:+15089542159&body=${smsBody}`;
+    window.location.href = `sms:+17044529982&body=${smsBody}`;
 
     document.getElementById("submitBtn").disabled = true;
     document.getElementById("submitBtn").textContent = "✅ Sent!";

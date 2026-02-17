@@ -644,7 +644,7 @@ function syncToJarvis(){
   if(unsent.length===0)return;
   let msg="📌 NEW TODOS from dashboard:\n";
   unsent.forEach(t=>{msg+=`\n• ${t.person}: ${t.text}`});
-  window.open("sms:+15089542159&body="+encodeURIComponent(msg),"_blank");
+  window.open("sms:+17044529982&body="+encodeURIComponent(msg),"_blank");
   localStorage.setItem("rr_todo_unsent","[]");
   showSyncBadge();
 }
