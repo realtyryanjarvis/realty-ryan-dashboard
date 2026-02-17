@@ -137,6 +137,10 @@ body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; mi
     <label for="hasPropertyToSell" style="font-size:14px;color:#FAFAFA;margin:0;">Buyer has property to sell/lease to complete purchase</label>
   </div>
   <div class="field" style="display:flex;align-items:center;gap:10px;">
+    <input type="checkbox" id="subjectToLeases" style="width:auto;">
+    <label for="subjectToLeases" style="font-size:14px;color:#FAFAFA;margin:0;">Property is subject to any lease(s)</label>
+  </div>
+  <div class="field" style="display:flex;align-items:center;gap:10px;">
     <input type="checkbox" id="hasFuelTank" style="width:auto;">
     <label for="hasFuelTank" style="font-size:14px;color:#FAFAFA;margin:0;">Fuel tank on property</label>
   </div>
@@ -402,6 +406,7 @@ function submitOffer() {
   msg += `Lead Paint Required: ${document.getElementById('leadPaint').checked ? 'YES' : 'NO'}\n`;
   const hpts = document.getElementById('hasPropertyToSell').checked;
   msg += `Has Property to Sell: ${hpts ? 'YES' : 'NO'}\n`;
+  msg += `Subject to Leases: ${document.getElementById('subjectToLeases').checked ? 'YES' : 'NO'}\n`;
   msg += `Fuel Tank: ${document.getElementById('hasFuelTank').checked ? 'YES' : 'NO'}\n`;
   const il = document.getElementById('itemsLeased').value.trim();
   const inc = document.getElementById('itemsNotConvey').value.trim();
