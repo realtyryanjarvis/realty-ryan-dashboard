@@ -342,14 +342,8 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
     <!-- Hero Action Buttons -->
     <div style="margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px">
       <!-- Project Progress -->
-      <a href="#process" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,.25);color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-size:.82rem;font-weight:600;transition:all .25s;letter-spacing:.02em">
+      <a href="#process" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-size:.85rem;font-weight:600;transition:all .25s;letter-spacing:.02em">
         <span style="font-size:1rem">📍</span> Project Progress — Final Punch &amp; Handoff
-        <span style="font-size:.7rem;opacity:.7;margin-left:4px">View →</span>
-      </a>
-      <!-- Latest Site Update -->
-      <a href="#site-update" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:.9rem;font-weight:600;transition:all .25s;letter-spacing:.02em">
-        <span style="font-size:1.1rem">🔧</span> Latest Site Update — Feb 17, 2026
-        <span style="font-size:.75rem;opacity:.7;margin-left:4px">View →</span>
       </a>
       <!-- Pending CO Banner -->
       <a href="#change-order" style="display:inline-flex;align-items:center;gap:10px;background:#d4920a;color:#fff;text-decoration:none;padding:14px 28px;border-radius:10px;font-size:.95rem;font-weight:700;box-shadow:0 4px 20px rgba(212,146,10,.4);transition:all .25s;animation:pulse-co 2s infinite">
@@ -365,15 +359,31 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
 <!-- Financial Dashboard -->
 <section id="dashboard" class="alt-bg">
   <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:32px">
       <div class="section-label">Financial Overview</div>
       <div class="section-title">Project <strong>At a Glance</strong></div>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card fade-in"><div class="number">$220,245</div><div class="label">Total Project</div></div>
-      <div class="stat-card green fade-in"><div class="number">$195,869</div><div class="label">Paid to Date</div></div>
-      <div class="stat-card fade-in"><div class="number">$24,376</div><div class="label">Remaining</div></div>
-      <div class="stat-card blue fade-in"><div class="number">~$33,806</div><div class="label">Alt3 Value Added</div></div>
+    <div class="fade-in" style="max-width:700px;margin:0 auto">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.04)">
+        <div style="display:flex;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);font-size:.88rem">
+          <span style="color:var(--dim)">Original Contract</span><span style="font-weight:600;color:var(--navy)">$220,245.59</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);font-size:.88rem">
+          <span style="color:var(--dim)">Change Orders (#1–#3)</span><span style="font-weight:600;color:var(--navy)">$26,559.08</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);font-size:.88rem;background:#fffcf5">
+          <span style="color:#b37a00;font-weight:500">⚠️ Pending Change Order</span><span style="font-weight:600;color:#b37a00">$15,273.31</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);font-size:.88rem">
+          <span style="color:var(--dim)">Paid to Date</span><span style="font-weight:600;color:var(--green)">$195,869.15</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);font-size:.88rem">
+          <span style="color:var(--dim)">Remaining Balance</span><span style="font-weight:600;color:var(--red)">$24,376.44</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 24px;font-size:.88rem;background:rgba(21,101,192,.03)">
+          <span style="color:var(--blue);font-weight:500">Alt3 Value Added</span><span style="font-weight:600;color:var(--blue)">~$33,806</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -426,97 +436,6 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
       </div>
     </div>
 
-    <!-- What's Happening Now -->
-    <div class="fade-in" style="margin-top:52px">
-      <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px;text-align:center">🔨 Currently In Progress</h3>
-      <div class="current-items">
-        <div class="ci-card">
-          <span class="ci-icon">⚡</span>
-          <div class="ci-content">
-            <div class="ci-title">Electrician Punch List</div>
-            <div class="ci-desc">Primary bath toe kick, shower exhaust, gym bar lights, main stair linear lighting, and exterior flood motion sensor integration.</div>
-          </div>
-          <span class="ci-status in-progress">In Progress</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">🔴</span>
-          <div class="ci-content">
-            <div class="ci-title">Rec Room Breaker / Panel B Investigation</div>
-            <div class="ci-desc">Recurring breaker trip — outdoor sconces disconnected temporarily. Adam / electrician tracing root cause.</div>
-          </div>
-          <span class="ci-status in-progress">In Progress</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">📺</span>
-          <div class="ci-content">
-            <div class="ci-title">TV Mounts &amp; AV Installation</div>
-            <div class="ci-desc">Great Room, Owner's Bedroom, Rec Room, and Exercise Room — receiver, sound bar, and subwoofer.</div>
-          </div>
-          <span class="ci-status pending">Pending CO Approval</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">📷</span>
-          <div class="ci-content">
-            <div class="ci-title">Additional Garage Security Camera</div>
-            <div class="ci-desc">Included in pending change order scope.</div>
-          </div>
-          <span class="ci-status pending">Pending CO Approval</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">🏠</span>
-          <div class="ci-content">
-            <div class="ci-title">Integration — Appliances &amp; Systems</div>
-            <div class="ci-desc">Microwave, stove, sliding doors, bathroom floor heaters, steam shower, sauna, and overhead doors — all to be integrated into Control4 + Josh.ai.</div>
-          </div>
-          <span class="ci-status in-progress">In Progress</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">💡</span>
-          <div class="ci-content">
-            <div class="ci-title">Patio LED Tape Light Selection</div>
-            <div class="ci-desc">Tracks installed and wired. Waiting on tape light selection to complete.</div>
-          </div>
-          <span class="ci-status pending">Selection Needed</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- What's Next -->
-    <div class="fade-in" style="margin-top:48px">
-      <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px;text-align:center">🔮 What's Ahead</h3>
-      <div class="current-items">
-        <div class="ci-card">
-          <span class="ci-icon">🚪</span>
-          <div class="ci-content">
-            <div class="ci-title">Move-In Day Walkthrough</div>
-            <div class="ci-desc">A hands-on walkthrough of your entire system — lighting scenes, voice commands, shades, AV, security, and how everything works together. We'll make sure you're completely comfortable before we leave.</div>
-          </div>
-          <span class="ci-status scheduled">At Move-In</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">🎙️</span>
-          <div class="ci-content">
-            <div class="ci-title">Background Programming Refinement</div>
-            <div class="ci-desc">As you settle in and start talking to your home through Josh.ai, we'll be refining scenes, automation routines, and voice responses in the background — adapting the system to how you actually live.</div>
-          </div>
-          <span class="ci-status upcoming">Ongoing</span>
-        </div>
-        <div class="ci-card">
-          <span class="ci-icon">🔄</span>
-          <div class="ci-content">
-            <div class="ci-title">30/60-Day Living-In Walkthrough</div>
-            <div class="ci-desc">After you've lived in the home for 30–60 days, we'll schedule a follow-up walkthrough. By then you'll know what you love, what needs tweaking, and what new automations would make life easier. This is where the system really becomes <em>yours</em>.</div>
-          </div>
-          <span class="ci-status scheduled">30–60 Days Post Move-In</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Philosophy Note -->
-    <div class="fade-in" style="max-width:600px;margin:48px auto 0;text-align:center;padding:28px;background:var(--surface);border-radius:16px;border:1px solid var(--border)">
-      <div style="font-size:1.4rem;margin-bottom:10px">🏡</div>
-      <p style="font-size:.85rem;color:var(--dim);line-height:1.7;margin:0"><strong style="color:var(--navy)">Our process doesn't end at installation.</strong> A smart home is a living system — it should grow with you. We stay engaged through move-in, refine programming as you adapt, and come back to fine-tune once you've truly settled in. That's the Alt3 difference.</p>
-    </div>
   </div>
 </section>
 
@@ -599,6 +518,12 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
         <div class="tl-title">Updated Pre-Wire — Sonance Removed</div>
         <div class="tl-desc">Proposal #119 — Sonance speakers removed (-$5,426.62). Replaced by Origin Acoustics in Josh.ai scope.</div>
         <a class="tl-link" href="https://drive.google.com/file/d/1NdRh2UW62Te1vTy4uQoW7saiF97zMx5_/view" target="_blank">View Updated Pre-Wire →</a>
+      </div>
+      <div class="tl-item fade-in" style="border-left-color:#d4920a">
+        <div class="tl-date" style="color:#b37a00">February 7, 2026</div>
+        <div class="tl-title" style="color:#b37a00">⚠️ Change Order #4 — Pending Approval</div>
+        <div class="tl-desc">Outdoor speakers, garage camera, TV mounts &amp; media for Rec Room, Living Room, Master Bedroom, and Gym. $15,273.31 — awaiting client approval.</div>
+        <a class="tl-link" href="#change-order" style="color:#d4920a">Review &amp; Approve →</a>
       </div>
     </div>
   </div>
@@ -914,6 +839,37 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
         </div>
       </div>
 
+      <!-- Change Order #4 — Pending -->
+      <div class="scope-card" style="border-color:#d4920a;border-width:2px;background:#fffcf5">
+        <div class="scope-header" onclick="toggleCard(this)" style="background:linear-gradient(135deg,#fff8e1,#ffecb3)">
+          <div class="scope-header-left">
+            <div class="scope-num" style="background:#d4920a">CO4</div>
+            <div class="scope-info"><h3 style="color:#b37a00">Change Order #4 — Pending Approval</h3><div class="scope-sub">Outdoor Speakers, Garage Camera, TV Mounts &amp; AV — 6 Areas</div></div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total" style="color:#b37a00;font-size:1.1rem">$15,273.31</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="note-box" style="border-left-color:#d4920a;background:rgba(212,146,10,.06)"><strong style="color:#b37a00">Awaiting Approval</strong> — Bailey add-ons proposal dated February 7, 2026.</div>
+          <div class="room-hdr" style="border-left-color:#d4920a"><span>Outdoor Speakers</span><span class="room-amt">$1,311.00</span></div>
+          <div class="room-hdr" style="border-left-color:#d4920a"><span>Garage Camera</span><span class="room-amt">$537.49</span></div>
+          <div class="room-hdr" style="border-left-color:#d4920a"><span>Rec Room — TV Mount &amp; Media</span><span class="room-amt">$1,576.97</span></div>
+          <div class="room-hdr" style="border-left-color:#d4920a"><span>Living Room — Full AV System</span><span class="room-amt">$8,366.94</span></div>
+          <div class="room-hdr" style="border-left-color:#d4920a"><span>Master Bedroom — TV Mount &amp; Media</span><span class="room-amt">$938.97</span></div>
+          <div class="room-hdr" style="border-left-color:#d4920a"><span>Gym — TV Mount &amp; Media</span><span class="room-amt">$2,541.94</span></div>
+          <div style="margin-top:16px;padding:14px;background:rgba(212,146,10,.06);border-radius:8px;border:1px solid rgba(212,146,10,.2)">
+            <div class="fee-line"><span>Equipment &amp; Materials</span><span>$10,350.81</span></div>
+            <div class="fee-line"><span>Professional Installation</span><span>$4,922.50</span></div>
+            <div class="area-total" style="border-color:#d4920a"><span>Change Order #4 Total (no tax)</span><span class="amt" style="color:#b37a00">$15,273.31</span></div>
+          </div>
+          <div style="text-align:center;margin-top:16px">
+            <a href="#change-order" style="display:inline-block;background:#d4920a;color:#fff;padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:background .2s">Review &amp; Approve →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -947,6 +903,12 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
         <h3>Motorized Shades Added</h3>
         <p>17 Lutron Sivoia QS Triathlon shades for kitchen, master bedroom, closets, and bath — battery-operated with fascia.</p>
       </div>
+      <div class="change-card fade-in" style="border:2px solid #d4920a;background:#fffcf5">
+        <div class="icon">⚠️</div>
+        <h3 style="color:#b37a00">Pending: AV &amp; Media Package</h3>
+        <p>Outdoor speakers, additional garage security camera, TV mounts and media systems for Living Room (full AV with receiver, soundbar, subwoofer), Rec Room, Master Bedroom, and Gym. <strong style="color:#b37a00">$15,273.31 — awaiting approval.</strong></p>
+        <a href="#change-order" style="display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;color:#d4920a;text-decoration:none">Review &amp; Approve →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -971,151 +933,23 @@ footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-tr
         <div class="value-row"><div><div class="val-label">Dimmer Plug-in Modules</div><div class="val-desc">2 modules for master closet</div></div><div class="val-amt">$514.00</div></div>
       </div>
       <div class="value-total"><span>Total Alt3 Value Added</span><span class="val-amt">~$33,806</span></div>
+
+      <!-- Additional Items — No Charge -->
+      <div style="margin-top:32px;padding:24px;background:rgba(46,125,50,.03);border:1px solid rgba(46,125,50,.15);border-radius:12px">
+        <h4 style="font-size:.82rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">✦ Additional Items Completed — No Charge</h4>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(46,125,50,.1);font-size:.85rem"><span style="color:var(--dim)">2 Outdoor Speakers — Installed</span><span style="color:var(--green);font-weight:600;font-size:.75rem">Covered</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(46,125,50,.1);font-size:.85rem"><span style="color:var(--dim)">1 Additional 24-Port POE Switch</span><span style="color:var(--green);font-weight:600;font-size:.75rem">Covered</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(46,125,50,.1);font-size:.85rem"><span style="color:var(--dim)">Lighting Keypad Relocations</span><span style="color:var(--green);font-weight:600;font-size:.75rem">Covered</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(46,125,50,.1);font-size:.85rem"><span style="color:var(--dim)">Patio LED Tape Wire Fix (final inspection)</span><span style="color:var(--green);font-weight:600;font-size:.75rem">Covered</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(46,125,50,.1);font-size:.85rem"><span style="color:var(--dim)">Control4 Core1 Controller</span><span style="color:var(--green);font-weight:600;font-size:.75rem">Covered</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:.85rem"><span style="color:var(--dim)">Miscellaneous Onsite Labor</span><span style="color:var(--green);font-weight:600;font-size:.75rem">Covered</span></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Project Status section consolidated into Added Value -->
 
-<!-- Latest Site Update -->
-<section id="site-update" class="alt-bg">
-  <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:32px">
-      <div class="section-label">Feb 17, 2026</div>
-      <div class="section-title">Latest <strong>Site Update</strong></div>
-      <div class="section-desc">Onsite walkthrough completed. All lights identified and working correctly, with the following items requiring attention.</div>
-    </div>
-
-    <div class="fade-in" style="max-width:800px;margin:0 auto">
-      <!-- Electrician Items -->
-      <div style="border:2px solid #ef5350;border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 4px 20px rgba(239,83,80,.08);margin-bottom:20px">
-        <div style="background:linear-gradient(135deg,#ffebee,#ffcdd2);padding:16px 24px;display:flex;align-items:center;gap:10px">
-          <span style="font-size:1.3rem">⚡</span>
-          <h3 style="font-size:.9rem;font-weight:700;color:#c62828;margin:0">Electrician Action Required</h3>
-        </div>
-        <div style="padding:16px 24px">
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>Primary Bath</strong> — Toe kick lighting under one vanity not activating with rest of linear lighting. Possible loose connection.
-          </div>
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>Primary Bath</strong> — Shower exhaust fan not audible when all systems on. Water closet fan working fine. Needs diagnosis.
-          </div>
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>Gym Service Bar</strong> — Ceiling-mounted lights above bar not coming on from any output. Needs electrician trace.
-          </div>
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>Main Stair</strong> — Linear lighting tape installed but not activating. May not be connected to panel output under house.
-          </div>
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>Exterior Floods</strong> — Currently on motion sensors, not responding correctly to lighting controls. Can motion sensing be disabled?
-          </div>
-          <div class="status-item" style="padding:10px 0;font-size:.85rem;color:#333;background:rgba(239,83,80,.04);padding:12px;border-radius:8px;border:1px solid rgba(239,83,80,.15)">
-            <strong>🔴 PRIORITY — Rec Room Exterior / Panel B</strong> — Breaker tripping again. Resolved temporarily by disconnecting outdoor sconces on back of rec room (same recurring fix). Adam / electrician to investigate root cause.
-          </div>
-        </div>
-      </div>
-
-      <!-- Alt3 / Tech Items -->
-      <div style="border:2px solid #1565c0;border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 4px 20px rgba(21,101,192,.08);margin-bottom:20px">
-        <div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);padding:16px 24px;display:flex;align-items:center;gap:10px">
-          <span style="font-size:1.3rem">🔧</span>
-          <h3 style="font-size:.9rem;font-weight:700;color:#1565c0;margin:0">Alt3 Smart Homes — Action Items</h3>
-        </div>
-        <div style="padding:16px 24px">
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>Wardrobe 1</strong> — Half of cabinet lights staying on (plugged directly into outlet, bypassing dimming module). Need 1×2 splitter to connect both transformers to dimming module. <span style="font-size:.75rem;color:var(--lighter);font-style:italic">Minor — part needed</span>
-          </div>
-          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
-            <strong>All Rooms</strong> — Match area/room naming between Lutron and Josh.ai systems for seamless voice control.
-          </div>
-          <div class="status-item" style="padding:10px 0;font-size:.85rem;color:#333">
-            <strong>Voice Control</strong> — Refinement phase begins once room naming is synced. Will be tuned to how Alex naturally uses voice commands.
-          </div>
-        </div>
-      </div>
-
-      <!-- Good News -->
-      <div style="background:rgba(46,125,50,.04);border:1px solid rgba(46,125,50,.2);border-radius:12px;padding:16px 24px;text-align:center">
-        <span style="font-size:1.2rem">✅</span>
-        <p style="font-size:.85rem;color:var(--green);font-weight:600;margin:4px 0 0">All other lights working correctly and identified. Several items corrected during this visit.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Added Value by Alt3 -->
-<section id="added-value">
-  <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:40px">
-      <div class="section-label">Completed — No Additional Charge</div>
-      <div class="section-title">Added Value by <strong>Alt3 Smart Homes</strong></div>
-      <div class="section-desc" style="margin:0 auto">The following items were completed at no cost to the client as part of our commitment to excellence.</div>
-    </div>
-    <div class="fade-in" style="max-width:800px;margin:0 auto">
-      <div class="av-section">
-        <div style="text-align:center"><span class="av-badge">✦ Covered by Alt3</span></div>
-
-        <div class="av-item">
-          <span class="av-icon">🔊</span>
-          <div class="av-text">
-            <div class="av-name">2 Outdoor Speakers — Installed</div>
-          </div>
-          <span class="av-tag">No Charge</span>
-        </div>
-
-        <div class="av-item">
-          <span class="av-icon">🔌</span>
-          <div class="av-text">
-            <div class="av-name">1 Additional 24-Port POE Switch</div>
-            <div class="av-desc">Needed two instead of one</div>
-          </div>
-          <span class="av-tag">No Charge</span>
-        </div>
-
-        <div class="av-item">
-          <span class="av-icon">🔲</span>
-          <div class="av-text">
-            <div class="av-name">Lighting Keypad Relocations</div>
-            <div class="av-desc">Moved lighting keypads a few times — covered by Alt3</div>
-          </div>
-          <span class="av-tag">No Charge</span>
-        </div>
-
-        <div class="av-item">
-          <span class="av-icon">💡</span>
-          <div class="av-text">
-            <div class="av-name">Patio LED Tape Wire Fix</div>
-            <div class="av-desc">Fixed patio LED tape wires for final inspection. Tracks only — tape light selection pending.</div>
-          </div>
-          <span class="av-tag">No Charge</span>
-        </div>
-
-        <div class="av-item">
-          <span class="av-icon">🎛️</span>
-          <div class="av-text">
-            <div class="av-name">Control4 Core1 Controller</div>
-            <div class="av-desc">Covered by Alt3</div>
-          </div>
-          <span class="av-tag">No Charge</span>
-        </div>
-
-        <div class="av-item">
-          <span class="av-icon">🔧</span>
-          <div class="av-text">
-            <div class="av-name">Other Miscellaneous Labor</div>
-            <div class="av-desc">Various onsite labor items absorbed by Alt3</div>
-          </div>
-          <span class="av-tag">No Charge</span>
-        </div>
-
-        <div class="av-total-box">
-          <div class="big">$0 Cost to Client</div>
-          <div class="sub">All items above completed and absorbed by Alt3 Smart Homes</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Pending Change Order -->
 <section id="change-order">
