@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt3 Smart Homes — Change Order #4 | Peninsula Club</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+@page { size: letter; margin: 0.5in; }
+@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --navy: #113665; --taupe: #BEB1A2; --surface: #f7f5f3; --border: #e8e3de; --text: #2a2a2a; --dim: #777; --amber: #d4920a; --amber-light: #fef7e8; }
+body { font-family: 'Neue Montreal', sans-serif; background: #f0ece8; color: var(--text); line-height: 1.5; font-size: 13px; }
+.proposal { max-width: 850px; margin: 0 auto; background: #fff; box-shadow: 0 4px 40px rgba(0,0,0,.08); }
+
+/* Header */
+.header { padding: 48px 48px 40px; border-bottom: 1px solid var(--border); position: relative; }
+.header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--navy), var(--taupe), var(--navy)); }
+.logo { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; color: var(--navy); }
+.logo span { color: var(--taupe); }
+.tagline { font-size: .72rem; color: var(--dim); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 2px; }
+.header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+.header-meta dt { font-size: .6rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 2px; }
+.header-meta dd { font-size: .88rem; color: var(--text); margin-bottom: 12px; }
+
+/* Badge */
+.co-badge { display: inline-block; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--amber); padding: 5px 14px; border-radius: 4px; margin-bottom: 20px; }
+
+/* Section */
+.section { padding: 32px 48px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title { font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 3px; height: 18px; background: var(--amber); border-radius: 2px; }
+.section-desc { color: var(--dim); font-size: .82rem; margin-bottom: 20px; }
+
+/* Room Cards */
+.room { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+.room-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.room-name { font-weight: 600; font-size: .9rem; color: var(--navy); }
+.room-total { font-weight: 700; font-size: .95rem; color: var(--amber); }
+.room-items { padding: 12px 20px; }
+.item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,.04); font-size: .82rem; }
+.item:last-child { border-bottom: none; }
+.item-name { color: var(--text); }
+.item-detail { color: var(--dim); font-size: .75rem; }
+.item-qty { color: var(--dim); font-size: .78rem; }
+
+/* Totals */
+.total-section { padding: 32px 48px; background: var(--amber-light); border-top: 3px solid var(--amber); }
+.total-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: .9rem; color: var(--dim); }
+.total-row.grand { font-size: 1.2rem; font-weight: 700; color: var(--navy); padding-top: 14px; margin-top: 8px; border-top: 2px solid var(--amber); }
+
+/* Terms */
+.terms { padding: 32px 48px; border-top: 1px solid var(--border); }
+.terms h3 { font-size: .85rem; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
+.terms p, .terms li { font-size: .78rem; color: var(--dim); line-height: 1.7; }
+.terms ul { padding-left: 16px; margin-bottom: 12px; }
+
+/* Signature */
+.sig-section { padding: 40px 48px; border-top: 1px solid var(--border); }
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
+.sig-block .label { font-size: .6rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 6px; }
+.sig-block .line { border-bottom: 1px solid var(--text); height: 36px; }
+.sig-block .name { font-size: .78rem; color: var(--dim); margin-top: 4px; }
+
+/* Footer */
+.footer { padding: 24px 48px; text-align: center; border-top: 1px solid var(--border); background: var(--surface); }
+.footer .brand { font-size: 1rem; font-weight: 800; letter-spacing: 1px; color: var(--navy); }
+.footer .brand span { color: var(--taupe); }
+.footer .sub { font-size: .68rem; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+
+/* Print button */
+.print-btn { position: fixed; top: 16px; right: 16px; background: var(--navy); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-family: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+.print-btn:hover { background: #0a2340; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+<div class="proposal">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">ALT<span>3</span></div>
+    <div class="tagline">Smart Homes</div>
+    <div class="header-meta">
+      <dl>
+        <dt>Prepared For</dt>
+        <dd>Alex Bailey<br>Keen Building Company</dd>
+        <dt>Project</dt>
+        <dd>18235 Peninsula Club Dr<br>Cornelius, NC 28031</dd>
+      </dl>
+      <dl>
+        <dt>Document</dt>
+        <dd>Change Order #4</dd>
+        <dt>Date</dt>
+        <dd>February 7, 2026</dd>
+        <dt>Status</dt>
+        <dd style="color:var(--amber);font-weight:600">Pending Approval</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Scope -->
+  <div class="section">
+    <span class="co-badge">Change Order #4</span>
+    <div class="section-title">Scope of Work</div>
+    <div class="section-desc">Additional AV equipment, outdoor speakers, security camera, and shade installation labor for the Peninsula Club project.</div>
+
+    <!-- Outdoor Speakers -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Outdoor Speakers</span>
+        <span class="room-total">$1,311.00</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Origin Acoustics OS80W</span><span class="item-qty">×2</span></div>
+      </div>
+    </div>
+
+    <!-- Garage Camera -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Garage Camera</span>
+        <span class="room-total">$537.49</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Luma 520 Series 5MP Turret IP Outdoor Camera</span><span class="item-qty">×1</span></div>
+      </div>
+    </div>
+
+    <!-- Rec Room -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Rec Room</span>
+        <span class="room-total">$1,576.97</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Sanus VXT7 TV Mount</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Roku Ultra</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Binary B6 HDMI Cable</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Control4 Driver: TCL TV (Cindev)</span><span class="item-qty">×1</span></div>
+      </div>
+    </div>
+
+    <!-- Living Room -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Living Room — Full AV System</span>
+        <span class="room-total">$8,366.94</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Anthem MRX 540 8K Receiver</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Origin Acoustics SBR43-60 Soundbar</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Triad MFS-BDL1 Subwoofer</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Strong Razor XL Tilt Mount 49–90"</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Strong Universal Soundbar Bracket</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Roku Ultra</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Binary B6 HDMI Cable</span><span class="item-qty">×1</span></div>
+      </div>
+    </div>
+
+    <!-- Master Bedroom -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Master Bedroom</span>
+        <span class="room-total">$938.97</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Strong Razor Large Tilt Mount 40–80"</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Roku Ultra</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Binary B6 HDMI Cable</span><span class="item-qty">×1</span></div>
+      </div>
+    </div>
+
+    <!-- Gym -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Gym</span>
+        <span class="room-total">$2,541.94</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Strong Carbon Series Dual Arm Mount 40–80"</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Roku Ultra</span><span class="item-qty">×1</span></div>
+        <div class="item"><span class="item-name">Binary B6 HDMI Cable</span><span class="item-qty">×1</span></div>
+      </div>
+    </div>
+
+    <!-- Shade Installation -->
+    <div class="room">
+      <div class="room-header">
+        <span class="room-name">Shade Installation</span>
+        <span class="room-total">$765.00</span>
+      </div>
+      <div class="room-items">
+        <div class="item"><span class="item-name">Professional Installation Labor</span><span class="item-qty">9 hrs × $85/hr</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Totals -->
+  <div class="total-section">
+    <div class="total-row"><span>Outdoor Speakers</span><span>$1,311.00</span></div>
+    <div class="total-row"><span>Garage Camera</span><span>$537.49</span></div>
+    <div class="total-row"><span>Rec Room</span><span>$1,576.97</span></div>
+    <div class="total-row"><span>Living Room</span><span>$8,366.94</span></div>
+    <div class="total-row"><span>Master Bedroom</span><span>$938.97</span></div>
+    <div class="total-row"><span>Gym</span><span>$2,541.94</span></div>
+    <div class="total-row"><span>Shade Installation</span><span>$765.00</span></div>
+    <div class="total-row grand"><span>Change Order #4 Total (no tax)</span><span>$16,038.31</span></div>
+  </div>
+
+  <!-- Terms -->
+  <div class="terms">
+    <h3>Terms &amp; Conditions</h3>
+    <ul>
+      <li>All pricing is valid for 30 days from the date of this document.</li>
+      <li>Sales tax is not included and will be applied to equipment at time of invoicing per NC state requirements.</li>
+      <li>Installation labor is tax-exempt.</li>
+      <li>Payment is due upon completion of installation unless otherwise agreed in writing.</li>
+      <li>Any modifications to this scope after approval may result in adjusted pricing.</li>
+      <li>Alt3 Smart Homes warrants all equipment per manufacturer warranty terms. Installation labor is warranted for 1 year from completion.</li>
+    </ul>
+    <p>This change order is an addendum to the original agreement dated May 2, 2025 for the Peninsula Club project at 18235 Peninsula Club Dr, Cornelius, NC.</p>
+  </div>
+
+  <!-- Signature -->
+  <div class="sig-section">
+    <h3 style="font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:4px">Approval</h3>
+    <p style="font-size:.78rem;color:var(--dim)">By signing below, you approve this change order for <strong>$16,038.31</strong> (plus applicable tax on equipment).</p>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="label">Client Signature</div>
+        <div class="line"></div>
+        <div class="name">Alex Bailey / Keen Building Company</div>
+      </div>
+      <div class="sig-block">
+        <div class="label">Date</div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="sig-grid" style="margin-top:20px">
+      <div class="sig-block">
+        <div class="label">Alt3 Smart Homes</div>
+        <div class="line"></div>
+        <div class="name">Ryan Palmer, CEO</div>
+      </div>
+      <div class="sig-block">
+        <div class="label">Date</div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="brand">ALT<span>3</span> SMART HOMES</div>
+    <div class="sub">Simple. Seamless. Smart — by design.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
