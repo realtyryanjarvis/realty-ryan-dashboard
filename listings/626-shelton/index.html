@@ -843,6 +843,35 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
   </details>
 </section>
 
+<!-- ═══════ DESIGN INTENT DOWNLOAD (GATED) ═══════ -->
+<section style="padding:80px clamp(40px,6vw,80px);background:var(--dark);text-align:center;border-top:1px solid rgba(248,247,246,.06)">
+  <span class="section-tag ani" style="margin-bottom:12px;display:inline-block">Exclusive Access</span>
+  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);color:var(--cream);margin-bottom:16px" class="ani ani-d1">Design Intent Package</h2>
+  <p style="max-width:600px;margin:0 auto 32px;color:var(--muted);font-size:15px;line-height:1.7" class="ani ani-d2">Explore the complete finish selections, material palettes, and design direction for 626 Shelton — curated by KEEN ID Interior Design.</p>
+  <button onclick="document.getElementById('diModal').classList.add('active')" class="ani ani-d3" style="display:inline-block;padding:16px 48px;background:var(--copper);color:var(--cream);font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;transition:background .3s">Download Design Intent</button>
+</section>
+
+<!-- Design Intent Modal -->
+<div id="diModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:8px;padding:40px;max-width:420px;width:90%;position:relative">
+    <button onclick="document.getElementById('diModal').classList.remove('active')" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;color:#999;cursor:pointer">✕</button>
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;color:#201408;margin-bottom:6px">Get the Design Intent</h3>
+    <p style="font-size:13px;color:#7b7269;margin-bottom:24px">Enter your info and we'll send you the full design package.</p>
+    <form id="diForm" onsubmit="return submitDesignIntent(event)">
+      <input type="text" id="di-name" placeholder="Your Name" required style="width:100%;padding:12px 14px;border:1px solid #ded9d3;border-radius:4px;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:12px;outline:none">
+      <input type="email" id="di-email" placeholder="Email Address" required style="width:100%;padding:12px 14px;border:1px solid #ded9d3;border-radius:4px;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:12px;outline:none">
+      <input type="tel" id="di-phone" placeholder="Phone Number (optional)" style="width:100%;padding:12px 14px;border:1px solid #ded9d3;border-radius:4px;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:20px;outline:none">
+      <button type="submit" id="di-submit" style="width:100%;padding:14px;background:#793315;color:#fff;border:none;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;transition:background .3s">Download Now</button>
+    </form>
+    <p id="di-error" style="display:none;color:#c0392b;font-size:12px;margin-top:12px;text-align:center"></p>
+  </div>
+</div>
+<style>
+#diModal.active{display:flex}
+#diModal input:focus{border-color:#793315}
+#di-submit:hover{background:#201408}
+</style>
+
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
   <img src="https://assets.cribflyer-proxy.com/cdn-cgi/image/width=500,fit=contain,rotate=0,format=auto,quality=100/5748/3/3233842/asset.png" alt="Corcoran HM Properties" class="footer-logo">
@@ -972,6 +1001,43 @@ function handleForm(e){
   setTimeout(()=>{btn.textContent='Request Private Preview';btn.style.background='';},3000);
   return false;
 }
+// Design Intent gated download
+async function submitDesignIntent(e) {
+  e.preventDefault();
+  const btn = document.getElementById('di-submit');
+  const errEl = document.getElementById('di-error');
+  errEl.style.display = 'none';
+  btn.textContent = 'SUBMITTING...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://offer-api-blush.vercel.app/api/design-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: document.getElementById('di-name').value,
+        email: document.getElementById('di-email').value,
+        phone: document.getElementById('di-phone').value,
+        property: '626 Shelton St'
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.downloadUrl) {
+      btn.textContent = 'DOWNLOADING ✓';
+      btn.style.background = '#2d5a27';
+      window.open(data.downloadUrl, '_blank');
+      setTimeout(() => { document.getElementById('diModal').classList.remove('active'); btn.textContent = 'DOWNLOAD NOW'; btn.style.background = ''; btn.disabled = false; }, 2000);
+    } else {
+      throw new Error(data.error || 'Something went wrong');
+    }
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.style.display = 'block';
+    btn.textContent = 'DOWNLOAD NOW';
+    btn.disabled = false;
+  }
+  return false;
+}
+
 // Floor plan tab switching
 function showFloor(floor, btn) {
   document.getElementById('fp-first').classList.toggle('hidden', floor !== 'first');
