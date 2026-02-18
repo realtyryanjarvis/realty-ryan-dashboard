@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jarvis Projects — AI Operations Kanban</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8f7f6;--surface:#fff;--border:#ded9d3;--text:#201408;--dim:#7b7269;--accent:#793315;--green:#2e7d32;--blue:#1565c0;--amber:#d4920a;--red:#c62828;--radius:10px}
+body{font-family:'Neue Montreal',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* Header */
+.header{background:var(--text);color:#fff;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header h1{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:10px}
+.header h1 span{color:var(--accent);font-size:.7rem;background:rgba(121,51,21,.2);padding:3px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase}
+.tab-bar{display:flex;gap:4px}
+.tab-bar button{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:none;padding:8px 18px;border-radius:6px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.tab-bar button:hover{background:rgba(255,255,255,.15);color:#fff}
+.tab-bar button.active{background:#fff;color:var(--text)}
+
+/* Kanban */
+.kanban-container{padding:24px;overflow-x:auto}
+.kanban{display:flex;gap:16px;min-height:calc(100vh - 140px)}
+.column{min-width:280px;max-width:320px;flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column}
+.col-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.col-title{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:8px}
+.col-count{background:var(--bg);color:var(--dim);font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:600}
+.col-body{padding:10px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+
+/* Cards */
+.card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:all .15s}
+.card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card-title{font-size:.85rem;font-weight:600;margin-bottom:6px}
+.card-desc{font-size:.75rem;color:var(--dim);line-height:1.5;margin-bottom:8px}
+.card-meta{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.tag{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border-radius:4px}
+.tag-rr{background:#fef3c7;color:#92400e}
+.tag-alt3{background:#e3f2fd;color:#1565c0}
+.tag-both{background:#f3e5f5;color:#7b1fa2}
+.priority-high{border-left:3px solid var(--red)}
+.priority-med{border-left:3px solid var(--amber)}
+.priority-low{border-left:3px solid var(--green)}
+.card-date{font-size:.65rem;color:var(--dim)}
+.card-assignee{font-size:.65rem;color:var(--dim);display:flex;align-items:center;gap:4px}
+
+/* Add card */
+.add-card{padding:10px;text-align:center}
+.add-card button{width:100%;background:none;border:1px dashed var(--border);border-radius:6px;padding:10px;font-size:.78rem;color:var(--dim);cursor:pointer;font-family:inherit;transition:all .15s}
+.add-card button:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:100;justify-content:center;align-items:center}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:12px;padding:28px;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--text)}
+.modal label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin:10px 0 4px}
+.modal input,.modal textarea,.modal select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:.85rem;font-family:inherit;outline:none}
+.modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--accent)}
+.modal textarea{min-height:80px;resize:vertical}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.modal-actions button{flex:1;padding:10px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+.btn-save{background:var(--accent);color:#fff}
+.btn-save:hover{background:#5a2410}
+.btn-cancel{background:var(--bg);color:var(--dim)}
+.btn-cancel:hover{background:var(--border)}
+.btn-delete{background:none;color:var(--red);font-size:.75rem;padding:6px;cursor:pointer;border:none;font-family:inherit}
+
+@media(max-width:768px){
+  .kanban{flex-direction:column}
+  .column{min-width:100%;max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🤖 Jarvis Projects <span>AI Ops</span></h1>
+  <div class="tab-bar">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="realty-ryan">Realty Ryan</button>
+    <button data-filter="alt3">Alt3</button>
+  </div>
+</div>
+
+<div class="kanban-container">
+  <div class="kanban" id="kanban"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Add Project</h3>
+    <input type="hidden" id="card-id">
+    <label>Project Name</label>
+    <input type="text" id="card-name" placeholder="e.g., Automated Seller Update Emails">
+    <label>Description</label>
+    <textarea id="card-desc" placeholder="What needs to be built..."></textarea>
+    <label>Business</label>
+    <select id="card-biz">
+      <option value="realty-ryan">Realty Ryan</option>
+      <option value="alt3">Alt3</option>
+      <option value="both">Both</option>
+    </select>
+    <label>Priority</label>
+    <select id="card-priority">
+      <option value="high">🔴 High</option>
+      <option value="med">🟡 Medium</option>
+      <option value="low">🟢 Low</option>
+    </select>
+    <label>Status</label>
+    <select id="card-status">
+      <option value="backlog">Backlog</option>
+      <option value="up-next">Up Next</option>
+      <option value="in-progress">In Progress</option>
+      <option value="review">Review / Refine</option>
+      <option value="done">Done</option>
+    </select>
+    <label>Assignee</label>
+    <select id="card-assignee">
+      <option value="jarvis">🤖 Jarvis</option>
+      <option value="ryan">👤 Ryan</option>
+      <option value="ally">👤 Ally</option>
+      <option value="together">🤝 Ryan + Jarvis</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveCard()">Save</button>
+    </div>
+    <div style="text-align:center;margin-top:8px">
+      <button class="btn-delete" id="btn-delete" onclick="deleteCard()" style="display:none">🗑️ Delete Project</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLS = [
+  {id:'backlog',title:'Backlog',icon:'📋'},
+  {id:'up-next',title:'Up Next',icon:'⏳'},
+  {id:'in-progress',title:'In Progress',icon:'🔨'},
+  {id:'review',title:'Review / Refine',icon:'👀'},
+  {id:'done',title:'Done',icon:'✅'}
+];
+
+const DEFAULT_CARDS = [
+  {id:1,name:'NC Transaction Playbooks',desc:'Buyer UC + Seller UC playbooks with 150+ steps each, template texts/emails, automation flags. Sub-agent building now.',biz:'realty-ryan',priority:'high',status:'in-progress',assignee:'jarvis',date:'2026-02-18'},
+  {id:2,name:'Listing Launch Playbook',desc:'Pre-listing to MLS go-live: agreements, disclosures, photos, marketing, MLS entry, launch week. 100+ steps.',biz:'realty-ryan',priority:'high',status:'in-progress',assignee:'jarvis',date:'2026-02-18'},
+  {id:3,name:'Elite Agent Touchpoints',desc:'Research top teams & coaches for differentiating touchpoints. Merge findings into all playbooks.',biz:'realty-ryan',priority:'high',status:'in-progress',assignee:'jarvis',date:'2026-02-18'},
+  {id:4,name:'Automated Client Texts During Transaction',desc:'Wire up playbook steps as automated texts to clients at key milestones (DD reminders, settlement prep, congrats, etc.)',biz:'realty-ryan',priority:'high',status:'up-next',assignee:'together',date:'2026-02-18'},
+  {id:5,name:'Monday HM Team Email',desc:'Weekly email to HM Properties team: active listings, open house opportunities, video marketing, co-marketing. From ryanpalmer@hmproperties.com.',biz:'realty-ryan',priority:'med',status:'backlog',assignee:'together',date:'2026-02-18'},
+  {id:6,name:'Automated Weekly Seller Update Emails',desc:'Ryan sent details about automating listing update emails to seller clients. Build out and integrate into listing playbook.',biz:'realty-ryan',priority:'med',status:'backlog',assignee:'together',date:'2026-02-18'},
+  {id:7,name:'Dashboard Process Flow — Transactions',desc:'Build interactive process flow on dashboard that Jarvis manages. Shows where each deal is, what step is next, who needs to act.',biz:'realty-ryan',priority:'high',status:'backlog',assignee:'together',date:'2026-02-18'},
+  {id:8,name:'Neighborhood Market Reports (Monthly)',desc:'Monthly email to past clients by zip code. Sample built for 28203. Need Ryan approval on format before automating.',biz:'realty-ryan',priority:'med',status:'review',assignee:'together',date:'2026-02-17'},
+  {id:9,name:'Peninsula Change Order Approval Flow',desc:'Wire serverless endpoint so approval notification auto-emails ryan.palmer@alt3.com when Alex approves.',biz:'alt3',priority:'med',status:'up-next',assignee:'jarvis',date:'2026-02-18'},
+  {id:10,name:'Write Offer Page — Brand Colors',desc:'Update write-offer.html from navy to Realty Ryan brand colors.',biz:'realty-ryan',priority:'low',status:'up-next',assignee:'jarvis',date:'2026-02-18'},
+  {id:11,name:'Fix Cron "Unsupported channel: whatsapp" Errors',desc:'FUB→Mailchimp, Newsletter, Daily Drip, Competition Alerts all failing with whatsapp delivery error.',biz:'realty-ryan',priority:'med',status:'backlog',assignee:'jarvis',date:'2026-02-18'},
+  {id:12,name:'Alt3 Client Project Portal Template',desc:'Peninsula proposal as a reusable template for future Alt3 jobs: progress tracker, notes, change orders, added value.',biz:'alt3',priority:'med',status:'backlog',assignee:'together',date:'2026-02-18'},
+  {id:13,name:'Daniel Neeman — Add to Pipeline',desc:'New construction lead. Waiting on Ryan for address and contact details. Add to dashboard, FUB, and email campaign.',biz:'realty-ryan',priority:'med',status:'backlog',assignee:'together',date:'2026-02-18'}
+];
+
+const LS = {
+  get(k,d){ try{return JSON.parse(localStorage.getItem('jp_'+k))||d}catch{return d}},
+  set(k,v){localStorage.setItem('jp_'+k,JSON.stringify(v))}
+};
+
+let currentFilter = 'all';
+let cards = LS.get('cards', DEFAULT_CARDS);
+
+function render(){
+  const kb = document.getElementById('kanban');
+  const filtered = currentFilter === 'all' ? cards : cards.filter(c => c.biz === currentFilter || c.biz === 'both');
+  
+  kb.innerHTML = COLS.map(col => {
+    const colCards = filtered.filter(c => c.status === col.id);
+    return `<div class="column">
+      <div class="col-header">
+        <div class="col-title">${col.icon} ${col.title} <span class="col-count">${colCards.length}</span></div>
+      </div>
+      <div class="col-body">
+        ${colCards.map(c => `<div class="card priority-${c.priority}" onclick="editCard(${c.id})">
+          <div class="card-title">${c.name}</div>
+          <div class="card-desc">${c.desc}</div>
+          <div class="card-meta">
+            <span class="tag tag-${c.biz}">${c.biz === 'realty-ryan' ? 'Realty Ryan' : c.biz === 'alt3' ? 'Alt3' : 'Both'}</span>
+            <span class="card-assignee">${c.assignee === 'jarvis' ? '🤖' : c.assignee === 'ryan' ? '👤' : c.assignee === 'ally' ? '👤' : '🤝'} ${c.assignee}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div class="add-card"><button onclick="openModal('${col.id}')">+ Add Project</button></div>
+    </div>`;
+  }).join('');
+}
+
+function openModal(status){
+  document.getElementById('card-id').value = '';
+  document.getElementById('card-name').value = '';
+  document.getElementById('card-desc').value = '';
+  document.getElementById('card-biz').value = 'realty-ryan';
+  document.getElementById('card-priority').value = 'med';
+  document.getElementById('card-status').value = status || 'backlog';
+  document.getElementById('card-assignee').value = 'together';
+  document.getElementById('modal-title').textContent = 'Add Project';
+  document.getElementById('btn-delete').style.display = 'none';
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function editCard(id){
+  const c = cards.find(x => x.id === id);
+  if(!c) return;
+  document.getElementById('card-id').value = c.id;
+  document.getElementById('card-name').value = c.name;
+  document.getElementById('card-desc').value = c.desc;
+  document.getElementById('card-biz').value = c.biz;
+  document.getElementById('card-priority').value = c.priority;
+  document.getElementById('card-status').value = c.status;
+  document.getElementById('card-assignee').value = c.assignee;
+  document.getElementById('modal-title').textContent = 'Edit Project';
+  document.getElementById('btn-delete').style.display = 'block';
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function closeModal(){ document.getElementById('modal-overlay').classList.remove('active'); }
+
+function saveCard(){
+  const id = document.getElementById('card-id').value;
+  const card = {
+    id: id ? parseInt(id) : Date.now(),
+    name: document.getElementById('card-name').value,
+    desc: document.getElementById('card-desc').value,
+    biz: document.getElementById('card-biz').value,
+    priority: document.getElementById('card-priority').value,
+    status: document.getElementById('card-status').value,
+    assignee: document.getElementById('card-assignee').value,
+    date: new Date().toISOString().slice(0,10)
+  };
+  if(!card.name) return alert('Project name required');
+  if(id){ cards = cards.map(c => c.id === parseInt(id) ? card : c); }
+  else { cards.push(card); }
+  LS.set('cards', cards);
+  closeModal();
+  render();
+}
+
+function deleteCard(){
+  const id = parseInt(document.getElementById('card-id').value);
+  if(confirm('Delete this project?')){
+    cards = cards.filter(c => c.id !== id);
+    LS.set('cards', cards);
+    closeModal();
+    render();
+  }
+}
+
+// Tab filtering
+document.querySelectorAll('.tab-bar button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
