@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="300">
+<!-- Firebase handles live updates now -->
 <title>Transaction Dashboard — Realty Ryan</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -234,15 +234,15 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
     </div>
   </div>
   <div class="hdr-numbers">
-    <div class="hn"><span class="hn-num">5</span><span class="hn-lbl">Active Listings</span></div>
+    <div class="hn"><span class="hn-num" id="stat-active">—</span><span class="hn-lbl">Active Listings</span></div>
     <div class="hn-divider"></div>
-    <div class="hn"><span class="hn-num">5</span><span class="hn-lbl">Under Contract</span></div>
+    <div class="hn"><span class="hn-num" id="stat-uc">—</span><span class="hn-lbl">Under Contract</span></div>
     <div class="hn-divider"></div>
-    <div class="hn"><span class="hn-num">5</span><span class="hn-lbl">Closed</span></div>
+    <div class="hn"><span class="hn-num" id="stat-closed">—</span><span class="hn-lbl">Closed</span></div>
     <div class="hn-divider"></div>
-    <div class="hn"><span class="hn-num">11</span><span class="hn-lbl">Buyers</span></div>
+    <div class="hn"><span class="hn-num" id="stat-buyers">—</span><span class="hn-lbl">Buyers</span></div>
     <div class="hn-divider"></div>
-    <div class="hn vol"><span class="hn-num">$3.8M</span><span class="hn-lbl">2026 Volume</span></div>
+    <div class="hn vol"><span class="hn-num" id="stat-volume">—</span><span class="hn-lbl">2026 Volume</span></div>
   </div>
 </div>
 
@@ -253,9 +253,15 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 <div class="weekly-cal">
 <div class="cal-day cal-today">
   <div class="cal-day-label">Today</div>
-  <div class="cal-event"><span class="cal-time">8:30 AM</span> Personal Training with Kobe J</div>
-<div class="cal-event"><span class="cal-time">11:30 AM</span> Broker Luncheon — 6017 Oxfordshire ...</div>
-<div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Tue Feb 17</div>
+  <div class="cal-empty">-</div>
+</div>
+<div class="cal-day">
+  <div class="cal-day-label">Wed Feb 18</div>
+  <div class="cal-event"><span class="cal-time">3:00 PM</span> 📸 Interior Photos - 709 Tennyson Dr...</div>
 
 </div>
 <div class="cal-day">
@@ -274,350 +280,210 @@ body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA
 </div>
 <div class="cal-day">
   <div class="cal-day-label">Sun Feb 22</div>
-  <div class="cal-event"><span class="cal-time">9:00 AM</span> Sip n Style — CLT Coffee Festival a...</div>
-
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Mon Feb 23</div>
   <div class="cal-empty">-</div>
-</div>
-<div class="cal-day">
-  <div class="cal-day-label">Tue Feb 24</div>
-  <div class="cal-event"><span class="cal-time">10:00 AM</span> HM Properties Sales Meeting</div>
-
 </div>
 </div>
 
 
 <div class="section-header">
   <h2>📌 To-Do</h2>
-  <span class="section-badge" id="todo-count">6</span>
+  <span class="section-badge" id="todo-count">0</span>
 </div>
 <div class="todo-section">
-  <div class="todo-columns" style="grid-template-columns: 1fr 1fr;">
-    <div class="todo-column" data-person="ryan">
-      <div class="todo-column-header">👤 Ryan <span class="todo-column-count">4</span></div>
-      <div class="todo-list" data-person="ryan">
-        <div class="todo-item high" draggable="true" data-id="1" data-person="ryan" data-priority="high"><div class="todo-check" onclick="toggleTodo('1')"></div><div class="todo-text">Drive by 4309 The Plaza — assess 4-plex for Marcello Homes (Viktor &amp; Marish Bogun) co-listing<span class="todo-deal">4309 The Plaza</span></div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('1')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('1')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item high" draggable="true" data-id="2" data-person="ryan" data-priority="high"><div class="todo-check" onclick="toggleTodo('2')"></div><div class="todo-text">Talk to builders about lots for Alexa &amp; Matt Evans — Keen (Alex Bailey), Chiott, Epic Homes, Highlight, A3 Custom<span class="todo-deal">Evans Build</span></div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('2')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('2')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item medium" draggable="true" data-id="3" data-person="ryan" data-priority="medium"><div class="todo-check" onclick="toggleTodo('3')"></div><div class="todo-text">Review Evans land search results — 30+ builder-owned lots in target areas compiled<span class="todo-deal">Evans Build</span></div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('3')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('3')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item high" draggable="true" data-id="4" data-person="ryan" data-priority="high"><div class="todo-check" onclick="toggleTodo('4')"></div><div class="todo-text">Send Buyer Agency Agreement to unsigned buyers</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('4')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('4')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
-      </div>
-      <div class="todo-add-inline">
-        <input type="text" placeholder="+ Add to-do..." class="todo-inline-input" data-person="ryan" onkeydown="if(event.key==='Enter')addInlineTodo(this)">
-      </div>
-    </div>
-    <div class="todo-column" data-person="ally">
-      <div class="todo-column-header">👩‍💼 Ally <span class="todo-column-count">2</span></div>
-      <div class="todo-list" data-person="ally">
-        <div class="todo-item medium" draggable="true" data-id="5" data-person="ally" data-priority="medium"><div class="todo-check" onclick="toggleTodo('5')"></div><div class="todo-text">Update FUB pipeline stages in Admin (back Feb 20)</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('5')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('5')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
-        <div class="todo-item medium" draggable="true" data-id="6" data-person="ally" data-priority="medium"><div class="todo-check" onclick="toggleTodo('6')"></div><div class="todo-text">Pull agent email list from MLS — import into FUB tagged as Agent + New Listing Alerts</div><div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('6')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('6')" title="Delete">✕</button></div><div class="todo-drag-handle">⠿</div></div>
-      </div>
-      <div class="todo-add-inline">
-        <input type="text" placeholder="+ Add to-do..." class="todo-inline-input" data-person="ally" onkeydown="if(event.key==='Enter')addInlineTodo(this)">
-      </div>
-    </div>
+  <div class="todo-columns" style="grid-template-columns: 1fr 1fr;" id="todo-columns-container">
+    <!-- Rendered dynamically from Firebase -->
   </div>
 </div>
 <div class="divider"></div>
 
 
-<div class="section-label">Listings <span class="sl-count">22</span></div>
-<div class="kanban">
-  <div class="kanban-col col-leads">
-    <div class="kanban-col-header">Leads <span class="count">1</span></div>
-    <div class="kanban-cards">
-      <a href="deals/30.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">4212 Montebello Dr</div>
-        <div class="card-client">Rick Diaz</div>
-        <div class="card-note">Seller lead - Home has been on market 143+ days · Needs DOM reset + fresh marketing strategy</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col" style="border-top-color:#c97a3b;">
-    <div class="kanban-col-header">Listing Appts <span class="count">3</span></div>
-    <div class="kanban-cards">
-      <a href="deals/29.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">168 Broadsound Pl, Mooresville</div>
-        <div class="card-client">Teresa</div>
-        <div class="card-price">$10M</div>
-        <div class="card-note">Listing appointment Friday Feb 20 at 10 AM</div>
-      </a>
-      <a href="deals/27.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">4309 The Plaza</div>
-        <div class="card-client">Viktor Bogun</div>
-        <div class="card-price">$2.20M</div>
-        <div class="card-note">4-plex · Co-listing prospect · Listing appointment - No signed agreement yet</div>
-      </a>
-      <a href="deals/45.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">1800 Chestnut St, Matthews</div>
-        <div class="card-client">Logan Lopez</div>
-        <div class="card-price">$1.25M</div>
-        <div class="card-note">listing appointment · Waiting for Logan to confirm appointment time.</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-prep">
-    <div class="kanban-col-header">WIP / Pre-List <span class="count">3</span></div>
-    <div class="kanban-cards">
-      <a href="deals/20.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">4601 General Pershing Dr</div>
-        <div class="card-client">Nathan Holbrook</div>
-        <div class="card-price">$650,000</div>
-        <div class="card-note">Signed listing - Pre-market (WIP)</div>
-      </a>
-      <a href="deals/26.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">113 Scottsmoor</div>
-        <div class="card-client">Brett Cockerham</div>
-        <div class="card-note">Brett &amp; Sonia Cockerham · Signed listing - Pre-market (WIP)</div>
-        <div class="card-timeline" style="color:#fbd75b;font-size:11px;margin-top:4px;">⏳ - Feb 26 @ 1:30 PM — Photos</div>
-      </a>
-      <a href="deals/24.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">709 Tennyson Drive</div>
-        <div class="card-client">Shayna Seals</div>
-        <div class="card-note">Signed listing agreement - Pre-market (WIP) · Planning to list when trees bloom (spring 2026)</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-live">
-    <div class="kanban-col-header">Active <span class="count">5</span></div>
-    <div class="kanban-cards">
-      <div class="card-sublabel">Existing Homes</div>
-      <a href="deals/12.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">4041 Hiddenbrook Dr</div>
-        <div class="card-client">Fiorella Freile</div>
-        <div class="card-price">$1.50M</div>
-        <div class="card-note">New build, completed. Active listing - Just on market, lots of showings</div>
-      </a>
-      <div class="card-sublabel" style="margin-top:10px;">To Be Built</div>
-      <a href="deals/6.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">626 Shelton - Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$4M</div>
-        <div class="card-note">Active listing on market</div>
-      </a>
-      <a href="deals/7.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">3208 Mayfield- Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$3.12M</div>
-        <div class="card-note">Active listing - ~12 months until completion (early 2027)</div>
-      </a>
-      <a href="deals/8.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">3320 Mayfield- Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$3.08M</div>
-        <div class="card-note">Active listing - ~12 months until completion (early 2027)</div>
-      </a>
-      <a href="deals/9.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">3321 Auburn Ave- Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$2.88M</div>
-        <div class="card-note">Active listing - Framing stage, expected completion early fall 2026</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-dd">
-    <div class="kanban-col-header">Under Contract <span class="count">5</span></div>
-    <div class="kanban-cards">
-      <a href="deals/10.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">1437 Montford - Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$2.23M</div>
-        <div class="card-note">Under Contract — Expected closing in 2-3 months (April/May 2026)</div>
-        <div class="card-meta"><span>⏰ 55d · Apr 15</span></div>
-      </a>
-      <a href="deals/42.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">1820 Parson - Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$1.60M</div>
-        <div class="card-note">Active listing - Framing stage, expected completion fall 2026 · Under contract</div>
-      </a>
-      <a href="deals/5.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">1816 Parson St- Keen Builders</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$1.45M</div>
-        <div class="card-note">Under Contract at $1,450,000</div>
-        <div class="card-meta"><span>⏰ 11d · Mar 02</span></div>
-      </a>
-      <a href="deals/4.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">6040 Coatbridge Lane</div>
-        <div class="card-client">Stuart Mossian</div>
-        <div class="card-price">$620,000</div>
-        <div class="card-note">Listing - Under Contract · Buyers are purchasing 6527 Burlwood Road ($960K)</div>
-        <div class="card-meta"><span>⏰ 7d · Feb 26</span></div>
-      </a>
-      <a href="deals/14.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">404 N Laurel Ave</div>
-        <div class="card-client">William Scolinos</div>
-        <div class="card-price">$289,000</div>
-        <div class="card-note">Under Contract - Through due diligence · Closing: Feb 25, 2026</div>
-        <div class="card-meta"><span>⏰ 6d · Feb 25</span></div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-closed">
-    <div class="kanban-col-header">Closed <span class="count">5</span></div>
-    <div class="kanban-cards">
-      <a href="deals/15.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">1817 Union</div>
-        <div class="card-client">Alex Bailey</div>
-        <div class="card-price">$1.45M</div>
-        <div class="card-note">Closed at $1,450,000</div>
-      </a>
-      <a href="deals/35.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">1009 Pryor St</div>
-        <div class="card-client">Lucy Duet</div>
-        <div class="card-price">$750,000</div>
-        <div class="card-note">Closed 2026 at $750,000</div>
-      </a>
-      <a href="deals/31.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">732 Manhassett Rd</div>
-        <div class="card-client"></div>
-        <div class="card-price">$629,999</div>
-        <div class="card-note">Do NOT contact seller</div>
-      </a>
-      <a href="deals/36.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">2719 Selwyn Ave #13</div>
-        <div class="card-client">Caroline Piper</div>
-        <div class="card-price">$504,250</div>
-        <div class="card-note">Closed 2026 at $504,250</div>
-      </a>
-      <a href="deals/38.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">9130 Landsburg Ln</div>
-        <div class="card-client">Annie Estabane</div>
-        <div class="card-price">$469,999</div>
-        <div class="card-note">Closed 2026 at $469,999</div>
-      </a>
-    </div>
-  </div>
+<div class="section-label">Listings <span class="sl-count" id="total-listings">—</span></div>
+<div class="kanban" id="listings-kanban">
+  <div class="kanban-col col-leads"><div class="kanban-col-header">Leads <span class="count" id="cnt-seller-leads">0</span></div><div class="kanban-cards" id="cards-seller-leads"></div></div>
+  <div class="kanban-col" style="border-top-color:#c97a3b;"><div class="kanban-col-header">Listing Appts <span class="count" id="cnt-seller-appt">0</span></div><div class="kanban-cards" id="cards-seller-appt"></div></div>
+  <div class="kanban-col col-prep"><div class="kanban-col-header">WIP / Pre-List <span class="count" id="cnt-seller-wip">0</span></div><div class="kanban-cards" id="cards-seller-wip"></div></div>
+  <div class="kanban-col col-live"><div class="kanban-col-header">Active <span class="count" id="cnt-seller-active">0</span></div><div class="kanban-cards" id="cards-seller-active"></div></div>
+  <div class="kanban-col col-dd"><div class="kanban-col-header">Under Contract <span class="count" id="cnt-seller-uc">0</span></div><div class="kanban-cards" id="cards-seller-uc"></div></div>
+  <div class="kanban-col col-closed"><div class="kanban-col-header">Closed <span class="count" id="cnt-seller-closed">0</span></div><div class="kanban-cards" id="cards-seller-closed"></div></div>
 </div>
 
-<div class="section-label">Buyers <span class="sl-count">11</span></div>
-<div class="kanban">
-  <div class="kanban-col col-hot">
-    <div class="kanban-col-header">Hot Leads 🔥 <span class="count">5</span></div>
-    <div class="kanban-cards">
-      <a href="deals/22.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Alexa &amp; Matt Evans - Buyer</div>
-        <div class="card-client">Alexa Evans</div>
-        <div class="card-price">$3M</div>
-        <div class="card-note">Budget: $3M target (stretch to $3.5M) · Lot: 0.4+ acres, flat, pool, walkable</div>
-      </a>
-      <a href="deals/28.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Matt Connelly - Buyer</div>
-        <div class="card-client">Matt Connelly</div>
-        <div class="card-price">$700,000</div>
-        <div class="card-note">timeline: Now — actively looking · hotlead: yes</div>
-        <div class="card-timeline" style="color:#ff887c;font-size:11px;margin-top:4px;">🔥 Now — actively looking</div>
-      </a>
-      <a href="deals/21.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Lindsey Anderson - Buyer</div>
-        <div class="card-client">Lindsey Anderson</div>
-        <div class="card-price">$700,000</div>
-        <div class="card-note">Budget: Comfortable around $700K, willing to go higher for the right home · Tags: investor-interest, new-construction</div>
-      </a>
-      <a href="deals/23.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Matt &amp; Nina Houser - Buyer</div>
-        <div class="card-client">Matt Houser, Nina Houser</div>
-        <div class="card-price">$250,000</div>
-        <div class="card-note">Budget: $200K-$300K for land · Owners of Green Life Charlotte (matt@greenlifeclt.com)</div>
-      </a>
-      <a href="deals/43.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Jake Murphy - Buyer</div>
-        <div class="card-client">Jake Murphy</div>
-        <div class="card-note">hotlead: yes · timeline: Now -- actively looking</div>
-        <div class="card-timeline" style="color:#ff887c;font-size:11px;margin-top:4px;">🔥 Now -- actively looking</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-leads">
-    <div class="kanban-col-header">Leads <span class="count">3</span></div>
-    <div class="kanban-cards">
-      <a href="deals/37.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Caroline Piper - Buyer</div>
-        <div class="card-client">Caroline Piper</div>
-        <div class="card-price">$350,000</div>
-        <div class="card-note">timeline: Flexible — signed a lease, browsing</div>
-        <div class="card-timeline" style="color:#46d6db;font-size:11px;margin-top:4px;">📅 Flexible — signed a lease, browsing</div>
-      </a>
-      <a href="deals/41.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Rachel Bogia - Land/Wedding Venue</div>
-        <div class="card-client">Rachel Bogia</div>
-        <div class="card-note">timeline: Active</div>
-        <div class="card-timeline" style="color:#ff887c;font-size:11px;margin-top:4px;">🔥 Active</div>
-      </a>
-      <a href="deals/39.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Max &amp; Lauren Sandquist - Buyer</div>
-        <div class="card-client">Max Sandquist</div>
-        <div class="card-note">timeline: May 2026 — lease ends</div>
-        <div class="card-timeline" style="color:#46d6db;font-size:11px;margin-top:4px;">📅 May 2026 — lease ends</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-contingent">
-    <div class="kanban-col-header">Contingent on Sale 🏠 <span class="count">2</span></div>
-    <div class="kanban-cards">
-      <a href="deals/25.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Shayna &amp; Jordan Seals - Buyer</div>
-        <div class="card-client">Shayna Seals</div>
-        <div class="card-price">$1.20M</div>
-        <div class="card-note">Budget: $1.2M max (may stretch for right home) · Areas: South Charlotte (Providence Crossing, Berkeley in 28277), Waxhaw, Ballantyne</div>
-        <div class="card-timeline" style="color:#46d6db;font-size:11px;margin-top:4px;">📅 After home sells — low priority</div>
-      </a>
-      <a href="deals/40.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">Nathan &amp; Lauren Holbrook - Buyer</div>
-        <div class="card-client">Nathan Holbrook</div>
-        <div class="card-note">timeline: TBD — monitoring job situation · contingent on sale</div>
-        <div class="card-timeline" style="color:#46d6db;font-size:11px;margin-top:4px;">📅 TBD — monitoring job situation</div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-signed">
-    <div class="kanban-col-header">Active Buyers <span class="count">0</span></div>
-    <div class="kanban-cards">
-
-    </div>
-  </div>
-  <div class="kanban-col col-pending">
-    <div class="kanban-col-header">Under Contract <span class="count">1</span></div>
-    <div class="kanban-cards">
-      <a href="deals/2.html" class="card" style="text-decoration:none;color:inherit;">
-        <div class="card-address">6527 Burlwood Road</div>
-        <div class="card-client">Stuart Mossian</div>
-        <div class="card-price">$960,000</div>
-        <div class="card-meta"><span>⏰ 7d · Feb 26</span></div>
-      </a>
-    </div>
-  </div>
-  <div class="kanban-col col-closed">
-    <div class="kanban-col-header">Closed <span class="count">0</span></div>
-    <div class="kanban-cards">
-
-    </div>
-  </div>
+<div class="section-label">Buyers <span class="sl-count" id="total-buyers">—</span></div>
+<div class="kanban" id="buyers-kanban">
+  <div class="kanban-col col-hot"><div class="kanban-col-header">Hot Leads 🔥 <span class="count" id="cnt-buyer-hot">0</span></div><div class="kanban-cards" id="cards-buyer-hot"></div></div>
+  <div class="kanban-col col-leads"><div class="kanban-col-header">Leads <span class="count" id="cnt-buyer-leads">0</span></div><div class="kanban-cards" id="cards-buyer-leads"></div></div>
+  <div class="kanban-col col-contingent"><div class="kanban-col-header">Contingent on Sale 🏠 <span class="count" id="cnt-buyer-contingent">0</span></div><div class="kanban-cards" id="cards-buyer-contingent"></div></div>
+  <div class="kanban-col col-signed"><div class="kanban-col-header">Active Buyers <span class="count" id="cnt-buyer-signed">0</span></div><div class="kanban-cards" id="cards-buyer-signed"></div></div>
+  <div class="kanban-col col-pending"><div class="kanban-col-header">Under Contract <span class="count" id="cnt-buyer-uc">0</span></div><div class="kanban-cards" id="cards-buyer-uc"></div></div>
+  <div class="kanban-col col-closed"><div class="kanban-col-header">Closed <span class="count" id="cnt-buyer-closed">0</span></div><div class="kanban-cards" id="cards-buyer-closed"></div></div>
 </div>
 
 
-<div class="section-header">
+<div class="section-header" id="referrals-header" style="display:none;">
   <h2>Sent Referrals</h2>
-  <span class="section-badge">2</span>
+  <span class="section-badge" id="referrals-count">0</span>
 </div>
-<div class="referrals-section">
-      <div class="ref-row">
-        <div class="ref-clients">Megan &amp; Michael Norris</div>
-        <div class="ref-detail">San Diego, CA &middot; Agent: Shana Weisman &middot; Fee: 25%</div>
-        <div class="ref-notes">Buying in San Diego. Shana handling buyer side.</div>
-      </div>
-      <div class="ref-row">
-        <div class="ref-clients">Taylor &amp; Daniel Napier</div>
-        <div class="ref-detail">Moving to NC — June 2026 &middot; Agent: TBD (incoming) &middot; Fee: 25%</div>
-        <div class="ref-notes">Referred out, moving to NC ~June 2026. Send housewarming gift when they close.</div>
-      </div>
+<div class="referrals-section" id="referrals-container"></div>
+
+<!-- ========== FORM 2-T WRITE OFFER PANEL ========== -->
+<div id="writeOfferPanel" style="display:none;">
+
+  <!-- Deal Bar -->
+  <div class="f2t-deal-bar">
+    <select id="f2t-deal-select" class="f2t-select" onchange="f2tLoadDeal(this.value)">
+      <option value="">— Load Deal —</option>
+    </select>
+    <input type="text" id="f2t-deal-name" class="f2t-input" placeholder="Deal name (e.g. Smith - 123 Main St)" style="flex:1;">
+    <button class="f2t-btn" onclick="f2tSaveDeal()">💾 Save</button>
+    <button class="f2t-btn f2t-btn-danger" onclick="f2tDeleteDeal()">🗑 Delete</button>
+  </div>
+
+  <!-- MLS Lookup -->
+  <div class="f2t-section-card">
+    <div class="f2t-section-title">MLS Lookup</div>
+    <div class="f2t-mls-row">
+      <input type="text" id="f2t-mls-query" class="f2t-input" placeholder="MLS # or Property Address" style="flex:1;">
+      <button class="f2t-btn f2t-btn-gold" onclick="f2tMlsLookup()">🔍 Pull from MLS</button>
+    </div>
+    <div id="f2t-mls-banner" class="f2t-banner" style="display:none;"></div>
+  </div>
+
+  <!-- Property & Listing Agent Info Card -->
+  <div class="f2t-section-card" id="f2t-property-card" style="display:none;">
+    <div class="f2t-section-title">Property & Listing Agent Info</div>
+    <div class="f2t-readonly-grid">
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Address</span><span class="f2t-ro-value" id="f2t-ro-address">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">City / County / Zip</span><span class="f2t-ro-value" id="f2t-ro-city-county-zip">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">PID / PIN</span><span class="f2t-ro-value" id="f2t-ro-pid">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">List Price</span><span class="f2t-ro-value" id="f2t-ro-list-price">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Listing Agent</span><span class="f2t-ro-value" id="f2t-ro-listing-agent">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Listing Firm</span><span class="f2t-ro-value" id="f2t-ro-listing-firm">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Legal Description</span><span class="f2t-ro-value" id="f2t-ro-legal">—</span></div>
+    </div>
+  </div>
+
+  <!-- Form Sections -->
+  <div class="f2t-form-grid">
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Buyer Info</div>
+      <label class="f2t-label">Buyer Name</label>
+      <input type="text" class="f2t-input" data-field="buyer_name" id="f2t-buyer-name">
+      <label class="f2t-label">Buyer 2 Name</label>
+      <input type="text" class="f2t-input" data-field="buyer2_name" id="f2t-buyer2-name">
+      <label class="f2t-label">Entity Name</label>
+      <input type="text" class="f2t-input" data-field="buyer_entity" id="f2t-buyer-entity">
+      <label class="f2t-label">Address</label>
+      <input type="text" class="f2t-input" data-field="buyer_address" id="f2t-buyer-address">
+      <label class="f2t-label">Email</label>
+      <input type="email" class="f2t-input" data-field="buyer_email" id="f2t-buyer-email">
+      <label class="f2t-label">Phone</label>
+      <input type="tel" class="f2t-input" data-field="buyer_phone" id="f2t-buyer-phone">
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Offer Terms</div>
+      <label class="f2t-label">Purchase Price</label>
+      <input type="text" class="f2t-input" data-field="purchase_price" id="f2t-purchase-price">
+      <label class="f2t-label">Due Diligence Fee</label>
+      <input type="text" class="f2t-input" data-field="due_diligence_fee" id="f2t-dd-fee">
+      <label class="f2t-label">Earnest Money</label>
+      <input type="text" class="f2t-input" data-field="earnest_money" id="f2t-earnest-money">
+      <label class="f2t-label">Additional Earnest Money</label>
+      <input type="text" class="f2t-input" data-field="additional_earnest" id="f2t-addl-earnest">
+      <label class="f2t-label">Seller Concessions</label>
+      <input type="text" class="f2t-input" data-field="seller_concession_amount" id="f2t-seller-concessions">
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Key Dates</div>
+      <label class="f2t-label">Due Diligence Deadline</label>
+      <input type="date" class="f2t-input" data-field="dd_period_date" id="f2t-dd-deadline">
+      <label class="f2t-label">Closing Date</label>
+      <input type="date" class="f2t-input" data-field="settlement_date" id="f2t-closing-date">
+      <label class="f2t-label">Possession Date</label>
+      <input type="date" class="f2t-input" data-field="possession_date" id="f2t-possession-date">
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Financing</div>
+      <label class="f2t-label">Loan Type</label>
+      <select class="f2t-select f2t-input" data-field="loan_type" id="f2t-loan-type">
+        <option value="">Select…</option>
+        <option value="Conventional">Conventional</option>
+        <option value="FHA">FHA</option>
+        <option value="VA">VA</option>
+        <option value="USDA">USDA</option>
+        <option value="Cash">Cash</option>
+        <option value="Other">Other</option>
+      </select>
+      <label class="f2t-label">Loan Amount</label>
+      <input type="text" class="f2t-input" data-field="loan_amount" id="f2t-loan-amount">
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Seller Info</div>
+      <label class="f2t-label">Seller Name</label>
+      <input type="text" class="f2t-input" data-field="seller_name" id="f2t-seller-name">
+      <label class="f2t-label">Seller Address</label>
+      <input type="text" class="f2t-input" data-field="seller_address" id="f2t-seller-address">
+      <label class="f2t-label">Seller Email</label>
+      <input type="email" class="f2t-input" data-field="seller_email" id="f2t-seller-email">
+      <label class="f2t-label">Seller Phone</label>
+      <input type="tel" class="f2t-input" data-field="seller_phone" id="f2t-seller-phone">
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Escrow</div>
+      <label class="f2t-label">Escrow Agent Name</label>
+      <input type="text" class="f2t-input" data-field="escrow_agent" id="f2t-escrow-agent">
+      <label class="f2t-label">Escrow Agent Address</label>
+      <input type="text" class="f2t-input" data-field="escrow_address" id="f2t-escrow-address">
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Personal Property</div>
+      <textarea class="f2t-input f2t-textarea" data-field="personal_property" id="f2t-personal-property" rows="4" placeholder="List personal property included…"></textarea>
+    </div>
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Additional Terms</div>
+      <textarea class="f2t-input f2t-textarea" data-field="additional_terms" id="f2t-additional-terms" rows="4" placeholder="Additional terms and conditions…"></textarea>
+    </div>
+  </div>
+
+  <!-- Buyer's Agent Card -->
+  <div class="f2t-section-card f2t-agent-card">
+    <div class="f2t-section-title">Buyer's Agent</div>
+    <div class="f2t-readonly-grid f2t-readonly-grid-compact">
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Agent</span><span class="f2t-ro-value">Ryan Palmer</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Firm</span><span class="f2t-ro-value">Corcoran HM Properties</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">License #</span><span class="f2t-ro-value">315654</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Firm License #</span><span class="f2t-ro-value">C18059</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Phone</span><span class="f2t-ro-value">508-954-2159</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Email</span><span class="f2t-ro-value">ryanpalmer@hmproperties.com</span></div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="f2t-actions">
+    <button class="f2t-btn f2t-btn-gold" onclick="f2tPreview()">👁 Preview</button>
+    <button class="f2t-btn" onclick="f2tPrint()">🖨 Print</button>
+    <button class="f2t-btn f2t-btn-sign" onclick="f2tSendForSignature()">✍️ Send for Signature</button>
+    <button class="f2t-btn f2t-btn-danger" onclick="toggleWriteOffer()">✕ Close</button>
+  </div>
+
+  <!-- Preview Section -->
+  <div id="f2t-preview-section" style="display:none;">
+    <div class="f2t-section-title" style="padding:16px 0 8px;">Form 2-T Preview</div>
+    <div id="f2t-preview-pages"></div>
+  </div>
+
 </div>
+<!-- ========== END FORM 2-T PANEL ========== -->
 
 <div class="footer">Realty Ryan & Associates · Powered by Jarvis</div>
 
+
+
 </div>
+
+
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
 const H="5ae67553136b2ba571f41239f4646eb489bb393b7d25717bf28bbbcdb24f1c04";
@@ -673,223 +539,6 @@ function addInlineTodo(input){
   list.insertAdjacentHTML("beforeend",renderTodoItem(todo,person));
   initDragDrop();
   input.value="";
-  updateTodoCount();
-  // Track unsent items for Jarvis sync
-  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
-  const personName=person.charAt(0).toUpperCase()+person.slice(1);
-  unsent.push({person:personName,text:text,time:new Date().toLocaleString()});
-  localStorage.setItem("rr_todo_unsent",JSON.stringify(unsent));
-  showSyncBadge();
-}
-
-// Sync badge — shows when there are unsent todos for Jarvis
-function showSyncBadge(){
-  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
-  let badge=document.getElementById("jarvis-sync-badge");
-  if(unsent.length===0){if(badge)badge.style.display="none";return}
-  if(!badge){
-    badge=document.createElement("div");
-    badge.id="jarvis-sync-badge";
-    badge.style.cssText="position:fixed;bottom:20px;right:20px;background:#7A3B14;color:#FAFAFA;padding:10px 16px;border-radius:24px;cursor:pointer;font-size:13px;font-family:Work Sans,sans-serif;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,0.4);display:flex;align-items:center;gap:8px;";
-    badge.onclick=syncToJarvis;
-    document.body.appendChild(badge);
-  }
-  badge.innerHTML=`🤖 <span>${unsent.length} new todo${unsent.length>1?"s":""}</span> <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:12px;font-weight:600;">Send to Jarvis</span>`;
-  badge.style.display="flex";
-}
-
-function syncToJarvis(){
-  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
-  if(unsent.length===0)return;
-  let msg="📌 NEW TODOS from dashboard:\n";
-  unsent.forEach(t=>{msg+=`\n• ${t.person}: ${t.text}`});
-  window.open("sms:+15089542159&body="+encodeURIComponent(msg),"_blank");
-  localStorage.setItem("rr_todo_unsent","[]");
-  showSyncBadge();
-}
-
-// Show badge on load if unsent items exist
-showSyncBadge();
-
-function toggleTodo(id){
-  const el=document.querySelector(`.todo-item[data-id="${id}"]`);
-  if(!el)return;
-  el.classList.toggle("done");
-  const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
-  if(el.classList.contains("done")){doneTodos[id]=true}else{delete doneTodos[id]}
-  localStorage.setItem("rr_todos_done",JSON.stringify(doneTodos));
-  // For local todos
-  const local=getLocalTodos();
-  const person=el.dataset.person;
-  if(local[person]){
-    const lt=local[person].find(t=>t.id===id);
-    if(lt){lt.done=!lt.done;saveLocalTodos(local)}
-  }
-  updateTodoCount();
-}
-
-function updateTodoCount(){
-  const all=document.querySelectorAll(".todo-item");
-  const active=[...all].filter(e=>!e.classList.contains("done")).length;
-  const ct=document.getElementById("todo-count");
-  if(ct)ct.textContent=active;
-  // Update per-column counts
-  document.querySelectorAll(".todo-column").forEach(col=>{
-    const items=col.querySelectorAll(".todo-item");
-    const activeCol=[...items].filter(e=>!e.classList.contains("done")).length;
-    const badge=col.querySelector(".todo-column-count");
-    if(badge)badge.textContent=activeCol;
-  });
-}
-
-// Delete todo
-function deleteTodo(id){
-  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
-  if(!item)return;
-  item.style.transition="opacity 0.2s";item.style.opacity="0";
-  setTimeout(()=>{
-    item.remove();
-    // Remove from local todos
-    const person=item.dataset.person;
-    const local=getLocalTodos();
-    if(local[person]){
-      local[person]=local[person].filter(t=>t.id!==id);
-      saveLocalTodos(local);
-    }
-    // Track server-rendered deletions
-    const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
-    if(!dels.includes(id))dels.push(id);
-    localStorage.setItem("rr_todo_deletes",JSON.stringify(dels));
-    updateTodoCount();
-  },200);
-}
-
-// Cycle priority: high → medium → low → high
-function cyclePriority(id){
-  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
-  if(!item)return;
-  const order=["high","medium","low"];
-  const current=item.dataset.priority||"medium";
-  const next=order[(order.indexOf(current)+1)%3];
-  item.classList.remove("high","medium","low");
-  item.classList.add(next);
-  item.dataset.priority=next;
-  // Save priority change
-  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
-  pris[id]=next;
-  localStorage.setItem("rr_todo_priorities",JSON.stringify(pris));
-  // Update local todos
-  const person=item.dataset.person;
-  const local=getLocalTodos();
-  if(local[person]){
-    const lt=local[person].find(t=>t.id===id);
-    if(lt){lt.priority=next;saveLocalTodos(local)}
-  }
-}
-
-// Apply saved deletions and priorities on load
-(function(){
-  const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
-  dels.forEach(id=>{
-    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
-    if(el)el.remove();
-  });
-  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
-  Object.keys(pris).forEach(id=>{
-    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
-    if(el){
-      el.classList.remove("high","medium","low");
-      el.classList.add(pris[id]);
-      el.dataset.priority=pris[id];
-    }
-  });
-})();
-
-// Edit todo on double-click
-document.addEventListener("dblclick",function(e){
-  const textEl=e.target.closest(".todo-text");
-  if(!textEl)return;
-  const item=textEl.closest(".todo-item");
-  if(!item||item.querySelector(".todo-edit-input"))return;
-  const currentText=textEl.childNodes[0]?textEl.childNodes[0].textContent.trim():textEl.textContent.trim();
-  const input=document.createElement("input");
-  input.type="text";
-  input.className="todo-edit-input";
-  input.value=currentText;
-  const dealSpan=textEl.querySelector(".todo-deal");
-  textEl.innerHTML="";
-  textEl.appendChild(input);
-  if(dealSpan)textEl.appendChild(dealSpan);
-  input.focus();
-  input.select();
-  function save(){
-    const newText=input.value.trim();
-    if(!newText)return cancel();
-    textEl.innerHTML="";
-    textEl.appendChild(document.createTextNode(newText));
-    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
-    // Save edit to localStorage
-    const id=item.dataset.id;
-    const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
-    edits[id]=newText;
-    localStorage.setItem("rr_todo_edits",JSON.stringify(edits));
-    // Also update local todos if applicable
-    const person=item.dataset.person;
-    const local=getLocalTodos();
-    if(local[person]){
-      const lt=local[person].find(t=>t.id===id);
-      if(lt){lt.text=newText;saveLocalTodos(local)}
-    }
-  }
-  function cancel(){
-    textEl.innerHTML="";
-    textEl.appendChild(document.createTextNode(currentText));
-    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
-  }
-  input.addEventListener("keydown",function(ev){
-    if(ev.key==="Enter"){ev.preventDefault();save()}
-    if(ev.key==="Escape")cancel();
-  });
-  input.addEventListener("blur",save);
-});
-
-// Apply saved edits on load
-(function(){
-  const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
-  Object.keys(edits).forEach(id=>{
-    const item=document.querySelector(`.todo-item[data-id="${id}"]`);
-    if(item){
-      const textEl=item.querySelector(".todo-text");
-      const dealSpan=textEl.querySelector(".todo-deal");
-      textEl.innerHTML="";
-      textEl.appendChild(document.createTextNode(edits[id]));
-      if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
-    }
-  });
-})();
-
-// Drag & Drop
-let dragItem=null;
-function initDragDrop(){
-  document.querySelectorAll(".todo-item[draggable]").forEach(item=>{
-    item.ondragstart=function(e){
-      dragItem=this;
-      this.classList.add("dragging");
-      e.dataTransfer.effectAllowed="move";
-      e.dataTransfer.setData("text/plain",this.dataset.id);
-    };
-    item.ondragend=function(){
-      this.classList.remove("dragging");
-      document.querySelectorAll(".todo-list").forEach(l=>l.classList.remove("drag-over"));
-      dragItem=null;
-    };
-  });
-  document.querySelectorAll(".todo-list[data-person]").forEach(list=>{
-    list.ondragover=function(e){
-      e.preventDefault();
-      e.dataTransfer.dropEffect="move";
-      this.classList.add("drag-over");
-    };
     list.ondragleave=function(){this.classList.remove("drag-over")};
     list.ondrop=function(e){
       e.preventDefault();
@@ -921,6 +570,506 @@ function initDragDrop(){
     };
   });
 }
+</script>
+
+<!-- Form 2-T Styles -->
+<style>
+#writeOfferPanel { padding: 20px 24px; }
+.f2t-deal-bar { display:flex; gap:8px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
+.f2t-input { width:100%; padding:10px 12px; background:#1a1408; border:1px solid #5C3D14; border-radius:6px; color:#FAFAFA; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
+.f2t-input:focus { border-color:#c97a3b; }
+.f2t-select { padding:10px 12px; background:#1a1408; border:1px solid #5C3D14; border-radius:6px; color:#FAFAFA; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
+.f2t-select:focus { border-color:#c97a3b; }
+.f2t-textarea { resize:vertical; min-height:80px; }
+.f2t-label { display:block; font-size:11px; color:#857D52; text-transform:uppercase; letter-spacing:0.08em; margin:10px 0 4px; }
+.f2t-label:first-of-type { margin-top:0; }
+.f2t-btn { padding:10px 18px; background:#7A3B14; color:#FAFAFA; border:none; border-radius:6px; font-family:'Work Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap; }
+.f2t-btn:hover { background:#9A4B1A; }
+.f2t-btn-gold { background:#c97a3b; }
+.f2t-btn-gold:hover { background:#e08a42; }
+.f2t-btn-danger { background:#5a1a1a; }
+.f2t-btn-danger:hover { background:#7a2a2a; }
+.f2t-btn-sign { background:#2a5a3a; }
+.f2t-btn-sign:hover { background:#3a7a4a; }
+.f2t-section-card { background:#261A05; border:1px solid #5C3D14; border-radius:8px; padding:16px; margin-bottom:12px; }
+.f2t-section-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#c97a3b; margin-bottom:12px; letter-spacing:0.06em; }
+.f2t-mls-row { display:flex; gap:8px; }
+.f2t-banner { padding:10px 14px; border-radius:6px; font-size:13px; margin-top:10px; }
+.f2t-banner.f2t-success { background:rgba(70,214,122,0.15); border:1px solid #46d67a; color:#46d67a; }
+.f2t-banner.f2t-error { background:rgba(255,68,68,0.15); border:1px solid #ff4444; color:#ff887c; }
+.f2t-readonly-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.f2t-readonly-grid-compact { grid-template-columns:1fr 1fr 1fr; }
+.f2t-ro-label { display:block; font-size:10px; color:#857D52; text-transform:uppercase; letter-spacing:0.08em; }
+.f2t-ro-value { display:block; font-size:14px; color:#FAFAFA; margin-top:2px; }
+.f2t-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.f2t-agent-card { margin-top:12px; }
+.f2t-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+#f2t-preview-section { margin-top:20px; }
+.f2t-preview-page { position:relative; margin-bottom:12px; background:#fff; border-radius:4px; overflow:hidden; }
+.f2t-preview-page img { width:100%; display:block; }
+.f2t-overlay-text { position:absolute; font-family:'Work Sans',sans-serif; color:#000; white-space:nowrap; overflow:hidden; }
+.f2t-overlay-check { position:absolute; font-size:14px; font-weight:bold; color:#000; }
+@media(max-width:768px){
+  .f2t-form-grid { grid-template-columns:1fr; }
+  .f2t-readonly-grid-compact { grid-template-columns:1fr 1fr; }
+  .f2t-mls-row { flex-direction:column; }
+}
+@media(max-width:480px){
+  .f2t-readonly-grid { grid-template-columns:1fr; }
+  .f2t-readonly-grid-compact { grid-template-columns:1fr; }
+  .f2t-deal-bar { flex-direction:column; }
+  .f2t-actions { flex-direction:column; }
+  .f2t-actions .f2t-btn { width:100%; }
+}
+</style>
+
+<!-- Firebase Live Data -->
+<script>
+// Initialize Firebase for dashboard data
+const dashFirebaseConfig = {
+  databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com"
+};
+const dashApp = firebase.initializeApp(dashFirebaseConfig, 'dashboard');
+const dashDb = firebase.database(dashApp);
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function renderCard(c) {
+  let html = `<a href="deals/${c.id}.html" class="card" style="text-decoration:none;color:inherit;">`;
+  html += `<div class="card-address">${esc(c.name)}</div>`;
+  html += `<div class="card-client">${esc((c.people||[]).join(', '))}</div>`;
+  if (c.priceStr && c.price > 0) html += `<div class="card-price">${esc(c.priceStr)}</div>`;
+  if (c.note) html += `<div class="card-note">${esc(c.note)}</div>`;
+  if (c.dom != null) {
+    const domColor = c.dom < 30 ? '#51b749' : c.dom < 60 ? '#fbd75b' : '#ff887c';
+    html += `<div class="card-meta"><span style="color:${domColor}">${c.dom} DOM</span></div>`;
+  }
+  if (c.closingStr) html += `<div class="card-meta"><span>${esc(c.closingStr)}</span></div>`;
+  if (c.timeline) {
+    const tl = c.timeline.toLowerCase();
+    let color = '#46d6db', icon = '📅';
+    if (['now','asap','immediate','active'].some(w => tl.includes(w))) { color = '#ff887c'; icon = '🔥'; }
+    else if (['1 month','next month','march','feb'].some(w => tl.includes(w))) { color = '#fbd75b'; icon = '⏳'; }
+    html += `<div class="card-timeline" style="color:${color};font-size:11px;margin-top:4px;">${icon} ${esc(c.timeline)}</div>`;
+  }
+  html += '</a>';
+  return html;
+}
+
+function renderCards(cards) { return (cards || []).map(renderCard).join(''); }
+
+function setCards(id, cards, cntId) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = renderCards(cards);
+  const cnt = document.getElementById(cntId);
+  if (cnt) cnt.textContent = (cards || []).length;
+}
+
+// Listen for deal changes
+dashDb.ref('realty-ryan/deals').on('value', snap => {
+  const d = snap.val();
+  if (!d) return;
+
+  const s = d.stats || {};
+  const si = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  si('stat-active', s.activeListings);
+  si('stat-uc', s.underContract);
+  si('stat-closed', s.closed);
+  si('stat-buyers', s.buyers);
+  si('stat-volume', s.closedVolume);
+  si('total-listings', s.totalListings);
+  si('total-buyers', s.totalBuyers);
+
+  setCards('cards-seller-leads', d.seller_leads, 'cnt-seller-leads');
+  setCards('cards-seller-appt', d.seller_appt, 'cnt-seller-appt');
+  setCards('cards-seller-wip', d.seller_wip, 'cnt-seller-wip');
+  setCards('cards-seller-uc', d.seller_uc, 'cnt-seller-uc');
+  setCards('cards-seller-closed', d.seller_closed, 'cnt-seller-closed');
+
+  const activeEl = document.getElementById('cards-seller-active');
+  if (activeEl) {
+    let h = '<div class="card-sublabel">Existing Homes</div>';
+    h += renderCards(d.seller_existing);
+    h += '<div class="card-sublabel" style="margin-top:10px;">To Be Built</div>';
+    h += renderCards(d.seller_new_construction);
+    activeEl.innerHTML = h;
+  }
+  const cntActive = document.getElementById('cnt-seller-active');
+  if (cntActive) cntActive.textContent = (d.seller_existing||[]).length + (d.seller_new_construction||[]).length;
+
+  setCards('cards-buyer-hot', d.buyer_hot, 'cnt-buyer-hot');
+  setCards('cards-buyer-leads', d.buyer_leads, 'cnt-buyer-leads');
+  setCards('cards-buyer-contingent', d.buyer_contingent, 'cnt-buyer-contingent');
+  setCards('cards-buyer-signed', d.buyer_signed, 'cnt-buyer-signed');
+  setCards('cards-buyer-uc', d.buyer_uc, 'cnt-buyer-uc');
+  setCards('cards-buyer-closed', d.buyer_closed, 'cnt-buyer-closed');
+});
+
+// Listen for todo changes
+dashDb.ref('realty-ryan/todos').on('value', snap => {
+  const todos = snap.val();
+  if (!todos) return;
+  const container = document.getElementById('todo-columns-container');
+  if (!container) return;
+
+  const personMap = { ryan: '👤 Ryan', ally: '👩‍💼 Ally', alexis: '💁 Alexis' };
+  let html = '';
+  let totalCount = 0;
+
+  Object.keys(todos).forEach(person => {
+    const items = todos[person] || [];
+    if (!Array.isArray(items)) return;
+    totalCount += items.length;
+    html += `<div class="todo-column" data-person="${person}">`;
+    html += `<div class="todo-column-header">${personMap[person] || person} <span class="todo-column-count">${items.length}</span></div>`;
+    html += `<div class="todo-list" data-person="${person}">`;
+    items.forEach(t => {
+      const pri = t.priority || 'medium';
+      const deal = t.deal ? `<span class="todo-deal">${esc(t.deal)}</span>` : '';
+      html += `<div class="todo-item ${pri}" draggable="true" data-id="${t.id}" data-person="${person}" data-priority="${pri}">`;
+      html += `<div class="todo-check" onclick="toggleTodo('${t.id}')"></div>`;
+      html += `<div class="todo-text">${esc(t.text)}${deal}</div>`;
+      html += `<div class="todo-actions"><button class="todo-action-btn todo-pri-cycle" onclick="cyclePriority('${t.id}')" title="Change priority">🔴</button><button class="todo-action-btn todo-delete" onclick="deleteTodo('${t.id}')" title="Delete">✕</button></div>`;
+      html += `<div class="todo-drag-handle">⠿</div></div>`;
+    });
+    html += `</div>`;
+    html += `<div class="todo-add-inline"><input type="text" placeholder="+ Add to-do..." class="todo-inline-input" data-person="${person}" onkeydown="if(event.key==='Enter')addInlineTodo(this)"></div>`;
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+
+  // Re-apply local state
+  const doneTodos = JSON.parse(localStorage.getItem('rr_todos_done') || '{}');
+  const dels = JSON.parse(localStorage.getItem('rr_todo_deletes') || '[]');
+  const pris = JSON.parse(localStorage.getItem('rr_todo_priorities') || '{}');
+  const edits = JSON.parse(localStorage.getItem('rr_todo_edits') || '{}');
+
+  dels.forEach(id => { const el = document.querySelector(`.todo-item[data-id="${id}"]`); if (el) el.remove(); });
+  Object.keys(doneTodos).forEach(id => { const el = document.querySelector(`.todo-item[data-id="${id}"]`); if (el) el.classList.add('done'); });
+  Object.keys(pris).forEach(id => {
+    const el = document.querySelector(`.todo-item[data-id="${id}"]`);
+    if (el) { el.classList.remove('high','medium','low'); el.classList.add(pris[id]); el.dataset.priority = pris[id]; }
+  });
+  Object.keys(edits).forEach(id => {
+    const item = document.querySelector(`.todo-item[data-id="${id}"]`);
+    if (item) { const t = item.querySelector('.todo-text'); if (t && t.childNodes[0]) t.childNodes[0].textContent = edits[id]; }
+  });
+
+  // Load locally-added todos
+  const local = getLocalTodos();
+  Object.keys(local).forEach(person => {
+    const list = document.querySelector(`.todo-list[data-person="${person}"]`);
+    if (list) {
+      local[person].forEach(t => {
+        if (!document.querySelector(`.todo-item[data-id="${t.id}"]`)) {
+          list.insertAdjacentHTML('beforeend', renderTodoItem(t, person));
+        }
+      });
+    }
+  });
+
+  updateTodoCount();
+  initDragDrop();
+});
+
+// Listen for referral changes
+dashDb.ref('realty-ryan/referrals').on('value', snap => {
+  const refs = snap.val();
+  if (!refs || !refs.length) return;
+  const active = refs.filter(r => r.status === 'Active');
+  if (!active.length) return;
+  document.getElementById('referrals-header').style.display = 'flex';
+  document.getElementById('referrals-count').textContent = active.length;
+  document.getElementById('referrals-container').innerHTML = active.map(r => `
+    <div class="ref-row">
+      <div class="ref-clients">${esc(r.clients)}</div>
+      <div class="ref-detail">${esc(r.location)} &middot; Agent: ${esc(r.agent)} &middot; Fee: ${esc(r.referralFee)}</div>
+      ${r.notes ? `<div class="ref-notes">${esc(r.notes)}</div>` : ''}
+    </div>`).join('');
+});
+
+// Listen for lastUpdated
+dashDb.ref('realty-ryan/lastUpdated').on('value', snap => {
+  const ts = snap.val();
+  if (!ts) return;
+  const bar = document.getElementById('last-updated-bar');
+  if (!bar) return;
+  const dt = new Date(ts);
+  function updateAgo() {
+    const now = new Date();
+    const diffMin = Math.floor((now - dt) / 60000);
+    let ago;
+    if (diffMin < 1) ago = 'just now';
+    else if (diffMin < 60) ago = diffMin + 'm ago';
+    else if (diffMin < 1440) ago = Math.floor(diffMin/60) + 'h ago';
+    else ago = Math.floor(diffMin/1440) + 'd ago';
+    bar.textContent = 'Last updated: ' + ago + ' · ' + dt.toLocaleString();
+  }
+  updateAgo();
+  clearInterval(window._lastUpdInterval);
+  window._lastUpdInterval = setInterval(updateAgo, 60000);
+});
+</script>
+
+<!-- Form 2-T JavaScript -->
+<script>
+const f2tFirebaseConfig = {
+  apiKey: "AIzaSyCLnvrTIIsshy0nP7z1BEAyFZdGeJ-hJwQ",
+  authDomain: "realtyryan-dashboard.firebaseapp.com",
+  databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com",
+  projectId: "realtyryan-dashboard",
+  storageBucket: "realtyryan-dashboard.firebasestorage.app",
+  messagingSenderId: "40229133129",
+  appId: "1:40229133129:web:be8ca0f35c778427301898"
+};
+const f2tApp = firebase.initializeApp(f2tFirebaseConfig, 'form2t');
+const f2tDb = firebase.database(f2tApp);
+const f2tDealsRef = f2tDb.ref('realty-ryan/form2t_deals');
+
+let f2tMappings = null;
+fetch('forms/form2t-mappings-clean.json').then(r=>r.json()).then(d=>{f2tMappings=d}).catch(()=>{});
+
+const F2T_AGENT = {
+  buyer_agent_name: 'Ryan Palmer',
+  buyer_agent_firm: 'Corcoran HM Properties',
+  buyer_agent_license: '315654',
+  buyer_agent_firm_license: 'C18059',
+  buyer_agent_phone: '508-954-2159',
+  buyer_agent_email: 'ryanpalmer@hmproperties.com'
+};
+
+function toggleWriteOffer() {
+  const panel = document.getElementById('writeOfferPanel');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function f2tGetFormData() {
+  const data = {};
+  document.querySelectorAll('#writeOfferPanel [data-field]').forEach(el => {
+    data[el.dataset.field] = el.value;
+  });
+  Object.assign(data, F2T_AGENT);
+  return data;
+}
+
+function f2tSetFormData(data) {
+  if (!data) return;
+  document.querySelectorAll('#writeOfferPanel [data-field]').forEach(el => {
+    if (data[el.dataset.field] !== undefined) el.value = data[el.dataset.field];
+  });
+}
+
+async function f2tMlsLookup() {
+  const q = document.getElementById('f2t-mls-query').value.trim();
+  if (!q) return;
+  const banner = document.getElementById('f2t-mls-banner');
+  banner.style.display = 'block';
+  banner.className = 'f2t-banner';
+  banner.textContent = 'Searching MLS…';
+  try {
+    const isNum = /^\d+$/.test(q);
+    let url = isNum
+      ? `https://api.idxbroker.com/mls/listing/${q}`
+      : `https://api.idxbroker.com/mls/searchresults?query=${encodeURIComponent(q)}`;
+    const resp = await fetch(url, {
+      headers: { 'accesskey': 'n7sPFcEjrAnAihx-uq46z8', 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    if (!resp.ok) throw new Error('MLS lookup failed: ' + resp.status);
+    const result = await resp.json();
+    const listing = Array.isArray(result) ? result[0] : result;
+    if (!listing) throw new Error('No results found');
+    const addr = listing.address || listing.streetName || '';
+    const city = listing.cityName || listing.city || '';
+    const county = listing.countyName || listing.county || '';
+    const zip = listing.zipcode || listing.zip || '';
+    const pid = listing.parcelNumber || listing.pid || '';
+    const legal = listing.legalDescription || '';
+    const listPrice = listing.listingPrice || listing.price || '';
+    const listAgent = listing.listingAgentName || listing.agentName || '';
+    const listFirm = listing.listingOfficeName || listing.officeName || '';
+    document.getElementById('f2t-ro-address').textContent = addr;
+    document.getElementById('f2t-ro-city-county-zip').textContent = `${city}, ${county}, ${zip}`;
+    document.getElementById('f2t-ro-pid').textContent = pid;
+    document.getElementById('f2t-ro-list-price').textContent = listPrice ? `$${Number(listPrice).toLocaleString()}` : '—';
+    document.getElementById('f2t-ro-listing-agent').textContent = listAgent;
+    document.getElementById('f2t-ro-listing-firm').textContent = listFirm;
+    document.getElementById('f2t-ro-legal').textContent = legal || '—';
+    const si = (id, v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
+    si('f2t-seller-name', listing.ownerName || '');
+    si('f2t-purchase-price', '');
+    if (listPrice) document.getElementById('f2t-purchase-price').placeholder = `List: $${Number(listPrice).toLocaleString()}`;
+    window.f2tMlsData = { street_address: addr, city, county, zip_code: zip, pid_pin: pid, other_description: legal, seller_name: listing.ownerName || '' };
+    document.getElementById('f2t-property-card').style.display = 'block';
+    banner.className = 'f2t-banner f2t-success';
+    banner.textContent = '✓ Property data loaded from MLS';
+  } catch (err) {
+    banner.className = 'f2t-banner f2t-error';
+    banner.textContent = '✕ ' + err.message;
+  }
+}
+
+function f2tGetDeals() {
+  try { return JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}'); } catch(e) { return {}; }
+}
+function f2tSaveDeals(deals) {
+  localStorage.setItem('rr_form2t_deals', JSON.stringify(deals));
+  f2tSyncToFirebase(deals);
+}
+function f2tSyncToFirebase(deals) {
+  try { f2tDealsRef.set(deals); } catch(e) { console.warn('Firebase sync failed', e); }
+}
+f2tDealsRef.on('value', snap => {
+  const fbDeals = snap.val();
+  if (fbDeals) {
+    localStorage.setItem('rr_form2t_deals', JSON.stringify(fbDeals));
+    f2tPopulateDealSelect();
+  }
+});
+function f2tPopulateDealSelect() {
+  const sel = document.getElementById('f2t-deal-select');
+  const deals = f2tGetDeals();
+  sel.innerHTML = '<option value="">— Load Deal —</option>';
+  Object.keys(deals).forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k; opt.textContent = k;
+    sel.appendChild(opt);
+  });
+}
+function f2tSaveDeal() {
+  const name = document.getElementById('f2t-deal-name').value.trim();
+  if (!name) { alert('Enter a deal name first.'); return; }
+  const deals = f2tGetDeals();
+  deals[name] = { ...f2tGetFormData(), _mlsData: window.f2tMlsData || null, _updated: new Date().toISOString() };
+  f2tSaveDeals(deals);
+  f2tPopulateDealSelect();
+  document.getElementById('f2t-deal-select').value = name;
+  f2tShowBanner('f2t-mls-banner', '💾 Deal saved: ' + name, true);
+}
+function f2tLoadDeal(name) {
+  if (!name) return;
+  const deals = f2tGetDeals();
+  const deal = deals[name];
+  if (!deal) return;
+  document.getElementById('f2t-deal-name').value = name;
+  f2tSetFormData(deal);
+  if (deal._mlsData) {
+    window.f2tMlsData = deal._mlsData;
+    const m = deal._mlsData;
+    document.getElementById('f2t-ro-address').textContent = m.street_address || '—';
+    document.getElementById('f2t-ro-city-county-zip').textContent = `${m.city||''}, ${m.county||''}, ${m.zip_code||''}`;
+    document.getElementById('f2t-ro-pid').textContent = m.pid_pin || '—';
+    document.getElementById('f2t-ro-legal').textContent = m.other_description || '—';
+    document.getElementById('f2t-property-card').style.display = 'block';
+  }
+}
+function f2tDeleteDeal() {
+  const name = document.getElementById('f2t-deal-select').value || document.getElementById('f2t-deal-name').value.trim();
+  if (!name) return;
+  if (!confirm('Delete deal "' + name + '"?')) return;
+  const deals = f2tGetDeals();
+  delete deals[name];
+  f2tSaveDeals(deals);
+  f2tPopulateDealSelect();
+  document.getElementById('f2t-deal-name').value = '';
+  f2tShowBanner('f2t-mls-banner', '🗑 Deal deleted', false);
+}
+function f2tShowBanner(id, msg, isSuccess) {
+  const b = document.getElementById(id);
+  b.style.display = 'block';
+  b.className = 'f2t-banner ' + (isSuccess ? 'f2t-success' : 'f2t-error');
+  b.textContent = msg;
+  setTimeout(() => { b.style.display = 'none'; }, 3000);
+}
+function f2tPreview() {
+  const section = document.getElementById('f2t-preview-section');
+  const pages = document.getElementById('f2t-preview-pages');
+  if (section.style.display !== 'none') { section.style.display = 'none'; return; }
+  pages.innerHTML = '';
+  const formData = f2tGetFormData();
+  if (window.f2tMlsData) Object.assign(formData, window.f2tMlsData);
+  const IMG_W = 612;
+  for (let p = 1; p <= 14; p++) {
+    const container = document.createElement('div');
+    container.className = 'f2t-preview-page';
+    const img = document.createElement('img');
+    img.src = `forms/images/form2t-page-${p}.png`;
+    img.alt = `Page ${p}`;
+    container.appendChild(img);
+    if (f2tMappings && f2tMappings[String(p)]) {
+      f2tMappings[String(p)].forEach(field => {
+        const val = formData[field.name];
+        if (!val) return;
+        if (field.type === 'checkbox') {
+          if (val === 'true' || val === true || val === '✓') {
+            const chk = document.createElement('div');
+            chk.className = 'f2t-overlay-check';
+            chk.textContent = '✓';
+            chk.style.left = (field.x / IMG_W * 100) + '%';
+            chk.style.top = (field.y / 792 * 100) + '%';
+            chk.style.fontSize = (field.fontSize || 10) + 'px';
+            container.appendChild(chk);
+          }
+        } else {
+          const txt = document.createElement('div');
+          txt.className = 'f2t-overlay-text';
+          txt.textContent = val;
+          txt.style.left = (field.x / IMG_W * 100) + '%';
+          txt.style.top = (field.y / 792 * 100) + '%';
+          txt.style.fontSize = (field.fontSize || 10) + 'px';
+          txt.style.maxWidth = (field.w / IMG_W * 100) + '%';
+          container.appendChild(txt);
+        }
+      });
+    }
+    pages.appendChild(container);
+  }
+  section.style.display = 'block';
+  section.scrollIntoView({ behavior: 'smooth' });
+}
+function f2tPrint() {
+  f2tPreview();
+  setTimeout(() => window.print(), 500);
+}
+async function f2tSendForSignature() {
+  const buyerEmail = document.getElementById('f2t-buyer-email').value.trim();
+  const buyerName = document.getElementById('f2t-buyer-name').value.trim();
+  const sellerEmail = document.getElementById('f2t-seller-email').value.trim();
+  const sellerName = document.getElementById('f2t-seller-name').value.trim();
+  if (!buyerEmail || !buyerName) { alert('Buyer name and email are required.'); return; }
+  if (!sellerEmail || !sellerName) { alert('Seller name and email are required.'); return; }
+  if (!confirm(`Send Form 2-T for signature to:\n• ${buyerName} (${buyerEmail})\n• ${sellerName} (${sellerEmail})\n\nProceed?`)) return;
+  const dealName = document.getElementById('f2t-deal-name').value.trim() || 'Form 2-T';
+  try {
+    const formData = new FormData();
+    formData.append('title', `Form 2-T: ${dealName}`);
+    formData.append('subject', `Offer to Purchase - ${dealName}`);
+    formData.append('message', 'Please review and sign the attached Form 2-T Offer to Purchase and Contract.');
+    formData.append('signers[0][email_address]', buyerEmail);
+    formData.append('signers[0][name]', buyerName);
+    formData.append('signers[0][order]', '0');
+    formData.append('signers[1][email_address]', sellerEmail);
+    formData.append('signers[1][name]', sellerName);
+    formData.append('signers[1][order]', '1');
+    formData.append('test_mode', '1');
+    const resp = await fetch('https://api.hellosign.com/v3/signature_request/send', {
+      method: 'POST',
+      headers: { 'Authorization': 'Basic ' + btoa('589ba5d3f3c5a635352c09254515e984c01d5e29529b1284ba8eb32b976d16c8:') },
+      body: formData
+    });
+    if (!resp.ok) throw new Error('Dropbox Sign error: ' + resp.status);
+    const result = await resp.json();
+    f2tShowBanner('f2t-mls-banner', '✍️ Signature request sent! ID: ' + (result.signature_request?.signature_request_id || 'sent'), true);
+  } catch (err) {
+    f2tShowBanner('f2t-mls-banner', '✕ Signature error: ' + err.message, false);
+  }
+}
+f2tPopulateDealSelect();
 </script>
 
 </body>
