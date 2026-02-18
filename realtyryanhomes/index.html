@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realty Ryan &amp; Associates | Luxury Real Estate in Charlotte, NC</title>
+<meta name="description" content="Charlotte's premier luxury real estate brokerage. New construction, investment properties, and bespoke service from a top 1% NC Realtor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f8f7f6;
+  --primary: #201408;
+  --accent: #793315;
+  --border: #ded9d3;
+  --muted: #7b7269;
+  --white: #ffffff;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--primary); -webkit-font-smoothing: antialiased; }
+
+/* ── UTILITY ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px); }
+.section-pad { padding: clamp(80px, 10vw, 160px) 0; }
+.serif { font-family: var(--serif); }
+.accent { color: var(--accent); }
+.muted { color: var(--muted); }
+.uppercase { text-transform: uppercase; letter-spacing: 0.15em; font-size: 11px; font-weight: 600; }
+.divider { width: 48px; height: 1px; background: var(--accent); margin: 24px 0; }
+
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 0;
+  transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+}
+.nav.scrolled {
+  background: rgba(32, 20, 8, 0.92);
+  backdrop-filter: blur(20px);
+  padding: 14px 0;
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 18px; color: var(--white);
+  letter-spacing: 0.04em; font-weight: 500;
+}
+.nav-logo span { font-weight: 300; opacity: 0.7; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,0.75); font-size: 12px; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 500; transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span { display: block; width: 24px; height: 1.5px; background: #fff; margin: 5px 0; transition: 0.3s; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--primary); overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(32,20,8,0.3) 0%, rgba(32,20,8,0.7) 100%);
+  z-index: 1;
+}
+.hero-video-overlay {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg, #201408 0%, #3a2510 50%, #201408 100%);
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: center;
+  padding: 0 24px; max-width: 900px;
+}
+.hero-eyebrow {
+  font-family: var(--sans); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.25em; color: rgba(255,255,255,0.5); margin-bottom: 32px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-size: clamp(40px, 7vw, 80px); color: var(--white); line-height: 1.08;
+  font-weight: 400; margin-bottom: 28px;
+}
+.hero h1 em { font-style: italic; font-weight: 400; }
+.hero-sub {
+  font-size: clamp(14px, 1.6vw, 17px); color: rgba(255,255,255,0.55);
+  line-height: 1.7; max-width: 560px; margin: 0 auto 48px; font-weight: 300;
+}
+.hero-cta {
+  display: inline-block; padding: 16px 48px;
+  border: 1px solid rgba(255,255,255,0.25); color: var(--white);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em;
+  font-weight: 500; transition: all 0.4s;
+}
+.hero-cta:hover { background: var(--white); color: var(--primary); }
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2;
+  color: rgba(255,255,255,0.3); font-size: 11px; letter-spacing: 0.15em;
+  text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.hero-scroll::after {
+  content: ''; width: 1px; height: 40px; background: rgba(255,255,255,0.2);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse { 0%,100% { opacity: 0.2; } 50% { opacity: 0.6; } }
+
+/* ── ABOUT ── */
+.about { background: var(--bg); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 8vw, 120px); align-items: center; }
+.about-image {
+  aspect-ratio: 3/4; background: var(--border);
+  position: relative; overflow: hidden;
+}
+.about-image-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: 12px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.1em; background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);
+}
+.about-text h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.15; margin-bottom: 24px; }
+.about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 20px; font-size: 15px; font-weight: 300; }
+.about-stats { display: flex; gap: 48px; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--border); }
+.about-stat h3 { font-size: 36px; font-weight: 400; margin-bottom: 4px; }
+.about-stat p { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+
+/* ── LISTINGS ── */
+.listings { background: var(--primary); color: var(--white); }
+.listings-header { text-align: center; margin-bottom: clamp(48px, 6vw, 80px); }
+.listings-header h2 { font-size: clamp(32px, 4vw, 52px); margin-bottom: 16px; }
+.listings-header p { color: rgba(255,255,255,0.45); font-size: 15px; font-weight: 300; }
+.listings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.listing-card {
+  position: relative; aspect-ratio: 4/5; overflow: hidden; cursor: pointer;
+  background: #2a1c0e;
+}
+.listing-card-bg {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.listing-card:hover .listing-card-bg { transform: scale(1.05); }
+.listing-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(32,20,8,0.85) 100%);
+  z-index: 1;
+}
+.listing-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; z-index: 2;
+}
+.listing-card-badge {
+  display: inline-block; padding: 4px 12px; background: var(--accent);
+  font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em;
+  margin-bottom: 12px; font-weight: 600;
+}
+.listing-card h3 { font-size: 20px; margin-bottom: 6px; font-weight: 400; }
+.listing-card .price { font-family: var(--sans); font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+.listing-card .meta {
+  display: flex; gap: 16px; font-size: 11px; color: rgba(255,255,255,0.5);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* ── SERVICES ── */
+.services { background: var(--bg); }
+.services-header { text-align: center; margin-bottom: clamp(48px, 6vw, 80px); }
+.services-header h2 { font-size: clamp(32px, 4vw, 52px); margin-bottom: 16px; }
+.services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+.service-card {
+  background: var(--bg); padding: clamp(32px, 4vw, 56px); text-align: center;
+  transition: background 0.3s;
+}
+.service-card:hover { background: #f0eeeb; }
+.service-icon {
+  font-size: 32px; margin-bottom: 24px; display: block;
+}
+.service-card h3 { font-size: 20px; margin-bottom: 16px; }
+.service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+/* ── KEEN ── */
+.keen { background: var(--white); }
+.keen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 8vw, 120px); align-items: center; }
+.keen-image {
+  aspect-ratio: 4/3; background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+}
+.keen-text h2 { font-size: clamp(28px, 3.5vw, 44px); line-height: 1.2; margin-bottom: 24px; }
+.keen-text p { color: var(--muted); line-height: 1.8; font-size: 15px; font-weight: 300; margin-bottom: 20px; }
+.keen-features { list-style: none; margin-top: 32px; }
+.keen-features li {
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px; display: flex; align-items: center; gap: 12px;
+}
+.keen-features li::before { content: '—'; color: var(--accent); font-weight: 600; }
+
+/* ── NEIGHBORHOODS ── */
+.neighborhoods { background: var(--bg); overflow: hidden; }
+.neighborhoods-header { text-align: center; margin-bottom: clamp(48px, 6vw, 80px); }
+.neighborhoods-header h2 { font-size: clamp(32px, 4vw, 52px); margin-bottom: 16px; }
+.neighborhoods-header p { color: var(--muted); font-size: 15px; font-weight: 300; max-width: 560px; margin: 0 auto; }
+.neighborhoods-scroll {
+  display: flex; gap: 20px; overflow-x: auto; padding-bottom: 24px;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.neighborhoods-scroll::-webkit-scrollbar { display: none; }
+.neighborhood-card {
+  flex: 0 0 280px; scroll-snap-align: start;
+  position: relative; aspect-ratio: 3/4; overflow: hidden;
+  background: var(--primary); cursor: pointer;
+}
+.neighborhood-card-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(32,20,8,0.1) 0%, rgba(32,20,8,0.8) 100%);
+  z-index: 1;
+}
+.neighborhood-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 28px; z-index: 2;
+}
+.neighborhood-card h3 { color: var(--white); font-size: 22px; margin-bottom: 4px; }
+.neighborhood-card p { color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 300; }
+
+/* ── MARKET INSIGHTS ── */
+.insights { background: var(--primary); color: var(--white); }
+.insights-inner { text-align: center; max-width: 720px; margin: 0 auto; }
+.insights-inner h2 { font-size: clamp(32px, 4vw, 52px); margin-bottom: 24px; }
+.insights-inner p { color: rgba(255,255,255,0.5); line-height: 1.8; font-size: 15px; font-weight: 300; margin-bottom: 40px; }
+.insights-stats { display: flex; justify-content: center; gap: clamp(32px, 6vw, 80px); margin-bottom: 48px; }
+.insights-stat h3 { font-size: clamp(36px, 5vw, 56px); font-weight: 400; margin-bottom: 8px; }
+.insights-stat p { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); }
+.insights-cta {
+  display: inline-block; padding: 16px 48px;
+  border: 1px solid rgba(255,255,255,0.2); color: var(--white);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em;
+  font-weight: 500; transition: all 0.4s;
+}
+.insights-cta:hover { background: var(--white); color: var(--primary); }
+
+/* ── TESTIMONIALS ── */
+.testimonials { background: var(--bg); }
+.testimonials-header { text-align: center; margin-bottom: clamp(48px, 6vw, 80px); }
+.testimonials-header h2 { font-size: clamp(32px, 4vw, 52px); margin-bottom: 16px; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.testimonial-card { padding: 40px; border: 1px solid var(--border); background: var(--white); }
+.testimonial-card .stars { color: var(--accent); font-size: 14px; letter-spacing: 4px; margin-bottom: 20px; }
+.testimonial-card blockquote {
+  font-family: var(--serif); font-size: 17px; line-height: 1.7;
+  font-style: italic; color: var(--primary); margin-bottom: 24px;
+}
+.testimonial-card .author { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+/* ── INSTAGRAM ── */
+.instagram { background: var(--white); text-align: center; }
+.instagram h2 { font-size: clamp(28px, 3.5vw, 44px); margin-bottom: 8px; }
+.instagram .handle { color: var(--accent); font-size: 14px; margin-bottom: 48px; display: block; }
+.instagram-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; max-width: 100%; }
+.instagram-placeholder {
+  aspect-ratio: 1; background: linear-gradient(135deg, #e8e4df, #d4cfc8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* ── CONTACT ── */
+.contact { background: var(--bg); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 8vw, 120px); }
+.contact-text h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.15; margin-bottom: 24px; }
+.contact-text p { color: var(--muted); line-height: 1.8; font-size: 15px; font-weight: 300; margin-bottom: 32px; }
+.contact-info { list-style: none; }
+.contact-info li { padding: 16px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.contact-info li strong { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+.contact-form { display: flex; flex-direction: column; gap: 20px; }
+.contact-form input, .contact-form textarea, .contact-form select {
+  width: 100%; padding: 16px 0; border: none; border-bottom: 1px solid var(--border);
+  background: transparent; font-family: var(--sans); font-size: 14px;
+  color: var(--primary); outline: none; transition: border-color 0.3s;
+}
+.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+  border-bottom-color: var(--accent);
+}
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
+.contact-form textarea { resize: none; min-height: 100px; }
+.contact-form select { cursor: pointer; color: var(--muted); }
+.contact-form select option { color: var(--primary); }
+.contact-submit {
+  display: inline-block; padding: 16px 48px; background: var(--primary); color: var(--white);
+  border: none; font-family: var(--sans); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.2em; font-weight: 500; cursor: pointer; transition: background 0.3s;
+  align-self: flex-start;
+}
+.contact-submit:hover { background: var(--accent); }
+
+/* ── FOOTER ── */
+.footer { background: var(--primary); color: var(--white); padding: 80px 0 40px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+.footer-brand h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 16px; font-weight: 400; }
+.footer-brand p { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.7; font-weight: 300; max-width: 320px; }
+.footer-col h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.35); margin-bottom: 20px; font-family: var(--sans); font-weight: 600; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a { color: rgba(255,255,255,0.6); font-size: 14px; transition: color 0.3s; font-weight: 300; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: rgba(255,255,255,0.25);
+}
+
+/* ── TEXT RYAN BUTTON ── */
+.text-ryan {
+  position: fixed; bottom: 28px; right: 28px; z-index: 99;
+  background: var(--accent); color: var(--white);
+  padding: 14px 28px; border-radius: 50px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 32px rgba(121, 51, 21, 0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
+}
+.text-ryan:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(121, 51, 21, 0.5); }
+.text-ryan svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MOBILE NAV OVERLAY ── */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(32, 20, 8, 0.97); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: var(--white); font-family: var(--serif); font-size: 28px;
+  opacity: 0.7; transition: opacity 0.3s;
+}
+.mobile-menu a:hover { opacity: 1; }
+.mobile-close {
+  position: absolute; top: 24px; right: 28px; background: none; border: none;
+  color: var(--white); font-size: 28px; cursor: pointer;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .listings-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .about-grid, .keen-grid, .contact-grid { grid-template-columns: 1fr; }
+  .about-image { max-height: 500px; }
+  .listings-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; gap: 0; border: 1px solid var(--border); }
+  .about-stats { gap: 24px; flex-wrap: wrap; }
+  .insights-stats { flex-direction: column; gap: 32px; }
+  .instagram-grid { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .neighborhood-card { flex: 0 0 240px; }
+}
+</style>
+</head>
+<body>
+<div id="password-gate">
+  <div class="gate-logo">Realty Ryan</div>
+  <input type="password" id="gate-pw" placeholder="Enter password" autofocus>
+  <button class="gate-btn" id="gate-submit">Enter</button>
+  <div class="gate-error" id="gate-error">Incorrect password</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">REALTY RYAN <span>&amp; ASSOCIATES</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#listings">Listings</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#neighborhoods">Neighborhoods</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="#about" onclick="this.parentElement.classList.remove('open')">About</a>
+  <a href="#listings" onclick="this.parentElement.classList.remove('open')">Listings</a>
+  <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
+  <a href="#neighborhoods" onclick="this.parentElement.classList.remove('open')">Neighborhoods</a>
+  <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-video-overlay"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Charlotte's Premier Luxury Brokerage</p>
+    <h1>Building Legacies,<br><em>Not Just Homes</em></h1>
+    <p class="hero-sub">Realty Ryan &amp; Associates pairs a top 1% Realtor with Charlotte's finest builder to deliver new construction luxury that's anything but ordinary.</p>
+    <a href="#listings" class="hero-cta">View Current Projects</a>
+  </div>
+  <div class="hero-scroll">Scroll<span></span></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about section-pad" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image">
+        <div class="about-image-placeholder">Ryan Palmer — Photo</div>
+      </div>
+      <div class="about-text fade-in">
+        <p class="uppercase accent">About Ryan Palmer</p>
+        <div class="divider"></div>
+        <h2>A Different Kind<br>of Broker</h2>
+        <p>With over 150 transactions and a place in the top 1% of North Carolina Realtors, Ryan Palmer doesn't just sell homes — he builds them, markets them, and reimagines what luxury living in Charlotte looks like.</p>
+        <p>As founder of Realty Ryan &amp; Associates and exclusive listing partner to Keen Building Company, Ryan brings an end-to-end approach that's rare in real estate: from land acquisition and architectural vision through smart home integration and final sale.</p>
+        <p>He also founded Alt3 Smart Homes, a technology company bringing intelligent living to every property, and Dwell Label, a lifestyle brand rooted in the culture of home.</p>
+        <div class="about-stats">
+          <div class="about-stat">
+            <h3>150<span class="accent">+</span></h3>
+            <p>Transactions</p>
+          </div>
+          <div class="about-stat">
+            <h3>Top 1<span class="accent">%</span></h3>
+            <p>NC Realtor</p>
+          </div>
+          <div class="about-stat">
+            <h3>$50M<span class="accent">+</span></h3>
+            <p>Active Inventory</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section class="listings section-pad" id="listings">
+  <div class="container">
+    <div class="listings-header fade-in">
+      <p class="uppercase" style="color: rgba(255,255,255,0.35); margin-bottom: 16px;">Current Portfolio</p>
+      <h2>Active Listings</h2>
+      <p>New construction luxury homes in Charlotte's most coveted neighborhoods.</p>
+    </div>
+    <div class="listings-grid">
+
+      <a href="https://homes.realtyryan.com/626shelton" class="listing-card fade-in" target="_blank">
+        <div class="listing-card-bg" style="background-image: url('https://homes.realtyryan.com/626shelton/images/cribflyer-1.jpg')"></div>
+        <div class="listing-card-overlay"></div>
+        <div class="listing-card-content">
+          <div class="listing-card-badge">Mammoth Oaks</div>
+          <h3>626 Shelton Street</h3>
+          <p class="price">$3,999,000</p>
+          <div class="meta">
+            <span>5 Bed</span><span>7 Bath</span><span>6,975 SF</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://homes.realtyryan.com/3208mayfield" class="listing-card fade-in" target="_blank">
+        <div class="listing-card-bg" style="background-image: url('https://homes.realtyryan.com/3208mayfield/images/cribflyer-1.jpg')"></div>
+        <div class="listing-card-overlay"></div>
+        <div class="listing-card-content">
+          <div class="listing-card-badge">Sedgefield</div>
+          <h3>3208 Mayfield Avenue</h3>
+          <p class="price">$3,125,000</p>
+          <div class="meta">
+            <span>5 Bed</span><span>5½ Bath</span><span>4,995 SF</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://homes.realtyryan.com/3320mayfield" class="listing-card fade-in" target="_blank">
+        <div class="listing-card-bg" style="background-image: url('https://homes.realtyryan.com/3320mayfield/images/cribflyer-1.jpg')"></div>
+        <div class="listing-card-overlay"></div>
+        <div class="listing-card-content">
+          <div class="listing-card-badge">Sedgefield</div>
+          <h3>3320 Mayfield Avenue</h3>
+          <p class="price">$3,075,000</p>
+          <div class="meta">
+            <span>5 Bed</span><span>4½ Bath</span><span>4,587 SF</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://homes.realtyryan.com/3321auburn" class="listing-card fade-in" target="_blank">
+        <div class="listing-card-bg" style="background-image: url('https://homes.realtyryan.com/3321auburn/images/cribflyer-1.jpg')"></div>
+        <div class="listing-card-overlay"></div>
+        <div class="listing-card-content">
+          <div class="listing-card-badge">Sedgefield</div>
+          <h3>3321 Auburn Avenue</h3>
+          <p class="price">$2,875,000</p>
+          <div class="meta">
+            <span>5 Bed</span><span>7 Bath</span><span>4,398 SF</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://homes.realtyryan.com/1820parson" class="listing-card fade-in" target="_blank">
+        <div class="listing-card-bg" style="background-image: url('https://homes.realtyryan.com/1820parson/images/cribflyer-1.jpg')"></div>
+        <div class="listing-card-overlay"></div>
+        <div class="listing-card-content">
+          <div class="listing-card-badge">Villa Heights</div>
+          <h3>1820 Parson Street</h3>
+          <p class="price">$1,600,000</p>
+          <div class="meta">
+            <span>5 Bed</span><span>5 Bath</span><span>4,103 SF</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://homes.realtyryan.com/1816parson" class="listing-card fade-in" target="_blank">
+        <div class="listing-card-bg" style="background-image: url('https://homes.realtyryan.com/1816parson/images/cribflyer-1.jpg')"></div>
+        <div class="listing-card-overlay"></div>
+        <div class="listing-card-content">
+          <div class="listing-card-badge" style="background: rgba(255,255,255,0.15);">Complete</div>
+          <h3>1816 Parson Street</h3>
+          <p class="price">$1,449,000</p>
+          <div class="meta">
+            <span>5 Bed</span><span>4 Bath</span><span>4,184 SF</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services section-pad" id="services">
+  <div class="container">
+    <div class="services-header fade-in">
+      <p class="uppercase accent" style="margin-bottom: 16px;">What We Do</p>
+      <h2>Full-Service Luxury</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <span class="service-icon">🏠</span>
+        <h3>Buyers</h3>
+        <p>White-glove representation for discerning buyers. Off-market access, negotiation expertise, and a network that unlocks doors before they hit the market.</p>
+      </div>
+      <div class="service-card fade-in">
+        <span class="service-icon">📊</span>
+        <h3>Sellers</h3>
+        <p>Cinematic marketing, data-driven pricing, and a brand presence that attracts qualified buyers. Every listing gets the editorial treatment.</p>
+      </div>
+      <div class="service-card fade-in">
+        <span class="service-icon">🏗️</span>
+        <h3>New Construction</h3>
+        <p>From lot selection to final walkthrough. Our partnership with Keen Building Company means you get a seamless, curated build experience.</p>
+      </div>
+      <div class="service-card fade-in">
+        <span class="service-icon">📈</span>
+        <h3>Investment</h3>
+        <p>Market analysis, ROI modeling, and acquisition strategy for investors seeking Charlotte's highest-performing luxury assets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEEN BUILDING -->
+<section class="keen section-pad" id="keen">
+  <div class="container">
+    <div class="keen-grid">
+      <div class="keen-text fade-in">
+        <p class="uppercase accent" style="margin-bottom: 16px;">Builder Partnership</p>
+        <div class="divider"></div>
+        <h2>Keen Building<br>Company</h2>
+        <p>The best homes aren't just sold — they're envisioned, designed, and built with intention. Our exclusive partnership with Keen Building Company means every Realty Ryan listing is a product of shared vision: architecturally significant, impeccably crafted, and built for the way people actually live.</p>
+        <p>Together, we control the process from land to listing — ensuring quality, timeline, and design integrity at every stage.</p>
+        <ul class="keen-features">
+          <li>Custom architectural design for every lot</li>
+          <li>Premium materials and finish specifications</li>
+          <li>Alt3 Smart Home integration standard</li>
+          <li>Transparent build timeline and communication</li>
+          <li>End-to-end project management</li>
+        </ul>
+      </div>
+      <div class="keen-image">Keen Building — Photo</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEIGHBORHOODS -->
+<section class="neighborhoods section-pad" id="neighborhoods">
+  <div class="container">
+    <div class="neighborhoods-header fade-in">
+      <p class="uppercase accent" style="margin-bottom: 16px;">Charlotte Living</p>
+      <h2>The Neighborhoods</h2>
+      <p>We specialize in Charlotte's most sought-after communities — each with its own character, charm, and investment potential.</p>
+    </div>
+    <div class="neighborhoods-scroll">
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #3a2510 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>Sedgefield</h3>
+          <p>Tree-lined streets, new luxury builds</p>
+        </div>
+      </div>
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #4a3520 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>Villa Heights</h3>
+          <p>Urban edge, rapid appreciation</p>
+        </div>
+      </div>
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #352818 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>Mammoth Oaks</h3>
+          <p>Estate-level living, mature canopy</p>
+        </div>
+      </div>
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #2e2010 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>Dilworth</h3>
+          <p>Historic charm, walkable living</p>
+        </div>
+      </div>
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #402c18 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>South End</h3>
+          <p>Energy, dining, and the light rail</p>
+        </div>
+      </div>
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #3a2815 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>Myers Park</h3>
+          <p>Charlotte's most prestigious address</p>
+        </div>
+      </div>
+      <div class="neighborhood-card">
+        <div class="neighborhood-card-bg" style="background: linear-gradient(180deg, #332210 0%, #201408 100%);"></div>
+        <div class="neighborhood-card-content">
+          <h3>Eastover</h3>
+          <p>Old-money elegance, grand estates</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET INSIGHTS -->
+<section class="insights section-pad" id="insights">
+  <div class="container">
+    <div class="insights-inner fade-in">
+      <p class="uppercase" style="color: rgba(255,255,255,0.3); margin-bottom: 16px;">Market Intelligence</p>
+      <h2>Data-Driven<br>Decisions</h2>
+      <p>Charlotte's luxury market moves fast. Ryan tracks every metric — absorption rates, price-per-square-foot trends, days on market — so you never have to guess. Our clients make decisions backed by real data, not hunches.</p>
+      <div class="insights-stats">
+        <div class="insights-stat">
+          <h3>$16M<span class="accent">+</span></h3>
+          <p>Active Portfolio Value</p>
+        </div>
+        <div class="insights-stat">
+          <h3>6</h3>
+          <p>Active New Builds</p>
+        </div>
+        <div class="insights-stat">
+          <h3>14</h3>
+          <p>Avg. Days on Market</p>
+        </div>
+      </div>
+      <a href="#contact" class="insights-cta">Request a Market Report</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials section-pad" id="testimonials">
+  <div class="container">
+    <div class="testimonials-header fade-in">
+      <p class="uppercase accent" style="margin-bottom: 16px;">Client Experiences</p>
+      <h2>What They Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Ryan made our new construction experience seamless. His relationship with the builder meant we always knew exactly what was happening and when."</blockquote>
+        <p class="author">— Coming Soon</p>
+      </div>
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The marketing Ryan put behind our home was unlike anything we'd seen. Cinematic, editorial — it attracted the right buyer immediately."</blockquote>
+        <p class="author">— Coming Soon</p>
+      </div>
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Not just a Realtor — a strategist. Ryan understood the investment angle and helped us acquire a property that's already appreciated significantly."</blockquote>
+        <p class="author">— Coming Soon</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="instagram section-pad">
+  <div class="container">
+    <h2 class="fade-in">Follow the Journey</h2>
+    <a href="https://instagram.com/realty.ryan" class="handle fade-in" target="_blank">@realty.ryan</a>
+    <div class="instagram-grid fade-in">
+      <div class="instagram-placeholder">1</div>
+      <div class="instagram-placeholder">2</div>
+      <div class="instagram-placeholder">3</div>
+      <div class="instagram-placeholder">4</div>
+      <div class="instagram-placeholder">5</div>
+      <div class="instagram-placeholder">6</div>
+    </div>
+    <p style="margin-top: 24px; font-size: 12px; color: var(--muted);">Instagram feed embed — connect via EmbedSocial or Elfsight to display live posts</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact section-pad" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-text fade-in">
+        <p class="uppercase accent" style="margin-bottom: 16px;">Get In Touch</p>
+        <div class="divider"></div>
+        <h2>Let's Talk<br>Real Estate</h2>
+        <p>Whether you're buying, selling, building, or investing — we'd love to hear from you. Reach out directly or fill out the form and we'll get back to you within 24 hours.</p>
+        <ul class="contact-info">
+          <li>
+            <strong>Ryan Palmer — Broker / CEO</strong>
+            <a href="tel:5089542159">508-954-2159</a> · <a href="mailto:ryanpalmer@hmproperties.com">ryanpalmer@hmproperties.com</a>
+          </li>
+          <li>
+            <strong>Ally Doerr — Operations &amp; Marketing</strong>
+            <a href="mailto:allydoerr@hmproperties.com">allydoerr@hmproperties.com</a>
+          </li>
+          <li>
+            <strong>Office</strong>
+            Charlotte, NC
+          </li>
+        </ul>
+      </div>
+      <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="tel" name="phone" placeholder="Phone Number">
+        <select name="interest" required>
+          <option value="" disabled selected>I'm interested in…</option>
+          <option value="buying">Buying a Home</option>
+          <option value="selling">Selling My Home</option>
+          <option value="new-construction">New Construction</option>
+          <option value="investment">Investment Properties</option>
+          <option value="market-report">Market Report</option>
+          <option value="other">Something Else</option>
+        </select>
+        <textarea name="message" placeholder="Tell us a little more…" rows="4"></textarea>
+        <button type="submit" class="contact-submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Realty Ryan &amp; Associates</h3>
+        <p>Charlotte's premier luxury brokerage specializing in new construction, curated living, and investment-grade real estate.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#listings">Listings</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#neighborhoods">Neighborhoods</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Buyer Representation</a></li>
+          <li><a href="#services">Seller Marketing</a></li>
+          <li><a href="#keen">New Construction</a></li>
+          <li><a href="#services">Investment Strategy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5089542159">508-954-2159</a></li>
+          <li><a href="mailto:ryanpalmer@hmproperties.com">ryanpalmer@hmproperties.com</a></li>
+          <li><a href="https://instagram.com/realty.ryan" target="_blank">@realty.ryan</a></li>
+          <li><a href="https://search.realtyryan.com" target="_blank">Property Search</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</span>
+      <span>Charlotte, North Carolina</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TEXT RYAN BUTTON -->
+<a href="sms:5089542159" class="text-ryan">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+  Text Ryan
+</a>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Form handler
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  const btn = form.querySelector('.contact-submit');
+  btn.textContent = 'Sent ✓';
+  btn.style.background = 'var(--accent)';
+  setTimeout(() => {
+    btn.textContent = 'Send Message';
+    btn.style.background = '';
+    form.reset();
+  }, 3000);
+}
+// Password gate
+(function(){
+  const k='rra_auth';
+  if(sessionStorage.getItem(k)==='1'){document.getElementById('password-gate').remove();return}
+  document.querySelectorAll('body > *:not(#password-gate):not(script):not(style)').forEach(el=>el.classList.add('site-hidden'));
+  document.getElementById('gate-submit').addEventListener('click',tryLogin);
+  document.getElementById('gate-pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin()});
+  function tryLogin(){
+    const pw=document.getElementById('gate-pw').value;
+    if(pw==='Swim5life50!'){
+      sessionStorage.setItem(k,'1');
+      document.getElementById('password-gate').remove();
+      document.querySelectorAll('.site-hidden').forEach(el=>el.classList.remove('site-hidden'));
+      document.getElementById('gate-style')?.remove();
+    }else{
+      document.getElementById('gate-error').classList.add('show');
+      document.getElementById('gate-pw').value='';
+    }
+  }
+})();
+</script>
+</body>
+</html>
