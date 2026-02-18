@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Front Porch Sundays — Coming to West Charlotte</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#fff;color:#1a1a1a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:8.5in;min-height:11in;margin:0 auto;position:relative;overflow:hidden}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);color:#fff;padding:60px 50px 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,134,11,.15) 0%,transparent 70%)}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#B8860B,#D4A843,#B8860B)}
+.badge{display:inline-block;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#D4A843;border:1px solid rgba(212,168,67,.4);padding:6px 16px;border-radius:20px;margin-bottom:20px;font-weight:600}
+.hero h1{font-family:'Playfair Display',serif;font-size:42px;line-height:1.15;font-weight:700;margin-bottom:12px}
+.hero h1 span{color:#D4A843}
+.hero .sub{font-size:15px;color:rgba(255,255,255,.7);line-height:1.6;max-width:420px}
+.hero .coming{display:inline-block;margin-top:20px;background:#D4A843;color:#1a1a2e;font-weight:700;font-size:13px;letter-spacing:1px;padding:10px 24px;border-radius:4px;text-transform:uppercase}
+
+/* What Is It */
+.what{padding:40px 50px;background:#fafaf8}
+.what h2{font-family:'Playfair Display',serif;font-size:22px;color:#1a1a2e;margin-bottom:16px}
+.what p{font-size:13.5px;line-height:1.7;color:#444;margin-bottom:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+.stat{text-align:center;padding:16px 8px;background:#fff;border-radius:8px;border:1px solid #eee}
+.stat .num{font-size:28px;font-weight:700;color:#0f3460;line-height:1}
+.stat .label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:6px;font-weight:500}
+
+/* Why It Matters */
+.why{padding:36px 50px;background:#fff}
+.why h2{font-family:'Playfair Display',serif;font-size:20px;color:#1a1a2e;margin-bottom:20px}
+.benefits{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.benefit{display:flex;align-items:flex-start;gap:10px;padding:14px;background:#f8f7f5;border-radius:8px}
+.benefit .icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.benefit .text h3{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:3px}
+.benefit .text p{font-size:11.5px;color:#666;line-height:1.5}
+
+/* Listing Callout */
+.listing{padding:32px 50px;background:linear-gradient(135deg,#0f3460,#1a1a2e);color:#fff;position:relative}
+.listing::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#D4A843,transparent)}
+.listing-inner{display:flex;align-items:center;gap:32px}
+.listing-text{flex:1}
+.listing-text .eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#D4A843;font-weight:600;margin-bottom:8px}
+.listing-text h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:8px;line-height:1.2}
+.listing-text p{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.6}
+.listing-cta{flex-shrink:0;text-align:center}
+.listing-cta .qr-placeholder{width:80px;height:80px;background:rgba(255,255,255,.1);border:2px solid rgba(212,168,67,.3);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,.4);margin-bottom:6px}
+.listing-cta .scan{font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px}
+
+/* Footer */
+.footer{padding:20px 50px;background:#fafaf8;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee}
+.footer .brand{display:flex;align-items:center;gap:12px}
+.footer .brand img{height:24px}
+.footer .brand-name{font-size:14px;font-weight:700;color:#1a1a2e;letter-spacing:.5px}
+.footer .brand-tag{font-size:9px;color:#888;letter-spacing:1px;text-transform:uppercase}
+.footer .contact{text-align:right;font-size:11px;color:#666;line-height:1.6}
+.footer .contact strong{color:#1a1a2e}
+
+@media print{
+  .page{width:100%;min-height:auto}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="badge">📍 Neighborhood Spotlight</div>
+    <h1>Front Porch<br>Sundays is coming<br>to <span>West Charlotte</span></h1>
+    <p class="sub">Charlotte's most beloved artisan market & live music event is expanding — and your future neighborhood is the destination.</p>
+    <div class="coming">🎉 Coming Soon to West Charlotte</div>
+  </div>
+
+  <div class="what">
+    <h2>What is Front Porch Sundays?</h2>
+    <p>Born in South End at Atherton Mill, Front Porch Sundays has grown into Charlotte's most popular monthly pop-up market. Every first Sunday from April through December, the community comes together for local vendors, live music, food trucks, craft beverages, and good vibes.</p>
+    <p>Named <strong>Reader's Choice Best Pop-Up Market</strong> by Queen City Nerve — and now it's heading west.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">100+</div><div class="label">Local Vendors</div></div>
+      <div class="stat"><div class="num">1st</div><div class="label">Sunday Monthly</div></div>
+      <div class="stat"><div class="num">Free</div><div class="label">Admission</div></div>
+      <div class="stat"><div class="num">Apr–Dec</div><div class="label">Season</div></div>
+    </div>
+  </div>
+
+  <div class="why">
+    <h2>Why This Matters for West Charlotte</h2>
+    <div class="benefits">
+      <div class="benefit">
+        <div class="icon">📈</div>
+        <div class="text"><h3>Property Values Rise</h3><p>Walkable community events are a proven driver of neighborhood desirability and home appreciation.</p></div>
+      </div>
+      <div class="benefit">
+        <div class="icon">🏘️</div>
+        <div class="text"><h3>Community Identity</h3><p>FPS creates a "place to be" — the kind of anchor event that defines a neighborhood's character.</p></div>
+      </div>
+      <div class="benefit">
+        <div class="icon">🛍️</div>
+        <div class="text"><h3>Local Economy Boost</h3><p>70+ small businesses, food trucks, and mobile shops bring foot traffic and spending to the area monthly.</p></div>
+      </div>
+      <div class="benefit">
+        <div class="icon">🎵</div>
+        <div class="text"><h3>Lifestyle & Culture</h3><p>Live music, craft beer, artisan goods, and a dog-friendly atmosphere — the Sunday you look forward to.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="listing">
+    <div class="listing-inner">
+      <div class="listing-text">
+        <div class="eyebrow">Now Available Nearby</div>
+        <h2>709 Tennyson · West Charlotte</h2>
+        <p>Live steps from Charlotte's next great Sunday tradition. This is your chance to be part of West Charlotte's transformation before everyone else catches on.</p>
+      </div>
+      <div class="listing-cta">
+        <div class="qr-placeholder">QR</div>
+        <div class="scan">Scan for details</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="brand">
+      <div>
+        <div class="brand-name">REALTY RYAN</div>
+        <div class="brand-tag">Corcoran HM Properties</div>
+      </div>
+    </div>
+    <div class="contact">
+      <strong>Ryan Palmer</strong> · REALTOR®<br>
+      508-954-2159 · ryanpalmer@hmproperties.com
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

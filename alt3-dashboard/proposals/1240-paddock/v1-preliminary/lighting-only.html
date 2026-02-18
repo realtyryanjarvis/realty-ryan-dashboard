@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt3 Smart Homes — Lighting Control Proposal</title>
+<style>
+@page { size: letter; margin: 0.6in 0.7in; }
+@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .page-break { page-break-before: always; } .no-print { display: none; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --copper: #B87333; --copper-light: #d4956a; --dark: #111; --surface: #1a1a1a; --border: #2a2a2a; --text: #e0e0e0; --dim: #999; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #0d0d0d; color: var(--text); line-height: 1.5; }
+.proposal { max-width: 850px; margin: 0 auto; background: var(--dark); }
+
+/* Cover */
+.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 40px; background: linear-gradient(160deg, #0d0d0d 0%, #1a1510 50%, #0d0d0d 100%); position: relative; }
+.cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--copper), transparent); }
+.cover-logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 2px; color: #fff; margin-bottom: 8px; }
+.cover-logo span { color: var(--copper); }
+.cover-tagline { font-size: 1rem; color: var(--dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 60px; }
+.cover-title { font-size: 2rem; font-weight: 300; color: #fff; margin-bottom: 12px; }
+.cover-subtitle { font-size: 1.1rem; color: var(--copper-light); margin-bottom: 60px; }
+.cover-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 500px; }
+.cover-meta dt { font-size: .7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 4px; }
+.cover-meta dd { font-size: .95rem; color: #fff; margin-bottom: 16px; }
+
+/* Sections */
+.section { padding: 48px 48px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title { font-size: 1.3rem; font-weight: 600; color: var(--copper-light); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 3px; height: 22px; background: var(--copper); border-radius: 2px; }
+.section-desc { color: var(--dim); font-size: .9rem; margin-bottom: 28px; max-width: 650px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+thead th { text-align: left; font-size: .7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); padding: 10px 12px; border-bottom: 2px solid var(--copper-dark, #5a3a1a); font-weight: 600; }
+thead th.right { text-align: right; }
+tbody td { padding: 10px 12px; font-size: .85rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+tbody td.right { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td.part { color: var(--dim); font-size: .78rem; font-family: 'SF Mono', 'Menlo', monospace; }
+tbody tr:hover { background: rgba(184,115,51,.04); }
+.subtotal-row td { border-top: 2px solid var(--border); font-weight: 600; padding-top: 14px; }
+.subtotal-row td.right { color: var(--copper-light); font-size: .95rem; }
+.fee-row td { color: var(--dim); font-size: .85rem; }
+.area-total td { border-top: 2px solid var(--copper); font-weight: 700; font-size: 1rem; padding-top: 14px; }
+.area-total td.right { color: #fff; }
+
+/* Grand Total */
+.grand-total { background: linear-gradient(135deg, var(--surface) 0%, #1e1510 100%); border: 1px solid var(--copper); border-radius: 10px; padding: 32px 40px; margin: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+.grand-total .label { font-size: 1.1rem; font-weight: 600; color: var(--copper-light); }
+.grand-total .amount { font-size: 2.2rem; font-weight: 700; color: #fff; }
+
+/* Scope */
+.scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.scope-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+.scope-card h4 { font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--copper); margin-bottom: 10px; }
+.scope-card ul { list-style: none; }
+.scope-card li { font-size: .85rem; color: var(--dim); padding: 3px 0; }
+.scope-card li::before { content: '▸'; color: var(--copper); margin-right: 8px; }
+
+/* Terms */
+.terms { columns: 2; column-gap: 32px; }
+.terms p { font-size: .82rem; color: var(--dim); margin-bottom: 12px; break-inside: avoid; }
+.terms strong { color: var(--text); }
+
+/* Signature */
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+.sig-block { border-top: 1px solid var(--border); padding-top: 12px; }
+.sig-block .label { font-size: .7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 4px; }
+.sig-block .line { border-bottom: 1px solid var(--dim); height: 40px; margin-bottom: 8px; }
+
+/* Footer */
+.footer { text-align: center; padding: 32px; border-top: 1px solid var(--border); }
+.footer-logo { font-size: 1.2rem; font-weight: 800; color: var(--copper); letter-spacing: 1px; }
+.footer p { font-size: .75rem; color: var(--dim); margin-top: 6px; }
+
+/* Print */
+.print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--copper); color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-size: .9rem; font-weight: 600; cursor: pointer; z-index: 100; box-shadow: 0 4px 20px rgba(184,115,51,.4); }
+.print-btn:hover { background: var(--copper-light); }
+
+@media (max-width: 600px) {
+  .section { padding: 32px 24px; }
+  .cover-meta { grid-template-columns: 1fr; gap: 0; }
+  .scope-grid { grid-template-columns: 1fr; }
+  .terms { columns: 1; }
+  .sig-grid { grid-template-columns: 1fr; }
+  .grand-total { flex-direction: column; gap: 8px; text-align: center; margin: 24px; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+<div class="proposal">
+
+  <!-- COVER PAGE -->
+  <div class="cover">
+    <div class="cover-logo">ALT<span>3</span></div>
+    <div class="cover-tagline">Smart Homes</div>
+    <div class="cover-title">Lutron HomeWorks Lighting Control</div>
+    <div class="cover-subtitle">1240 Paddock Avenue, Charlotte NC</div>
+    <dl class="cover-meta">
+      <div>
+        <dt>Prepared For</dt>
+        <dd>Jeffery Davis</dd>
+        <dt>Project Address</dt>
+        <dd>1240 Paddock Avenue<br>Charlotte, NC 28209</dd>
+      </div>
+      <div>
+        <dt>Prepared By</dt>
+        <dd>Ryan Palmer<br>CEO, Alt3 Smart Homes</dd>
+        <dt>Date</dt>
+        <dd>February 17, 2026</dd>
+        <dt>Proposal #</dt>
+        <dd>ALT3-2026-002</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- SCOPE OVERVIEW -->
+  <div class="section">
+    <div class="section-title">Project Overview</div>
+    <div class="section-desc">
+      A complete Lutron HomeWorks QSX lighting control system for your new home at 1240 Paddock Avenue — delivering intelligent, whole-home lighting with personalized scene control, tunable white technology, and seamless integration across every room.
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h4>What's Included</h4>
+        <ul>
+          <li>HomeWorks QSX processor & panel infrastructure</li>
+          <li>Palladiom & Sunnata designer keypads throughout</li>
+          <li>Ketra tunable white downlights & fixtures</li>
+          <li>Rania D2 roller shade integration fixtures</li>
+          <li>Adaptive dimming modules for LED compatibility</li>
+          <li>Occupancy sensors for hands-free automation</li>
+          <li>Lumaris tunable white tape lighting</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Engineering & Services</h4>
+        <ul>
+          <li>System design & engineering</li>
+          <li>Full programming & scene configuration</li>
+          <li>On-site commissioning & calibration</li>
+          <li>Homeowner training & walkthrough</li>
+          <li>Integration with smart home ecosystem</li>
+          <li>Post-install support & adjustments</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN LEVEL -->
+  <div class="section page-break">
+    <div class="section-title">Main Level — Equipment</div>
+    <div class="section-desc">Primary living spaces including kitchen, great room, dining, foyer, and entertaining areas.</div>
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Part #</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HomeWorks Dimmer</td>
+          <td class="part">HRST-PRO-N-RW</td>
+          <td class="right">25</td>
+          <td class="right">$293.00</td>
+          <td class="right">$7,325.00</td>
+        </tr>
+        <tr>
+          <td>HomeWorks Switch</td>
+          <td class="part">HRST-8ANS-RW</td>
+          <td class="right">5</td>
+          <td class="right">$307.00</td>
+          <td class="right">$1,535.00</td>
+        </tr>
+        <tr>
+          <td>Ketra D2 Tunable White Fixture</td>
+          <td class="part">Ketra D2</td>
+          <td class="right">51</td>
+          <td class="right">$997.50</td>
+          <td class="right">$50,872.50</td>
+        </tr>
+        <tr>
+          <td>Rania D2 Fixture</td>
+          <td class="part">Rania D2</td>
+          <td class="right">12</td>
+          <td class="right">$728.00</td>
+          <td class="right">$8,736.00</td>
+        </tr>
+        <tr>
+          <td>Sunnata Hybrid Keypad, Engraved</td>
+          <td class="part">Sunnata Hybrid</td>
+          <td class="right">15</td>
+          <td class="right">$653.00</td>
+          <td class="right">$9,795.00</td>
+        </tr>
+        <tr>
+          <td>Sunnata 4-Button Keypad, Engraved</td>
+          <td class="part">Sunnata 4B</td>
+          <td class="right">3</td>
+          <td class="right">$531.00</td>
+          <td class="right">$1,593.00</td>
+        </tr>
+        <tr>
+          <td>Low-Voltage Panel</td>
+          <td class="part">HQ-LV21-120</td>
+          <td class="right">1</td>
+          <td class="right">$640.00</td>
+          <td class="right">$640.00</td>
+        </tr>
+        <tr>
+          <td>Dual Radio Processor</td>
+          <td class="part">HQP7-RF2</td>
+          <td class="right">1</td>
+          <td class="right">$1,705.00</td>
+          <td class="right">$1,705.00</td>
+        </tr>
+        <tr>
+          <td>CCX Processor</td>
+          <td class="part">HQP7-RF</td>
+          <td class="right">1</td>
+          <td class="right">$979.00</td>
+          <td class="right">$979.00</td>
+        </tr>
+        <tr class="subtotal-row">
+          <td colspan="4">Main Level Equipment Subtotal</td>
+          <td class="right">$83,180.50</td>
+        </tr>
+        <tr class="fee-row">
+          <td colspan="4">Engineering, Programming & Oversight (10%)</td>
+          <td class="right">$8,318.05</td>
+        </tr>
+        <tr class="area-total">
+          <td colspan="4">Main Level Total</td>
+          <td class="right">$91,498.55</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- UPPER LEVEL -->
+  <div class="section page-break">
+    <div class="section-title">Upper Level — Equipment</div>
+    <div class="section-desc">Primary & secondary bedrooms, bathrooms, hallways, and bonus areas.</div>
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Part #</th><th class="right">Qty</th><th class="right">Unit Price</th><th class="right">Total</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HomeWorks Dimmer</td>
+          <td class="part">HRST-PRO-N-RW</td>
+          <td class="right">30</td>
+          <td class="right">$293.00</td>
+          <td class="right">$8,790.00</td>
+        </tr>
+        <tr>
+          <td>HomeWorks Switch</td>
+          <td class="part">HRST-8ANS-RW</td>
+          <td class="right">8</td>
+          <td class="right">$307.00</td>
+          <td class="right">$2,456.00</td>
+        </tr>
+        <tr>
+          <td>Rania D2 Fixture</td>
+          <td class="part">Rania D2</td>
+          <td class="right">13</td>
+          <td class="right">$728.00</td>
+          <td class="right">$9,464.00</td>
+        </tr>
+        <tr>
+          <td>Sunnata Hybrid Keypad, Engraved</td>
+          <td class="part">Sunnata Hybrid</td>
+          <td class="right">1</td>
+          <td class="right">$653.00</td>
+          <td class="right">$653.00</td>
+        </tr>
+        <tr>
+          <td>Sunnata 4-Button Keypad, Engraved</td>
+          <td class="part">Sunnata 4B</td>
+          <td class="right">2</td>
+          <td class="right">$531.00</td>
+          <td class="right">$1,062.00</td>
+        </tr>
+        <tr class="subtotal-row">
+          <td colspan="4">Upper Level Equipment Subtotal</td>
+          <td class="right">$22,425.00</td>
+        </tr>
+        <tr class="fee-row">
+          <td colspan="4">Engineering, Programming & Oversight (10%)</td>
+          <td class="right">$2,242.50</td>
+        </tr>
+        <tr class="area-total">
+          <td colspan="4">Upper Level Total</td>
+          <td class="right">$24,667.50</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRAND TOTAL -->
+  <div class="grand-total">
+    <div class="label">Project Investment</div>
+    <div class="amount">$116,166.05</div>
+  </div>
+
+  <!-- TERMS -->
+  <div class="section page-break">
+    <div class="section-title">Terms & Conditions</div>
+    <div class="terms">
+      <p><strong>Payment Schedule:</strong> 50% deposit upon acceptance. 40% upon equipment delivery. 10% balance upon completion and commissioning.</p>
+      <p><strong>Proposal Validity:</strong> This proposal is valid for 30 days from the date of issue. Pricing is subject to change after this period due to manufacturer adjustments.</p>
+      <p><strong>Timeline:</strong> Equipment lead time is typically 4–8 weeks from order. Installation and programming typically require 3–5 days on-site, coordinated with your builder's schedule.</p>
+      <p><strong>Warranty:</strong> All Lutron HomeWorks equipment carries the manufacturer's standard warranty. Alt3 Smart Homes provides a 1-year workmanship warranty on all installation and programming.</p>
+      <p><strong>Change Orders:</strong> Any additions or modifications after acceptance will be documented and priced separately. No additional work will begin without written approval.</p>
+      <p><strong>Exclusions:</strong> This proposal covers lighting control equipment, engineering, and programming only. Electrical rough-in, low-voltage wiring, and trim-out labor are not included unless separately specified.</p>
+    </div>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div class="section">
+    <div class="section-title">Acceptance</div>
+    <p style="font-size:.88rem;color:var(--dim);margin-bottom:8px;">By signing below, you authorize Alt3 Smart Homes to proceed with the scope described in this proposal.</p>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Client Signature</div>
+        <p style="font-size:.85rem;margin-top:4px;">Jeffery Davis</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Alt3 Smart Homes</div>
+        <p style="font-size:.85rem;margin-top:4px;">Ryan Palmer, CEO</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">ALT3 SMART HOMES</div>
+    <p>Charlotte, NC &nbsp;|&nbsp; ryan.palmer@alt3.com &nbsp;|&nbsp; (508) 954-2159</p>
+    <p style="margin-top:4px;">Intelligent Living, Beautifully Designed</p>
+  </div>
+
+</div>
+
+</body>
+</html>

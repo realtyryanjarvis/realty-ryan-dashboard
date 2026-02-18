@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Builder Partnership — Alt3 Smart Homes</title>
+<link rel="preconnect" href="https://fonts.cdnfonts.com">
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --navy:#113665;
+  --taupe:#BEB1A2;
+  --cream:#E1D8CE;
+  --white:#FFFFFF;
+  --surface:#F8F6F3;
+  --text:#1a1a1a;
+  --text-secondary:#5a5550;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Neue Montreal',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  background:var(--white);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+::selection{background:var(--navy);color:var(--white)}
+
+/* Section Base */
+section{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:0 24px;
+}
+
+.container{
+  max-width:1200px;
+  width:100%;
+  margin:0 auto;
+}
+
+/* Fade-in animations */
+.fade-in{
+  opacity:0;
+  transform:translateY(60px);
+  transition:opacity 1.2s var(--ease),transform 1.2s var(--ease);
+}
+
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.fade-in-stagger > *{
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+
+.fade-in-stagger.visible > *:nth-child(1){transition-delay:.1s}
+.fade-in-stagger.visible > *:nth-child(2){transition-delay:.2s}
+.fade-in-stagger.visible > *:nth-child(3){transition-delay:.3s}
+.fade-in-stagger.visible > *:nth-child(4){transition-delay:.4s}
+.fade-in-stagger.visible > *:nth-child(5){transition-delay:.5s}
+.fade-in-stagger.visible > *:nth-child(6){transition-delay:.6s}
+
+.fade-in-stagger.visible > *{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Typography */
+h1,h2,h3{
+  font-weight:300;
+  letter-spacing:-2px;
+  line-height:1.1;
+}
+
+h1{font-size:clamp(3rem,8vw,6rem)}
+h2{font-size:clamp(2.5rem,6vw,4.5rem)}
+h3{font-size:clamp(1.5rem,3vw,2.5rem)}
+
+.text-massive{
+  font-size:clamp(80px,12vw,140px);
+  font-weight:700;
+  letter-spacing:-4px;
+  line-height:.8;
+}
+
+.text-big{font-size:clamp(1.2rem,2.5vw,1.5rem)}
+.text-small{font-size:.9rem;opacity:.7}
+
+.caps{
+  font-size:.8rem;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-weight:500;
+}
+
+/* Photo sections */
+.photo-section{
+  background-attachment:fixed;
+  background-position:center;
+  background-size:cover;
+  position:relative;
+}
+
+.photo-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  filter:brightness(.3);
+}
+
+.photo-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  color:var(--white);
+}
+
+/* Content sections */
+.content-section{padding:120px 24px}
+.content-section.cream{background:var(--surface)}
+
+/* Dividers */
+.divider{
+  height:1px;
+  background:var(--taupe);
+  width:60px;
+  margin:40px auto;
+}
+
+/* Stats */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:60px;
+  margin:80px 0;
+}
+
+.stat{text-align:center}
+.stat-number{
+  color:var(--navy);
+  font-size:clamp(80px,8vw,100px);
+  font-weight:700;
+  letter-spacing:-3px;
+  line-height:.9;
+  margin-bottom:16px;
+}
+.stat-label{
+  font-size:.85rem;
+  color:var(--text-secondary);
+  letter-spacing:1px;
+  line-height:1.3;
+}
+
+/* Cards */
+.card{
+  background:var(--white);
+  border:1px solid var(--cream);
+  border-radius:16px;
+  padding:40px;
+  transition:transform .3s var(--ease);
+}
+
+.card:hover{transform:translateY(-4px)}
+
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:32px;
+  margin:80px 0;
+}
+
+/* Service cards */
+.service-cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:40px;
+  margin:80px 0;
+}
+
+.service-card{
+  text-align:center;
+  padding:40px 20px;
+}
+
+.service-icon{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:var(--navy);
+  color:var(--white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  margin:0 auto 24px;
+}
+
+/* Process steps */
+.process-flow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:80px 0;
+  gap:20px;
+}
+
+.process-step{
+  text-align:center;
+  flex:1;
+}
+
+.process-arrow{
+  font-size:1.5rem;
+  color:var(--taupe);
+  flex:0 0 auto;
+}
+
+/* Buttons */
+.btn{
+  display:inline-block;
+  padding:18px 36px;
+  border-radius:8px;
+  font-size:1rem;
+  font-weight:600;
+  text-decoration:none;
+  transition:all .3s var(--ease);
+  letter-spacing:.5px;
+}
+
+.btn-primary{
+  background:var(--white);
+  color:var(--navy);
+}
+
+.btn-outline{
+  border:2px solid var(--white);
+  color:var(--white);
+  background:transparent;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+
+/* Tables */
+.comparison-table{
+  width:100%;
+  border-collapse:collapse;
+  margin:60px 0;
+  background:var(--white);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 30px rgba(0,0,0,.06);
+}
+
+.comparison-table thead{background:var(--surface)}
+.comparison-table th{
+  padding:20px;
+  text-align:left;
+  font-size:.85rem;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  border-bottom:2px solid var(--navy);
+}
+
+.comparison-table td{
+  padding:20px;
+  border-bottom:1px solid var(--cream);
+  font-size:.9rem;
+  line-height:1.5;
+}
+
+.comparison-table tbody tr:nth-child(even){background:var(--surface)}
+.comparison-table tbody tr:hover{background:rgba(17,54,101,.04)}
+
+.comparison-table .feature-col{font-weight:600;color:var(--text)}
+.comparison-table .typical-col{color:var(--text-secondary);text-align:center}
+.comparison-table .alt3-col{color:var(--navy);font-weight:500;text-align:center}
+
+/* Video embeds */
+.video-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  margin:80px 0;
+}
+
+.video-embed{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  aspect-ratio:16/9;
+  box-shadow:0 8px 40px rgba(0,0,0,.1);
+}
+
+.video-embed iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+.video-caption{
+  text-align:center;
+  margin-top:16px;
+  font-size:.9rem;
+  color:var(--text-secondary);
+  font-weight:500;
+}
+
+/* Partnership tiers */
+.tier-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  margin:80px 0;
+}
+
+.tier-card{
+  border-radius:20px;
+  padding:50px 40px;
+  text-align:center;
+  position:relative;
+}
+
+.tier-card.preferred{
+  background:var(--white);
+  border:2px solid var(--cream);
+}
+
+.tier-card.certified{
+  background:var(--navy);
+  color:var(--white);
+  border:2px solid var(--navy);
+}
+
+.tier-title{
+  font-size:1.5rem;
+  font-weight:600;
+  margin-bottom:12px;
+  letter-spacing:-1px;
+}
+
+.tier-desc{
+  margin-bottom:32px;
+  opacity:.8;
+}
+
+.tier-benefits{
+  list-style:none;
+  text-align:left;
+}
+
+.tier-benefits li{
+  padding:8px 0;
+  font-size:.9rem;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.tier-card.preferred .tier-benefits li{
+  border-bottom-color:var(--cream);
+}
+
+.tier-benefits li::before{
+  content:'✓';
+  color:var(--white);
+  margin-right:12px;
+  font-weight:700;
+}
+
+.tier-card.preferred .tier-benefits li::before{
+  color:var(--navy);
+}
+
+/* Project cards */
+.project-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  margin:80px 0;
+}
+
+.project-card{
+  background:var(--white);
+  border:1px solid var(--cream);
+  border-radius:20px;
+  padding:40px;
+  text-align:center;
+}
+
+.project-value{
+  font-size:2.5rem;
+  font-weight:700;
+  color:var(--navy);
+  margin-bottom:8px;
+  letter-spacing:-2px;
+}
+
+.project-name{
+  font-size:1.2rem;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.project-desc{
+  font-size:.9rem;
+  color:var(--text-secondary);
+}
+
+/* Scroll indicator */
+.scroll-indicator{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  color:rgba(255,255,255,.5);
+  font-size:.8rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.scroll-dot{
+  display:block;
+  width:2px;
+  height:20px;
+  background:currentColor;
+  margin:8px auto;
+  opacity:.5;
+  animation:scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse{
+  0%,100%{opacity:.3;transform:translateY(0)}
+  50%{opacity:1;transform:translateY(4px)}
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:40px}
+  .service-cards{grid-template-columns:repeat(2,1fr)}
+  .video-grid{grid-template-columns:1fr}
+  .tier-cards{grid-template-columns:1fr}
+  .project-cards{grid-template-columns:1fr;gap:24px}
+  
+  .process-flow{
+    flex-direction:column;
+    gap:32px;
+  }
+  
+  .process-arrow{
+    transform:rotate(90deg);
+  }
+}
+
+@media(max-width:600px){
+  section{padding:0 16px}
+  .stats-grid{grid-template-columns:1fr;gap:32px}
+  .service-cards{grid-template-columns:1fr}
+  .cards-grid{grid-template-columns:1fr;gap:24px}
+  
+  .comparison-table{
+    font-size:.8rem;
+  }
+  
+  .comparison-table th,
+  .comparison-table td{
+    padding:12px 8px;
+  }
+  
+  .stat-number{
+    font-size:clamp(60px,15vw,80px);
+  }
+}
+
+/* Dark navy section */
+.navy-section{
+  background:var(--navy);
+  color:var(--white);
+}
+</style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<section class="photo-section" style="background-image:url('photos/hero-exterior.jpg')">
+  <div class="photo-content">
+    <div class="fade-in">
+      <div class="caps" style="color:var(--taupe);margin-bottom:40px">Alt3 Smart Homes</div>
+      <h1 style="margin-bottom:32px">Your Buyers<br>Expect Smart.</h1>
+      <p class="text-big" style="opacity:.5;max-width:600px;margin:0 auto 60px">Partner with Charlotte's premier smart home integrator.</p>
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. MARKET STATS -->
+<section class="content-section">
+  <div class="container">
+    <div class="stats-grid fade-in-stagger">
+      <div class="stat">
+        <div class="stat-number">77M+</div>
+        <div class="stat-label">U.S. Smart Home<br>Households</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">72%</div>
+        <div class="stat-label">Luxury Buyers<br>Expect Smart</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">+5%</div>
+        <div class="stat-label">Higher Resale<br>Value</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">58%</div>
+        <div class="stat-label">Want Smart<br>Lighting</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="fade-in" style="text-align:center;max-width:700px;margin:0 auto">
+      <p class="text-big" style="font-style:italic">"Your buyers are already shopping for this. The question is whether you're offering it."</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PHOTO BREAK -->
+<section class="photo-section" style="background-image:url('modern-interior.jpg')">
+  <div class="photo-content">
+    <div class="fade-in">
+      <h2 style="max-width:800px;margin:0 auto;font-style:italic">"Most builders use 4 vendors for what we do with one."</h2>
+    </div>
+  </div>
+</section>
+
+<!-- 4. THE PROBLEM -->
+<section class="content-section cream">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:80px">
+      <div class="caps" style="color:var(--navy);margin-bottom:20px">The Challenge</div>
+      <h2>Three problems you face<br><strong style="font-weight:700">every project.</strong></h2>
+    </div>
+    <div class="cards-grid fade-in-stagger">
+      <div class="card">
+        <div style="font-size:3rem;margin-bottom:24px">🔀</div>
+        <h3 style="margin-bottom:16px">Fragmented Vendors</h3>
+        <p>Lighting company, AV company, shade company, security company. Four schedules. Four contracts. Four fingers to point when something goes wrong.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:3rem;margin-bottom:24px">⚠️</div>
+        <h3 style="margin-bottom:16px">Warranty Headaches</h3>
+        <p>Buyer calls you six months later. The shades don't work with the lights. The security doesn't work with the audio. Guess who has to fix it?</p>
+      </div>
+      <div class="card">
+        <div style="font-size:3rem;margin-bottom:24px">💸</div>
+        <h3 style="margin-bottom:16px">Missed Margin</h3>
+        <p>$50-200K per home your buyer spends on technology. You coordinate it, but someone else captures the profit. That doesn't make sense.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. THE SOLUTION -->
+<section class="content-section">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:80px">
+      <h2 style="margin-bottom:32px">One partner. One system.<br><strong style="font-weight:700">Zero complexity.</strong></h2>
+    </div>
+    <div class="service-cards fade-in-stagger">
+      <div class="service-card">
+        <div class="service-icon">◐</div>
+        <h3>Lighting</h3>
+        <p>Lutron HomeWorks + Ketra tunable wellness lighting</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◑</div>
+        <h3>Audio</h3>
+        <p>Whole-home sound with invisible architectural speakers</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◒</div>
+        <h3>Shading</h3>
+        <p>Whisper-quiet motorized shades integrated with lighting</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◓</div>
+        <h3>Security</h3>
+        <p>AI cameras, sensors, and smart locks — one app</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="process-flow fade-in">
+      <span class="caps">Design</span>
+      <div class="process-arrow">→</div>
+      <span class="caps">Pre-wire</span>
+      <div class="process-arrow">→</div>
+      <span class="caps">Install</span>
+      <div class="process-arrow">→</div>
+      <span class="caps">Program</span>
+      <div class="process-arrow">→</div>
+      <span class="caps">Support</span>
+    </div>
+  </div>
+</section>
+
+<!-- 6. COMPETITIVE COMPARISON -->
+<section class="content-section cream">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:60px">
+      <div class="caps" style="color:var(--navy);margin-bottom:20px">The Alt3 Difference</div>
+      <h2>Why builders are switching<br><strong style="font-weight:700">to us.</strong></h2>
+    </div>
+    <div class="fade-in">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th class="feature-col">Feature</th>
+            <th class="typical-col">Typical AV Provider</th>
+            <th class="alt3-col">Alt3 Smart Homes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-col">Scope of Work</td>
+            <td class="typical-col">AV only — you still need a lighting company, shade company, and security company</td>
+            <td class="alt3-col">Lighting + AV + Shading + Security — all under one roof</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Vendor Coordination</td>
+            <td class="typical-col">You manage 3-4 separate vendors, schedules, and contracts</td>
+            <td class="alt3-col">One contract, one schedule, one point of contact</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Lighting Expertise</td>
+            <td class="typical-col">Basic switches and dimmers — maybe Lutron Caseta</td>
+            <td class="alt3-col">Lutron HomeWorks + Ketra tunable wellness lighting — the gold standard</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Voice Control</td>
+            <td class="typical-col">Alexa or Google — consumer-grade, privacy concerns</td>
+            <td class="alt3-col">Josh.ai — luxury-grade, private, built for custom homes</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Builder Experience</td>
+            <td class="typical-col">Shows up when they show up — your project works around theirs</td>
+            <td class="alt3-col">We work around YOUR schedule — install in 2-3 days, zero delays</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Buyer Presentation</td>
+            <td class="typical-col">Paper quote or spreadsheet — buyer has no idea what they're getting</td>
+            <td class="alt3-col">Interactive digital proposals with video — buyers see it before they buy it</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Post-Sale Support</td>
+            <td class="typical-col">Buyer calls YOU when something breaks. You call 3 different vendors.</td>
+            <td class="alt3-col">One number. We handle everything. Your name stays clean.</td>
+          </tr>
+          <tr>
+            <td class="feature-col">System Integration</td>
+            <td class="typical-col">Each system is a silo — separate apps, separate controls</td>
+            <td class="alt3-col">Everything on one platform — lights, music, shades, cameras, locks, voice</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Warranty</td>
+            <td class="typical-col">4 vendors = 4 warranties = 4 finger-pointing conversations</td>
+            <td class="alt3-col">One warranty. One company. One call.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 7. PHOTO BREAK -->
+<section class="photo-section" style="background-image:url('photos/interior-living.jpg')">
+  <div class="photo-content">
+    <div class="fade-in">
+      <h2 style="max-width:800px;margin:0 auto;font-style:italic">"The best technology is the kind your buyer never has to think about."</h2>
+    </div>
+  </div>
+</section>
+
+<!-- 8. THE NUMBERS (ROI) -->
+<section class="content-section">
+  <div class="container">
+    <div class="stats-grid fade-in-stagger">
+      <div class="stat">
+        <div class="stat-number">$50-200K</div>
+        <div class="stat-label">Per Home<br>Revenue</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">+5%</div>
+        <div class="stat-label">Higher Resale<br>Value</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2-3</div>
+        <div class="stat-label">Day Install<br>Timeline</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">15-20</div>
+        <div class="stat-label">Year System<br>Lifespan</div>
+      </div>
+    </div>
+    <div class="fade-in" style="text-align:center;margin-top:60px">
+      <div class="stat">
+        <div class="stat-number" style="margin-bottom:24px">$0</div>
+        <div class="stat-label" style="font-size:1rem">Builder cost for pre-wire coordination</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto">
+      <p class="text-big" style="font-style:italic">"Every dollar your buyer spends = margin you weren't capturing."</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. HOW IT WORKS -->
+<section class="content-section cream">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:80px">
+      <div class="caps" style="color:var(--navy);margin-bottom:20px">Our Process</div>
+      <h2>How it <strong style="font-weight:700">works.</strong></h2>
+    </div>
+    <div class="process-flow fade-in-stagger" style="justify-content:space-between">
+      <div class="process-step">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 20px">1</div>
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Consult</h3>
+        <p class="text-small">Review plans and recommend system package</p>
+      </div>
+      <div class="process-step">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 20px">2</div>
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Design</h3>
+        <p class="text-small">Custom system design matched to floor plan</p>
+      </div>
+      <div class="process-step">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 20px">3</div>
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Pre-wire</h3>
+        <p class="text-small">Coordinate with electrician during rough-in</p>
+      </div>
+      <div class="process-step">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 20px">4</div>
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Install</h3>
+        <p class="text-small">Professional installation on your timeline</p>
+      </div>
+      <div class="process-step">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 20px">5</div>
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Program</h3>
+        <p class="text-small">Every scene and automation dialed in</p>
+      </div>
+      <div class="process-step">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 20px">6</div>
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Support</h3>
+        <p class="text-small">Ongoing support — we're their first call</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. VIDEOS -->
+<section class="content-section">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:60px">
+      <div class="caps" style="color:var(--navy);margin-bottom:20px">See It In Action</div>
+      <h2>Experience <strong style="font-weight:700">the difference.</strong></h2>
+    </div>
+    <div class="video-grid fade-in-stagger">
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/NR8X7wtjHZI?rel=0&modestbranding=1&enablejsapi=1&mute=1" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">Josh.ai Voice Control — Natural language, private, luxury-grade</div>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Gy2oGbAN2GA?rel=0&modestbranding=1&enablejsapi=1&mute=1" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">Ketra Lighting — Tunable white technology that follows circadian rhythm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. PARTNERSHIP PROGRAM -->
+<section class="content-section cream">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:60px">
+      <div class="caps" style="color:var(--navy);margin-bottom:20px">Partnership Tiers</div>
+      <h2>Choose your <strong style="font-weight:700">level.</strong></h2>
+    </div>
+    <div class="tier-cards fade-in-stagger">
+      <div class="tier-card preferred">
+        <div class="tier-title">Preferred Partner</div>
+        <div class="tier-desc">Get started with no commitment</div>
+        <ul class="tier-benefits">
+          <li>Project-by-project basis</li>
+          <li>Custom proposals for your buyers</li>
+          <li>Coordinated installation timeline</li>
+          <li>Builder referral program</li>
+          <li>Direct buyer support</li>
+          <li>No minimums or exclusivity</li>
+        </ul>
+      </div>
+      <div class="tier-card certified">
+        <div class="tier-title">Certified Partner</div>
+        <div class="tier-desc">Volume commitment with premium benefits</div>
+        <ul class="tier-benefits">
+          <li>Preferred pricing on all projects</li>
+          <li>Dedicated project manager</li>
+          <li>Marketing co-op support</li>
+          <li>Showroom model home program</li>
+          <li>Builder branding on proposals</li>
+          <li>Territory exclusivity available</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. CURRENT PROJECTS -->
+<section class="content-section">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;margin-bottom:60px">
+      <div class="caps" style="color:var(--navy);margin-bottom:20px">Portfolio</div>
+      <h2>We're already building with<br><strong style="font-weight:700">Charlotte's best.</strong></h2>
+    </div>
+    <div class="project-cards fade-in-stagger">
+      <div class="project-card">
+        <div class="project-value">$274K</div>
+        <div class="project-name">1240 Paddock</div>
+        <div class="project-desc">Luxury estate with Keen Building Company</div>
+      </div>
+      <div class="project-card">
+        <div class="project-value">$220K</div>
+        <div class="project-name">Peninsula</div>
+        <div class="project-desc">Waterfront smart home with premium finishes</div>
+      </div>
+      <div class="project-card">
+        <div class="project-value">Spec Home</div>
+        <div class="project-name">626 Shelton</div>
+        <div class="project-desc">Modern smart home showcase</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. CTA -->
+<section class="navy-section">
+  <div class="container">
+    <div class="fade-in" style="text-align:center">
+      <h2 style="margin-bottom:32px;color:var(--white)">Let's Build <strong style="font-weight:700">Smarter.</strong></h2>
+      <p style="font-size:1.2rem;opacity:.7;margin-bottom:60px;max-width:600px;margin-left:auto;margin-right:auto">Stop juggling four vendors. Start offering what your buyers expect.</p>
+      <div style="display:flex;gap:24px;justify-content:center;margin-bottom:80px;flex-wrap:wrap">
+        <a href="mailto:info@alt3.com?subject=Builder%20Partnership%20Inquiry" class="btn btn-primary">Schedule a Consultation</a>
+        <a href="../proposals/1240-paddock/client-experience.html" class="btn btn-outline">View Sample Project</a>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.2);padding-top:40px;display:flex;justify-content:center;gap:40px;flex-wrap:wrap">
+        <span style="color:rgba(255,255,255,.5);font-size:.9rem">info@alt3.com</span>
+        <span style="color:rgba(255,255,255,.5);font-size:.9rem">alt3smarthomes.com</span>
+        <span style="color:rgba(255,255,255,.5);font-size:.9rem">@alt3smarthomes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Intersection Observer for animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.2,
+  rootMargin: '0px 0px -100px 0px'
+});
+
+// Observe all fade-in elements
+document.querySelectorAll('.fade-in, .fade-in-stagger').forEach(el => {
+  observer.observe(el);
+});
+
+// Auto-play/pause YouTube videos on scroll
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const iframe = entry.target;
+    try {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      } else {
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      }
+    } catch (err) {}
+  });
+}, { threshold: [0, 0.5] });
+
+document.querySelectorAll('.video-embed iframe').forEach(video => {
+  videoObserver.observe(video);
+});
+</script>
+
+</body>
+</html>

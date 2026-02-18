@@ -1,0 +1,493 @@
+<!-- Bailey Add-Ons Proposal — Alt3 Smart Homes -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt3 Smart Homes — Bailey Smart Home Add-Ons</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+@page { size: letter; margin: 0.4in 0.5in; }
+@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .page-break { page-break-before: always; } .no-print { display: none; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --copper: #113665; --copper-light: #BEB1A2; --copper-dark: #113665; --dark: #ffffff; --surface: #f7f5f3; --border: #e8e3de; --text: #2a2a2a; --dim: #777; }
+body { font-family: 'Neue Montreal', sans-serif; background: #f0ece8; color: var(--text); line-height: 1.45; font-size: 13px; }
+.proposal { max-width: 850px; margin: 0 auto; background: var(--dark); box-shadow: 0 4px 40px rgba(0,0,0,.08); }
+
+/* Cover */
+.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 40px; background: linear-gradient(160deg, #ffffff 0%, #f7f5f3 50%, #ffffff 100%); position: relative; }
+.cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--copper), transparent); }
+.cover-logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 2px; color: var(--copper); margin-bottom: 8px; }
+.cover-logo span { color: var(--copper-light); }
+.cover-tagline { font-size: 1rem; color: var(--dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 60px; }
+.cover-title { font-size: 2rem; font-weight: 300; color: var(--text); margin-bottom: 12px; }
+.cover-subtitle { font-size: 1.1rem; color: var(--copper-light); margin-bottom: 60px; }
+.cover-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 500px; }
+.cover-meta dt { font-size: .7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 4px; }
+.cover-meta dd { font-size: .95rem; color: var(--text); margin-bottom: 16px; }
+
+/* Sections */
+.section { padding: 28px 40px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title { font-size: 1.15rem; font-weight: 600; color: var(--copper-light); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 3px; height: 20px; background: var(--copper); border-radius: 2px; }
+.section-desc { color: var(--dim); font-size: .82rem; margin-bottom: 18px; max-width: 650px; }
+
+/* Part Header */
+.part-header { background: linear-gradient(135deg, var(--surface) 0%, #eee9e4 100%); border: 1px solid var(--border); border-radius: 10px; padding: 24px 36px; margin: 28px 40px 0; display: flex; justify-content: space-between; align-items: center; }
+.part-header .part-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--copper); margin-bottom: 4px; }
+.part-header .part-title { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.part-header .part-total-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); text-align: right; }
+.part-header .part-total { font-size: 1.5rem; font-weight: 700; color: var(--copper); text-align: right; }
+
+/* Product Cards */
+.product-grid { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.product-card { display: grid; grid-template-columns: 56px 1fr auto auto auto; align-items: center; gap: 12px; padding: 8px 12px; background: #fff; border: 1px solid var(--border); border-radius: 6px; transition: border-color .2s; }
+.product-card:hover { border-color: var(--copper-light); }
+.product-img { width: 56px; height: 56px; border-radius: 6px; background: #f7f5f3; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.product-img svg { width: 32px; height: 32px; }
+.product-info { min-width: 0; }
+.product-name { font-size: .82rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-part { font-size: .7rem; color: var(--dim); font-family: 'SF Mono', Menlo, monospace; }
+.product-qty, .product-unit, .product-ext { text-align: right; font-size: .82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.product-qty { color: var(--dim); min-width: 32px; }
+.product-unit { color: var(--dim); min-width: 70px; }
+.product-ext { color: var(--copper); font-weight: 500; min-width: 80px; }
+.product-header { display: grid; grid-template-columns: 56px 1fr auto auto auto; gap: 12px; padding: 4px 12px; font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); font-weight: 600; }
+.product-header > :nth-child(3),
+.product-header > :nth-child(4),
+.product-header > :nth-child(5) { text-align: right; }
+
+/* Fee/Subtotal rows */
+.fee-line { display: flex; justify-content: space-between; padding: 4px 12px; font-size: .8rem; color: var(--dim); }
+.subtotal-line { display: flex; justify-content: space-between; padding: 8px 12px; font-size: .85rem; font-weight: 600; border-top: 2px solid var(--border); margin-top: 6px; }
+.subtotal-line .amount { color: var(--copper-light); }
+.area-total-line { display: flex; justify-content: space-between; padding: 10px 12px; font-size: .95rem; font-weight: 700; border-top: 2px solid var(--copper); margin-top: 4px; }
+.area-total-line .amount { color: var(--copper); }
+
+/* Room header */
+.room-header { font-size: .9rem; font-weight: 600; color: var(--copper); margin: 22px 0 8px; padding: 8px 12px; border-left: 3px solid var(--copper); background: rgba(17,54,101,.04); border-radius: 0 6px 6px 0; display: flex; justify-content: space-between; align-items: baseline; }
+.room-header .room-total { font-size: .82rem; color: var(--dim); font-weight: 400; }
+
+/* Scope */
+.scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+.scope-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.scope-card h4 { font-size: .68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--copper); margin-bottom: 8px; font-weight: 700; }
+.scope-card ul { list-style: none; }
+.scope-card li { font-size: .8rem; color: var(--dim); padding: 2px 0; }
+.scope-card li::before { content: '▸'; color: var(--copper); margin-right: 8px; }
+
+/* Grand Total */
+.grand-total { background: linear-gradient(135deg, #f7f5f3 0%, #eee9e4 100%); border: 2px solid var(--copper); border-radius: 12px; padding: 32px 40px; margin: 28px 40px; }
+.gt-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.gt-row .label { font-size: .9rem; color: var(--dim); }
+.gt-row .amount { font-size: 1rem; color: var(--text); font-variant-numeric: tabular-nums; }
+.gt-divider { border-top: 1px solid var(--border); margin: 12px 0; }
+.gt-final { display: flex; justify-content: space-between; align-items: baseline; }
+.gt-final .label { font-size: 1.1rem; font-weight: 600; color: var(--copper); }
+.gt-final .amount { font-size: 2.2rem; font-weight: 700; color: var(--copper); }
+
+/* Payment */
+.payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.payment-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center; }
+.payment-pct { font-size: 1.8rem; font-weight: 700; color: var(--copper); }
+.payment-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-top: 4px; }
+.payment-amount { font-size: .9rem; color: var(--text); font-weight: 600; margin-top: 4px; }
+
+/* Summary Table */
+.summary-table { width: 100%; border-collapse: collapse; }
+.summary-table td { padding: 6px 12px; font-size: .82rem; border-bottom: 1px solid var(--border); }
+.summary-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.summary-table .total-row td { border-top: 2px solid var(--copper); font-weight: 700; font-size: .95rem; padding-top: 10px; }
+.summary-table .total-row td:last-child { color: var(--copper); }
+
+/* Terms */
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.terms-grid p { font-size: .78rem; color: var(--dim); break-inside: avoid; }
+.terms-grid strong { color: var(--copper); }
+
+/* Signature */
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+.sig-block { border-top: 1px solid var(--border); padding-top: 10px; }
+.sig-block .label { font-size: .68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 4px; }
+.sig-block .line { border-bottom: 1px solid var(--dim); height: 36px; margin-bottom: 6px; }
+
+/* Footer */
+.footer { text-align: center; padding: 28px; border-top: 1px solid var(--border); }
+.footer-logo { font-size: 1.1rem; font-weight: 800; color: var(--copper); letter-spacing: 1px; }
+.footer p { font-size: .72rem; color: var(--dim); margin-top: 4px; }
+
+.print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--copper); color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-size: .9rem; font-weight: 600; cursor: pointer; z-index: 100; box-shadow: 0 4px 20px rgba(17,54,101,.4); }
+.print-btn:hover { background: var(--copper-light); }
+
+@media (max-width: 600px) {
+  .section { padding: 20px 16px; }
+  .cover-meta { grid-template-columns: 1fr; gap: 0; }
+  .scope-grid, .terms-grid, .payment-grid { grid-template-columns: 1fr; }
+  .sig-grid { grid-template-columns: 1fr; }
+  .grand-total { margin: 20px 16px; padding: 24px 20px; }
+  .part-header { margin: 20px 16px 0; flex-direction: column; gap: 8px; text-align: center; }
+  .product-card { grid-template-columns: 44px 1fr auto; }
+  .product-qty, .product-unit { display: none; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+<div class="proposal">
+
+  <!-- ========== COVER ========== -->
+  <div class="cover">
+    <div class="cover-logo">ALT<span>3</span></div>
+    <div class="cover-tagline">Smart Homes</div>
+    <div class="cover-title">Bailey — Smart Home Add-Ons</div>
+    <div class="cover-subtitle">Equipment Upgrades &amp; Enhancements</div>
+    <dl class="cover-meta">
+      <div>
+        <dt>Prepared For</dt>
+        <dd>Bailey</dd>
+        <dt>Project</dt>
+        <dd>Bailey Residence</dd>
+      </div>
+      <div>
+        <dt>Prepared By</dt>
+        <dd>Ryan Palmer<br>CEO, Alt3 Smart Homes</dd>
+        <dt>Date</dt>
+        <dd>February 17, 2026</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- ========== PROJECT OVERVIEW ========== -->
+  <div class="section">
+    <div class="section-title">Project Overview</div>
+    <div class="section-desc">
+      This proposal covers add-on equipment upgrades for the Bailey Residence — including outdoor audio, surveillance, TV mounting, streaming players, a premium living room audio/video system, and a dual-display gym setup. All items are enhancements to the existing smart home infrastructure.
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h4>Equipment Room Floor</h4>
+        <ul>
+          <li>Outdoor speaker system</li>
+          <li>Garage surveillance camera</li>
+          <li>Josh microphones (Master, Kitchen, Pool Room)</li>
+          <li>3rd party integration programming</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Main Floor</h4>
+        <ul>
+          <li>Rec Room — TV mount &amp; streaming</li>
+          <li>Living Room — Full surround audio/video</li>
+          <li>Master Bedroom — TV mount &amp; streaming</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>2nd Floor</h4>
+        <ul>
+          <li>Gym — Dual TV articulating mounts</li>
+          <li>Dual streaming players</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Highlights</h4>
+        <ul>
+          <li>Origin Acoustics outdoor speakers</li>
+          <li>Anthem MRX 540 8K AV Receiver</li>
+          <li>Triad &amp; Origin surround system</li>
+          <li>Luma 520 Series IP Camera</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  EQUIPMENT ROOM FLOOR                                            -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Equipment Room Floor</div>
+      <div class="part-title">Outdoor Audio &amp; Security</div>
+    </div>
+    <div>
+      <div class="part-total-label">Floor Total</div>
+      <div class="part-total">$2,148.49</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <!-- Outdoor Speakers -->
+    <div class="room-header"><span>Outdoor Speakers</span><span class="room-total">$1,611.00</span></div>
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Origin Acoustics OS80W Outdoor Speakers</div><div class="product-part">Outdoor Speaker System</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$1,011.00</div><div class="product-ext">$1,011.00</div>
+      </div>
+    </div>
+    <div class="subtotal-line"><span>Equipment Sub-Total</span><span class="amount">$1,011.00</span></div>
+    <div class="fee-line"><span>Labor</span><span>$300.00</span></div>
+    <div class="area-total-line"><span>Outdoor Speakers Total</span><span class="amount">$1,611.00</span></div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:.78rem;color:var(--dim);margin-top:12px;">
+      <strong style="color:var(--copper-light)">Note:</strong> Josh system includes 3 microphones (Master, Kitchen, Pool Room). 20 hours additional install/programming for 3rd party integration.
+    </div>
+
+    <!-- Garage Camera -->
+    <div class="room-header" style="margin-top:28px"><span>Garage Camera</span><span class="room-total">$537.49</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="24" height="16" rx="3" stroke="#113665" stroke-width="2"/><circle cx="20" cy="22" r="5" stroke="#113665" stroke-width="1.5"/><circle cx="20" cy="22" r="2" fill="#113665"/><path d="M32 20l8-4v16l-8-4z" stroke="#113665" stroke-width="2" fill="#113665" opacity=".2"/></svg></div>
+        <div class="product-info"><div class="product-name">Luma 520 Series 5MP Turret IP Outdoor Camera</div><div class="product-part">5MP, Outdoor</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$384.99</div><div class="product-ext">$384.99</div>
+      </div>
+    </div>
+    <div class="subtotal-line"><span>Equipment Sub-Total</span><span class="amount">$384.99</span></div>
+    <div class="fee-line"><span>Labor</span><span>$152.50</span></div>
+    <div class="area-total-line"><span>Garage Camera Total</span><span class="amount">$537.49</span></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  MAIN FLOOR                                                      -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Main Floor</div>
+      <div class="part-title">Audio, Video &amp; Streaming</div>
+    </div>
+    <div>
+      <div class="part-total-label">Floor Total</div>
+      <div class="part-total">$10,882.88</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <!-- Rec Room -->
+    <div class="room-header"><span>Rec Room</span><span class="room-total">$1,576.97</span></div>
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="20" rx="2" stroke="#113665" stroke-width="2"/><path d="M14 34h20" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Sanus VXT7 TV Mount</div><div class="product-part">Full-Motion Mount</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$249.99</div><div class="product-ext">$249.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="24" height="16" rx="3" stroke="#113665" stroke-width="2"/><rect x="16" y="16" width="16" height="8" rx="1" fill="#113665" opacity=".15"/><circle cx="24" cy="34" r="3" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Roku Ultra Streaming Player</div><div class="product-part">4K Streaming</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$99.99</div><div class="product-ext">$99.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24h24" stroke="#113665" stroke-width="3" stroke-linecap="round"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="36" cy="24" r="4" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Binary B6 4K HDMI Cable 2M</div><div class="product-part">High-Speed HDMI</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$31.99</div><div class="product-ext">$31.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="12" width="32" height="24" rx="4" stroke="#113665" stroke-width="2"/><path d="M18 20l4 4-4 4" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="26" y1="28" x2="34" y2="28" stroke="#113665" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Control4 Driver: TCL TV by Cindev</div><div class="product-part">Integration Driver</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$150.00</div><div class="product-ext">$150.00</div>
+      </div>
+    </div>
+    <div class="subtotal-line"><span>Equipment Sub-Total</span><span class="amount">$531.97</span></div>
+    <div class="fee-line"><span>Labor</span><span>$1,045.00</span></div>
+    <div class="area-total-line"><span>Rec Room Total</span><span class="amount">$1,576.97</span></div>
+
+    <!-- Living Room -->
+    <div class="room-header" style="margin-top:28px"><span>Living Room</span><span class="room-total">$8,366.94</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="24" height="16" rx="3" stroke="#113665" stroke-width="2"/><rect x="16" y="16" width="16" height="8" rx="1" fill="#113665" opacity=".15"/><circle cx="24" cy="34" r="3" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Roku Ultra Streaming Player</div><div class="product-part">4K Streaming</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$99.99</div><div class="product-ext">$99.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24h24" stroke="#113665" stroke-width="3" stroke-linecap="round"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="36" cy="24" r="4" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Binary B6 4K HDMI Cable 2M</div><div class="product-part">High-Speed HDMI</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$31.99</div><div class="product-ext">$31.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Triad MFS-BDL1 Speaker System</div><div class="product-part">In-Room Speaker Bundle</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$2,560.00</div><div class="product-ext">$2,560.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="20" width="36" height="8" rx="4" stroke="#113665" stroke-width="2"/><circle cx="14" cy="24" r="2" fill="#113665" opacity=".4"/><circle cx="24" cy="24" r="2" fill="#113665" opacity=".4"/><circle cx="34" cy="24" r="2" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Origin Acoustics SBR43-60 Soundbar</div><div class="product-part">Premium Soundbar</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$1,613.00</div><div class="product-ext">$1,613.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="14" width="40" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="12" cy="24" r="1.5" fill="#113665"/><rect x="22" y="18" width="18" height="3" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="23" width="18" height="3" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="28" width="12" height="3" rx="1" fill="#113665" opacity=".3"/></svg></div>
+        <div class="product-info"><div class="product-name">Anthem MRX 540 8K AV Receiver</div><div class="product-part">8K AV Receiver</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$1,899.99</div><div class="product-ext">$1,899.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="20" rx="2" stroke="#113665" stroke-width="2"/><path d="M14 34h20" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Strong Razor XL Tilt Mount 49-90"</div><div class="product-part">Extra Large Tilt Mount</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$353.99</div><div class="product-ext">$353.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="18" width="32" height="6" rx="3" stroke="#113665" stroke-width="2"/><path d="M18 24v8M30 24v8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><path d="M14 32h20" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Strong Universal Soundbar Bracket</div><div class="product-part">Soundbar Mount</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$117.99</div><div class="product-ext">$117.99</div>
+      </div>
+    </div>
+    <div class="subtotal-line"><span>Equipment Sub-Total</span><span class="amount">$6,676.94</span></div>
+    <div class="fee-line"><span>Labor</span><span>$1,690.00</span></div>
+    <div class="area-total-line"><span>Living Room Total</span><span class="amount">$8,366.94</span></div>
+
+    <!-- Master Bedroom -->
+    <div class="room-header" style="margin-top:28px"><span>Master Bedroom</span><span class="room-total">$938.97</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="20" rx="2" stroke="#113665" stroke-width="2"/><path d="M14 34h20" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Strong Razor Large Tilt Mount 40-80"</div><div class="product-part">Large Tilt Mount</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$311.99</div><div class="product-ext">$311.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="24" height="16" rx="3" stroke="#113665" stroke-width="2"/><rect x="16" y="16" width="16" height="8" rx="1" fill="#113665" opacity=".15"/><circle cx="24" cy="34" r="3" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Roku Ultra Streaming Player</div><div class="product-part">4K Streaming</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$99.99</div><div class="product-ext">$99.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24h24" stroke="#113665" stroke-width="3" stroke-linecap="round"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="36" cy="24" r="4" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Binary B6 4K HDMI Cable 2M</div><div class="product-part">High-Speed HDMI</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$31.99</div><div class="product-ext">$31.99</div>
+      </div>
+    </div>
+    <div class="subtotal-line"><span>Equipment Sub-Total</span><span class="amount">$443.97</span></div>
+    <div class="fee-line"><span>Labor</span><span>$495.00</span></div>
+    <div class="area-total-line"><span>Master Bedroom Total</span><span class="amount">$938.97</span></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  2ND FLOOR                                                       -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">2nd Floor</div>
+      <div class="part-title">Gym</div>
+    </div>
+    <div>
+      <div class="part-total-label">Floor Total</div>
+      <div class="part-total">$2,541.94</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="room-header"><span>Gym</span><span class="room-total">$2,541.94</span></div>
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="20" rx="2" stroke="#113665" stroke-width="2"/><path d="M6 18v12M42 18v12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M14 34h20" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Strong Carbon Series Dual Arm Articulating Mount 40-80"</div><div class="product-part">Articulating Mount</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$518.99</div><div class="product-ext">$1,037.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="24" height="16" rx="3" stroke="#113665" stroke-width="2"/><rect x="16" y="16" width="16" height="8" rx="1" fill="#113665" opacity=".15"/><circle cx="24" cy="34" r="3" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Roku Ultra Streaming Player</div><div class="product-part">4K Streaming</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$99.99</div><div class="product-ext">$199.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24h24" stroke="#113665" stroke-width="3" stroke-linecap="round"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="36" cy="24" r="4" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Binary B6 4K HDMI Cable 2M</div><div class="product-part">High-Speed HDMI</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$31.99</div><div class="product-ext">$63.98</div>
+      </div>
+    </div>
+    <div class="subtotal-line"><span>Equipment Sub-Total</span><span class="amount">$1,301.94</span></div>
+    <div class="fee-line"><span>Labor</span><span>$1,240.00</span></div>
+    <div class="area-total-line"><span>Gym Total</span><span class="amount">$2,541.94</span></div>
+  </div>
+
+  <!-- ========== ROOM SUMMARY ========== -->
+  <div class="section page-break">
+    <div class="section-title">Room Summary</div>
+    <table class="summary-table">
+      <tbody>
+        <tr><td>Outdoor Speakers</td><td>$1,611.00</td></tr>
+        <tr><td>Garage Camera</td><td>$537.49</td></tr>
+        <tr><td>Rec Room</td><td>$1,576.97</td></tr>
+        <tr><td>Living Room</td><td>$8,366.94</td></tr>
+        <tr><td>Master Bedroom</td><td>$938.97</td></tr>
+        <tr><td>Gym</td><td>$2,541.94</td></tr>
+        <tr class="total-row"><td><strong>Base Total (before enhancements)</strong></td><td><strong>$15,273.31</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== GRAND TOTAL ========== -->
+  <div class="grand-total">
+    <div style="width:100%">
+      <div class="gt-row"><span class="label">Equipment &amp; Materials</span><span class="amount">$10,350.81</span></div>
+      <div class="gt-row"><span class="label">Professional Installation</span><span class="amount">$4,922.50</span></div>
+      <div class="gt-row" style="font-style:italic"><span class="label">Project Enhancements (5%)</span><span class="amount">$763.67</span></div>
+      <div class="gt-divider"></div>
+      <div class="gt-final"><span class="label">Total Project Investment</span><span class="amount">$16,036.98</span></div>
+      <div class="gt-divider" style="margin-top:20px"></div>
+      <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-top:12px;margin-bottom:8px;font-weight:600">Progress Billing</div>
+      <div class="gt-row"><span class="label">10% — Deposit Upon Signing</span><span class="amount">$1,603.70</span></div>
+      <div class="gt-row"><span class="label">80% — When Equipment Ordering Begins</span><span class="amount">$12,829.58</span></div>
+      <div class="gt-row"><span class="label">10% — Substantial Completion</span><span class="amount">$1,603.70</span></div>
+    </div>
+  </div>
+
+  <!-- ========== TERMS ========== -->
+  <div class="section page-break">
+    <div class="section-title">Terms &amp; Conditions</div>
+    <div class="terms-grid">
+      <p><strong>Progress Billing:</strong> 10% non-refundable deposit due upon signing. 80% due when equipment is ordered and received. 10% final payment at substantial completion. All invoices due upon receipt; late payments may incur fees.</p>
+      <p><strong>Proposal Validity:</strong> This proposal is valid for 30 days from date of issue. Pricing subject to change due to manufacturer adjustments.</p>
+      <p><strong>Timeline:</strong> Project timelines depend on product availability, manufacturer shipping, and scheduling. Equipment lead time is typically 4–8 weeks. Installation coordinated with project schedule.</p>
+      <p><strong>Equipment Warranty:</strong> All equipment covered per manufacturer's standard warranty. Alt3 will perform one (1) courtesy replacement of one (1) item (parts + labor) within the manufacturer's warranty period. Additional replacements subject to labor charges.</p>
+      <p><strong>Workmanship Warranty:</strong> Alt3 provides a one-year workmanship warranty from the date of substantial completion. Issues caused by misuse, third-party alterations, or manufacturer defects are excluded.</p>
+      <p><strong>Change Orders:</strong> Additional work not in the original scope requires a change order and additional charges. No work begins without written approval.</p>
+      <p><strong>Cancellations:</strong> The initial deposit is non-refundable. Customer is responsible for restocking fees or non-returnable items if cancelled after equipment is ordered. Completed labor is billable.</p>
+      <p><strong>Liability:</strong> Alt3's liability is limited to the total amount paid under this agreement. Not liable for pre-existing issues, customer-provided equipment, or post-installation modifications.</p>
+      <p><strong>Governing Law:</strong> This agreement is governed by the laws of the State of North Carolina. Disputes resolved in Charlotte, NC courts.</p>
+    </div>
+  </div>
+
+  <!-- ========== SIGNATURE ========== -->
+  <div class="section">
+    <div class="section-title">Acceptance</div>
+    <p style="font-size:.82rem;color:var(--dim);margin-bottom:8px;">By signing below, you authorize Alt3 Smart Homes to proceed with the scope described in this proposal.</p>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Client Signature</div>
+        <p style="font-size:.82rem;margin-top:4px;">Bailey</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Alt3 Smart Homes</div>
+        <p style="font-size:.82rem;margin-top:4px;">Ryan Palmer, CEO</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">ALT3 SMART HOMES</div>
+    <p>Ryan.Palmer@alt3.com &nbsp;|&nbsp; alt3smarthomes.com</p>
+    <p style="margin-top:4px;">Simple. Seamless. Smart — by design.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

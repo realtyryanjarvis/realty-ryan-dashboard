@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.cdnfonts.com/css/neue-montreal" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 1080px;
+  height: 1080px;
+  font-family: 'Neue Montreal', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) saturate(0.8);
+}
+
+.frame {
+  position: absolute;
+  top: 30px; left: 30px; right: 30px; bottom: 30px;
+  border: 1px solid rgba(255,255,255,0.15);
+  z-index: 3;
+}
+
+.content {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px;
+}
+
+.brand {
+  font-size: 13px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #BEB1A2;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.headline {
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: #FFFFFF;
+  letter-spacing: -1.5px;
+  margin-bottom: 30px;
+}
+
+.headline em {
+  font-style: italic;
+  color: #BEB1A2;
+}
+
+.divider {
+  width: 40px;
+  height: 1.5px;
+  background: #BEB1A2;
+  margin-bottom: 30px;
+}
+
+.tagline {
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  font-weight: 400;
+}
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="photo">
+    <img src="photo-moody.jpg" alt="">
+  </div>
+  <div class="content">
+    <div class="brand">Alt3 Smart Homes</div>
+    <h1 class="headline">Your Home<br>Should Just <em>Know</em></h1>
+    <div class="divider"></div>
+    <div class="tagline">Simple · Seamless · Smart</div>
+  </div>
+</body>
+</html>

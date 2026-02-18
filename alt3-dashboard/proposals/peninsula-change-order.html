@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change Order — Peninsula Club | Alt3 Smart Homes</title>
+<link rel="preconnect" href="https://fonts.cdnfonts.com">
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#113665;--navy-light:#1a4a8a;--taupe:#BEB1A2;--cream:#E1D8CE;
+  --bg:#FFFFFF;--surface:#f7f5f3;--border:#e8e3de;
+  --text:#1a1a1a;--dim:#555;--lighter:#888;
+  --green:#2e7d32;--amber:#d4920a;--amber-dark:#b37a00;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Neue Montreal',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+::selection{background:var(--navy);color:#fff}
+
+/* Header */
+.co-header{background:var(--navy);color:#fff;padding:48px 24px;text-align:center}
+.co-header .brand{font-size:.7rem;letter-spacing:4px;text-transform:uppercase;opacity:.7;margin-bottom:8px}
+.co-header .brand span{color:var(--taupe)}
+.co-header h1{font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.co-header .project{font-size:.95rem;opacity:.8;margin-bottom:24px}
+.co-header .amount{font-size:3rem;font-weight:800;letter-spacing:-.03em;color:#fff}
+.co-header .amount-label{font-size:.75rem;text-transform:uppercase;letter-spacing:2px;opacity:.6;margin-top:4px}
+
+/* Container */
+.container{max-width:720px;margin:0 auto;padding:0 24px}
+
+/* Context */
+.context{padding:32px 0;border-bottom:1px solid var(--border)}
+.context h2{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.context p{font-size:.9rem;color:var(--dim);line-height:1.7}
+.context .date{font-size:.8rem;color:var(--lighter);margin-top:8px}
+
+/* Room Cards */
+.rooms{padding:32px 0}
+.rooms h2{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;font-size:.8rem}
+.room-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;transition:all .2s var(--ease)}
+.room-card:hover{border-color:rgba(212,146,10,.4);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.room-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;cursor:pointer}
+.room-header:hover{background:rgba(0,0,0,.02)}
+.room-left{display:flex;align-items:center;gap:14px}
+.room-num{width:32px;height:32px;background:var(--amber);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+.room-name{font-weight:600;font-size:.95rem}
+.room-floor{font-size:.75rem;color:var(--lighter);margin-top:1px}
+.room-total{font-size:1rem;font-weight:700;color:var(--amber-dark);white-space:nowrap}
+.room-body{display:none;padding:0 20px 16px;border-top:1px solid var(--border)}
+.room-card.open .room-body{display:block}
+.room-card.open .chevron{transform:rotate(180deg)}
+.chevron{color:var(--lighter);font-size:.7rem;transition:transform .2s;margin-left:12px}
+.item{padding:8px 0;border-bottom:1px solid rgba(0,0,0,.04);font-size:.85rem;color:var(--dim);display:flex;align-items:center;gap:8px}
+.item:last-child{border-bottom:none}
+.item::before{content:'•';color:var(--amber);font-weight:bold}
+.room-total-bar{display:flex;justify-content:space-between;padding:10px 0 0;font-weight:700;font-size:.9rem;border-top:2px solid var(--amber);margin-top:8px}
+.room-total-bar .amt{color:var(--amber-dark)}
+
+/* Summary */
+.summary{padding:32px 0;border-top:1px solid var(--border)}
+.summary-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
+.sum-line{display:flex;justify-content:space-between;padding:8px 0;font-size:.9rem;color:var(--dim)}
+.sum-total{display:flex;justify-content:space-between;padding:12px 0 0;margin-top:8px;border-top:2px solid var(--amber);font-size:1.1rem;font-weight:700;color:var(--navy)}
+
+/* Approve */
+.approve-section{text-align:center;padding:40px 0 60px;border-top:1px solid var(--border)}
+.approve-box{background:rgba(212,146,10,.05);border:2px solid rgba(212,146,10,.2);border-radius:14px;padding:40px;max-width:500px;margin:0 auto}
+.approve-box p{font-size:.9rem;color:var(--dim);margin-bottom:20px}
+.approve-box strong{color:var(--navy)}
+.approve-btn{display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:#fff;border:none;padding:18px 48px;border-radius:10px;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .25s var(--ease);box-shadow:0 4px 16px rgba(212,146,10,.35);font-family:inherit}
+.approve-btn:hover{background:var(--amber-dark);transform:translateY(-2px);box-shadow:0 6px 24px rgba(212,146,10,.45)}
+.approve-btn.approved{background:var(--green);cursor:default;box-shadow:0 4px 16px rgba(46,125,50,.3)}
+.approve-btn.approved:hover{transform:none}
+#approval-stamp{display:none;margin-top:16px;padding:14px 20px;background:rgba(46,125,50,.08);border:2px solid var(--green);border-radius:10px;font-size:.9rem;color:var(--green);font-weight:600}
+
+/* Footer */
+footer{background:var(--navy);color:#fff;text-align:center;padding:32px;font-size:.75rem;opacity:.8}
+footer .brand{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
+footer .brand span{color:var(--taupe)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:#fff;border-radius:14px;padding:32px;max-width:400px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,.2)}
+.modal-box h3{font-size:1.1rem;color:var(--navy);margin-bottom:12px}
+.modal-box label{display:block;font-size:.75rem;color:var(--lighter);text-transform:uppercase;letter-spacing:1px;margin:12px 0 4px}
+.modal-box input{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:inherit;outline:none}
+.modal-box input:focus{border-color:var(--amber)}
+.modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.modal-actions button{padding:10px 20px;border-radius:8px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;border:none}
+.modal-actions .cancel{background:var(--surface);color:var(--dim)}
+.modal-actions .confirm{background:var(--green);color:#fff}
+
+/* Mobile */
+@media(max-width:600px){
+  .co-header h1{font-size:1.4rem}
+  .co-header .amount{font-size:2.2rem}
+  .room-header{padding:12px 16px}
+  .approve-box{padding:24px}
+  .approve-btn{padding:16px 32px;font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="co-header">
+  <div class="brand">ALT<span>3</span> SMART HOMES</div>
+  <h1>Change Order</h1>
+  <div class="project">18235 Peninsula Club Dr, Cornelius NC</div>
+  <div class="amount">$15,273.31</div>
+  <div class="amount-label">Total Change Order Amount</div>
+</div>
+
+<!-- Context -->
+<div class="container">
+  <div class="context">
+    <h2>Scope Addition — Items Requested On-Site</h2>
+    <p>Hi Alex — this change order covers the additional items you requested during your on-site walkthrough with Bill. This includes outdoor audio, an additional security camera for the garage, TV mounting and media setup across four rooms, plus a full living room entertainment system upgrade with soundbar and receiver.</p>
+    <div class="date">Proposal Date: February 7, 2026</div>
+  </div>
+
+  <!-- Room Breakdown -->
+  <div class="rooms">
+    <h2>Room-by-Room Breakdown</h2>
+
+    <!-- 1. Outdoor Speakers -->
+    <div class="room-card">
+      <div class="room-header" onclick="this.closest('.room-card').classList.toggle('open')">
+        <div class="room-left">
+          <div class="room-num">1</div>
+          <div><div class="room-name">Outdoor Speakers</div><div class="room-floor">Equipment Room Floor</div></div>
+        </div>
+        <div style="display:flex;align-items:center"><div class="room-total">$1,311.00</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="room-body">
+        <div class="item">Origin Acoustics OS80W outdoor speaker</div>
+        <div class="item">Professional installation</div>
+        <div class="room-total-bar"><span>Room Total</span><span class="amt">$1,311.00</span></div>
+      </div>
+    </div>
+
+    <!-- 2. Garage Camera -->
+    <div class="room-card">
+      <div class="room-header" onclick="this.closest('.room-card').classList.toggle('open')">
+        <div class="room-left">
+          <div class="room-num">2</div>
+          <div><div class="room-name">Garage Camera</div><div class="room-floor">Equipment Room Floor</div></div>
+        </div>
+        <div style="display:flex;align-items:center"><div class="room-total">$537.49</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="room-body">
+        <div class="item">Luma 520 Series 5MP Turret IP Outdoor Camera</div>
+        <div class="item">Professional installation</div>
+        <div class="room-total-bar"><span>Room Total</span><span class="amt">$537.49</span></div>
+      </div>
+    </div>
+
+    <!-- 3. Rec Room -->
+    <div class="room-card">
+      <div class="room-header" onclick="this.closest('.room-card').classList.toggle('open')">
+        <div class="room-left">
+          <div class="room-num">3</div>
+          <div><div class="room-name">Rec Room</div><div class="room-floor">Main Floor</div></div>
+        </div>
+        <div style="display:flex;align-items:center"><div class="room-total">$1,576.97</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="room-body">
+        <div class="item">Sanus VXT7 TV Mount</div>
+        <div class="item">Roku Ultra streaming player</div>
+        <div class="item">Binary B6 HDMI cable</div>
+        <div class="item">Control4 Driver: TCL TV integration</div>
+        <div class="item">Professional installation</div>
+        <div class="room-total-bar"><span>Room Total</span><span class="amt">$1,576.97</span></div>
+      </div>
+    </div>
+
+    <!-- 4. Living Room -->
+    <div class="room-card">
+      <div class="room-header" onclick="this.closest('.room-card').classList.toggle('open')">
+        <div class="room-left">
+          <div class="room-num">4</div>
+          <div><div class="room-name">Living Room</div><div class="room-floor">Main Floor</div></div>
+        </div>
+        <div style="display:flex;align-items:center"><div class="room-total">$8,366.94</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="room-body">
+        <div class="item">Roku Ultra streaming player</div>
+        <div class="item">Binary B6 HDMI cable</div>
+        <div class="item">Triad MFS-BDL1 motorized floor stand</div>
+        <div class="item">Origin Acoustics SBR43-60 soundbar</div>
+        <div class="item">Anthem MRX 540 8K A/V receiver</div>
+        <div class="item">Strong Razor XL tilt mount (49-90")</div>
+        <div class="item">Strong universal soundbar bracket</div>
+        <div class="item">Professional installation</div>
+        <div class="room-total-bar"><span>Room Total</span><span class="amt">$8,366.94</span></div>
+      </div>
+    </div>
+
+    <!-- 5. Master Bedroom -->
+    <div class="room-card">
+      <div class="room-header" onclick="this.closest('.room-card').classList.toggle('open')">
+        <div class="room-left">
+          <div class="room-num">5</div>
+          <div><div class="room-name">Master Bedroom</div><div class="room-floor">Main Floor</div></div>
+        </div>
+        <div style="display:flex;align-items:center"><div class="room-total">$938.97</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="room-body">
+        <div class="item">Strong Razor large tilt mount (40-80")</div>
+        <div class="item">Roku Ultra streaming player</div>
+        <div class="item">Binary B6 HDMI cable</div>
+        <div class="item">Professional installation</div>
+        <div class="room-total-bar"><span>Room Total</span><span class="amt">$938.97</span></div>
+      </div>
+    </div>
+
+    <!-- 6. Gym -->
+    <div class="room-card">
+      <div class="room-header" onclick="this.closest('.room-card').classList.toggle('open')">
+        <div class="room-left">
+          <div class="room-num">6</div>
+          <div><div class="room-name">Gym</div><div class="room-floor">2nd Floor</div></div>
+        </div>
+        <div style="display:flex;align-items:center"><div class="room-total">$2,541.94</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="room-body">
+        <div class="item">Strong Carbon Series dual arm mount (40-80") × 2</div>
+        <div class="item">Roku Ultra streaming player × 2</div>
+        <div class="item">Binary B6 HDMI cable × 2</div>
+        <div class="item">Professional installation</div>
+        <div class="room-total-bar"><span>Room Total</span><span class="amt">$2,541.94</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="summary-box">
+      <div class="sum-line"><span>Equipment &amp; Materials</span><span>$10,350.81</span></div>
+      <div class="sum-line"><span>Professional Installation</span><span>$4,922.50</span></div>
+      <div class="sum-total"><span>Change Order Total (no tax)</span><span>$15,273.31</span></div>
+    </div>
+  </div>
+
+  <!-- Approve -->
+  <div class="approve-section">
+    <div class="approve-box">
+      <p>By clicking below, you approve this change order for <strong>$15,273.31</strong> to be added to the Peninsula Club project scope.</p>
+      <button class="approve-btn" id="approve-btn" onclick="showApprovalModal()">✍️ Approve Change Order</button>
+      <div id="approval-stamp"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="brand">ALT<span>3</span> SMART HOMES</div>
+  <div>Simple. Seamless. Smart — by design.</div>
+</footer>
+
+<!-- Approval Modal -->
+<div class="modal-overlay" id="approval-modal">
+  <div class="modal-box">
+    <h3>Approve Change Order</h3>
+    <p style="font-size:.85rem;color:var(--dim);margin-bottom:8px">By confirming, you approve the change order totaling <strong>$15,273.31</strong>.</p>
+    <label>Full Name</label>
+    <input type="text" id="approval-name" placeholder="e.g. Alex Bailey">
+    <label>Date</label>
+    <input type="date" id="approval-date">
+    <div class="modal-actions">
+      <button class="cancel" onclick="hideApprovalModal()">Cancel</button>
+      <button class="confirm" onclick="confirmApproval()">✅ Confirm Approval</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+const FIREBASE_URL='https://realtyryan-dashboard-default-rtdb.firebaseio.com';
+
+function showApprovalModal(){
+  if(localStorage.getItem('bailey-co-approved')) return;
+  document.getElementById('approval-date').valueAsDate=new Date();
+  document.getElementById('approval-modal').classList.add('active');
+}
+function hideApprovalModal(){document.getElementById('approval-modal').classList.remove('active')}
+
+function confirmApproval(){
+  const name=document.getElementById('approval-name').value.trim();
+  const date=document.getElementById('approval-date').value;
+  if(!name){alert('Please enter your name.');return}
+  if(!date){alert('Please enter the date.');return}
+  const now=new Date();
+  const time=now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  const data=JSON.stringify({name,date,time});
+  localStorage.setItem('bailey-co-approved',data);
+  hideApprovalModal();
+  renderApproval(name,date);
+
+  // Save to Firebase
+  const payload={name,date,time,amount:'$15,273.31',project:'Peninsula Club — 18235 Peninsula Club Dr',approvedAt:new Date().toISOString(),status:'approved'};
+  fetch(FIREBASE_URL+'/alt3/approvals/peninsula-co.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
+
+  // Queue email notification to Ryan
+  fetch(FIREBASE_URL+'/alt3/pending_notifications.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    type:'change_order_approved',
+    to:'ryan.palmer@alt3.com',
+    subject:'✅ Bailey Change Order Approved — $15,273.31',
+    body:'Alex Bailey approved the Peninsula Club change order.\\n\\nProject: 18235 Peninsula Club Dr, Cornelius NC\\nApproved by: '+name+'\\nAmount: $15,273.31\\nDate: '+date+' at '+time+'\\n\\nView full project: https://realtyryanjarvis.github.io/alt3-dashboard/proposals/peninsula-bailey-complete.html',
+    createdAt:new Date().toISOString(),
+    status:'pending'
+  })}).catch(()=>{});
+}
+
+function renderApproval(name,date){
+  const btn=document.getElementById('approve-btn');
+  btn.classList.add('approved');
+  btn.textContent='✅ Approved by '+name+' on '+date;
+  btn.onclick=null;
+  const stamp=document.getElementById('approval-stamp');
+  stamp.style.display='block';
+  stamp.textContent='Change order approved by '+name+' on '+date+'. Thank you!';
+}
+
+// Restore on load
+(function(){
+  const saved=localStorage.getItem('bailey-co-approved');
+  if(saved){const d=JSON.parse(saved);renderApproval(d.name,d.date)}
+})();
+</script>
+</body>
+</html>

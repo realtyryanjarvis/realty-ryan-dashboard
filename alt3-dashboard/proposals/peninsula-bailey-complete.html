@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peninsula Club — Project Summary | Alt3 Smart Homes</title>
+<link rel="preconnect" href="https://fonts.cdnfonts.com">
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#113665;--navy-light:#1a4a8a;--taupe:#BEB1A2;--cream:#E1D8CE;
+  --bg:#FFFFFF;--surface:#f7f5f3;--border:#e8e3de;
+  --text:#1a1a1a;--dim:#555;--lighter:#888;
+  --green:#2e7d32;--blue:#1565c0;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Neue Montreal',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+::selection{background:var(--navy);color:#fff}
+
+/* Utility */
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:all .4s var(--ease)}
+nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 20px rgba(0,0,0,.06);padding:10px 0}
+nav .container{display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-size:1rem;font-weight:700;letter-spacing:.08em;color:var(--text)}.nav-logo span{color:var(--navy)}
+.nav-badge{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);border:1px solid var(--taupe);padding:4px 12px;border-radius:20px}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;background:linear-gradient(180deg,#fff 0%,var(--surface) 50%,#fff 100%);position:relative}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--navy),transparent)}
+.hero-content{max-width:700px}
+.hero-badge{display:inline-block;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);border:1px solid var(--taupe);padding:8px 20px;border-radius:30px;margin-bottom:28px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+.hero h1 strong{font-weight:700}
+.hero .address{font-size:1.1rem;color:var(--dim);margin-bottom:32px}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:32px;text-align:left;max-width:440px;margin:0 auto}
+.hero-meta dt{font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lighter);margin-bottom:2px}
+.hero-meta dd{font-size:.9rem;color:var(--text);margin-bottom:12px}
+.hero-scroll{display:inline-block;width:22px;height:36px;border:2px solid var(--navy);border-radius:11px;position:relative;margin-top:40px;cursor:pointer}
+.hero-scroll::after{content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);width:3px;height:7px;background:var(--navy);border-radius:2px;animation:scrollDot 2s infinite}
+@keyframes scrollDot{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(8px)}}
+
+/* Section spacing */
+section{padding:100px 0}
+section.alt-bg{background:var(--cream)}
+
+/* Section headers */
+.section-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);margin-bottom:10px;font-weight:600}
+.section-title{font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:300;line-height:1.15;margin-bottom:16px;letter-spacing:-.01em}
+.section-title strong{font-weight:700}
+.section-desc{font-size:.95rem;color:var(--dim);max-width:600px;line-height:1.7}
+
+/* Dashboard Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.stat-card{text-align:center;padding:32px 16px;border-radius:16px;background:var(--bg);border:1px solid rgba(190,177,162,.3);box-shadow:0 2px 20px rgba(0,0,0,.03);transition:transform .3s var(--ease)}
+.stat-card:hover{transform:translateY(-4px)}
+.stat-card .number{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--navy);margin-bottom:4px;font-variant-numeric:tabular-nums}
+.stat-card .label{font-size:.75rem;color:var(--dim);letter-spacing:.05em}
+.stat-card.green .number{color:var(--green)}
+.stat-card.blue .number{color:var(--blue)}
+
+/* Timeline */
+.timeline{position:relative;margin-top:48px;padding-left:40px}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--navy),var(--taupe))}
+.tl-item{position:relative;padding:0 0 32px 24px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:'';position:absolute;left:-32px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--navy);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--navy);z-index:1}
+.tl-item.milestone::before{width:16px;height:16px;left:-34px;top:2px;background:var(--green);box-shadow:0 0 0 2px var(--green)}
+.tl-date{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lighter);font-weight:600;margin-bottom:2px}
+.tl-title{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:4px}
+.tl-desc{font-size:.82rem;color:var(--dim)}
+.tl-link{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:600;color:var(--navy);background:rgba(17,54,101,.08);padding:4px 12px;border-radius:20px;text-decoration:none;transition:all .2s}
+.tl-link:hover{background:var(--navy);color:#fff}
+
+/* Scope Cards */
+.scope-cards{display:flex;flex-direction:column;gap:16px;margin-top:48px}
+.scope-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:0 2px 16px rgba(0,0,0,.03);transition:box-shadow .3s}
+.scope-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.07)}
+.scope-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;cursor:pointer;user-select:none;transition:background .2s}
+.scope-header:hover{background:var(--surface)}
+.scope-header-left{display:flex;align-items:center;gap:16px}
+.scope-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+.scope-num.green-bg{background:var(--green)}
+.scope-info h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.scope-info .scope-sub{font-size:.75rem;color:var(--dim)}
+.scope-header-right{display:flex;align-items:center;gap:12px}
+.scope-total{font-size:1.2rem;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.scope-total.green{color:var(--green)}
+.scope-chevron{font-size:1rem;color:var(--taupe);transition:transform .3s}
+.scope-card.open .scope-chevron{transform:rotate(180deg)}
+.scope-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border)}
+.scope-card.open .scope-body{display:block}
+.scope-view-link{display:inline-block;font-size:.7rem;font-weight:600;color:var(--navy);background:rgba(17,54,101,.08);padding:3px 10px;border-radius:16px;text-decoration:none;margin-left:8px;transition:all .2s}
+.scope-view-link:hover{background:var(--navy);color:#fff}
+
+/* Product rows inside scope */
+.room-hdr{display:flex;justify-content:space-between;padding:10px 12px;background:rgba(17,54,101,.04);border-radius:8px;font-size:.85rem;font-weight:600;color:var(--navy);margin:16px 0 8px;border-left:3px solid var(--navy)}
+.room-hdr .room-amt{font-weight:500;color:var(--dim)}
+.prod-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;padding:6px 12px;font-size:.8rem;align-items:center;border-bottom:1px solid rgba(0,0,0,.04)}
+.prod-row:last-child{border-bottom:none}
+.prod-name{font-weight:500}.prod-part{font-size:.7rem;color:var(--lighter)}
+.prod-qty,.prod-unit,.prod-ext{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.prod-qty{color:var(--lighter);min-width:36px}.prod-unit{color:var(--lighter);min-width:70px}.prod-ext{color:var(--navy);font-weight:500;min-width:80px}
+.col-header{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;padding:4px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--lighter);font-weight:600}
+.col-header>:nth-child(n+2){text-align:right}
+.note-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:.8rem;color:var(--dim);margin:12px 0}
+.note-box strong{color:var(--taupe)}
+.fee-line{display:flex;justify-content:space-between;padding:3px 12px;font-size:.78rem;color:var(--dim)}
+.discount-line{display:flex;justify-content:space-between;padding:3px 12px;font-size:.78rem;color:var(--green)}
+.area-total{display:flex;justify-content:space-between;padding:10px 12px;font-size:.9rem;font-weight:700;border-top:2px solid var(--navy);margin-top:6px}
+.area-total .amt{color:var(--navy)}
+
+/* Changes Section */
+.changes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:48px}
+.change-card{padding:28px;border-radius:16px;background:var(--bg);border:1px solid rgba(190,177,162,.3);box-shadow:0 2px 16px rgba(0,0,0,.03);transition:transform .3s var(--ease)}
+.change-card:hover{transform:translateY(-3px)}
+.change-card .icon{font-size:1.8rem;margin-bottom:12px}
+.change-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px;color:var(--navy)}
+.change-card p{font-size:.82rem;color:var(--dim);line-height:1.6}
+
+/* Value Added */
+.value-hero{text-align:center;padding:40px;border-radius:20px;background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:2px solid var(--blue);margin-bottom:40px}
+.value-hero .big{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--blue)}
+.value-hero .sub{font-size:.9rem;color:var(--dim);margin-top:8px;max-width:500px;margin-left:auto;margin-right:auto}
+.value-grid{display:flex;flex-direction:column;gap:8px}
+.value-row{display:flex;justify-content:space-between;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;font-size:.85rem;align-items:center}
+.value-row .val-label{color:var(--text)}.value-row .val-desc{font-size:.72rem;color:var(--lighter)}
+.value-row .val-amt{font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;white-space:nowrap}
+.value-total{display:flex;justify-content:space-between;padding:14px 16px;border-top:2px solid var(--blue);margin-top:8px;font-weight:700;font-size:1rem}
+.value-total .val-amt{color:var(--blue)}
+
+/* Outstanding */
+.outstanding-section{margin-top:48px}
+.outstanding-section h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.outstanding-section h3 .badge{font-size:.6rem;padding:3px 10px;border-radius:12px;font-weight:600;letter-spacing:.05em}
+.badge-green{background:rgba(46,125,50,.1);color:var(--green)}
+.badge-amber{background:rgba(245,124,0,.1);color:#e65100}
+.oi-item{padding:8px 14px;font-size:.82rem;color:var(--dim);border-left:3px solid var(--taupe);margin:6px 0;background:rgba(190,177,162,.06);border-radius:0 8px 8px 0}
+.oi-item strong{color:var(--text)}
+
+/* Financial Summary */
+.fin-summary{background:linear-gradient(135deg,var(--surface),#eee9e4);border:2px solid var(--navy);border-radius:16px;padding:32px;margin-top:48px}
+.fin-summary h3{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--navy);margin-bottom:16px;font-weight:700}
+.fin-table{width:100%;border-collapse:collapse}
+.fin-table td{padding:8px 12px;font-size:.85rem;border-bottom:1px solid var(--border)}
+.fin-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
+.fin-table .total-row td{border-top:2px solid var(--navy);border-bottom:none;font-weight:700;font-size:1rem;padding-top:12px}
+.fin-table .total-row td:last-child{color:var(--navy)}
+.fin-divider{border-top:1px solid var(--border);margin:12px 0}
+.fin-row{display:flex;justify-content:space-between;padding:6px 12px;font-size:.9rem}
+.fin-row.paid{color:var(--green);font-weight:500}
+.fin-final{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
+.fin-final .label{font-size:1.1rem;font-weight:600;color:var(--navy)}
+.fin-final .amount{font-size:2rem;font-weight:700;color:var(--navy)}
+
+/* Signature */
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:24px}
+.sig-block .label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--lighter);margin-bottom:4px}
+.sig-block .line{border-bottom:1px solid var(--dim);height:36px;margin-bottom:6px}
+
+/* Footer */
+footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border)}
+footer .brand{font-size:.9rem;font-weight:700;letter-spacing:.08em;margin-bottom:4px}
+footer .brand span{color:var(--navy)}
+footer .tagline{font-size:.72rem;color:var(--lighter);letter-spacing:2px;text-transform:uppercase}
+
+/* Status Items */
+.status-item{padding:10px 14px;font-size:.82rem;color:var(--dim);margin:6px 0;border-radius:0 8px 8px 0;line-height:1.6}
+.status-item.si-green{border-left:3px solid var(--green);background:rgba(46,125,50,.04)}
+.status-item.si-amber{border-left:3px solid #d4920a;background:rgba(212,146,10,.04)}
+.si-note{display:block;font-size:.72rem;color:var(--lighter);font-style:italic;margin-top:2px}
+.si-action{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;color:var(--green);background:rgba(46,125,50,.08);padding:3px 12px;border-radius:16px;text-decoration:none;transition:all .2s}
+.si-action:hover{background:var(--green);color:#fff}
+.si-action.amber{color:#d4920a;background:rgba(212,146,10,.08)}
+.si-action.amber:hover{background:#d4920a;color:#fff}
+@media(max-width:768px){.status-split{grid-template-columns:1fr!important}}
+
+/* Project Process Flow */
+.process-track{display:flex;align-items:flex-start;justify-content:space-between;position:relative;max-width:900px;margin:0 auto;padding:0 20px}
+.process-track::before{content:'';position:absolute;top:28px;left:60px;right:60px;height:3px;background:var(--border);z-index:0}
+.process-track::after{content:'';position:absolute;top:28px;left:60px;width:calc(57% * 1);height:3px;background:var(--green);z-index:1;transition:width .5s}
+.process-step{display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;flex:1;max-width:130px}
+.step-dot{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;border:3px solid var(--border);background:#fff;transition:all .3s;margin-bottom:12px}
+.step-dot.done{border-color:var(--green);background:var(--green);color:#fff}
+.step-dot.active{border-color:#d4920a;background:#fff8e1;animation:step-pulse 2s infinite}
+.step-dot.upcoming{border-color:var(--border);background:var(--surface);opacity:.6}
+@keyframes step-pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,146,10,.3)}50%{box-shadow:0 0 0 10px rgba(212,146,10,0)}}
+.step-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);text-align:center;line-height:1.3}
+.step-date{font-size:.62rem;color:var(--dim);margin-top:4px;text-align:center}
+.step-desc{font-size:.65rem;color:var(--lighter);margin-top:3px;text-align:center;line-height:1.4}
+.current-items{max-width:800px;margin:0 auto}
+.ci-card{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;transition:all .2s}
+.ci-card:hover{border-color:var(--taupe);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.ci-icon{font-size:1.1rem;margin-top:2px;flex-shrink:0}
+.ci-content .ci-title{font-weight:600;font-size:.85rem;color:var(--navy)}
+.ci-content .ci-desc{font-size:.78rem;color:var(--dim);margin-top:3px;line-height:1.5}
+.ci-status{margin-left:auto;flex-shrink:0;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:4px;white-space:nowrap}
+.ci-status.in-progress{background:#fff8e1;color:#b37a00}
+.ci-status.pending{background:#e3f2fd;color:#1565c0}
+.ci-status.scheduled{background:#f3e5f5;color:#7b1fa2}
+.ci-status.upcoming{background:var(--surface);color:var(--dim)}
+@media(max-width:600px){
+  .process-track{flex-wrap:wrap;gap:12px;justify-content:center}
+  .process-track::before,.process-track::after{display:none}
+  .process-step{max-width:80px}
+  .step-dot{width:44px;height:44px;font-size:1rem}
+}
+
+/* Added Value Section */
+.av-section{border:2px solid var(--green);border-radius:20px;padding:40px 32px;background:linear-gradient(135deg,#f0faf0,#e8f5e9);position:relative;overflow:hidden}
+.av-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),#66bb6a,var(--green))}
+.av-badge{display:inline-block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--green);padding:6px 16px;border-radius:20px;margin-bottom:16px}
+.av-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid rgba(46,125,50,.12)}
+.av-item:last-child{border-bottom:none}
+.av-icon{font-size:1.1rem;margin-top:2px;flex-shrink:0}
+.av-text{flex:1}
+.av-text .av-name{font-weight:600;font-size:.9rem;color:var(--navy)}
+.av-text .av-desc{font-size:.8rem;color:var(--dim);margin-top:2px;line-height:1.5}
+.av-tag{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:rgba(46,125,50,.1);color:var(--green);white-space:nowrap}
+.av-total-box{text-align:center;padding:20px;background:rgba(46,125,50,.08);border:1px solid rgba(46,125,50,.2);border-radius:12px;margin-top:24px}
+.av-total-box .big{font-size:1.4rem;font-weight:800;color:var(--green)}
+.av-total-box .sub{font-size:.8rem;color:var(--dim);margin-top:4px}
+
+/* Pending Change Order */
+.co-section{border:2px solid #d4920a;border-radius:20px;padding:40px 32px;background:linear-gradient(135deg,#fffcf5,#fef7e8);position:relative;overflow:hidden}
+.co-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#d4920a,#f0b429,#d4920a)}
+.co-badge{display:inline-block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#fff;background:#d4920a;padding:6px 16px;border-radius:20px;margin-bottom:16px}
+.co-total-box{text-align:center;padding:24px;background:rgba(212,146,10,.08);border:1px solid rgba(212,146,10,.25);border-radius:12px;margin:24px 0}
+.co-total-box .big{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:#b37a00}
+.co-total-box .sub{font-size:.82rem;color:var(--dim);margin-top:4px}
+.co-note{font-size:.82rem;color:var(--dim);line-height:1.7;margin:16px 0;padding:12px 16px;background:rgba(212,146,10,.06);border-left:3px solid #d4920a;border-radius:0 8px 8px 0}
+.co-link{display:inline-block;font-size:.75rem;font-weight:600;color:#d4920a;text-decoration:none;margin-top:8px;transition:color .2s}
+.co-link:hover{color:#b37a00}
+
+/* Approval Button */
+.approve-btn{display:inline-flex;align-items:center;gap:8px;background:#d4920a;color:#fff;border:none;padding:14px 32px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s var(--ease);box-shadow:0 4px 16px rgba(212,146,10,.35);margin-top:12px}
+.approve-btn:hover{background:#b37a00;transform:translateY(-2px);box-shadow:0 6px 24px rgba(212,146,10,.45)}
+.approve-btn.approved{background:var(--green);cursor:default;box-shadow:0 4px 16px rgba(46,125,50,.3)}
+.approve-btn.approved:hover{transform:none;box-shadow:0 4px 16px rgba(46,125,50,.3)}
+
+/* Approval Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:200;justify-content:center;align-items:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-box h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:16px}
+.modal-box label{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin:12px 0 4px}
+.modal-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:inherit}
+.modal-box input:focus{outline:none;border-color:var(--navy)}
+.modal-actions{display:flex;gap:12px;margin-top:20px}
+.modal-actions button{flex:1;padding:10px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.modal-actions .confirm{background:var(--green);color:#fff}
+.modal-actions .confirm:hover{background:#1b5e20}
+.modal-actions .cancel{background:var(--surface);color:var(--dim);border:1px solid var(--border)}
+.modal-actions .cancel:hover{background:var(--border)}
+
+/* Pending row in fin table */
+.fin-table .pending-row td{color:#d4920a;font-style:italic;border-bottom:1px dashed rgba(212,146,10,.4)}
+.fin-table .grand-row td{border-top:3px solid var(--navy);font-size:1.1rem;font-weight:800}
+.fin-pending-note{font-size:.75rem;color:#d4920a;margin-top:6px;font-style:italic;padding:0 12px}
+
+/* Future Enhancements */
+.future-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:40px}
+.future-card{padding:24px;border-radius:14px;background:var(--bg);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.03);transition:transform .3s var(--ease),box-shadow .3s}
+.future-card:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.07)}
+.future-card .icon{font-size:1.6rem;margin-bottom:10px}
+.future-card h3{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.future-card p{font-size:.78rem;color:var(--dim);line-height:1.65}
+.future-card .note{font-size:.7rem;color:var(--lighter);font-style:italic;margin-top:6px}
+.future-cta{text-align:center;margin-top:32px;padding:24px;background:rgba(17,54,101,.04);border-radius:12px}
+.future-cta a{display:inline-block;background:var(--navy);color:#fff;padding:12px 28px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s}
+.future-cta a:hover{background:var(--navy-light);transform:translateY(-2px)}
+.future-cta p{font-size:.8rem;color:var(--dim);margin-top:8px}
+
+/* Maintenance tiers */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.tier{padding:8px 10px;border-radius:8px;text-align:center;font-size:.72rem;font-weight:600}
+.tier.bronze{background:rgba(205,127,50,.1);color:#8b5e3c}
+.tier.silver{background:rgba(150,150,150,.1);color:#666}
+.tier.gold{background:rgba(212,175,55,.15);color:#8b6914}
+
+/* Print */
+.print-btn{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;z-index:100;box-shadow:0 4px 20px rgba(17,54,101,.4);transition:background .2s}
+.print-btn:hover{background:var(--taupe)}
+@media print{.print-btn,nav{display:none}.hero{min-height:auto;padding:40px 24px}section{padding:40px 0}.scope-body{display:block!important}.scope-chevron{display:none}}
+
+/* Covered banner */
+.covered-banner{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:2px solid var(--green);border-radius:12px;padding:16px;text-align:center;margin:12px 0}
+.covered-banner .big{font-size:1.2rem;font-weight:800;color:var(--green)}
+.covered-banner .sub{font-size:.8rem;color:var(--dim);margin-top:4px}
+
+/* Responsive */
+@media(max-width:768px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .stat-card{padding:20px 12px}
+  .stat-card .number{font-size:1.4rem}
+  .hero-meta{grid-template-columns:1fr;gap:0}
+  .sig-grid{grid-template-columns:1fr}
+  .changes-grid{grid-template-columns:1fr}
+  .prod-row{grid-template-columns:1fr auto}.prod-qty,.prod-unit{display:none}
+  .scope-header{flex-direction:column;gap:12px;text-align:center}
+  .scope-header-left{flex-direction:column}
+  .timeline{padding-left:32px}
+  .timeline::before{left:11px}
+  .tl-item::before{left:-28px}
+  .tl-item.milestone::before{left:-30px}
+  .fin-final .amount{font-size:1.5rem}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  section{padding:60px 0}
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">📄 Save as PDF</button>
+
+<!-- Nav -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-logo">ALT<span>3</span></div>
+    <div class="nav-badge">Prepared for Alex Bailey</div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-content fade-in">
+    <div class="hero-badge">Project Summary</div>
+    <h1>Peninsula <strong>Club</strong></h1>
+    <p class="address">18235 Peninsula Club Dr, Cornelius NC</p>
+    <dl class="hero-meta">
+      <div><dt>Client</dt><dd>Alex Bailey<br>Keen Building Company</dd></div>
+      <div><dt>Last Updated</dt><dd>February 17, 2026</dd></div>
+    </dl>
+    <!-- Hero Action Buttons -->
+    <div style="margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px">
+      <!-- Project Progress -->
+      <a href="#process" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,.25);color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-size:.82rem;font-weight:600;transition:all .25s;letter-spacing:.02em">
+        <span style="font-size:1rem">📍</span> Project Progress — Final Punch &amp; Handoff
+        <span style="font-size:.7rem;opacity:.7;margin-left:4px">View →</span>
+      </a>
+      <!-- Latest Site Update -->
+      <a href="#site-update" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:.9rem;font-weight:600;transition:all .25s;letter-spacing:.02em">
+        <span style="font-size:1.1rem">🔧</span> Latest Site Update — Feb 17, 2026
+        <span style="font-size:.75rem;opacity:.7;margin-left:4px">View →</span>
+      </a>
+      <!-- Pending CO Banner -->
+      <a href="#change-order" style="display:inline-flex;align-items:center;gap:10px;background:#d4920a;color:#fff;text-decoration:none;padding:14px 28px;border-radius:10px;font-size:.95rem;font-weight:700;box-shadow:0 4px 20px rgba(212,146,10,.4);transition:all .25s;animation:pulse-co 2s infinite">
+        <span style="font-size:1.2rem">⚠️</span> Pending Change Order — $15,273.31 — Review & Approve
+      </a>
+    </div>
+    <style>@keyframes pulse-co{0%,100%{box-shadow:0 4px 20px rgba(212,146,10,.4)}50%{box-shadow:0 4px 30px rgba(212,146,10,.65)}}</style>
+
+    <a href="#dashboard" class="hero-scroll" aria-label="Scroll down" style="margin-top:24px"></a>
+  </div>
+</section>
+
+<!-- Financial Dashboard -->
+<section id="dashboard" class="alt-bg">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label">Financial Overview</div>
+      <div class="section-title">Project <strong>At a Glance</strong></div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card fade-in"><div class="number">$220,245</div><div class="label">Total Project</div></div>
+      <div class="stat-card green fade-in"><div class="number">$195,869</div><div class="label">Paid to Date</div></div>
+      <div class="stat-card fade-in"><div class="number">$24,376</div><div class="label">Remaining</div></div>
+      <div class="stat-card blue fade-in"><div class="number">~$33,806</div><div class="label">Alt3 Value Added</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Project Process Flow -->
+<section id="process">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:650px;margin:0 auto;margin-bottom:48px">
+      <div class="section-label">Your Journey</div>
+      <div class="section-title">Project <strong>Progress</strong></div>
+      <div class="section-desc" style="margin:0 auto">Where we are today and what's ahead. Alt3 stays with you long after move-in.</div>
+    </div>
+
+    <!-- Milestone Track -->
+    <div class="process-track fade-in" style="--progress:72%">
+      <div class="process-step">
+        <div class="step-dot done">✓</div>
+        <div class="step-label">Design &amp; Scope</div>
+        <div class="step-date">May 2025</div>
+      </div>
+      <div class="process-step">
+        <div class="step-dot done">✓</div>
+        <div class="step-label">Pre-Wire &amp; Rough-In</div>
+        <div class="step-date">Jul–Aug 2025</div>
+      </div>
+      <div class="process-step">
+        <div class="step-dot done">✓</div>
+        <div class="step-label">Equipment &amp; Trim</div>
+        <div class="step-date">Sep–Nov 2025</div>
+      </div>
+      <div class="process-step">
+        <div class="step-dot done">✓</div>
+        <div class="step-label">Programming &amp; Testing</div>
+        <div class="step-date">Dec 2025–Feb 2026</div>
+      </div>
+      <div class="process-step">
+        <div class="step-dot active">📍</div>
+        <div class="step-label">Final Punch &amp; Handoff</div>
+        <div class="step-date">Now</div>
+      </div>
+      <div class="process-step">
+        <div class="step-dot upcoming">🏠</div>
+        <div class="step-label">Move-In Walkthrough</div>
+        <div class="step-date">At Move-In</div>
+      </div>
+      <div class="process-step">
+        <div class="step-dot upcoming">🔄</div>
+        <div class="step-label">Living-In Tuning</div>
+        <div class="step-date">30–60 Days</div>
+      </div>
+    </div>
+
+    <!-- What's Happening Now -->
+    <div class="fade-in" style="margin-top:52px">
+      <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px;text-align:center">🔨 Currently In Progress</h3>
+      <div class="current-items">
+        <div class="ci-card">
+          <span class="ci-icon">⚡</span>
+          <div class="ci-content">
+            <div class="ci-title">Electrician Punch List</div>
+            <div class="ci-desc">Primary bath toe kick, shower exhaust, gym bar lights, main stair linear lighting, and exterior flood motion sensor integration.</div>
+          </div>
+          <span class="ci-status in-progress">In Progress</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">🔴</span>
+          <div class="ci-content">
+            <div class="ci-title">Rec Room Breaker / Panel B Investigation</div>
+            <div class="ci-desc">Recurring breaker trip — outdoor sconces disconnected temporarily. Adam / electrician tracing root cause.</div>
+          </div>
+          <span class="ci-status in-progress">In Progress</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">📺</span>
+          <div class="ci-content">
+            <div class="ci-title">TV Mounts &amp; AV Installation</div>
+            <div class="ci-desc">Great Room, Owner's Bedroom, Rec Room, and Exercise Room — receiver, sound bar, and subwoofer.</div>
+          </div>
+          <span class="ci-status pending">Pending CO Approval</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">📷</span>
+          <div class="ci-content">
+            <div class="ci-title">Additional Garage Security Camera</div>
+            <div class="ci-desc">Included in pending change order scope.</div>
+          </div>
+          <span class="ci-status pending">Pending CO Approval</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">🏠</span>
+          <div class="ci-content">
+            <div class="ci-title">Integration — Appliances &amp; Systems</div>
+            <div class="ci-desc">Microwave, stove, sliding doors, bathroom floor heaters, steam shower, sauna, and overhead doors — all to be integrated into Control4 + Josh.ai.</div>
+          </div>
+          <span class="ci-status in-progress">In Progress</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">💡</span>
+          <div class="ci-content">
+            <div class="ci-title">Patio LED Tape Light Selection</div>
+            <div class="ci-desc">Tracks installed and wired. Waiting on tape light selection to complete.</div>
+          </div>
+          <span class="ci-status pending">Selection Needed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- What's Next -->
+    <div class="fade-in" style="margin-top:48px">
+      <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px;text-align:center">🔮 What's Ahead</h3>
+      <div class="current-items">
+        <div class="ci-card">
+          <span class="ci-icon">🚪</span>
+          <div class="ci-content">
+            <div class="ci-title">Move-In Day Walkthrough</div>
+            <div class="ci-desc">A hands-on walkthrough of your entire system — lighting scenes, voice commands, shades, AV, security, and how everything works together. We'll make sure you're completely comfortable before we leave.</div>
+          </div>
+          <span class="ci-status scheduled">At Move-In</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">🎙️</span>
+          <div class="ci-content">
+            <div class="ci-title">Background Programming Refinement</div>
+            <div class="ci-desc">As you settle in and start talking to your home through Josh.ai, we'll be refining scenes, automation routines, and voice responses in the background — adapting the system to how you actually live.</div>
+          </div>
+          <span class="ci-status upcoming">Ongoing</span>
+        </div>
+        <div class="ci-card">
+          <span class="ci-icon">🔄</span>
+          <div class="ci-content">
+            <div class="ci-title">30/60-Day Living-In Walkthrough</div>
+            <div class="ci-desc">After you've lived in the home for 30–60 days, we'll schedule a follow-up walkthrough. By then you'll know what you love, what needs tweaking, and what new automations would make life easier. This is where the system really becomes <em>yours</em>.</div>
+          </div>
+          <span class="ci-status scheduled">30–60 Days Post Move-In</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Philosophy Note -->
+    <div class="fade-in" style="max-width:600px;margin:48px auto 0;text-align:center;padding:28px;background:var(--surface);border-radius:16px;border:1px solid var(--border)">
+      <div style="font-size:1.4rem;margin-bottom:10px">🏡</div>
+      <p style="font-size:.85rem;color:var(--dim);line-height:1.7;margin:0"><strong style="color:var(--navy)">Our process doesn't end at installation.</strong> A smart home is a living system — it should grow with you. We stay engaged through move-in, refine programming as you adapt, and come back to fine-tune once you've truly settled in. That's the Alt3 difference.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Project Timeline -->
+<section id="timeline">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label">Project Evolution</div>
+      <div class="section-title">How We <strong>Got Here</strong></div>
+      <div class="section-desc">A chronological look at every approval, change order, and milestone throughout the project.</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item milestone fade-in">
+        <div class="tl-date">May 2, 2025</div>
+        <div class="tl-title">Original Contract Signed</div>
+        <div class="tl-desc">Lutron lighting + Sonos audio system — initial scope defined.</div>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">June 14, 2025</div>
+        <div class="tl-title">Control4 Audio Approved</div>
+        <div class="tl-desc">Replaced Sonos with full Control4 + Josh.ai smart home system.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1eFOgrahI3DCW6CfbBaI2o4VYZiSaQ0SR/view" target="_blank">View Original Proposal →</a>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">July 21, 2025</div>
+        <div class="tl-title">Change Order #1 Approved</div>
+        <div class="tl-desc">Additional Ketra S30 lamps for the golf simulation room.</div>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">July 28, 2025</div>
+        <div class="tl-title">Pre-Wire Proposal #104 Consolidated</div>
+        <div class="tl-desc">Full pre-wire scope for 18 rooms — networking, audio, security, and surveillance.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1eFOgrahI3DCW6CfbBaI2o4VYZiSaQ0SR/view" target="_blank">View Original Proposal →</a>
+      </div>
+      <div class="tl-item milestone fade-in">
+        <div class="tl-date">August 2025</div>
+        <div class="tl-title">Final Lutron Proposal #106 Approved</div>
+        <div class="tl-desc">153 Ketra S30s, 12 D3 downlights, 35 Palladiom keypads, and full HomeWorks system.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/15h5LKUOiiSyGVpMm8MaH5gQz2aIP0Y7R/view" target="_blank">View Lighting Proposal →</a>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">September 12, 2025</div>
+        <div class="tl-title">Josh.ai Invoice + Change Order</div>
+        <div class="tl-desc">Full Josh.ai + Control4 system — $71,343.55 retail, -$19,241.24 discount.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1bmtY9BEQsHSK3dob4xRG9BRJFJm7MdRu/view" target="_blank">View Josh.ai Proposal →</a>
+        <a class="tl-link" href="https://drive.google.com/file/d/1D18ldyL0D1xsEISZKknAs4Wubsdne9sM/view" target="_blank">Email Thread →</a>
+      </div>
+      <!-- Removed: subcontractor reference -->
+      <div class="tl-item fade-in">
+        <div class="tl-date">September 22, 2025</div>
+        <div class="tl-title">Shade Quote Sent</div>
+        <div class="tl-desc">17 Lutron Sivoia QS Triathlon roller shades across 5 rooms.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1GKg6ouQVJJEf4dHEL5ho1DoTunqSq9de/view" target="_blank">View Shade Quote →</a>
+      </div>
+      <div class="tl-item milestone fade-in">
+        <div class="tl-date">November 10, 2025</div>
+        <div class="tl-title">Alex Approves Shades</div>
+        <div class="tl-desc">Kitchen, master bedroom, closets, and bath — all approved.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1zk0FR4zxIpzLsvFn2h_9-3zjjXgXBhtC/view" target="_blank">Approval Email →</a>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">November 12, 2025</div>
+        <div class="tl-title">Shade Order Confirmed</div>
+        <div class="tl-desc">Ally confirms order placed + $85/hr installation labor rate.</div>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">November 13, 2025</div>
+        <div class="tl-title">Change Order #3 Sent</div>
+        <div class="tl-desc">Upper level dimmers, linear lighting, and stair tread lights.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/17iSn-EuxafGSxV35Vos2lL1U51AFLx0g/view" target="_blank">View CO#3 Proposal →</a>
+      </div>
+      <div class="tl-item milestone fade-in">
+        <div class="tl-date">November 14, 2025</div>
+        <div class="tl-title">Alex Approves CO#3</div>
+        <div class="tl-desc">$14,318.50 — approved same day.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1uC4AfewgjPaqWEEw2s4oG-1Rqa7qSkqd/view" target="_blank">Approval Email →</a>
+      </div>
+      <div class="tl-item fade-in">
+        <div class="tl-date">February 13, 2026</div>
+        <div class="tl-title">Updated Pre-Wire — Sonance Removed</div>
+        <div class="tl-desc">Proposal #119 — Sonance speakers removed (-$5,426.62). Replaced by Origin Acoustics in Josh.ai scope.</div>
+        <a class="tl-link" href="https://drive.google.com/file/d/1NdRh2UW62Te1vTy4uQoW7saiF97zMx5_/view" target="_blank">View Updated Pre-Wire →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scope Sections -->
+<section id="scope" class="alt-bg">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label">Scope of Work</div>
+      <div class="section-title">Complete <strong>Breakdown</strong></div>
+      <div class="section-desc" style="margin:0 auto">Click each section to explore the full room-by-room line items.</div>
+    </div>
+    <div class="scope-cards">
+
+      <!-- Section 1: Pre-Wire -->
+      <div class="scope-card fade-in" id="sec1">
+        <div class="scope-header" onclick="toggleCard(this)">
+          <div class="scope-header-left">
+            <div class="scope-num">1</div>
+            <div class="scope-info">
+              <h3>Pre-Wire <a class="scope-view-link" href="https://drive.google.com/file/d/1NdRh2UW62Te1vTy4uQoW7saiF97zMx5_/view" target="_blank" onclick="event.stopPropagation()">View Proposal →</a></h3>
+              <div class="scope-sub">Proposal #119 — Updated Feb 13, 2026</div>
+            </div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total">$6,359.50</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="note-box"><strong>Updated 2/13/2026</strong> — Sonance speakers removed per scope change. Savings of $5,426.62 from original Proposal #104 ($10,989.39 → $6,359.50).</div>
+          <div class="col-header"><span>Room / Description</span><span>Qty</span><span>Unit</span><span>Total</span></div>
+          <div class="prod-row"><div><div class="prod-name">Great Room / Pool Room</div><div class="prod-part">CAT6 ×2, trim ×2, audio rough, VersaBox</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$692.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Kitchen</div><div class="prod-part">Audio rough-in</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$150.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Dining</div><div class="prod-part">Audio rough-in</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$150.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Master Bedroom</div><div class="prod-part">CAT6, trim, audio rough</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$271.50</div></div>
+          <div class="prod-row"><div><div class="prod-name">Master Bathroom</div><div class="prod-part">Audio rough-in</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$150.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Study</div><div class="prod-part">CAT6, trim</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$121.50</div></div>
+          <div class="prod-row"><div><div class="prod-name">Guest Suite</div><div class="prod-part">CAT6, trim</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$121.50</div></div>
+          <div class="prod-row"><div><div class="prod-name">Covered Living</div><div class="prod-part">CAT6 ×2, trim ×2, audio rough</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$393.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Recreation</div><div class="prod-part">CAT6 ×2, trim ×2, conduit, 5.1.2 surround pre-wire</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$773.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Suite 1–4</div><div class="prod-part">CAT6 ×4, trim ×4</div></div><div class="prod-qty">4</div><div class="prod-unit">$121.50</div><div class="prod-ext">$486.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Gym</div><div class="prod-part">CAT6 ×2, trim ×2</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$243.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Golf Room</div><div class="prod-part">CAT6 ×2, trim ×2</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$243.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Security</div><div class="prod-part">CAT6 ×2, surveillance trim ×2</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$214.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Surveillance</div><div class="prod-part">CAT6 ×6, trim ×6</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$642.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Whole Home Wi-Fi</div><div class="prod-part">CAT6 ×7, trim ×7</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$749.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Pool Audio</div><div class="prod-part">Conduit, 14/4 direct burial speaker cable</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$380.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Dock</div><div class="prod-part">Direct burial CAT6 ×2</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$250.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Equipment Closet</div><div class="prod-part">RG6 coax ×2, conduit, CAT6 ×2</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$330.00</div></div>
+          <div class="area-total"><span>Pre-Wire Total (18 rooms)</span><span class="amt">$6,359.50</span></div>
+        </div>
+      </div>
+
+      <!-- Section 2: Josh.AI + Control4 -->
+      <div class="scope-card fade-in" id="sec2">
+        <div class="scope-header" onclick="toggleCard(this)">
+          <div class="scope-header-left">
+            <div class="scope-num">2</div>
+            <div class="scope-info">
+              <h3>Josh.AI + Control4 <a class="scope-view-link" href="https://drive.google.com/file/d/1bmtY9BEQsHSK3dob4xRG9BRJFJm7MdRu/view" target="_blank" onclick="event.stopPropagation()">View Proposal →</a></h3>
+              <div class="scope-sub">Proposal #108 — Signed Sep 16, 2025</div>
+            </div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total">$47,434.98</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="note-box"><strong>Alt3 Smart Homes</strong> — Full retail $71,343.55 → Preferred Client Discount −$19,241.24 → $52,102.31 → <strong>Project Fee (no tax): $47,434.98</strong></div>
+          <div class="room-hdr"><span>Equipment Room</span><span class="room-amt">$23,739.74</span></div>
+          <div class="col-header"><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span></div>
+          <div class="prod-row"><div><div class="prod-name">Strong 32U Rack</div></div><div class="prod-qty">×1</div><div class="prod-unit">$2,749.99</div><div class="prod-ext">$2,749.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">WattBox 8-Outlet IP Power Conditioner</div></div><div class="prod-qty">×1</div><div class="prod-unit">$968.99</div><div class="prod-ext">$968.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">WattBox 12-Outlet Power Conditioner</div></div><div class="prod-qty">×1</div><div class="prod-unit">$951.99</div><div class="prod-ext">$951.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Control4 Core 5</div></div><div class="prod-qty">×1</div><div class="prod-unit">$3,599.99</div><div class="prod-ext">$3,599.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">AVPro Edge Audio Hub</div></div><div class="prod-qty">×1</div><div class="prod-unit">$1,959.00</div><div class="prod-ext">$1,959.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Triad 8-Zone Amp (125W)</div></div><div class="prod-qty">×1</div><div class="prod-unit">$2,379.99</div><div class="prod-ext">$2,379.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Wirepath Enclosure Door 40"</div></div><div class="prod-qty">×1</div><div class="prod-unit">$279.99</div><div class="prod-ext">$279.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Araknis 520 Router</div></div><div class="prod-qty">×1</div><div class="prod-unit">$863.99</div><div class="prod-ext">$863.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Araknis 24-Port PoE Switch</div></div><div class="prod-qty">×1</div><div class="prod-unit">$1,078.99</div><div class="prod-ext">$1,078.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Araknis 820 WAP</div></div><div class="prod-qty">×3</div><div class="prod-unit">$777.99</div><div class="prod-ext">$2,333.97</div></div>
+          <div class="prod-row"><div><div class="prod-name">Araknis 520 Outdoor AP</div></div><div class="prod-qty">×1</div><div class="prod-unit">$646.99</div><div class="prod-ext">$646.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Strong Lacing Bar</div></div><div class="prod-qty">×1</div><div class="prod-unit">$40.99</div><div class="prod-ext">$40.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Binary Audio Cables</div></div><div class="prod-qty">×12</div><div class="prod-unit">$44.99</div><div class="prod-ext">$539.88</div></div>
+          <div class="prod-row"><div><div class="prod-name">Triad 8-Zone Amp (100W)</div></div><div class="prod-qty">×1</div><div class="prod-unit">$2,379.99</div><div class="prod-ext">$2,379.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Installation Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$2,965.00</div></div>
+
+          <div class="room-hdr"><span>Security</span><span class="room-amt">$6,047.98</span></div>
+          <div class="prod-row"><div><div class="prod-name">Luma 8CH NVR 2TB</div></div><div class="prod-qty">×1</div><div class="prod-unit">$1,278.99</div><div class="prod-ext">$1,278.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Control4 Chime Doorbell</div></div><div class="prod-qty">×1</div><div class="prod-unit">$538.99</div><div class="prod-ext">$538.99</div></div>
+          <div class="prod-row"><div><div class="prod-name">Luma 820 8MP Turret Camera</div></div><div class="prod-qty">×5</div><div class="prod-unit">$615.00</div><div class="prod-ext">$3,075.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Installation Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$1,155.00</div></div>
+
+          <div class="room-hdr"><span>Golf Room</span><span class="room-amt">$1,705.49</span></div>
+          <div class="prod-row"><div><div class="prod-name">Origin D85 Speaker</div></div><div class="prod-qty">×2</div><div class="prod-unit">—</div><div class="prod-ext">—</div></div>
+          <div class="prod-row"><div><div class="prod-name">Binary HDMI Cable + Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">—</div></div>
+
+          <div class="room-hdr"><span>Gym</span><span class="room-amt">$5,696.98</span></div>
+          <div class="prod-row"><div><div class="prod-name">AVPro HDBT Tx/Rx, Origin D85 ×4, HDMI, Halo Remote, Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$5,696.98</div></div>
+
+          <div class="room-hdr"><span>Master Bath</span><span class="room-amt">$886.00</span></div>
+          <div class="prod-row"><div><div class="prod-name">Origin D53 Speaker ×2 + Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$886.00</div></div>
+
+          <div class="room-hdr"><span>Master Bedroom</span><span class="room-amt">$3,761.47</span></div>
+          <div class="prod-row"><div><div class="prod-name">AVPro HDBT, VersaBox, Origin D85 ×2, Halo Touch, HDMI, Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$3,761.47</div></div>
+
+          <div class="room-hdr"><span>Living Room</span><span class="room-amt">$3,729.48</span></div>
+          <div class="prod-row"><div><div class="prod-name">AVPro HDBT, VersaBox, Origin D85 ×2, Halo Touch, HDMI, Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$3,729.48</div></div>
+
+          <div class="room-hdr"><span>Kitchen</span><span class="room-amt">$1,596.00</span></div>
+          <div class="prod-row"><div><div class="prod-name">Origin D85 Speaker ×2 + Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$1,596.00</div></div>
+
+          <div class="room-hdr"><span>Covered Patio</span><span class="room-amt">$3,856.98</span></div>
+          <div class="prod-row"><div><div class="prod-name">AVPro HDBT, Halo Touch, Origin D85EX ×2, HDMI, Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$3,856.98</div></div>
+
+          <div class="room-hdr"><span>Patio / Pool</span><span class="room-amt">$4,856.50</span></div>
+          <div class="prod-row"><div><div class="prod-name">Origin D85EX ×2, AS41 Landscape System, Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$4,856.50</div></div>
+
+          <div class="room-hdr"><span>Pool Room</span><span class="room-amt">$5,159.98</span></div>
+          <div class="prod-row"><div><div class="prod-name">AVPro HDBT, Origin D85 ×4, Halo Touch, HDMI, Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$5,159.98</div></div>
+
+          <div style="margin-top:20px;padding:14px;background:var(--surface);border-radius:8px;">
+            <div class="fee-line"><span>Full Retail (Parts + Labor + Tax)</span><span>$71,343.55</span></div>
+            <div class="discount-line"><span>Preferred Client Discount</span><span>−$19,241.24</span></div>
+            <div class="fee-line"><span>Discounted Total</span><span>$52,102.31</span></div>
+            <div class="area-total"><span>Project Fee (no tax)</span><span class="amt">$47,434.98</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Additional Josh.AI -->
+      <div class="scope-card fade-in" id="sec3">
+        <div class="scope-header" onclick="toggleCard(this)">
+          <div class="scope-header-left">
+            <div class="scope-num green-bg">3</div>
+            <div class="scope-info">
+              <h3>Additional Josh.AI Items <a class="scope-view-link" href="https://drive.google.com/file/d/1Tx5jBX-a_MoKo8GmHOestScNCFqZ4cnm/view" target="_blank" onclick="event.stopPropagation()">View Proposal →</a></h3>
+              <div class="scope-sub">100% Covered by Alt3 — $0 client cost</div>
+            </div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total green">$0.00</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="covered-banner"><div class="big">✦ 100% COVERED BY ALT3 ✦</div><div class="sub">These items totaling $11,749.95 were absorbed by Alt3 Smart Homes — $0 cost to client</div></div>
+          <div class="col-header"><span>Item</span><span>Qty</span><span>Unit</span><span>Total</span></div>
+          <div class="prod-row"><div><div class="prod-name">Josh Touchscreen + Extra Programming</div><div class="prod-part">20 hrs × $150/hr programming, $3,002.50 labor + tax</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$3,212.67</div></div>
+          <div class="prod-row"><div><div class="prod-name">Gym — Cinema Sub (Paradigm)</div><div class="prod-part">$449.99 + $102.50 labor + tax</div></div><div class="prod-qty">×1</div><div class="prod-unit">$449.99</div><div class="prod-ext">$591.16</div></div>
+          <div class="prod-row"><div><div class="prod-name">Living Room — Josh Touchscreen Ceramic White</div><div class="prod-part">$1,896.90 + $152.50 labor + tax</div></div><div class="prod-qty">×1</div><div class="prod-unit">$1,896.90</div><div class="prod-ext">$2,192.85</div></div>
+          <div class="prod-row"><div><div class="prod-name">Pool Room — Anthem MRX 740 8K + Josh Touchscreen</div><div class="prod-part">MRX 740 $3,099.99, Touchscreen $1,896.90, $380 labor + tax</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$5,753.27</div></div>
+          <div class="area-total"><span>Total (Covered by Alt3)</span><span class="amt" style="color:var(--green)">$11,749.95</span></div>
+        </div>
+      </div>
+
+      <!-- Section 4: Shades -->
+      <div class="scope-card fade-in" id="sec4">
+        <div class="scope-header" onclick="toggleCard(this)">
+          <div class="scope-header-left">
+            <div class="scope-num">4</div>
+            <div class="scope-info">
+              <h3>Motorized Shades <a class="scope-view-link" href="https://drive.google.com/file/d/1GKg6ouQVJJEf4dHEL5ho1DoTunqSq9de/view" target="_blank" onclick="event.stopPropagation()">View Quote →</a></h3>
+              <div class="scope-sub">Lutron Quote #3887368.1 — Approved Nov 10, 2025</div>
+            </div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total">$19,958.48</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="note-box"><strong>Approved Nov 10, 2025</strong> — 17 Sivoia QS Triathlon Roller Shades, Basketweave 90 C 3% Oyster/Beige, battery-operated (3–5 yr life), with fascia. Install labor at $85/hr pass-through.</div>
+          <div class="room-hdr"><span>Kitchen (6 windows)</span></div>
+          <div class="prod-row"><div><div class="prod-name">Window 3</div><div class="prod-part">48 1/16" × 99"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,191.66</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 4</div><div class="prod-part">47 9/16" × 99"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,189.74</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 5</div><div class="prod-part">47 9/16" × 99"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,189.74</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 6</div><div class="prod-part">48 1/8" × 99"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,191.90</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 7</div><div class="prod-part">47 13/16" × 99"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,190.70</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 8</div><div class="prod-part">47 7/8" × 99"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,190.94</div></div>
+
+          <div class="room-hdr"><span>Master Bedroom (5 windows)</span></div>
+          <div class="prod-row"><div><div class="prod-name">Window 1</div><div class="prod-part">31 3/4" × 85"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,045.08</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 2 Right</div><div class="prod-part">46 1/2" × 120"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,269.60</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 2 Middle</div><div class="prod-part">47 3/8" × 120"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,272.95</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 2 Left</div><div class="prod-part">45 3/4" × 120"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,266.72</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 3</div><div class="prod-part">29" × 94"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,070.51</div></div>
+
+          <div class="room-hdr"><span>Master Closet — Water Facing (1 window)</span></div>
+          <div class="prod-row"><div><div class="prod-name">Window 1</div><div class="prod-part">35 3/8" × 39"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$983.04</div></div>
+
+          <div class="room-hdr"><span>Master Closet — Street Facing (2 windows)</span></div>
+          <div class="prod-row"><div><div class="prod-name">Window 1 Left</div><div class="prod-part">30 1/2" × 72"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$988.34</div></div>
+          <div class="prod-row"><div><div class="prod-name">Window 1 Right</div><div class="prod-part">30 1/2" × 72"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$988.34</div></div>
+
+          <div class="room-hdr"><span>Master Bath (1 window)</span></div>
+          <div class="prod-row"><div><div class="prod-name">Window 1</div><div class="prod-part">59 1/2" × 76"</div></div><div class="prod-qty"></div><div class="prod-unit">BW 90C</div><div class="prod-ext">$1,171.66</div></div>
+
+          <div style="margin-top:16px;padding:14px;background:var(--surface);border-radius:8px;">
+            <div class="fee-line"><span>List Price (17 shades)</span><span>$19,200.08</span></div>
+            <div class="fee-line"><span>Shipping</span><span>$758.40</span></div>
+            <div class="area-total"><span>Shades Total</span><span class="amt">$19,958.48</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: Lighting -->
+      <div class="scope-card fade-in" id="sec5">
+        <div class="scope-header" onclick="toggleCard(this)">
+          <div class="scope-header-left">
+            <div class="scope-num">5</div>
+            <div class="scope-info">
+              <h3>Lighting <a class="scope-view-link" href="https://drive.google.com/file/d/15h5LKUOiiSyGVpMm8MaH5gQz2aIP0Y7R/view" target="_blank" onclick="event.stopPropagation()">View Proposal →</a></h3>
+              <div class="scope-sub">Proposal #106 + Change Orders #1 & #2</div>
+            </div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total">$132,174.43</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="note-box"><strong>Final Lutron Proposal #106</strong> — Ketra tunable lighting, Lutron HomeWorks keypads, processors, and modules. Alt3 absorbed panel, dimmer modules ($514), rush D3 shipping ($1,661.20), and LV panel ($640).</div>
+          <div class="room-hdr"><span>Base Lutron Components</span><span class="room-amt">$121,670.50</span></div>
+          <div class="col-header"><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span></div>
+          <div class="prod-row"><div><div class="prod-name">Ketra S30 Lamp (incl trim)</div></div><div class="prod-qty">×153</div><div class="prod-unit">$380.00</div><div class="prod-ext">$58,140.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Palladiom 4-Button Keypad (Single)</div></div><div class="prod-qty">×35</div><div class="prod-unit">$437.50</div><div class="prod-ext">$15,312.50</div></div>
+          <div class="prod-row"><div><div class="prod-name">Ketra D3 Downlight (incl trim)</div></div><div class="prod-qty">×12</div><div class="prod-unit">$1,186.00</div><div class="prod-ext">$14,232.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">LQSE-4A5-120-D LED DIN Module</div></div><div class="prod-qty">×12</div><div class="prod-unit">$1,149.00</div><div class="prod-ext">$13,788.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">4-Button Keypad (Double Gang)</div></div><div class="prod-qty">×16</div><div class="prod-unit">$437.50</div><div class="prod-ext">$7,000.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">PD8-59F-120 DIN Panel</div></div><div class="prod-qty">×2</div><div class="prod-unit">$1,340.00</div><div class="prod-ext">$2,680.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">HQP7-RF Gateway</div></div><div class="prod-qty">×2</div><div class="prod-unit">$890.00</div><div class="prod-ext">$1,780.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">HQP7-2 Processor</div></div><div class="prod-qty">×1</div><div class="prod-unit">$1,749.00</div><div class="prod-ext">$1,749.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">LQSE-4S8-120-D Switch Module</div></div><div class="prod-qty">×2</div><div class="prod-unit">$849.00</div><div class="prod-ext">$1,698.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Sunnata Keypad</div></div><div class="prod-qty">×2</div><div class="prod-unit">$510.00</div><div class="prod-ext">$1,020.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">HQR-REP-120 Hybrid Repeater</div></div><div class="prod-qty">×2</div><div class="prod-unit">$460.00</div><div class="prod-ext">$920.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Ketra A20 (Kitchen Pendants)</div></div><div class="prod-qty">×3</div><div class="prod-unit">$245.00</div><div class="prod-ext">$735.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Palladiom Faceplate</div></div><div class="prod-qty">×8</div><div class="prod-unit">$73.50</div><div class="prod-ext">$588.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Power Supply</div></div><div class="prod-qty">×1</div><div class="prod-unit">$500.00</div><div class="prod-ext">$500.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">PDW-QS-9 Wire Harness</div></div><div class="prod-qty">×1</div><div class="prod-unit">$435.00</div><div class="prod-ext">$435.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">PDW-QS-8 Wire Harness</div></div><div class="prod-qty">×1</div><div class="prod-unit">$400.00</div><div class="prod-ext">$400.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Occupancy Sensor</div></div><div class="prod-qty">×3</div><div class="prod-unit">$105.00</div><div class="prod-ext">$315.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">LMJ-16R-DV-B Relay</div></div><div class="prod-qty">×1</div><div class="prod-unit">$190.00</div><div class="prod-ext">$190.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">QS-WLB Landing Board</div></div><div class="prod-qty">×2</div><div class="prod-unit">$94.00</div><div class="prod-ext">$188.00</div></div>
+
+          <div class="room-hdr"><span>Change Order #1</span><span class="room-amt">$2,445.30</span></div>
+          <div class="prod-row"><div><div class="prod-name">Ketra S30 Lamp</div><div class="prod-part">Additional row for pool room; one cancelled in gym</div></div><div class="prod-qty">×6</div><div class="prod-unit">$407.55</div><div class="prod-ext">$2,445.30</div></div>
+
+          <div class="room-hdr"><span>Change Order #2</span><span class="room-amt">$9,796.28</span></div>
+          <div class="prod-row"><div><div class="prod-name">Ketra S30 Lamp</div><div class="prod-part">Golf Sim Room — tariff price increase, incl trim</div></div><div class="prod-qty">×14</div><div class="prod-unit">$456.00</div><div class="prod-ext">$6,384.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Ketra D2 Downlight</div><div class="prod-part">Living room wall wash</div></div><div class="prod-qty">×2</div><div class="prod-unit">$1,050.00</div><div class="prod-ext">$2,100.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Sunnata Keypad</div><div class="prod-part">Golf Room</div></div><div class="prod-qty">×2</div><div class="prod-unit">$531.00</div><div class="prod-ext">$1,062.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Shipping</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$250.28</div></div>
+
+          <div style="margin-top:20px;padding:14px;background:var(--surface);border-radius:8px;">
+            <div class="fee-line"><span>Base Components</span><span>$121,670.50</span></div>
+            <div class="fee-line"><span>Change Order #1</span><span>$2,445.30</span></div>
+            <div class="fee-line"><span>Change Order #2</span><span>$9,796.28</span></div>
+            <div class="fee-line"><span>Total Parts</span><span>$133,912.08</span></div>
+            <div class="discount-line"><span>Additional Discount</span><span>−$1,737.65</span></div>
+            <div class="area-total"><span>Lighting Total (no tax)</span><span class="amt">$132,174.43</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 6: Change Order #3 -->
+      <div class="scope-card fade-in" id="sec6">
+        <div class="scope-header" onclick="toggleCard(this)">
+          <div class="scope-header-left">
+            <div class="scope-num">6</div>
+            <div class="scope-info">
+              <h3>Change Order #3 <a class="scope-view-link" href="https://drive.google.com/file/d/17iSn-EuxafGSxV35Vos2lL1U51AFLx0g/view" target="_blank" onclick="event.stopPropagation()">View Proposal →</a></h3>
+              <div class="scope-sub">Proposal #114 — Approved Nov 14, 2025</div>
+            </div>
+          </div>
+          <div class="scope-header-right">
+            <div class="scope-total">$14,318.50</div>
+            <div class="scope-chevron">▼</div>
+          </div>
+        </div>
+        <div class="scope-body">
+          <div class="note-box"><strong>Approved Nov 14, 2025</strong> — Additional lighting control, linear lighting, and stair lights. Project fee excludes tax.</div>
+          <div class="room-hdr"><span>Upstairs</span><span class="room-amt">$9,969.50</span></div>
+          <div class="col-header"><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span></div>
+          <div class="prod-row"><div><div class="prod-name">HQP7-RF Additional Processor</div></div><div class="prod-qty">×1</div><div class="prod-unit">$979.00</div><div class="prod-ext">$979.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">HRST-PRO-N-RW Dimmer</div></div><div class="prod-qty">×21</div><div class="prod-unit">$293.00</div><div class="prod-ext">$6,153.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">HRST-8ANS-RW Switch</div></div><div class="prod-qty">×5</div><div class="prod-unit">$307.00</div><div class="prod-ext">$1,535.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Lighting Control Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$1,302.50</div></div>
+
+          <div class="room-hdr"><span>Master Closets</span><span class="room-amt">$772.50</span></div>
+          <div class="prod-row"><div><div class="prod-name">HQR-3PD-1 Plug-in Dimmer</div></div><div class="prod-qty">×3</div><div class="prod-unit">$257.50</div><div class="prod-ext">$772.50</div></div>
+
+          <div class="room-hdr"><span>Master Bedroom</span><span class="room-amt">$1,419.50</span></div>
+          <div class="prod-row"><div><div class="prod-name">Cove Linear Lighting</div><div class="prod-part">36' track, driver, 3000K</div></div><div class="prod-qty">×1</div><div class="prod-unit">$1,117.00</div><div class="prod-ext">$1,117.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Installation Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$302.50</div></div>
+
+          <div class="room-hdr"><span>Master Bathroom</span><span class="room-amt">$528.50</span></div>
+          <div class="prod-row"><div><div class="prod-name">Shower Linear Lighting</div><div class="prod-part">6' track, driver, 3000K</div></div><div class="prod-qty">×1</div><div class="prod-unit">$376.00</div><div class="prod-ext">$376.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Installation Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$152.50</div></div>
+
+          <div class="room-hdr"><span>Stairs</span><span class="room-amt">$1,628.50</span></div>
+          <div class="prod-row"><div><div class="prod-name">LED Linear Stair Tread Light</div><div class="prod-part">77' track, driver, 3000K</div></div><div class="prod-qty">×1</div><div class="prod-unit">$826.00</div><div class="prod-ext">$826.00</div></div>
+          <div class="prod-row"><div><div class="prod-name">Installation Labor</div></div><div class="prod-qty">—</div><div class="prod-unit">—</div><div class="prod-ext">$802.50</div></div>
+
+          <div style="margin-top:16px;padding:14px;background:var(--surface);border-radius:8px;">
+            <div class="fee-line"><span>Parts (Taxable)</span><span>$11,758.50</span></div>
+            <div class="fee-line"><span>Labor (Tax Exempt)</span><span>$2,560.00</span></div>
+            <div class="area-total"><span>Change Order #3 Total (no tax)</span><span class="amt">$14,318.50</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- What Changed -->
+<section id="changes">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label">Evolution</div>
+      <div class="section-title">What <strong>Changed</strong></div>
+      <div class="section-desc" style="margin:0 auto">Key upgrades and adjustments made throughout the project lifecycle.</div>
+    </div>
+    <div class="changes-grid">
+      <div class="change-card fade-in">
+        <div class="icon">🔄</div>
+        <h3>Sonos → Control4 + Josh.ai</h3>
+        <p>Upgraded from basic Sonos audio to a full Control4 + Josh.ai smart home system with voice control, touchscreens, and multi-room integration.</p>
+      </div>
+      <div class="change-card fade-in">
+        <div class="icon">🔇</div>
+        <h3>Sonance Speakers Removed</h3>
+        <p>Sonance VX64R/VP62R speakers removed from pre-wire (−$5,426.62). Replaced by Origin Acoustics D85 in the Josh.ai scope.</p>
+      </div>
+      <div class="change-card fade-in">
+        <div class="icon">💡</div>
+        <h3>3 Lighting Change Orders</h3>
+        <p>Additional Ketra lamps, golf room expansion, upper level dimmers, and LED linear lighting added across multiple approvals.</p>
+      </div>
+      <div class="change-card fade-in">
+        <div class="icon">🪟</div>
+        <h3>Motorized Shades Added</h3>
+        <p>17 Lutron Sivoia QS Triathlon shades for kitchen, master bedroom, closets, and bath — battery-operated with fascia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Alt3 Value Added -->
+<section id="value" class="alt-bg">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label">Partnership</div>
+      <div class="section-title">Alt3 <strong>Value Added</strong></div>
+    </div>
+    <div class="fade-in" style="margin-top:40px;max-width:700px;margin-left:auto;margin-right:auto">
+      <div class="value-hero">
+        <div class="big">$33,806.39+</div>
+        <div class="sub">Alt3 invested in upgrading your system to ensure the best possible experience.</div>
+      </div>
+      <div class="value-grid">
+        <div class="value-row"><div><div class="val-label">Josh.ai Preferred Client Discount</div><div class="val-desc">Josh microphones, system pricing, network + speaker upgrades</div></div><div class="val-amt">$19,241.24</div></div>
+        <div class="value-row"><div><div class="val-label">Additional Josh.ai Items</div><div class="val-desc">Touchscreens, MRX 740, Paradigm sub, programming</div></div><div class="val-amt">$11,749.95</div></div>
+        <div class="value-row"><div><div class="val-label">Rush D3 Shipping</div><div class="val-desc">Expedited Ketra D3 downlight delivery</div></div><div class="val-amt">$1,661.20</div></div>
+        <div class="value-row"><div><div class="val-label">Low Voltage Panel</div><div class="val-desc">Additional panel for garage runs</div></div><div class="val-amt">$640.00</div></div>
+        <div class="value-row"><div><div class="val-label">Dimmer Plug-in Modules</div><div class="val-desc">2 modules for master closet</div></div><div class="val-amt">$514.00</div></div>
+      </div>
+      <div class="value-total"><span>Total Alt3 Value Added</span><span class="val-amt">~$33,806</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Old Outstanding Items replaced by Project Status section above -->
+
+<!-- Project Status — Additional Items -->
+<section id="status-items">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:40px">
+      <div class="section-label">Project Status</div>
+      <div class="section-title">Additional <strong>Items</strong></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px" class="fade-in status-split">
+
+      <!-- Completed -->
+      <div style="border:2px solid var(--green);border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 4px 20px rgba(46,125,50,.08)">
+        <div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);padding:18px 24px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">✅</span>
+          <h3 style="font-size:.95rem;font-weight:700;color:var(--green);margin:0">Completed — No Additional Charge</h3>
+        </div>
+        <div style="padding:20px 24px">
+          <div class="status-item si-green">2 Outdoor Speakers — installed</div>
+          <div class="status-item si-green">1 Additional 24-Port POE Switch — needed two instead of one</div>
+          <div class="status-item si-green">Moved lighting keypads a few times <span class="si-note">Covered by Alt3</span></div>
+          <div class="status-item si-green">Fixed patio LED tape wires for final inspection <span class="si-note">Tracks only — tape light selection pending</span></div>
+          <div class="status-item si-green">Control4 Core1 Controller <span class="si-note">Covered by Alt3</span></div>
+          <div class="status-item si-green">Other miscellaneous labor items absorbed by Alt3 onsite</div>
+        </div>
+      </div>
+
+<!-- Items Still To Do section removed -->
+
+    </div>
+  </div>
+</section>
+
+<!-- Latest Site Update -->
+<section id="site-update" class="alt-bg">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:32px">
+      <div class="section-label">Feb 17, 2026</div>
+      <div class="section-title">Latest <strong>Site Update</strong></div>
+      <div class="section-desc">Onsite walkthrough completed. All lights identified and working correctly, with the following items requiring attention.</div>
+    </div>
+
+    <div class="fade-in" style="max-width:800px;margin:0 auto">
+      <!-- Electrician Items -->
+      <div style="border:2px solid #ef5350;border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 4px 20px rgba(239,83,80,.08);margin-bottom:20px">
+        <div style="background:linear-gradient(135deg,#ffebee,#ffcdd2);padding:16px 24px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.3rem">⚡</span>
+          <h3 style="font-size:.9rem;font-weight:700;color:#c62828;margin:0">Electrician Action Required</h3>
+        </div>
+        <div style="padding:16px 24px">
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>Primary Bath</strong> — Toe kick lighting under one vanity not activating with rest of linear lighting. Possible loose connection.
+          </div>
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>Primary Bath</strong> — Shower exhaust fan not audible when all systems on. Water closet fan working fine. Needs diagnosis.
+          </div>
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>Gym Service Bar</strong> — Ceiling-mounted lights above bar not coming on from any output. Needs electrician trace.
+          </div>
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>Main Stair</strong> — Linear lighting tape installed but not activating. May not be connected to panel output under house.
+          </div>
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>Exterior Floods</strong> — Currently on motion sensors, not responding correctly to lighting controls. Can motion sensing be disabled?
+          </div>
+          <div class="status-item" style="padding:10px 0;font-size:.85rem;color:#333;background:rgba(239,83,80,.04);padding:12px;border-radius:8px;border:1px solid rgba(239,83,80,.15)">
+            <strong>🔴 PRIORITY — Rec Room Exterior / Panel B</strong> — Breaker tripping again. Resolved temporarily by disconnecting outdoor sconces on back of rec room (same recurring fix). Adam / electrician to investigate root cause.
+          </div>
+        </div>
+      </div>
+
+      <!-- Alt3 / Tech Items -->
+      <div style="border:2px solid #1565c0;border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 4px 20px rgba(21,101,192,.08);margin-bottom:20px">
+        <div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);padding:16px 24px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.3rem">🔧</span>
+          <h3 style="font-size:.9rem;font-weight:700;color:#1565c0;margin:0">Alt3 Smart Homes — Action Items</h3>
+        </div>
+        <div style="padding:16px 24px">
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>Wardrobe 1</strong> — Half of cabinet lights staying on (plugged directly into outlet, bypassing dimming module). Need 1×2 splitter to connect both transformers to dimming module. <span style="font-size:.75rem;color:var(--lighter);font-style:italic">Minor — part needed</span>
+          </div>
+          <div class="status-item" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:.85rem;color:#333">
+            <strong>All Rooms</strong> — Match area/room naming between Lutron and Josh.ai systems for seamless voice control.
+          </div>
+          <div class="status-item" style="padding:10px 0;font-size:.85rem;color:#333">
+            <strong>Voice Control</strong> — Refinement phase begins once room naming is synced. Will be tuned to how Alex naturally uses voice commands.
+          </div>
+        </div>
+      </div>
+
+      <!-- Good News -->
+      <div style="background:rgba(46,125,50,.04);border:1px solid rgba(46,125,50,.2);border-radius:12px;padding:16px 24px;text-align:center">
+        <span style="font-size:1.2rem">✅</span>
+        <p style="font-size:.85rem;color:var(--green);font-weight:600;margin:4px 0 0">All other lights working correctly and identified. Several items corrected during this visit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Added Value by Alt3 -->
+<section id="added-value">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:40px">
+      <div class="section-label">Completed — No Additional Charge</div>
+      <div class="section-title">Added Value by <strong>Alt3 Smart Homes</strong></div>
+      <div class="section-desc" style="margin:0 auto">The following items were completed at no cost to the client as part of our commitment to excellence.</div>
+    </div>
+    <div class="fade-in" style="max-width:800px;margin:0 auto">
+      <div class="av-section">
+        <div style="text-align:center"><span class="av-badge">✦ Covered by Alt3</span></div>
+
+        <div class="av-item">
+          <span class="av-icon">🔊</span>
+          <div class="av-text">
+            <div class="av-name">2 Outdoor Speakers — Installed</div>
+          </div>
+          <span class="av-tag">No Charge</span>
+        </div>
+
+        <div class="av-item">
+          <span class="av-icon">🔌</span>
+          <div class="av-text">
+            <div class="av-name">1 Additional 24-Port POE Switch</div>
+            <div class="av-desc">Needed two instead of one</div>
+          </div>
+          <span class="av-tag">No Charge</span>
+        </div>
+
+        <div class="av-item">
+          <span class="av-icon">🔲</span>
+          <div class="av-text">
+            <div class="av-name">Lighting Keypad Relocations</div>
+            <div class="av-desc">Moved lighting keypads a few times — covered by Alt3</div>
+          </div>
+          <span class="av-tag">No Charge</span>
+        </div>
+
+        <div class="av-item">
+          <span class="av-icon">💡</span>
+          <div class="av-text">
+            <div class="av-name">Patio LED Tape Wire Fix</div>
+            <div class="av-desc">Fixed patio LED tape wires for final inspection. Tracks only — tape light selection pending.</div>
+          </div>
+          <span class="av-tag">No Charge</span>
+        </div>
+
+        <div class="av-item">
+          <span class="av-icon">🎛️</span>
+          <div class="av-text">
+            <div class="av-name">Control4 Core1 Controller</div>
+            <div class="av-desc">Covered by Alt3</div>
+          </div>
+          <span class="av-tag">No Charge</span>
+        </div>
+
+        <div class="av-item">
+          <span class="av-icon">🔧</span>
+          <div class="av-text">
+            <div class="av-name">Other Miscellaneous Labor</div>
+            <div class="av-desc">Various onsite labor items absorbed by Alt3</div>
+          </div>
+          <span class="av-tag">No Charge</span>
+        </div>
+
+        <div class="av-total-box">
+          <div class="big">$0 Cost to Client</div>
+          <div class="sub">All items above completed and absorbed by Alt3 Smart Homes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pending Change Order -->
+<section id="change-order">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:600px;margin:0 auto;margin-bottom:40px">
+      <div class="section-label">Action Required</div>
+      <div class="section-title">Pending Change Order — <strong>Approval Required</strong></div>
+      <div class="section-desc" style="margin:0 auto">Bailey add-ons proposal dated February 7, 2026. Review the room-by-room breakdown below.</div>
+    </div>
+    <div class="fade-in" style="max-width:800px;margin:0 auto">
+      <div class="co-section">
+        <div class="co-badge">⚡ Pending Approval</div>
+        <h2 style="font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:4px">Bailey Add-Ons — February 7, 2026</h2>
+        <p style="font-size:.82rem;color:var(--dim);margin-bottom:8px">Outdoor speakers, garage camera, TV mounts &amp; media for Rec Room, Living Room, Master Bedroom, and Gym.</p>
+        <a class="co-link" href="#">View Original Proposal →</a>
+
+        <div class="co-total-box">
+          <div class="big">$15,273.31</div>
+          <div class="sub" style="margin-top:8px">Change Order Total (no tax)</div>
+        </div>
+
+        <div style="max-width:420px;margin:24px auto 0;padding:20px 24px;background:rgba(212,146,10,.06);border-radius:12px;border:1px solid rgba(212,146,10,.2)">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:.88rem;border-bottom:1px solid rgba(212,146,10,.12)"><span style="color:var(--dim)">Equipment &amp; Materials</span><span style="font-weight:600;color:var(--navy)">$10,350.81</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:.88rem;border-bottom:1px solid rgba(212,146,10,.12)"><span style="color:var(--dim)">Professional Installation</span><span style="font-weight:600;color:var(--navy)">$4,922.50</span></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:1rem;font-weight:700;border-top:2px solid #d4920a;margin-top:4px"><span style="color:var(--navy)">Change Order Total (no tax)</span><span style="color:#b37a00">$15,273.31</span></div>
+        </div>        <!-- Approval -->
+        <div style="text-align:center;margin-top:32px;padding:32px;background:rgba(212,146,10,.06);border:2px solid rgba(212,146,10,.25);border-radius:12px" id="approval-area">
+          <p style="font-size:.9rem;color:var(--dim);margin-bottom:16px">By clicking below, you approve this change order for <strong style="color:var(--navy)">$15,273.31</strong></p>
+          <button class="approve-btn" id="approve-btn" onclick="showApprovalModal()" style="font-size:1.1rem;padding:18px 48px;">✍️ Approve Change Order</button>
+          <div id="approval-stamp" style="display:none;margin-top:12px;padding:14px 20px;background:rgba(46,125,50,.08);border:2px solid var(--green);border-radius:10px;font-size:.9rem;color:var(--green);font-weight:600"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Financial Summary -->
+<section id="summary" class="alt-bg" style="background:var(--cream)">
+  <div class="container">
+    <div class="fade-in" style="max-width:700px;margin:0 auto">
+      <div class="fin-summary">
+        <h3>Financial Summary</h3>
+        <table class="fin-table">
+          <tr><td>Section 1 — Pre-Wire (Proposal #119)</td><td>$6,359.50</td></tr>
+          <tr><td>Section 2 — Josh.AI + Control4 (Proposal #108)</td><td>$47,434.98</td></tr>
+          <tr><td>Section 3 — Additional Josh.AI (Covered by Alt3)</td><td>$0.00</td></tr>
+          <tr><td>Section 4 — Shades (Lutron #3887368.1)</td><td>$19,958.48</td></tr>
+          <tr><td>Section 5 — Lighting (Proposal #106 + CO #1 & #2)</td><td>$132,174.43</td></tr>
+          <tr><td>Section 6 — Change Order #3 (Proposal #114)</td><td>$14,318.50</td></tr>
+          <tr class="total-row"><td>Current Total</td><td>$220,245.89</td></tr>
+          <tr class="pending-row"><td>⏳ Pending Change Order (Feb 7, 2026)</td><td>$15,273.31</td></tr>
+          <tr class="grand-row"><td>Including Pending CO</td><td>$235,519.20</td></tr>
+        </table>
+        <div class="fin-divider"></div>
+        <div class="fin-row paid"><span>Paid to Date</span><span>$195,869.45</span></div>
+        <div class="fin-divider"></div>
+        <div class="fin-final"><span class="label">Remaining Balance</span><span class="amount">$24,376.44</span></div>
+        <div class="fin-pending-note">⏳ Pending change order of $15,273.31 not yet included in remaining balance — awaiting approval.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Acceptance -->
+<!-- Acceptance section removed -->
+
+<!-- Footer -->
+<footer>
+  <div class="brand">ALT<span>3</span> SMART HOMES</div>
+  <div class="tagline">Simple. Seamless. Smart — by design.</div>
+</footer>
+
+<!-- Approval Modal -->
+<div class="modal-overlay" id="approval-modal">
+  <div class="modal-box">
+    <h3>Approve Change Order</h3>
+    <p style="font-size:.82rem;color:var(--dim);margin-bottom:8px">By confirming, you approve the pending change order totaling <strong>$15,273.31</strong>.</p>
+    <label>Full Name</label>
+    <input type="text" id="approval-name" placeholder="e.g. Alex Bailey">
+    <label>Date</label>
+    <input type="date" id="approval-date">
+    <div class="modal-actions">
+      <button class="cancel" onclick="hideApprovalModal()">Cancel</button>
+      <button class="confirm" onclick="confirmApproval()">✅ Confirm Approval</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Toggle scope cards
+function toggleCard(header){
+  const card=header.closest('.scope-card');
+  card.classList.toggle('open');
+}
+
+// Intersection Observer for fade-in
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+
+// Approval flow
+function showApprovalModal(){
+  if(localStorage.getItem('bailey-co-approved')) return;
+  document.getElementById('approval-date').valueAsDate=new Date();
+  document.getElementById('approval-modal').classList.add('active');
+}
+function hideApprovalModal(){document.getElementById('approval-modal').classList.remove('active')}
+function confirmApproval(){
+  const name=document.getElementById('approval-name').value.trim();
+  const date=document.getElementById('approval-date').value;
+  if(!name){alert('Please enter your name.');return}
+  if(!date){alert('Please enter the date.');return}
+  const now=new Date();
+  const time=now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  const data=JSON.stringify({name,date,time});
+  localStorage.setItem('bailey-co-approved',data);
+  hideApprovalModal();
+  renderApproval(name,date);
+  // Send email notification
+  sendApprovalNotification(name,date,time);
+}
+function sendApprovalNotification(name,date,time){
+  const FIREBASE_URL='https://realtyryan-dashboard-default-rtdb.firebaseio.com';
+  const payload={
+    name:name,
+    date:date,
+    time:time,
+    amount:'$15,273.31',
+    project:'Peninsula Club — 18235 Peninsula Club Dr',
+    approvedAt:new Date().toISOString(),
+    status:'approved'
+  };
+  // 1. Write to Firebase (permanent record)
+  fetch(FIREBASE_URL+'/alt3/approvals/peninsula-co.json',{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(()=>console.log('Firebase: approval saved'))
+    .catch(e=>console.warn('Firebase write failed',e));
+  // 2. Send email notification to Ryan via Gmail API (through Jarvis)
+  fetch(FIREBASE_URL+'/alt3/pending_notifications.json',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      type:'change_order_approved',
+      to:'ryan.palmer@alt3.com',
+      subject:'✅ Bailey Change Order Approved — $15,273.31',
+      body:'Alex Bailey approved the Peninsula Club change order.\n\nProject: 18235 Peninsula Club Dr, Cornelius NC\nApproved by: '+name+'\nAmount: $15,273.31\nDate: '+date+' at '+time+'\n\nView full project: https://realtyryanjarvis.github.io/alt3-dashboard/proposals/peninsula-bailey-complete.html',
+      createdAt:new Date().toISOString(),
+      status:'pending'
+    })
+  }).then(()=>console.log('Notification queued'))
+    .catch(e=>console.warn('Notification queue failed',e));
+}
+function renderApproval(name,date){
+  const btn=document.getElementById('approve-btn');
+  btn.classList.add('approved');
+  btn.textContent='✅ Approved by '+name+' on '+date;
+  btn.onclick=null;
+  const stamp=document.getElementById('approval-stamp');
+  stamp.style.display='block';
+  stamp.textContent='Change order approved by '+name+' on '+date+'. Thank you!';
+  // Hide hero banner
+  const banner=document.getElementById('hero-co-banner');
+  if(banner) banner.innerHTML='<div style="display:inline-block;background:rgba(46,125,50,.1);border:2px solid #2e7d32;color:#2e7d32;padding:12px 24px;border-radius:10px;font-weight:600">✅ Change Order Approved by '+name+'</div>';
+}
+// Restore approval on load
+(function(){
+  const saved=localStorage.getItem('bailey-co-approved');
+  if(saved){const d=JSON.parse(saved);renderApproval(d.name,d.date)}
+})();
+</script>
+</body>
+</html>

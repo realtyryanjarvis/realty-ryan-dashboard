@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.cdnfonts.com/css/neue-montreal" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 1080px;
+  height: 1080px;
+  font-family: 'Neue Montreal', sans-serif;
+  background: #000000;
+  overflow: hidden;
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px;
+}
+
+.headline {
+  font-size: 88px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -3px;
+  margin-bottom: 40px;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sub {
+  font-size: 21px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+}
+
+.brand {
+  position: absolute;
+  bottom: 60px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  font-weight: 500;
+}
+
+/* subtle glow */
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(17,54,101,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="content">
+    <h1 class="headline">Your home<br>should just<br>know.</h1>
+    <p class="sub">Simple. Seamless. Smart — by design.</p>
+  </div>
+  <div class="brand">Alt3 Smart Homes</div>
+</body>
+</html>

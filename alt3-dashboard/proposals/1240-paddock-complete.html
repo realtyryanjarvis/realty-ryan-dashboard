@@ -1,0 +1,1336 @@
+<!-- Rebranded: Navy + Taupe + Neue Montreal -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt3 Smart Homes — Complete Smart Home Proposal</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+@page { size: letter; margin: 0.4in 0.5in; }
+@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .page-break { page-break-before: always; } .no-print { display: none; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --copper: #113665; --copper-light: #BEB1A2; --copper-dark: #113665; --dark: #ffffff; --surface: #f7f5f3; --border: #e8e3de; --text: #2a2a2a; --dim: #777; }
+body { font-family: 'Neue Montreal', sans-serif; background: #f0ece8; color: var(--text); line-height: 1.45; font-size: 13px; }
+.proposal { max-width: 850px; margin: 0 auto; background: var(--dark); box-shadow: 0 4px 40px rgba(0,0,0,.08); }
+
+/* Cover */
+.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 40px; background: linear-gradient(160deg, #ffffff 0%, #f7f5f3 50%, #ffffff 100%); position: relative; }
+.cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--copper), transparent); }
+.cover-logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 2px; color: var(--copper); margin-bottom: 8px; }
+.cover-logo span { color: var(--copper-light); }
+.cover-tagline { font-size: 1rem; color: var(--dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 60px; }
+.cover-title { font-size: 2rem; font-weight: 300; color: var(--text); margin-bottom: 12px; }
+.cover-subtitle { font-size: 1.1rem; color: var(--copper-light); margin-bottom: 60px; }
+.cover-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 500px; }
+.cover-meta dt { font-size: .7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 4px; }
+.cover-meta dd { font-size: .95rem; color: var(--text); margin-bottom: 16px; }
+
+/* Sections */
+.section { padding: 28px 40px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title { font-size: 1.15rem; font-weight: 600; color: var(--copper-light); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 3px; height: 20px; background: var(--copper); border-radius: 2px; }
+.section-desc { color: var(--dim); font-size: .82rem; margin-bottom: 18px; max-width: 650px; }
+
+/* Part Header */
+.part-header { background: linear-gradient(135deg, var(--surface) 0%, #eee9e4 100%); border: 1px solid var(--border); border-radius: 10px; padding: 24px 36px; margin: 28px 40px 0; display: flex; justify-content: space-between; align-items: center; }
+.part-header .part-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--copper); margin-bottom: 4px; }
+.part-header .part-title { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.part-header .part-total-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); text-align: right; }
+.part-header .part-total { font-size: 1.5rem; font-weight: 700; color: var(--copper); text-align: right; }
+
+/* Product Cards */
+.product-grid { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.product-card { display: grid; grid-template-columns: 56px 1fr auto auto auto; align-items: center; gap: 12px; padding: 8px 12px; background: #fff; border: 1px solid var(--border); border-radius: 6px; transition: border-color .2s; }
+.product-card:hover { border-color: var(--copper-light); }
+.product-img { width: 56px; height: 56px; border-radius: 6px; background: #f7f5f3; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.product-img svg { width: 32px; height: 32px; }
+.product-info { min-width: 0; }
+.product-name { font-size: .82rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-part { font-size: .7rem; color: var(--dim); font-family: 'SF Mono', Menlo, monospace; }
+.product-qty, .product-unit, .product-ext { text-align: right; font-size: .82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.product-qty { color: var(--dim); min-width: 32px; }
+.product-unit { color: var(--dim); min-width: 70px; }
+.product-ext { color: var(--copper); font-weight: 500; min-width: 80px; }
+.product-header { display: grid; grid-template-columns: 56px 1fr auto auto auto; gap: 12px; padding: 4px 12px; font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); font-weight: 600; }
+.product-header > :nth-child(3),
+.product-header > :nth-child(4),
+.product-header > :nth-child(5) { text-align: right; }
+
+/* Fee/Subtotal rows */
+.fee-line { display: flex; justify-content: space-between; padding: 4px 12px; font-size: .8rem; color: var(--dim); }
+.subtotal-line { display: flex; justify-content: space-between; padding: 8px 12px; font-size: .85rem; font-weight: 600; border-top: 2px solid var(--border); margin-top: 6px; }
+.subtotal-line .amount { color: var(--copper-light); }
+.area-total-line { display: flex; justify-content: space-between; padding: 10px 12px; font-size: .95rem; font-weight: 700; border-top: 2px solid var(--copper); margin-top: 4px; }
+.area-total-line .amount { color: var(--copper); }
+
+/* Room header */
+.room-header { font-size: .9rem; font-weight: 600; color: var(--copper); margin: 22px 0 8px; padding: 8px 12px; border-left: 3px solid var(--copper); background: rgba(17,54,101,.04); border-radius: 0 6px 6px 0; display: flex; justify-content: space-between; align-items: baseline; }
+.room-header .room-total { font-size: .82rem; color: var(--dim); font-weight: 400; }
+
+/* Scope */
+.scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+.scope-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.scope-card h4 { font-size: .68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--copper); margin-bottom: 8px; font-weight: 700; }
+.scope-card ul { list-style: none; }
+.scope-card li { font-size: .8rem; color: var(--dim); padding: 2px 0; }
+.scope-card li::before { content: '▸'; color: var(--copper); margin-right: 8px; }
+
+/* Interactive Toggle Options */
+.option-toggle { display: block; cursor: pointer; margin-bottom: 10px; }
+.option-toggle input[type="checkbox"] { display: none; }
+.option-card { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: #fff; border: 2px solid var(--border); border-radius: 10px; transition: all .3s ease; position: relative; overflow: hidden; }
+.option-card.selected { border-color: var(--copper); background: linear-gradient(135deg, #fff 0%, #f0ece8 100%); }
+.option-card:hover { border-color: var(--copper-light); }
+.option-check { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .85rem; color: transparent; transition: all .3s; flex-shrink: 0; }
+.option-card.selected .option-check { background: var(--copper); border-color: var(--copper); color: #fff; }
+.option-info { flex: 1; min-width: 0; }
+.option-name { font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.option-desc { font-size: .75rem; color: var(--dim); line-height: 1.4; }
+.option-price { text-align: right; flex-shrink: 0; }
+.option-amount { font-size: 1.1rem; font-weight: 700; color: var(--copper); }
+.option-detail { font-size: .7rem; color: var(--dim); }
+.option-card:not(.selected) .option-name,
+.option-card:not(.selected) .option-amount { color: var(--dim); text-decoration: line-through; opacity: .5; }
+.option-card:not(.selected) .option-desc,
+.option-card:not(.selected) .option-detail { opacity: .3; }
+@media print { .option-card:not(.selected) { display: none; } .option-check { display: none; } }
+
+/* Grand Total */
+.grand-total { background: linear-gradient(135deg, #f7f5f3 0%, #eee9e4 100%); border: 2px solid var(--copper); border-radius: 12px; padding: 32px 40px; margin: 28px 40px; }
+.gt-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.gt-row .label { font-size: .9rem; color: var(--dim); }
+.gt-row .amount { font-size: 1rem; color: var(--text); font-variant-numeric: tabular-nums; }
+.gt-divider { border-top: 1px solid var(--border); margin: 12px 0; }
+.gt-final { display: flex; justify-content: space-between; align-items: baseline; }
+.gt-final .label { font-size: 1.1rem; font-weight: 600; color: var(--copper); }
+.gt-final .amount { font-size: 2.2rem; font-weight: 700; color: var(--copper); }
+
+/* Payment */
+.payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.payment-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center; }
+.payment-pct { font-size: 1.8rem; font-weight: 700; color: var(--copper); }
+.payment-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-top: 4px; }
+.payment-amount { font-size: .9rem; color: var(--text); font-weight: 600; margin-top: 4px; }
+
+/* Terms */
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.terms-grid p { font-size: .78rem; color: var(--dim); break-inside: avoid; }
+.terms-grid strong { color: var(--copper); }
+
+/* Signature */
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+.sig-block { border-top: 1px solid var(--border); padding-top: 10px; }
+.sig-block .label { font-size: .68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 4px; }
+.sig-block .line { border-bottom: 1px solid var(--dim); height: 36px; margin-bottom: 6px; }
+
+/* Footer */
+.footer { text-align: center; padding: 28px; border-top: 1px solid var(--border); }
+.footer-logo { font-size: 1.1rem; font-weight: 800; color: var(--copper); letter-spacing: 1px; }
+.footer p { font-size: .72rem; color: var(--dim); margin-top: 4px; }
+
+/* Section B Summary Table */
+.summary-table { width: 100%; border-collapse: collapse; }
+.summary-table td { padding: 6px 12px; font-size: .82rem; border-bottom: 1px solid var(--border); }
+.summary-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.summary-table .total-row td { border-top: 2px solid var(--copper); font-weight: 700; font-size: .95rem; padding-top: 10px; }
+.summary-table .total-row td:last-child { color: var(--copper); }
+
+.print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--copper); color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-size: .9rem; font-weight: 600; cursor: pointer; z-index: 100; box-shadow: 0 4px 20px rgba(17,54,101,.4); }
+.print-btn:hover { background: var(--copper-light); }
+
+@media (max-width: 600px) {
+  .section { padding: 20px 16px; }
+  .cover-meta { grid-template-columns: 1fr; gap: 0; }
+  .scope-grid, .terms-grid, .payment-grid { grid-template-columns: 1fr; }
+  .sig-grid { grid-template-columns: 1fr; }
+  .grand-total { margin: 20px 16px; padding: 24px 20px; }
+  .part-header { margin: 20px 16px 0; flex-direction: column; gap: 8px; text-align: center; }
+  .product-card { grid-template-columns: 44px 1fr auto; }
+  .product-qty, .product-unit { display: none; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+<div class="proposal">
+
+  <!-- ========== COVER ========== -->
+  <div class="cover">
+    <div class="cover-logo">ALT<span>3</span></div>
+    <div class="cover-tagline">Smart Homes</div>
+    <div class="cover-title">Complete Smart Home Proposal</div>
+    <div class="cover-subtitle">1240 Paddock Avenue, Charlotte NC 28209</div>
+    <dl class="cover-meta">
+      <div>
+        <dt>Prepared For</dt>
+        <dd>Jeffery Davis</dd>
+        <dt>Project Address</dt>
+        <dd>1240 Paddock Avenue<br>Charlotte, NC 28209</dd>
+        <dt>Builder</dt>
+        <dd>Keen Building Company</dd>
+      </div>
+      <div>
+        <dt>Prepared By</dt>
+        <dd>Ryan Palmer<br>CEO, Alt3 Smart Homes</dd>
+        <dt>Date</dt>
+        <dd>February 17, 2026</dd>
+        <dt>Proposal #</dt>
+        <dd>ALT3-2026-001</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- ========== OVERVIEW ========== -->
+  <div class="section">
+    <div class="section-title">Project Overview</div>
+    <div class="section-desc">
+      A comprehensive, whole-home smart living system for your new home at 1240 Paddock Avenue — encompassing intelligent lighting control, distributed audio &amp; video, voice-driven AI automation, security, climate integration, and automated motorized shading.
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h4>Section A1 — Control System</h4>
+        <ul>
+          <li>Lutron HomeWorks QSX processor infrastructure</li>
+          <li>Palladiom &amp; Sunnata designer keypads</li>
+          <li>HomeWorks dimmers &amp; switches</li>
+          <li>Low-voltage panel &amp; wiring</li>
+          <li>System engineering &amp; programming</li>
+          <li>Works with standard or Ketra fixtures</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Section A2 — Ketra &amp; Rania Fixtures</h4>
+        <ul>
+          <li>51 Ketra D2 tunable white downlights</li>
+          <li>25 Rania D2 designer fixtures</li>
+          <li>Circadian-optimized light throughout the day</li>
+          <li>Biologically beneficial color temperature</li>
+          <li>Requires A1 control system</li>
+          <li>Optional enhancement</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Section B — Smart Home, A/V &amp; Security</h4>
+        <ul>
+          <li>AI voice control throughout every room</li>
+          <li>Distributed whole-home audio (14 zones)</li>
+          <li>4K video distribution to 5 displays</li>
+          <li>Dedicated home theater / bonus room</li>
+          <li>Security system with cameras &amp; sensors</li>
+          <li>Networking, climate, &amp; shade prewire</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Section C — Lutron Motorized Shading</h4>
+        <ul>
+          <li>Lutron Palladiom &amp; Sivoia QS roller shades</li>
+          <li>26 motorized window treatments</li>
+          <li>Integrated with HomeWorks lighting scenes</li>
+          <li>Daylight harvesting &amp; privacy scheduling</li>
+          <li>Ketra-coordinated tunable light balancing</li>
+          <li>Professional measurement &amp; installation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION A1: LIGHTING CONTROL SYSTEM                             -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section A1</div>
+      <div class="part-title">Lutron HomeWorks Control System</div>
+    </div>
+    <div>
+      <div class="part-total-label">Section Total</div>
+      <div class="part-total">$42,195.62</div>
+    </div>
+  </div>
+
+  <!-- Control Note -->
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Note:</strong> Section A1 covers the HomeWorks control infrastructure — processors, dimmers, switches, keypads, and panels. Installation labor is not included — electrical rough-in, wiring, and trim-out are the responsibility of the project electrician. This system works with standard fixtures or can be paired with Section A2 for Ketra tunable lighting.
+    </div>
+  </div>
+
+  <!-- Main Level Control -->
+  <div class="section">
+    <div class="section-title">Main Level — Control System</div>
+    <div class="section-desc">HomeWorks QSX processors, dimmers (25), switches (5), Sunnata &amp; Palladiom keypads (18), and low-voltage panel infrastructure for primary living spaces.</div>
+
+    <div class="subtotal-line"><span>Control Equipment</span><span class="amount">$23,572.00</span></div>
+    <div class="fee-line"><span>Engineering, Programming &amp; Oversight</span><span>$2,357.20</span></div>
+    <div class="area-total-line"><span>Main Level Control Total</span><span class="amount">$25,929.20</span></div>
+  </div>
+
+  <!-- Upper Level Control -->
+  <div class="section">
+    <div class="section-title">Upper Level — Control System</div>
+    <div class="section-desc">HomeWorks dimmers (30), switches (8), and Sunnata keypads (3) for bedrooms, bathrooms, hallways, and bonus areas.</div>
+
+    <div class="subtotal-line"><span>Control Equipment</span><span class="amount">$12,961.00</span></div>
+    <div class="fee-line"><span>Engineering, Programming &amp; Oversight</span><span>$1,296.10</span></div>
+    <div class="area-total-line"><span>Upper Level Control Total</span><span class="amount">$14,257.10</span></div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="fee-line" style="margin-top:8px;padding:10px 12px;background:rgba(17,54,101,.04);border-radius:6px;"><span>Project Enhancements (5%)</span><span>$2,009.32</span></div>
+    <div class="area-total-line"><span>Section A1 Total (incl. enhancements)</span><span class="amount">$42,195.62</span></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION A2: KETRA & RANIA FIXTURES (INTERACTIVE OPTIONS)        -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section A2 — Optional</div>
+      <div class="part-title">Ketra &amp; Rania Tunable Fixtures</div>
+    </div>
+    <div>
+      <div class="part-total-label">Section Total</div>
+      <div class="part-total" id="a2-total">$79,778.74</div>
+    </div>
+  </div>
+
+  <!-- Fixtures Note -->
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Optional Enhancement:</strong> Ketra D2 tunable white fixtures deliver biologically-optimized light that shifts color temperature throughout the day — energizing in the morning, warm and relaxing in the evening. Rania D2 fixtures provide elegant dimming with designer aesthetics. Requires Section A1 control system.
+      <br><br><span style="color:var(--copper-light);">✦ Click each option below to include or exclude it from your total.</span>
+    </div>
+  </div>
+
+  <!-- Main Level Fixtures — Toggle -->
+  <div class="section">
+    <div class="section-title">Main Level — Fixtures</div>
+
+    <label class="option-toggle" data-value="50872.50" data-eng="5087.25">
+      <input type="checkbox" class="fixture-toggle" id="toggle-ketra-main" checked>
+      <div class="option-card selected" id="card-ketra-main">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Ketra D2 Tunable White Fixtures</div>
+          <div class="option-desc">51 circadian-optimized downlights — shifts color temperature from energizing daylight to warm evening glow</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">$50,872.50</div>
+          <div class="option-detail">51 × $997.50</div>
+        </div>
+      </div>
+    </label>
+
+    <label class="option-toggle" data-value="8736.00" data-eng="873.60">
+      <input type="checkbox" class="fixture-toggle" id="toggle-rania-main" checked>
+      <div class="option-card selected" id="card-rania-main">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Rania D2 Fixtures</div>
+          <div class="option-desc">12 designer dimming fixtures for accent and architectural lighting</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">$8,736.00</div>
+          <div class="option-detail">12 × $728.00</div>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <!-- Upper Level Fixtures — Toggle -->
+  <div class="section">
+    <div class="section-title">Upper Level — Fixtures</div>
+
+    <label class="option-toggle" data-value="9464.00" data-eng="946.40">
+      <input type="checkbox" class="fixture-toggle" id="toggle-rania-upper" checked>
+      <div class="option-card selected" id="card-rania-upper">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Rania D2 Fixtures</div>
+          <div class="option-desc">13 fixtures for bedrooms, bathrooms, hallways, and bonus areas</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">$9,464.00</div>
+          <div class="option-detail">13 × $728.00</div>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION B: SMART HOME, A/V & SECURITY                          -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section B</div>
+      <div class="part-title">Smart Home, Audio/Video &amp; Security</div>
+    </div>
+    <div>
+      <div class="part-total-label">Section Total</div>
+      <div class="part-total">$113,451.61</div>
+    </div>
+  </div>
+
+  <!-- Section B Note -->
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Includes:</strong> All equipment, materials, labor, and professional installation by Alt3 Smart Homes. Section B is a fully installed, turnkey system.
+    </div>
+  </div>
+
+  <!-- Equipment Room -->
+  <div class="section">
+    <div class="section-title">Equipment Room — Network &amp; Core Infrastructure</div>
+    <div class="section-desc">Central rack, networking, processing, and whole-home distribution backbone.</div>
+
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="4" width="24" height="40" rx="2" stroke="#113665" stroke-width="2"/><rect x="15" y="8" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="14" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="20" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="26" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="32" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="38" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Strong Custom Series Floor Standing Rack — 42U</div>
+          <div class="product-part">42U, 20" Depth</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,036.99</div>
+        <div class="product-ext">$1,036.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="14" width="36" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="14" cy="24" r="2" fill="#113665"/><circle cx="20" cy="24" r="2" fill="#113665"/><rect x="26" y="20" width="12" height="8" rx="1" stroke="#113665" stroke-width="1" opacity=".5"/><path d="M24 8v6M20 8h8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">WattBox IP Power Conditioner</div>
+          <div class="product-part">WB-800-IPVM-12</div>
+        </div>
+        <div class="product-qty">×2</div>
+        <div class="product-unit">$1,028.99</div>
+        <div class="product-ext">$2,057.98</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="16" width="36" height="16" rx="3" stroke="#113665" stroke-width="2"/><circle cx="14" cy="24" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="14" cy="24" r="1" fill="#113665"/><rect x="22" y="20" width="16" height="2" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="24" width="16" height="2" rx="1" fill="#113665" opacity=".3"/><path d="M10 16v-4h6M38 16v-4h-6" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis 520-Series Dual-WAN Router</div>
+          <div class="product-part">Multi-Gigabit VPN</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$907.99</div>
+        <div class="product-ext">$907.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="16" width="40" height="16" rx="3" stroke="#113665" stroke-width="2"/><rect x="8" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="12" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="16" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="20" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="24" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="28" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="32" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="36" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="8" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="12" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="16" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="20" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="24" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="28" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="32" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="36" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis 48-Port PoE Managed Switch</div>
+          <div class="product-part">AN-220-SW-F-48-POE</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,699.99</div>
+        <div class="product-ext">$1,699.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><path d="M16 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><line x1="24" y1="28" x2="24" y2="34" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis Wi-Fi 6 820 Series WAP</div>
+          <div class="product-part">Indoor Access Point</div>
+        </div>
+        <div class="product-qty">×4</div>
+        <div class="product-unit">$816.99</div>
+        <div class="product-ext">$3,267.96</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M20 22c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><line x1="24" y1="28" x2="24" y2="32" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis Wi-Fi 6 520 Series WAP</div>
+          <div class="product-part">Indoor Access Point</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$472.99</div>
+        <div class="product-ext">$472.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="12" width="32" height="24" rx="4" stroke="#113665" stroke-width="2"/><path d="M18 20l4 4-4 4" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="26" y1="28" x2="34" y2="28" stroke="#113665" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Josh Core — AI Voice Control Processor</div>
+          <div class="product-part">Josh.ai Core</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$3,078.90</div>
+        <div class="product-ext">$3,078.90</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="14" width="36" height="20" rx="3" stroke="#113665" stroke-width="2"/><path d="M14 20h6v8h-6z" stroke="#113665" stroke-width="1" opacity=".5"/><path d="M24 20h6v8h-6z" stroke="#113665" stroke-width="1" opacity=".5"/><circle cx="38" cy="24" r="1.5" fill="#113665"/><path d="M12 14v-4M24 14v-4M36 14v-4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">AVPro Edge Hub — 4K Video Distribution</div>
+          <div class="product-part">AVP-AC-AEX-RC-HUB</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,959.00</div>
+        <div class="product-ext">$1,959.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="14" width="40" height="20" rx="3" stroke="#113665" stroke-width="2"/><rect x="8" y="18" width="6" height="12" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="16" y="18" width="6" height="12" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="24" y="18" width="6" height="12" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="32" y="18" width="6" height="12" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="8" y="22" width="6" height="2" fill="#113665" opacity=".3"/><rect x="16" y="22" width="6" height="2" fill="#113665" opacity=".3"/><rect x="24" y="22" width="6" height="2" fill="#113665" opacity=".3"/><rect x="32" y="22" width="6" height="2" fill="#113665" opacity=".3"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">MartinLogan MDA16 — 16-Ch Amplifier</div>
+          <div class="product-part">16-Channel Distribution Amp</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$3,749.99</div>
+        <div class="product-ext">$3,749.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="14" width="40" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="12" cy="24" r="1.5" fill="#113665"/><rect x="22" y="18" width="18" height="3" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="23" width="18" height="3" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="28" width="12" height="3" rx="1" fill="#113665" opacity=".3"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Anthem MDX 8 — 8-Zone Audio Matrix</div>
+          <div class="product-part">Anthem MDX 8</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$2,499.98</div>
+        <div class="product-ext">$2,499.98</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="32" height="20" rx="3" stroke="#113665" stroke-width="2"/><rect x="12" y="18" width="24" height="12" rx="2" fill="#113665" opacity=".1"/><circle cx="24" cy="24" r="3" stroke="#113665" stroke-width="1.5"/><path d="M22 22l4 4M26 22l-4 4" stroke="#113665" stroke-width="1" stroke-linecap="round" opacity=".5"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Sonos Port — Streaming Source</div>
+          <div class="product-part">Sonos Port</div>
+        </div>
+        <div class="product-qty">×3</div>
+        <div class="product-unit">$499.00</div>
+        <div class="product-ext">$1,497.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Structured Wiring &amp; Cable Infrastructure</div>
+          <div class="product-part">Cat6, Coax, Speaker Wire</div>
+        </div>
+        <div class="product-qty">—</div>
+        <div class="product-unit">—</div>
+        <div class="product-ext">$594.55</div>
+      </div>
+
+    </div>
+
+    <div class="subtotal-line"><span>Equipment Subtotal</span><span class="amount">$23,371.37</span></div>
+    <div class="fee-line"><span>Installation Labor</span><span>$4,497.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$1,950.86</span></div>
+    <div class="area-total-line"><span>Equipment Room Total</span><span class="amount">$29,819.73</span></div>
+  </div>
+
+  <!-- Security -->
+  <div class="section page-break">
+    <div class="section-title">Security &amp; Surveillance</div>
+    <div class="section-desc">Comprehensive security with AI camera analytics, smart sensors, and two-way video doorbells.</div>
+
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="24" height="16" rx="3" stroke="#113665" stroke-width="2"/><circle cx="20" cy="22" r="5" stroke="#113665" stroke-width="1.5"/><circle cx="20" cy="22" r="2" fill="#113665"/><path d="M32 20l8-4v16l-8-4z" stroke="#113665" stroke-width="2" fill="#113665" opacity=".2"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">IC Realtime NightWatch Pro AI Camera</div>
+          <div class="product-part">4K, VFX Analytics</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,500.00</div>
+        <div class="product-ext">$1,500.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#113665" stroke-width="2"/><rect x="14" y="14" width="20" height="14" rx="2" fill="#113665" opacity=".15"/><circle cx="24" cy="38" r="2" fill="#113665"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Qolsys IQ4 Hub — 7" Security Panel</div>
+          <div class="product-part">Verizon LTE</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$781.84</div>
+        <div class="product-ext">$781.84</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="12" width="16" height="6" rx="2" stroke="#113665" stroke-width="1.5"/><rect x="20" y="18" width="8" height="18" rx="1" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="26" r="2" fill="#113665" opacity=".4"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Qolsys Recessed Door/Window Sensor</div>
+          <div class="product-part">S-Line Encrypted</div>
+        </div>
+        <div class="product-qty">×5</div>
+        <div class="product-unit">$82.18</div>
+        <div class="product-ext">$410.90</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="28" r="12" stroke="#113665" stroke-width="2"/><path d="M18 22c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><path d="M14 18c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="28" r="2" fill="#113665"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Qolsys Outdoor Motion Sensor</div>
+          <div class="product-part">QOL-QS5110-840</div>
+        </div>
+        <div class="product-qty">×2</div>
+        <div class="product-unit">$130.08</div>
+        <div class="product-ext">$260.16</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M24 16v8l5 5" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Qolsys Carbon Monoxide Detector</div>
+          <div class="product-part">Wireless CO Sensor</div>
+        </div>
+        <div class="product-qty">×2</div>
+        <div class="product-unit">$157.36</div>
+        <div class="product-ext">$314.72</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#113665" stroke-width="2"/><path d="M16 16l16 16M32 16l-16 16" stroke="#113665" stroke-width="1" opacity=".3"/><path d="M14 24h20" stroke="#113665" stroke-width="1" opacity=".3"/><path d="M24 14v20" stroke="#113665" stroke-width="1" opacity=".3"/><circle cx="24" cy="24" r="6" stroke="#113665" stroke-width="1.5"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Qolsys Glass Break Detector</div>
+          <div class="product-part">S-Line Encrypted</div>
+        </div>
+        <div class="product-qty">×6</div>
+        <div class="product-unit">$179.86</div>
+        <div class="product-ext">$1,079.16</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M18 22c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="28" r="3" fill="#113665" opacity=".4"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Qolsys PIR Motion Sensor</div>
+          <div class="product-part">S-Line, Pet Immune</div>
+        </div>
+        <div class="product-qty">×3</div>
+        <div class="product-unit">$97.72</div>
+        <div class="product-ext">$293.16</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="6" width="16" height="28" rx="8" stroke="#113665" stroke-width="2"/><circle cx="24" cy="16" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="16" r="1.5" fill="#113665"/><rect x="20" y="28" width="8" height="4" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="34" width="4" height="8" rx="1" stroke="#113665" stroke-width="1.5"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Video Doorbell — 2MP PoE</div>
+          <div class="product-part">IR Night Vision, SIP</div>
+        </div>
+        <div class="product-qty">×2</div>
+        <div class="product-unit">$598.00</div>
+        <div class="product-ext">$1,196.00</div>
+      </div>
+
+    </div>
+
+    <div class="subtotal-line"><span>Equipment Subtotal</span><span class="amount">$5,835.94</span></div>
+    <div class="fee-line"><span>Installation Labor</span><span>$2,385.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$575.47</span></div>
+    <div class="area-total-line"><span>Security Total</span><span class="amount">$8,796.40</span></div>
+  </div>
+
+  <!-- Climate + Shades -->
+  <div class="section">
+    <div class="section-title">Climate Control &amp; Shade Preparation</div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="28" rx="6" stroke="#113665" stroke-width="2"/><rect x="16" y="16" width="16" height="10" rx="2" fill="#113665" opacity=".15"/><path d="M20 30h8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="24" r="1.5" fill="#113665"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Ecobee Smart Thermostat</div>
+          <div class="product-part">EB-STATE3LTP-02</div>
+        </div>
+        <div class="product-qty">×3</div>
+        <div class="product-unit">$149.94</div>
+        <div class="product-ext">$449.85</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Installation Labor</span><span>$195.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$45.15</span></div>
+    <div class="area-total-line"><span>Climate Control Total</span><span class="amount">$689.99</span></div>
+
+    <div style="height:16px"></div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="2" stroke="#113665" stroke-width="2"/><line x1="8" y1="14" x2="40" y2="14" stroke="#113665" stroke-width="1" opacity=".4"/><line x1="8" y1="20" x2="40" y2="20" stroke="#113665" stroke-width="1" opacity=".4"/><line x1="8" y1="26" x2="40" y2="26" stroke="#113665" stroke-width="1" opacity=".4"/><path d="M24 32v8M20 40h8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Motorized Shade Prewire — per motor location</div>
+          <div class="product-part">Bonus, Kitchen, Mud, Dining, Primary BR, Guest</div>
+        </div>
+        <div class="product-qty">×26</div>
+        <div class="product-unit">$100.00</div>
+        <div class="product-ext">$2,600.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Installation Labor</span><span>$195.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$195.65</span></div>
+    <div class="area-total-line"><span>Shade Wiring Total</span><span class="amount">$2,990.65</span></div>
+  </div>
+
+  <!-- FLOOR 1: Room-by-room A/V -->
+  <div class="section page-break">
+    <div class="section-title">First Floor — Audio, Video &amp; Voice</div>
+
+    <!-- Living Room -->
+    <div class="room-header"><span>Living Room</span><span class="room-total">$5,602.33</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC6-HT</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$524.99</div><div class="product-ext">$1,049.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="28" rx="3" stroke="#113665" stroke-width="2"/><rect x="16" y="18" width="16" height="12" rx="2" stroke="#113665" stroke-width="1.5"/><path d="M20 24h8M24 20v8" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Dynamo IW-O</div><div class="product-part">In-Wall Subwoofer</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$784.99</div><div class="product-ext">$784.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="32" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="18" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="32" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="18" cy="24" r="1.5" fill="#113665"/><circle cx="32" cy="24" r="1.5" fill="#113665"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan MP500</div><div class="product-part">Subwoofer Amplifier</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$899.99</div><div class="product-ext">$899.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="12" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><path d="M22 30h4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Edge — AI Voice Control</div><div class="product-part">Josh.ai Edge</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$548.90</div><div class="product-ext">$548.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">4K Streaming &amp; Distribution</div><div class="product-part">Roku, AVPro, cables</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$324.97</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Ethernet plates, prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$306.99</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$1,320.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$366.51</span></div>
+
+    <!-- Kitchen -->
+    <div class="room-header"><span>Kitchen</span><span class="room-total">$6,036.05</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="8" width="20" height="32" rx="10" stroke="#113665" stroke-width="2"/><circle cx="24" cy="18" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="18" r="1" fill="#113665"/><rect x="20" y="28" width="8" height="6" rx="2" fill="#113665" opacity=".2"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Nano — AI Voice Control</div><div class="product-part">Coral White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$878.90</div><div class="product-ext">$878.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#113665" stroke-width="2"/><rect x="12" y="12" width="24" height="18" rx="2" fill="#113665" opacity=".1"/><circle cx="24" cy="36" r="2" fill="#113665"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh 10" Touchscreen</div><div class="product-part">Ceramic White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$2,202.82</div><div class="product-ext">$2,202.82</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Cat6, prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$204.47</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$1,205.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$394.88</span></div>
+
+    <!-- Office -->
+    <div class="room-header"><span>Office</span><span class="room-total">$3,851.87</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="8" width="20" height="32" rx="10" stroke="#113665" stroke-width="2"/><circle cx="24" cy="18" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="18" r="1" fill="#113665"/><rect x="20" y="28" width="8" height="6" rx="2" fill="#113665" opacity=".2"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Nano — AI Voice Control</div><div class="product-part">Coral White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$878.90</div><div class="product-ext">$878.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="16" width="24" height="20" rx="2" stroke="#113665" stroke-width="2"/><rect x="16" y="20" width="16" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="16" y="28" width="16" height="4" rx="1" fill="#113665" opacity=".2"/></svg></div>
+        <div class="product-info"><div class="product-name">Arlington Floor Box</div><div class="product-part">FLBR5420BL</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$118.00</div><div class="product-ext">$118.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Cat6, ethernet plate, prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$183.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$1,521.99</span></div>
+
+    <!-- Guest Bedroom 1 -->
+    <div class="room-header"><span>Guest Bedroom 1</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$169.68</span></div>
+
+    <!-- Lounge -->
+    <div class="room-header"><span>Lounge</span><span class="room-total">$1,885.85</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$100.00</div><div class="product-ext">$100.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$635.87</span></div>
+
+    <!-- Owner's Suite -->
+    <div class="room-header"><span>Owner's Bedroom</span><span class="room-total">$8,377.59</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="8" width="20" height="32" rx="10" stroke="#113665" stroke-width="2"/><circle cx="24" cy="18" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="18" r="1" fill="#113665"/><rect x="20" y="28" width="8" height="6" rx="2" fill="#113665" opacity=".2"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Nano — AI Voice Control</div><div class="product-part">Coral White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$878.90</div><div class="product-ext">$878.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#113665" stroke-width="2"/><rect x="12" y="12" width="24" height="18" rx="2" fill="#113665" opacity=".1"/><circle cx="24" cy="36" r="2" fill="#113665"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh 10" Touchscreen</div><div class="product-part">Ceramic White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$2,202.82</div><div class="product-ext">$2,202.82</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="12" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><path d="M22 30h4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Edge — AI Voice Control</div><div class="product-part">Josh.ai Edge</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$548.90</div><div class="product-ext">$548.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">4K Streaming &amp; Distribution</div><div class="product-part">Roku, AVPro, mount, cables</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$578.96</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Cat6, ethernet plates, prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$397.47</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$2,620.55</span></div>
+
+    <div class="room-header"><span>Owner's Bathroom</span><span class="room-total">$1,885.85</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$100.00</div><div class="product-ext">$100.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$635.87</span></div>
+
+    <div class="room-header"><span>Owner's Closet</span><span class="room-total">$1,885.85</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$100.00</div><div class="product-ext">$100.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$635.87</span></div>
+
+    <!-- Covered Porch -->
+    <div class="room-header"><span>Covered Porch</span><span class="room-total">$6,297.81</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/><path d="M10 10l4 4M38 10l-4 4M10 38l4-4M38 38l-4-4" stroke="#113665" stroke-width="1" stroke-linecap="round" opacity=".3"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan IC8-AW</div><div class="product-part">Outdoor In-Ceiling Speaker</div></div>
+        <div class="product-qty">×6</div><div class="product-unit">$399.99</div><div class="product-ext">$2,399.94</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="12" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><path d="M22 30h4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Edge — AI Voice Control</div><div class="product-part">Josh.ai Edge</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$548.90</div><div class="product-ext">$548.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="8" width="24" height="32" rx="2" stroke="#113665" stroke-width="2"/><rect x="16" y="14" width="16" height="20" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><path d="M20 40h8" stroke="#113665" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Strong XL Tilt Mount</div><div class="product-part">49–90" Display</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$353.99</div><div class="product-ext">$353.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">4K Streaming &amp; Distribution</div><div class="product-part">Roku, AVPro, cables</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$224.97</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Ethernet plates, prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$293.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$2,477.01</span></div>
+  </div>
+
+  <!-- 2ND FLOOR -->
+  <div class="section page-break">
+    <div class="section-title">Second Floor — Audio, Video &amp; Voice</div>
+
+    <!-- Bonus Room -->
+    <div class="room-header"><span>Bonus Room / Home Theater</span><span class="room-total">$21,084.66</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="12" width="40" height="24" rx="3" stroke="#113665" stroke-width="2"/><circle cx="12" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="12" cy="24" r="1.5" fill="#113665"/><rect x="20" y="16" width="20" height="4" rx="1" fill="#113665" opacity=".3"/><rect x="20" y="22" width="20" height="4" rx="1" fill="#113665" opacity=".3"/><rect x="20" y="28" width="14" height="4" rx="1" fill="#113665" opacity=".3"/></svg></div>
+        <div class="product-info"><div class="product-name">Anthem MRX 740 8K AV Receiver</div><div class="product-part">Anthem MRX 740</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$3,099.99</div><div class="product-ext">$3,099.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="14" width="36" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="16" cy="24" r="5" stroke="#113665" stroke-width="1.5"/><circle cx="16" cy="24" r="2" fill="#113665" opacity=".4"/><circle cx="32" cy="24" r="5" stroke="#113665" stroke-width="1.5"/><circle cx="32" cy="24" r="2" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion XTW5-LCR</div><div class="product-part">Front LCR Speakers</div></div>
+        <div class="product-qty">×3</div><div class="product-unit">$1,299.99</div><div class="product-ext">$3,899.97</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">Surround Speakers</div></div>
+        <div class="product-qty">×4</div><div class="product-unit">$574.99</div><div class="product-ext">$2,299.96</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="28" rx="3" stroke="#113665" stroke-width="2"/><rect x="16" y="18" width="16" height="12" rx="2" stroke="#113665" stroke-width="1.5"/><path d="M20 24h8M24 20v8" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Dynamo IW-O</div><div class="product-part">In-Wall Subwoofer</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$784.99</div><div class="product-ext">$1,569.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="32" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="18" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="32" cy="24" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="18" cy="24" r="1.5" fill="#113665"/><circle cx="32" cy="24" r="1.5" fill="#113665"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan MP500</div><div class="product-part">Subwoofer Amplifier</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$899.99</div><div class="product-ext">$899.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="6" width="12" height="36" rx="2" stroke="#113665" stroke-width="2"/><rect x="14" y="14" width="20" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><circle cx="24" cy="32" r="3" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Sanus VXT7-B2 Speaker Mount</div><div class="product-part">Sanus</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$275.33</div><div class="product-ext">$275.33</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="8" width="20" height="32" rx="10" stroke="#113665" stroke-width="2"/><circle cx="24" cy="18" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="18" r="1" fill="#113665"/><rect x="20" y="28" width="8" height="6" rx="2" fill="#113665" opacity=".2"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Nano — AI Voice Control</div><div class="product-part">Coral White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$878.90</div><div class="product-ext">$878.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#113665" stroke-width="2"/><rect x="12" y="12" width="24" height="18" rx="2" fill="#113665" opacity=".1"/><circle cx="24" cy="36" r="2" fill="#113665"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh 10" Touchscreen</div><div class="product-part">Ceramic White</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$2,202.82</div><div class="product-ext">$2,202.82</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="12" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><path d="M22 30h4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Edge — AI Voice Control</div><div class="product-part">Josh.ai Edge</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$548.90</div><div class="product-ext">$548.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">4K Streaming</div><div class="product-part">Roku Ultra, cables</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$149.96</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Cat6, ethernet plates, surround prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$504.48</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$4,754.37</span></div>
+
+    <!-- JR Suite, Guest BR 2, Guest BR 3 -->
+    <div class="room-header"><span>JR Suite</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$169.68</span></div>
+
+    <div class="room-header"><span>Guest Bedroom 2</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$169.68</span></div>
+
+    <div class="room-header"><span>Guest Bedroom 3</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$169.68</span></div>
+  </div>
+
+  <!-- OUTDOOR + GARAGE -->
+  <div class="section page-break">
+    <div class="section-title">Outdoor &amp; Garage</div>
+
+    <div class="room-header"><span>Pergola</span><span class="room-total">$1,580.90</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18l14-8 14 8" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="12" y="18" width="24" height="20" rx="2" stroke="#113665" stroke-width="2"/><circle cx="24" cy="28" r="5" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="28" r="2" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan ML-75AW</div><div class="product-part">Outdoor Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$469.99</div><div class="product-ext">$939.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$100.00</div><div class="product-ext">$100.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$540.92</span></div>
+
+    <div class="room-header"><span>Firepit</span><span class="room-total">$1,580.90</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18l14-8 14 8" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="12" y="18" width="24" height="20" rx="2" stroke="#113665" stroke-width="2"/><circle cx="24" cy="28" r="5" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="28" r="2" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan ML-75AW</div><div class="product-part">Outdoor Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$469.99</div><div class="product-ext">$939.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$100.00</div><div class="product-ext">$100.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$540.92</span></div>
+
+    <div class="room-header"><span>Gym / Flex Room</span><span class="room-total">$4,631.86</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan Motion MC8</div><div class="product-part">In-Ceiling Speaker</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$574.99</div><div class="product-ext">$1,149.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="12" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><path d="M22 30h4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Edge — AI Voice Control</div><div class="product-part">Josh.ai Edge</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$548.90</div><div class="product-ext">$548.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="8" width="24" height="32" rx="2" stroke="#113665" stroke-width="2"/><rect x="16" y="14" width="16" height="20" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><path d="M20 40h8" stroke="#113665" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="product-info"><div class="product-name">Strong XL Tilt Mount</div><div class="product-part">49–90" Display</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$353.99</div><div class="product-ext">$353.99</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">4K Streaming &amp; Distribution</div><div class="product-part">Roku, AVPro, cables</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$232.98</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">Infrastructure</div><div class="product-part">Cat6, ethernet plates, prewire</div></div>
+        <div class="product-qty">—</div><div class="product-unit">—</div><div class="product-ext">$363.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor + Tax</span><span>$1,983.02</span></div>
+  </div>
+
+  <!-- ========== SECTION B SUMMARY ========== -->
+  <div class="section">
+    <div class="section-title">Section B Summary</div>
+    <table class="summary-table">
+      <tbody>
+        <tr><td>Equipment Room — Network &amp; Core</td><td>$29,819.73</td></tr>
+        <tr><td>Security &amp; Surveillance</td><td>$8,796.40</td></tr>
+        <tr><td>Climate Control</td><td>$689.99</td></tr>
+        <tr><td>Shade Wiring (26 locations)</td><td>$2,990.65</td></tr>
+        <tr><td>Living Room</td><td>$5,602.33</td></tr>
+        <tr><td>Kitchen</td><td>$6,036.05</td></tr>
+        <tr><td>Office</td><td>$3,851.87</td></tr>
+        <tr><td>Guest Bedroom 1</td><td>$262.68</td></tr>
+        <tr><td>Lounge</td><td>$1,885.85</td></tr>
+        <tr><td>Owner's Bedroom</td><td>$8,377.59</td></tr>
+        <tr><td>Owner's Bathroom</td><td>$1,885.85</td></tr>
+        <tr><td>Owner's Closet</td><td>$1,885.85</td></tr>
+        <tr><td>Covered Porch</td><td>$6,297.81</td></tr>
+        <tr><td>Bonus Room / Home Theater</td><td>$21,084.66</td></tr>
+        <tr><td>JR Suite</td><td>$262.68</td></tr>
+        <tr><td>Guest Bedroom 2</td><td>$262.68</td></tr>
+        <tr><td>Guest Bedroom 3</td><td>$262.68</td></tr>
+        <tr><td>Pergola</td><td>$1,580.90</td></tr>
+        <tr><td>Firepit</td><td>$1,580.90</td></tr>
+        <tr><td>Gym / Flex Room</td><td>$4,631.86</td></tr>
+        <tr><td>Project Enhancements (5%)</td><td>$5,402.46</td></tr>
+        <tr class="total-row"><td><strong>Section B Total</strong></td><td><strong>$113,451.61</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION C: MOTORIZED SHADING (INTERACTIVE OPTION)               -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section C — Optional</div>
+      <div class="part-title">Lutron Motorized Shading</div>
+    </div>
+    <div>
+      <div class="part-total-label">Budgetary Estimate</div>
+      <div class="part-total" id="c-total">~$39,000</div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Budgetary Estimate:</strong> This is a planning-level estimate based on an average of $1,500 per window. Final shade pricing will be quoted separately after professional window measurement, fabric selection, and design consultation.
+      <br><br><span style="color:var(--copper-light);">✦ Click below to include or exclude shading from your project scope.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Whole-Home Lutron Motorized Shading</div>
+
+    <label class="option-toggle" data-section="c" data-value="39000.00">
+      <input type="checkbox" class="shade-toggle" id="toggle-shades" checked>
+      <div class="option-card selected" id="card-shades">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Lutron Palladiom / Sivoia QS Motorized Shades</div>
+          <div class="option-desc">26 automated window treatments — whisper-quiet motors, HomeWorks scene integration, daylight harvesting, privacy scheduling. Includes professional measurement, fabric consultation, and installation.</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">~$39,000</div>
+          <div class="option-detail">26 windows × $1,500 avg</div>
+        </div>
+      </div>
+    </label>
+
+    <p style="font-size:.72rem;color:var(--dim);margin-top:12px;padding:8px 12px;background:rgba(17,54,101,.08);border-radius:6px;">
+      <strong style="color:var(--copper-light)">Note:</strong> Final pricing will be determined after on-site window measurement and fabric/material selection. Actual costs may vary based on window dimensions, shade type (roller, honeycomb, drapery), and fabric choice. This estimate is provided for planning purposes.
+    </p>
+  </div>
+
+  <!-- ========== GRAND TOTAL ========== -->
+  <div class="grand-total page-break">
+    <div style="width:100%">
+      <div class="gt-row"><span class="label">Section A1 — HomeWorks Control System</span><span class="amount">$40,186.30</span></div>
+      <div class="gt-row" id="gt-a2"><span class="label">Section A2 — Ketra &amp; Rania Fixtures</span><span class="amount">$75,979.75</span></div>
+      <div class="gt-row"><span class="label">Section B — Smart Home, A/V &amp; Security</span><span class="amount">$108,049.15</span></div>
+      <div class="gt-row" id="gt-c"><span class="label">Section C — Lutron Motorized Shading (26 windows)</span><span class="amount">~$39,000</span></div>
+      <div class="gt-row" id="gt-enhance" style="font-style:italic"><span class="label">Project Enhancements (5%)</span><span class="amount" id="gt-enhance-amt">$11,210.76</span></div>
+      <div class="gt-divider"></div>
+      <div class="gt-final"><span class="label">Total Project Investment</span><span class="amount" id="gt-grand">$274,425.96</span></div>
+      <div class="gt-divider" style="margin-top:20px"></div>
+      <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-top:12px;margin-bottom:8px;font-weight:600">Progress Billing</div>
+      <div class="gt-row"><span class="label">10% — Deposit Upon Signing</span><span class="amount" id="gt-dep">$27,442.60</span></div>
+      <div class="gt-row"><span class="label">80% — When Equipment Ordering Begins</span><span class="amount" id="gt-mid">$219,540.77</span></div>
+      <div class="gt-row"><span class="label">10% — Substantial Completion</span><span class="amount" id="gt-fin">$27,442.60</span></div>
+    </div>
+  </div>
+
+  <!-- ========== TERMS ========== -->
+  <div class="section">
+    <div class="section-title">Terms &amp; Conditions</div>
+    <div class="terms-grid">
+      <p><strong>Progress Billing:</strong> 10% non-refundable deposit due upon signing. 80% due when equipment is ordered and received. 10% final payment at substantial completion. All invoices due upon receipt; late payments may incur fees.</p>
+      <p><strong>Proposal Validity:</strong> This proposal is valid for 30 days from date of issue. Pricing subject to change due to manufacturer adjustments.</p>
+      <p><strong>Timeline:</strong> Project timelines depend on product availability, manufacturer shipping, and scheduling. Equipment lead time is typically 4–8 weeks. Installation coordinated with builder's construction schedule.</p>
+      <p><strong>Equipment Warranty:</strong> All equipment covered per manufacturer's standard warranty. Alt3 will perform one (1) courtesy replacement of one (1) item (parts + labor) within the manufacturer's warranty period. Additional replacements subject to labor charges.</p>
+      <p><strong>Workmanship Warranty:</strong> Alt3 provides a one-year workmanship warranty from the date of substantial completion. Issues caused by misuse, third-party alterations, or manufacturer defects are excluded.</p>
+      <p><strong>Change Orders:</strong> Additional work not in the original scope requires a change order and additional charges. No work begins without written approval.</p>
+      <p><strong>Cancellations:</strong> The initial deposit is non-refundable. Customer is responsible for restocking fees or non-returnable items if cancelled after equipment is ordered. Completed labor is billable.</p>
+      <p><strong>Liability:</strong> Alt3's liability is limited to the total amount paid under this agreement. Not liable for pre-existing issues, customer-provided equipment, or post-installation modifications.</p>
+      <p><strong>Governing Law:</strong> This agreement is governed by the laws of the State of North Carolina. Disputes resolved in Charlotte, NC courts.</p>
+    </div>
+  </div>
+
+  <!-- ========== SIGNATURE ========== -->
+  <div class="section">
+    <div class="section-title">Acceptance</div>
+    <p style="font-size:.82rem;color:var(--dim);margin-bottom:8px;">By signing below, you authorize Alt3 Smart Homes to proceed with the scope described in this proposal.</p>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Client Signature</div>
+        <p style="font-size:.82rem;margin-top:4px;">Jeffery Davis</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Alt3 Smart Homes</div>
+        <p style="font-size:.82rem;margin-top:4px;">Ryan Palmer, CEO</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">ALT3 SMART HOMES</div>
+    <p>Ryan.Palmer@alt3.com &nbsp;|&nbsp; alt3smarthomes.com</p>
+    <p style="margin-top:4px;">Simple. Seamless. Smart — by design.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const BASE_A1 = 40186.30;
+  const BASE_B  = 108049.15;
+  const ENHANCE_RATE = 0.05;
+
+  function fmt(n){ return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  function recalc(){
+    // --- Section A2 fixtures ---
+    let a2 = 0;
+    document.querySelectorAll('.fixture-toggle').forEach(cb => {
+      const wrap = cb.closest('.option-toggle');
+      const card = wrap.querySelector('.option-card');
+      const mat = parseFloat(wrap.dataset.value);
+      const eng = parseFloat(wrap.dataset.eng);
+      if(cb.checked){
+        card.classList.add('selected');
+        a2 += mat + eng;
+      } else {
+        card.classList.remove('selected');
+      }
+    });
+    document.getElementById('a2-total').textContent = fmt(a2);
+    const gtA2 = document.getElementById('gt-a2');
+    if(gtA2){
+      gtA2.querySelector('.amount').textContent = fmt(a2);
+      gtA2.style.display = a2 === 0 ? 'none' : 'flex';
+    }
+
+    // --- Section C shades ---
+    let c = 0;
+    const shadeCb = document.getElementById('toggle-shades');
+    const shadeCard = document.getElementById('card-shades');
+    if(shadeCb && shadeCb.checked){
+      c = 39000;
+      shadeCard.classList.add('selected');
+    } else if(shadeCard){
+      shadeCard.classList.remove('selected');
+    }
+    const cTotal = document.getElementById('c-total');
+    if(cTotal) cTotal.textContent = fmt(c);
+    const gtC = document.getElementById('gt-c');
+    if(gtC){
+      gtC.querySelector('.amount').textContent = fmt(c);
+      gtC.style.display = c === 0 ? 'none' : 'flex';
+    }
+
+    // --- Project Enhancements (5% on A1 + A2 + B) ---
+    const enhanceBase = BASE_A1 + a2 + BASE_B;
+    const enhance = enhanceBase * ENHANCE_RATE;
+    const gtEnhance = document.getElementById('gt-enhance-amt');
+    if(gtEnhance) gtEnhance.textContent = fmt(enhance);
+    const gtEnhanceRow = document.getElementById('gt-enhance');
+    if(gtEnhanceRow) gtEnhanceRow.style.display = 'flex';
+
+    // --- Grand total ---
+    const grand = enhanceBase + enhance + c;
+    document.getElementById('gt-grand').textContent = fmt(grand);
+
+    // --- Payment schedule ---
+    const dep = grand * 0.10;
+    const mid = grand * 0.80;
+    const fin = grand * 0.10;
+    const pays = document.querySelectorAll('.payment-amount');
+    if(pays.length >= 3){
+      pays[0].textContent = fmt(dep);
+      pays[1].textContent = fmt(mid);
+      pays[2].textContent = fmt(fin);
+    }
+    // Update grand total billing rows
+    const gtDep = document.getElementById('gt-dep');
+    const gtMid = document.getElementById('gt-mid');
+    const gtFin = document.getElementById('gt-fin');
+    if(gtDep) gtDep.textContent = fmt(dep);
+    if(gtMid) gtMid.textContent = fmt(mid);
+    if(gtFin) gtFin.textContent = fmt(fin);
+  }
+
+  document.querySelectorAll('.fixture-toggle').forEach(cb => {
+    cb.addEventListener('change', recalc);
+  });
+  const shadeCb = document.getElementById('toggle-shades');
+  if(shadeCb) shadeCb.addEventListener('change', recalc);
+})();
+</script>
+</body>
+</html>

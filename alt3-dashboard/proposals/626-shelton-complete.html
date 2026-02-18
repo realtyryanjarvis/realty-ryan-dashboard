@@ -1,0 +1,1073 @@
+<!-- 626 Shelton — Keen Base Package (Parsons) + Lutron HomeWorks -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt3 Smart Homes — 626 Shelton Complete Proposal</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+@page { size: letter; margin: 0.4in 0.5in; }
+@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .page-break { page-break-before: always; } .no-print { display: none; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --copper: #113665; --copper-light: #BEB1A2; --copper-dark: #113665; --dark: #ffffff; --surface: #f7f5f3; --border: #e8e3de; --text: #2a2a2a; --dim: #777; }
+body { font-family: 'Neue Montreal', sans-serif; background: #f0ece8; color: var(--text); line-height: 1.45; font-size: 13px; }
+.proposal { max-width: 850px; margin: 0 auto; background: var(--dark); box-shadow: 0 4px 40px rgba(0,0,0,.08); }
+
+/* Cover */
+.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 40px; background: linear-gradient(160deg, #ffffff 0%, #f7f5f3 50%, #ffffff 100%); position: relative; }
+.cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--copper), transparent); }
+.cover-logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 2px; color: var(--copper); margin-bottom: 8px; }
+.cover-logo span { color: var(--copper-light); }
+.cover-tagline { font-size: 1rem; color: var(--dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 60px; }
+.cover-title { font-size: 2rem; font-weight: 300; color: var(--text); margin-bottom: 12px; }
+.cover-subtitle { font-size: 1.1rem; color: var(--copper-light); margin-bottom: 60px; }
+.cover-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 500px; }
+.cover-meta dt { font-size: .7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 4px; }
+.cover-meta dd { font-size: .95rem; color: var(--text); margin-bottom: 16px; }
+
+/* Sections */
+.section { padding: 28px 40px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title { font-size: 1.15rem; font-weight: 600; color: var(--copper-light); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 3px; height: 20px; background: var(--copper); border-radius: 2px; }
+.section-desc { color: var(--dim); font-size: .82rem; margin-bottom: 18px; max-width: 650px; }
+
+/* Part Header */
+.part-header { background: linear-gradient(135deg, var(--surface) 0%, #eee9e4 100%); border: 1px solid var(--border); border-radius: 10px; padding: 24px 36px; margin: 28px 40px 0; display: flex; justify-content: space-between; align-items: center; }
+.part-header .part-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--copper); margin-bottom: 4px; }
+.part-header .part-title { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.part-header .part-total-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); text-align: right; }
+.part-header .part-total { font-size: 1.5rem; font-weight: 700; color: var(--copper); text-align: right; }
+
+/* Product Cards */
+.product-grid { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.product-card { display: grid; grid-template-columns: 56px 1fr auto auto auto; align-items: center; gap: 12px; padding: 8px 12px; background: #fff; border: 1px solid var(--border); border-radius: 6px; transition: border-color .2s; }
+.product-card:hover { border-color: var(--copper-light); }
+.product-img { width: 56px; height: 56px; border-radius: 6px; background: #f7f5f3; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.product-img svg { width: 32px; height: 32px; }
+.product-info { min-width: 0; }
+.product-name { font-size: .82rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-part { font-size: .7rem; color: var(--dim); font-family: 'SF Mono', Menlo, monospace; }
+.product-qty, .product-unit, .product-ext { text-align: right; font-size: .82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.product-qty { color: var(--dim); min-width: 32px; }
+.product-unit { color: var(--dim); min-width: 70px; }
+.product-ext { color: var(--copper); font-weight: 500; min-width: 80px; }
+.product-header { display: grid; grid-template-columns: 56px 1fr auto auto auto; gap: 12px; padding: 4px 12px; font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); font-weight: 600; }
+.product-header > :nth-child(3),
+.product-header > :nth-child(4),
+.product-header > :nth-child(5) { text-align: right; }
+
+/* Fee/Subtotal rows */
+.fee-line { display: flex; justify-content: space-between; padding: 4px 12px; font-size: .8rem; color: var(--dim); }
+.subtotal-line { display: flex; justify-content: space-between; padding: 8px 12px; font-size: .85rem; font-weight: 600; border-top: 2px solid var(--border); margin-top: 6px; }
+.subtotal-line .amount { color: var(--copper-light); }
+.area-total-line { display: flex; justify-content: space-between; padding: 10px 12px; font-size: .95rem; font-weight: 700; border-top: 2px solid var(--copper); margin-top: 4px; }
+.area-total-line .amount { color: var(--copper); }
+
+/* Room header */
+.room-header { font-size: .9rem; font-weight: 600; color: var(--copper); margin: 22px 0 8px; padding: 8px 12px; border-left: 3px solid var(--copper); background: rgba(17,54,101,.04); border-radius: 0 6px 6px 0; display: flex; justify-content: space-between; align-items: baseline; }
+.room-header .room-total { font-size: .82rem; color: var(--dim); font-weight: 400; }
+
+/* Scope */
+.scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+.scope-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.scope-card h4 { font-size: .68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--copper); margin-bottom: 8px; font-weight: 700; }
+.scope-card ul { list-style: none; }
+.scope-card li { font-size: .8rem; color: var(--dim); padding: 2px 0; }
+.scope-card li::before { content: '▸'; color: var(--copper); margin-right: 8px; }
+
+/* Interactive Toggle Options */
+.option-toggle { display: block; cursor: pointer; margin-bottom: 10px; }
+.option-toggle input[type="checkbox"] { display: none; }
+.option-card { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: #fff; border: 2px solid var(--border); border-radius: 10px; transition: all .3s ease; position: relative; overflow: hidden; }
+.option-card.selected { border-color: var(--copper); background: linear-gradient(135deg, #fff 0%, #f0ece8 100%); }
+.option-card:hover { border-color: var(--copper-light); }
+.option-check { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .85rem; color: transparent; transition: all .3s; flex-shrink: 0; }
+.option-card.selected .option-check { background: var(--copper); border-color: var(--copper); color: #fff; }
+.option-info { flex: 1; min-width: 0; }
+.option-name { font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.option-desc { font-size: .75rem; color: var(--dim); line-height: 1.4; }
+.option-price { text-align: right; flex-shrink: 0; }
+.option-amount { font-size: 1.1rem; font-weight: 700; color: var(--copper); }
+.option-detail { font-size: .7rem; color: var(--dim); }
+.option-card:not(.selected) .option-name,
+.option-card:not(.selected) .option-amount { color: var(--dim); text-decoration: line-through; opacity: .5; }
+.option-card:not(.selected) .option-desc,
+.option-card:not(.selected) .option-detail { opacity: .3; }
+@media print { .option-card:not(.selected) { display: none; } .option-check { display: none; } }
+
+/* Grand Total */
+.grand-total { background: linear-gradient(135deg, #f7f5f3 0%, #eee9e4 100%); border: 2px solid var(--copper); border-radius: 12px; padding: 32px 40px; margin: 28px 40px; }
+.gt-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.gt-row .label { font-size: .9rem; color: var(--dim); }
+.gt-row .amount { font-size: 1rem; color: var(--text); font-variant-numeric: tabular-nums; }
+.gt-divider { border-top: 1px solid var(--border); margin: 12px 0; }
+.gt-final { display: flex; justify-content: space-between; align-items: baseline; }
+.gt-final .label { font-size: 1.1rem; font-weight: 600; color: var(--copper); }
+.gt-final .amount { font-size: 2.2rem; font-weight: 700; color: var(--copper); }
+
+/* Payment */
+.payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.payment-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center; }
+.payment-pct { font-size: 1.8rem; font-weight: 700; color: var(--copper); }
+.payment-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-top: 4px; }
+.payment-amount { font-size: .9rem; color: var(--text); font-weight: 600; margin-top: 4px; }
+
+/* Terms */
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.terms-grid p { font-size: .78rem; color: var(--dim); break-inside: avoid; }
+.terms-grid strong { color: var(--copper); }
+
+/* Signature */
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+.sig-block { border-top: 1px solid var(--border); padding-top: 10px; }
+.sig-block .label { font-size: .68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 4px; }
+.sig-block .line { border-bottom: 1px solid var(--dim); height: 36px; margin-bottom: 6px; }
+
+/* Footer */
+.footer { text-align: center; padding: 28px; border-top: 1px solid var(--border); }
+.footer-logo { font-size: 1.1rem; font-weight: 800; color: var(--copper); letter-spacing: 1px; }
+.footer p { font-size: .72rem; color: var(--dim); margin-top: 4px; }
+
+/* Summary Table */
+.summary-table { width: 100%; border-collapse: collapse; }
+.summary-table td { padding: 6px 12px; font-size: .82rem; border-bottom: 1px solid var(--border); }
+.summary-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.summary-table .total-row td { border-top: 2px solid var(--copper); font-weight: 700; font-size: .95rem; padding-top: 10px; }
+.summary-table .total-row td:last-child { color: var(--copper); }
+
+.print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--copper); color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-size: .9rem; font-weight: 600; cursor: pointer; z-index: 100; box-shadow: 0 4px 20px rgba(17,54,101,.4); }
+.print-btn:hover { background: var(--copper-light); }
+
+@media (max-width: 600px) {
+  .section { padding: 20px 16px; }
+  .cover-meta { grid-template-columns: 1fr; gap: 0; }
+  .scope-grid, .terms-grid, .payment-grid { grid-template-columns: 1fr; }
+  .sig-grid { grid-template-columns: 1fr; }
+  .grand-total { margin: 20px 16px; padding: 24px 20px; }
+  .part-header { margin: 20px 16px 0; flex-direction: column; gap: 8px; text-align: center; }
+  .product-card { grid-template-columns: 44px 1fr auto; }
+  .product-qty, .product-unit { display: none; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+<div class="proposal">
+
+  <!-- ========== COVER ========== -->
+  <div class="cover">
+    <div class="cover-logo">ALT<span>3</span></div>
+    <div class="cover-tagline">Smart Homes</div>
+    <div class="cover-title">Complete Smart Home Proposal</div>
+    <div class="cover-subtitle">626 Shelton Avenue — Keen Base Package (Parsons)</div>
+    <dl class="cover-meta">
+      <div>
+        <dt>Prepared For</dt>
+        <dd>Keen Homes<br>Parsons Model — Spec Home</dd>
+        <dt>Project Address</dt>
+        <dd>626 Shelton Avenue<br>Charlotte, NC</dd>
+      </div>
+      <div>
+        <dt>Prepared By</dt>
+        <dd>Ryan Palmer<br>CEO, Alt3 Smart Homes</dd>
+        <dt>Date</dt>
+        <dd>February 17, 2026</dd>
+        <dt>Proposal #</dt>
+        <dd>ALT3-2026-002</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- ========== OVERVIEW ========== -->
+  <div class="section">
+    <div class="section-title">Project Overview</div>
+    <div class="section-desc">
+      A comprehensive smart home system for the Parsons spec home at 626 Shelton Avenue — encompassing Lutron HomeWorks lighting control, enterprise networking, Josh.ai voice control, security, and distributed audio infrastructure. Optional Ketra and Rania tunable fixtures available as premium upgrades.
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h4>Section A1 — Lutron HomeWorks Control</h4>
+        <ul>
+          <li>HomeWorks S30 trim &amp; smart bulbs</li>
+          <li>HRST-PRO dimmers &amp; HRST-8ANS switches</li>
+          <li>Sunnata hybrid &amp; 4-button keypads (engraved)</li>
+          <li>Occupancy sensors throughout</li>
+          <li>System engineering &amp; programming</li>
+          <li>Material + engineering — electrician installs</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Section A2/A3 — Ketra &amp; Rania (Optional)</h4>
+        <ul>
+          <li>Ketra D3 full-spectrum tunable (large form)</li>
+          <li>Ketra D2 full-spectrum tunable (standard)</li>
+          <li>Rania D2 decorative dimming fixtures</li>
+          <li>Circadian-optimized light throughout the day</li>
+          <li>Priced per fixture — quantities during design</li>
+          <li>Requires A1 control system</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Section B — Smart Home (Turnkey Installed)</h4>
+        <ul>
+          <li>Enterprise networking &amp; 42U rack</li>
+          <li>Josh.ai voice control &amp; touchscreen</li>
+          <li>Lutron RA3 lighting control</li>
+          <li>DoorBird video door station</li>
+          <li>Distributed audio (6 zones)</li>
+          <li>Complete low-voltage prewire</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h4>Investment Summary</h4>
+        <ul>
+          <li>Section A1: $19,631.25 (Lutron control)</li>
+          <li>Section A2: Optional Ketra fixtures</li>
+          <li>Section A3: Optional Rania fixtures</li>
+          <li>Section B: $27,460.58 (smart home installed)</li>
+          <li>Grand total updates live with selections</li>
+          <li>10/80/10 progress billing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION A1: LUTRON HOMEWORKS CONTROL SYSTEM                     -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section A1</div>
+      <div class="part-title">Lutron HomeWorks Control System</div>
+    </div>
+    <div>
+      <div class="part-total-label">Section Total</div>
+      <div class="part-total">$19,631.25</div>
+    </div>
+  </div>
+
+  <!-- Control Note -->
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Note:</strong> Section A1 covers the HomeWorks control infrastructure — processors, dimmers, switches, keypads, occupancy sensors, and smart bulbs. Installation labor is not included — electrical rough-in, wiring, and trim-out are the responsibility of the project electrician. This section covers material and engineering/programming only.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">HomeWorks Control Equipment</div>
+    <div class="section-desc">Lutron HomeWorks lighting control hardware — dimmers, switches, keypads, occupancy sensors, and smart bulbs for whole-home scene-based control.</div>
+
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="20" r="10" stroke="#113665" stroke-width="2"/><path d="M18 30h12v4a2 2 0 01-2 2H20a2 2 0 01-2-2v-4z" stroke="#113665" stroke-width="2"/><path d="M24 10v-4M14 14l-3-3M34 14l3-3" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">S30 Trim and Smart Bulb</div>
+          <div class="product-part">HomeWorks compatible</div>
+        </div>
+        <div class="product-qty">×20</div>
+        <div class="product-unit">$456.00</div>
+        <div class="product-ext">$9,120.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><path d="M16 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><line x1="24" y1="28" x2="24" y2="34" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">LRF2-OCR2B-P-WH Occupancy Sensor</div>
+          <div class="product-part">Wireless occupancy/vacancy</div>
+        </div>
+        <div class="product-qty">×15</div>
+        <div class="product-unit">$118.65</div>
+        <div class="product-ext">$1,779.75</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="8" width="16" height="32" rx="3" stroke="#113665" stroke-width="2"/><line x1="24" y1="14" x2="24" y2="34" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><circle cx="24" cy="20" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="20" r="1" fill="#113665"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">HRST-PRO-N-RW Dimmer</div>
+          <div class="product-part">HomeWorks pro dimmer</div>
+        </div>
+        <div class="product-qty">×10</div>
+        <div class="product-unit">$293.00</div>
+        <div class="product-ext">$2,930.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="8" width="16" height="32" rx="3" stroke="#113665" stroke-width="2"/><rect x="20" y="18" width="8" height="4" rx="1" fill="#113665" opacity=".3"/><rect x="20" y="26" width="8" height="4" rx="1" fill="#113665" opacity=".3"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">HRST-8ANS-RW Switch</div>
+          <div class="product-part">HomeWorks 8A switch</div>
+        </div>
+        <div class="product-qty">×3</div>
+        <div class="product-unit">$307.00</div>
+        <div class="product-ext">$921.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="6" width="20" height="36" rx="3" stroke="#113665" stroke-width="2"/><rect x="18" y="12" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="20" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="28" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><circle cx="24" cy="38" r="2" fill="#113665" opacity=".3"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Sunnata Hybrid Keypad (engraved)</div>
+          <div class="product-part">Scene keypad, custom engraving</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$653.00</div>
+        <div class="product-ext">$653.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="6" width="20" height="36" rx="3" stroke="#113665" stroke-width="2"/><rect x="18" y="12" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="18" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="24" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="30" width="12" height="4" rx="1" fill="#113665" opacity=".2"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Sunnata 4-Button Keypad (engraved)</div>
+          <div class="product-part">4-button scene keypad</div>
+        </div>
+        <div class="product-qty">×3</div>
+        <div class="product-unit">$531.00</div>
+        <div class="product-ext">$1,593.00</div>
+      </div>
+
+    </div>
+
+    <div class="subtotal-line"><span>Material Subtotal (Selling Price)</span><span class="amount">$16,996.75</span></div>
+    <div class="fee-line"><span>Engineering, Oversight &amp; Programming (10%)</span><span>$1,699.68</span></div>
+    <div class="area-total-line"><span>Section A1 Subtotal</span><span class="amount">$18,696.43</span></div>
+    <div class="fee-line" style="margin-top:8px;padding:10px 12px;background:rgba(17,54,101,.04);border-radius:6px;"><span>Project Enhancements (5%)</span><span>$934.82</span></div>
+    <div class="area-total-line"><span>Section A1 Total (incl. enhancements)</span><span class="amount">$19,631.25</span></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION A2: KETRA FIXTURES (OPTIONAL)                           -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section A2 — Optional</div>
+      <div class="part-title">Ketra Tunable Fixtures</div>
+    </div>
+    <div>
+      <div class="part-total-label">Per-Unit Pricing</div>
+      <div class="part-total" id="a2-total">$0.00</div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Optional Enhancement:</strong> Ketra fixtures deliver full-spectrum tunable white and color light that shifts color temperature throughout the day — energizing in the morning, warm and relaxing in the evening. Requires Section A1 control system.
+      <br><br><span style="color:var(--copper-light);">✦ Click each option below to include or exclude it from your project scope. Priced per fixture — quantities determined during design phase.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Ketra Fixture Options</div>
+
+    <label class="option-toggle" data-value="1200.00" data-eng="0">
+      <input type="checkbox" class="fixture-toggle" id="toggle-ketra-d3">
+      <div class="option-card" id="card-ketra-d3">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Ketra D3 Fixture</div>
+          <div class="option-desc">Full-spectrum tunable white + color, large form factor. Priced per fixture — quantities determined during design phase.</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">$1,200.00</div>
+          <div class="option-detail">per fixture</div>
+        </div>
+      </div>
+    </label>
+
+    <label class="option-toggle" data-value="997.50" data-eng="0">
+      <input type="checkbox" class="fixture-toggle" id="toggle-ketra-d2">
+      <div class="option-card" id="card-ketra-d2">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Ketra D2 Fixture</div>
+          <div class="option-desc">Full-spectrum tunable white + color, standard form factor. Priced per fixture — quantities determined during design phase.</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">$997.50</div>
+          <div class="option-detail">per fixture</div>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION A3: RANIA FIXTURES (OPTIONAL)                           -->
+  <!-- ================================================================ -->
+  <div class="part-header">
+    <div>
+      <div class="part-label">Section A3 — Optional</div>
+      <div class="part-title">Rania Decorative Fixtures</div>
+    </div>
+    <div>
+      <div class="part-total-label">Per-Unit Pricing</div>
+      <div class="part-total" id="a3-total">$0.00</div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Optional Enhancement:</strong> Rania D2 fixtures provide elegant decorative dimming with premium aesthetics. Requires Section A1 control system.
+      <br><br><span style="color:var(--copper-light);">✦ Click below to include or exclude. Priced per fixture — quantities determined during design phase.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Rania Fixture Options</div>
+
+    <label class="option-toggle" data-value="728.00" data-eng="0">
+      <input type="checkbox" class="fixture-toggle" id="toggle-rania-d2">
+      <div class="option-card" id="card-rania-d2">
+        <div class="option-check">✓</div>
+        <div class="option-info">
+          <div class="option-name">Rania D2 Fixture</div>
+          <div class="option-desc">Decorative dimming fixture with premium aesthetic. Priced per fixture — quantities determined during design phase.</div>
+        </div>
+        <div class="option-price">
+          <div class="option-amount">$728.00</div>
+          <div class="option-detail">per fixture</div>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SECTION B: SMART HOME (EXISTING 14 ROOMS)                      -->
+  <!-- ================================================================ -->
+  <div class="part-header page-break">
+    <div>
+      <div class="part-label">Section B</div>
+      <div class="part-title">Smart Home — Turnkey Installed</div>
+    </div>
+    <div>
+      <div class="part-total-label">Section Total</div>
+      <div class="part-total">$27,460.58</div>
+    </div>
+  </div>
+
+  <!-- Section B Note -->
+  <div class="section" style="padding-bottom:0">
+    <div style="background:var(--surface);border:1px solid var(--copper-dark);border-radius:8px;padding:16px 20px;font-size:.82rem;color:var(--dim);">
+      <strong style="color:var(--copper-light)">Includes:</strong> All equipment, materials, labor, tax, and professional installation by Alt3 Smart Homes. Section B is a fully installed, turnkey system covering 14 rooms across infrastructure, main floor, and 2nd floor.
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  INFRASTRUCTURE                                                   -->
+  <!-- ================================================================ -->
+
+  <!-- Equipment Room -->
+  <div class="section">
+    <div class="section-title">Equipment Room — Network &amp; Core</div>
+    <div class="section-desc">Central rack, networking backbone, power conditioning, and Josh.ai voice processing.</div>
+
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="4" width="24" height="40" rx="2" stroke="#113665" stroke-width="2"/><rect x="15" y="8" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="14" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="20" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="26" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="32" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="15" y="38" width="18" height="4" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Strong Custom Series Floor Standing Rack — 42U</div>
+          <div class="product-part">42U, 20" Depth</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,036.99</div>
+        <div class="product-ext">$1,036.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="14" width="36" height="20" rx="3" stroke="#113665" stroke-width="2"/><circle cx="14" cy="24" r="2" fill="#113665"/><circle cx="20" cy="24" r="2" fill="#113665"/><rect x="26" y="20" width="12" height="8" rx="1" stroke="#113665" stroke-width="1" opacity=".5"/><path d="M24 8v6M20 8h8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">WattBox 820 IP Power Conditioner</div>
+          <div class="product-part">WB-820-IPVM</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,337.99</div>
+        <div class="product-ext">$1,337.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="16" width="36" height="16" rx="3" stroke="#113665" stroke-width="2"/><circle cx="14" cy="24" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="14" cy="24" r="1" fill="#113665"/><rect x="22" y="20" width="16" height="2" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="24" width="16" height="2" rx="1" fill="#113665" opacity=".3"/><path d="M10 16v-4h6M38 16v-4h-6" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis 520-Series Dual-WAN Router</div>
+          <div class="product-part">Multi-Gigabit VPN</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$907.99</div>
+        <div class="product-ext">$907.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="16" width="40" height="16" rx="3" stroke="#113665" stroke-width="2"/><rect x="8" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="12" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="16" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="20" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="24" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="28" y="20" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="8" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="12" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="16" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="20" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="24" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/><rect x="28" y="26" width="2" height="2" rx=".5" fill="#113665" opacity=".5"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis 24-Port PoE Managed Switch</div>
+          <div class="product-part">AN-220-SW-F-24-POE</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$1,132.99</div>
+        <div class="product-ext">$1,132.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><path d="M16 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="26" r="2" fill="#113665"/><line x1="24" y1="28" x2="24" y2="34" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Araknis Wi-Fi 6 820 Series WAP</div>
+          <div class="product-part">Indoor Access Point</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$816.99</div>
+        <div class="product-ext">$816.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="12" width="32" height="24" rx="4" stroke="#113665" stroke-width="2"/><path d="M18 20l4 4-4 4" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="26" y1="28" x2="34" y2="28" stroke="#113665" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Josh One — AI Voice Control Processor</div>
+          <div class="product-part">Josh.ai One</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$768.90</div>
+        <div class="product-ext">$768.90</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="32" height="20" rx="3" stroke="#113665" stroke-width="2"/><rect x="14" y="18" width="6" height="12" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><rect x="22" y="18" width="6" height="12" rx="1" stroke="#113665" stroke-width="1" opacity=".4"/><circle cx="36" cy="24" r="1.5" fill="#113665"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">SFP Module</div>
+          <div class="product-part">Fiber Transceiver</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$51.99</div>
+        <div class="product-ext">$51.99</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="28" height="28" rx="4" stroke="#113665" stroke-width="2"/><path d="M18 18h12M18 24h12M18 30h8" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">DMARK — Demarcation Point</div>
+          <div class="product-part">Telco entrance panel</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$203.75</div>
+        <div class="product-ext">$203.75</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Cat6 Cable Runs</div>
+          <div class="product-part">Structured Wiring</div>
+        </div>
+        <div class="product-qty">×3</div>
+        <div class="product-unit">$35.00</div>
+        <div class="product-ext">$105.00</div>
+      </div>
+
+    </div>
+
+    <div class="subtotal-line"><span>Equipment Subtotal</span><span class="amount">$6,362.59</span></div>
+    <div class="fee-line"><span>Installation Labor</span><span>$2,032.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$587.65</span></div>
+    <div class="area-total-line"><span>Equipment Room Total</span><span class="amount">$8,982.74</span></div>
+  </div>
+
+  <!-- Security -->
+  <div class="section">
+    <div class="section-title">Security</div>
+    <div class="section-desc">Video door station and prewire for future security device locations.</div>
+
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="6" width="16" height="28" rx="8" stroke="#113665" stroke-width="2"/><circle cx="24" cy="16" r="4" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="16" r="1.5" fill="#113665"/><rect x="20" y="28" width="8" height="4" rx="1" fill="#113665" opacity=".3"/><rect x="22" y="34" width="4" height="8" rx="1" stroke="#113665" stroke-width="1.5"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">DoorBird IP Video Door Station</div>
+          <div class="product-part">PoE, SIP Intercom</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$460.68</div>
+        <div class="product-ext">$460.68</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><path d="M18 22c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#113665" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="28" r="3" fill="#113665" opacity=".4"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Security Prewire — 7 Device Locations</div>
+          <div class="product-part">Rough-in wiring for sensors/cameras</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$200.00</div>
+        <div class="product-ext">$200.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Cat6 Cable Runs</div>
+          <div class="product-part">Security device wiring</div>
+        </div>
+        <div class="product-qty">×7</div>
+        <div class="product-unit">$35.00</div>
+        <div class="product-ext">$245.00</div>
+      </div>
+
+    </div>
+
+    <div class="subtotal-line"><span>Equipment Subtotal</span><span class="amount">$905.68</span></div>
+    <div class="fee-line"><span>Installation Labor</span><span>$620.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$106.80</span></div>
+    <div class="area-total-line"><span>Security Total</span><span class="amount">$1,632.48</span></div>
+  </div>
+
+  <!-- Lighting Control -->
+  <div class="section">
+    <div class="section-title">Lighting Control</div>
+    <div class="section-desc">Lutron RadioRA 3 processor, Sunnata keypads, and dimmers for whole-home scene-based lighting.</div>
+
+    <div class="product-header">
+      <span></span><span>Product</span><span>Qty</span><span>Unit</span><span>Total</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="12" width="32" height="24" rx="4" stroke="#113665" stroke-width="2"/><path d="M18 20l4 4-4 4" stroke="#113665" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="26" y1="28" x2="34" y2="28" stroke="#113665" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Lutron RA3 Processor Starter Kit</div>
+          <div class="product-part">RadioRA 3 Hub</div>
+        </div>
+        <div class="product-qty">×1</div>
+        <div class="product-unit">$549.00</div>
+        <div class="product-ext">$549.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="6" width="20" height="36" rx="3" stroke="#113665" stroke-width="2"/><rect x="18" y="12" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="20" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><rect x="18" y="28" width="12" height="4" rx="1" fill="#113665" opacity=".2"/><circle cx="24" cy="38" r="2" fill="#113665" opacity=".3"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Lutron Sunnata Keypad</div>
+          <div class="product-part">Multi-button scene keypad</div>
+        </div>
+        <div class="product-qty">×2</div>
+        <div class="product-unit">$356.00</div>
+        <div class="product-ext">$712.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="8" width="16" height="32" rx="3" stroke="#113665" stroke-width="2"/><line x1="24" y1="14" x2="24" y2="34" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><circle cx="24" cy="20" r="3" stroke="#113665" stroke-width="1.5"/><circle cx="24" cy="20" r="1" fill="#113665"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Lutron Dimmer</div>
+          <div class="product-part">RA3 compatible</div>
+        </div>
+        <div class="product-qty">×4</div>
+        <div class="product-unit">$219.50</div>
+        <div class="product-ext">$878.00</div>
+      </div>
+
+    </div>
+
+    <div class="subtotal-line"><span>Equipment Subtotal</span><span class="amount">$2,139.00</span></div>
+    <div class="fee-line"><span>Installation Labor</span><span>$892.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$212.22</span></div>
+    <div class="area-total-line"><span>Lighting Control Total</span><span class="amount">$3,243.72</span></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  MAIN FLOOR                                                       -->
+  <!-- ================================================================ -->
+
+  <div class="section page-break">
+    <div class="section-title">Main Floor — Audio, Video &amp; Data</div>
+
+    <!-- Great Room -->
+    <div class="room-header"><span>Great Room</span><span class="room-total">$919.54</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">5.1 Surround Sound Prewire</div><div class="product-part">Speaker &amp; subwoofer cable runs</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$307.00</div><div class="product-ext">$307.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">TV/Multimedia w/ Fiber</div><div class="product-part">HDMI, Cat6, fiber backhaul</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$117.38</div><div class="product-ext">$117.38</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$435.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$60.16</span></div>
+
+    <!-- Gourmet Kitchen -->
+    <div class="room-header"><span>Gourmet Kitchen</span><span class="room-total">$4,238.16</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="14" width="32" height="20" rx="3" stroke="#113665" stroke-width="2"/><rect x="12" y="18" width="24" height="12" rx="2" fill="#113665" opacity=".1"/><circle cx="24" cy="24" r="3" stroke="#113665" stroke-width="1.5"/></svg></div>
+        <div class="product-info"><div class="product-name">Sonos Amp</div><div class="product-part">Streaming amplifier</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$799.00</div><div class="product-ext">$799.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#113665" stroke-width="2"/><circle cx="24" cy="24" r="8" stroke="#113665" stroke-width="1"/><circle cx="24" cy="24" r="3" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">MartinLogan IC8 In-Ceiling Speaker</div><div class="product-part">8" driver, all-weather</div></div>
+        <div class="product-qty">×2</div><div class="product-unit">$320.00</div><div class="product-ext">$640.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#113665" stroke-width="2"/><rect x="12" y="12" width="24" height="18" rx="2" fill="#113665" opacity=".1"/><circle cx="24" cy="36" r="2" fill="#113665"/></svg></div>
+        <div class="product-info"><div class="product-name">Josh Touchscreen — Ceramic White</div><div class="product-part">Smart home control panel</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$1,648.90</div><div class="product-ext">$1,648.90</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$113.00</div><div class="product-ext">$113.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$760.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$277.26</span></div>
+
+    <!-- Study -->
+    <div class="room-header"><span>Study</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$152.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$17.18</span></div>
+
+    <!-- Covered Outdoor Living -->
+    <div class="room-header"><span>Covered Outdoor Living</span><span class="room-total">$463.84</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$113.00</div><div class="product-ext">$113.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$227.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$30.34</span></div>
+
+    <!-- Future Pool -->
+    <div class="room-header"><span>Future Pool</span><span class="room-total">$201.16</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run — future pool area</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$113.00</div><div class="product-ext">$113.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$75.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$13.16</span></div>
+
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  2ND FLOOR                                                        -->
+  <!-- ================================================================ -->
+
+  <div class="section page-break">
+    <div class="section-title">2nd Floor — Audio, Video &amp; Data</div>
+
+    <!-- Master Bedroom -->
+    <div class="room-header"><span>Master Bedroom</span><span class="room-total">$463.84</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$113.00</div><div class="product-ext">$113.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$227.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$30.34</span></div>
+
+    <!-- Master Bathroom -->
+    <div class="room-header"><span>Master Bathroom</span><span class="room-total">$201.16</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">House Audio Prewire</div><div class="product-part">Speaker cable run</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$113.00</div><div class="product-ext">$113.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$75.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$13.16</span></div>
+
+    <!-- Bedroom 2 -->
+    <div class="room-header"><span>Bedroom 2</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$152.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$17.18</span></div>
+
+    <!-- Bedroom 3 -->
+    <div class="room-header"><span>Bedroom 3</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$152.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$17.18</span></div>
+
+    <!-- Bedroom 4 -->
+    <div class="room-header"><span>Bedroom 4</span><span class="room-total">$262.68</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="16" rx="2" stroke="#113665" stroke-width="2"/><rect x="18" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/><rect x="26" y="22" width="4" height="4" rx="1" fill="#113665" opacity=".4"/></svg></div>
+        <div class="product-info"><div class="product-name">Dual Ethernet Wall Plate</div><div class="product-part">Data &amp; Network</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$93.00</div><div class="product-ext">$93.00</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$152.50</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$17.18</span></div>
+
+    <!-- Bonus Room -->
+    <div class="room-header"><span>Bonus Room</span><span class="room-total">$919.54</span></div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h24M12 24h24M12 30h24" stroke="#113665" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><rect x="8" y="12" width="32" height="24" rx="3" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">5.1 Surround Sound Prewire</div><div class="product-part">Speaker &amp; subwoofer cable runs</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$307.00</div><div class="product-ext">$307.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="12" width="28" height="18" rx="2" stroke="#113665" stroke-width="2"/><path d="M18 34h12" stroke="#113665" stroke-width="2" stroke-linecap="round"/><path d="M24 30v4" stroke="#113665" stroke-width="2"/></svg></div>
+        <div class="product-info"><div class="product-name">TV/Multimedia w/ Fiber</div><div class="product-part">HDMI, Cat6, fiber backhaul</div></div>
+        <div class="product-qty">×1</div><div class="product-unit">$117.38</div><div class="product-ext">$117.38</div>
+      </div>
+    </div>
+    <div class="fee-line"><span>Labor</span><span>$435.00</span></div>
+    <div class="fee-line"><span>Tax (7%)</span><span>$60.16</span></div>
+
+  </div>
+
+  <!-- ========== SECTION B SUMMARY ========== -->
+  <div class="section">
+    <div class="section-title">Section B — Room Summary</div>
+    <table class="summary-table">
+      <tbody>
+        <tr style="font-weight:600;color:var(--copper)"><td colspan="2" style="font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;padding-top:12px">Infrastructure</td></tr>
+        <tr><td>Equipment Room — Network &amp; Core</td><td>$8,982.74</td></tr>
+        <tr><td>Security</td><td>$1,632.48</td></tr>
+        <tr><td>Lighting Control</td><td>$3,243.72</td></tr>
+        <tr style="font-weight:600;color:var(--copper)"><td colspan="2" style="font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;padding-top:12px">Main Floor</td></tr>
+        <tr><td>Great Room</td><td>$919.54</td></tr>
+        <tr><td>Gourmet Kitchen</td><td>$4,238.16</td></tr>
+        <tr><td>Study</td><td>$262.68</td></tr>
+        <tr><td>Covered Outdoor Living</td><td>$463.84</td></tr>
+        <tr><td>Future Pool</td><td>$201.16</td></tr>
+        <tr style="font-weight:600;color:var(--copper)"><td colspan="2" style="font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;padding-top:12px">2nd Floor</td></tr>
+        <tr><td>Master Bedroom</td><td>$463.84</td></tr>
+        <tr><td>Master Bathroom</td><td>$201.16</td></tr>
+        <tr><td>Bedroom 2</td><td>$262.68</td></tr>
+        <tr><td>Bedroom 3</td><td>$262.68</td></tr>
+        <tr><td>Bedroom 4</td><td>$262.68</td></tr>
+        <tr><td>Bonus Room</td><td>$919.54</td></tr>
+        <tr class="total-row"><td><strong>Section B Total (14 rooms)</strong></td><td><strong>$27,460.58</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== GRAND TOTAL ========== -->
+  <div class="grand-total page-break">
+    <div style="width:100%">
+      <div class="gt-row"><span class="label">Section A1 — Lutron HomeWorks Control</span><span class="amount">$19,631.25</span></div>
+      <div class="gt-row" id="gt-a2" style="display:none"><span class="label">Section A2 — Ketra Fixtures (per-unit selected)</span><span class="amount">$0.00</span></div>
+      <div class="gt-row" id="gt-a3" style="display:none"><span class="label">Section A3 — Rania Fixtures (per-unit selected)</span><span class="amount">$0.00</span></div>
+      <div class="gt-row"><span class="label">Section B — Smart Home (Turnkey Installed)</span><span class="amount">$27,460.58</span></div>
+      <div class="gt-divider"></div>
+      <div class="gt-final"><span class="label">Total Project Investment</span><span class="amount" id="gt-grand">$47,091.83</span></div>
+      <div class="gt-divider" style="margin-top:20px"></div>
+      <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-top:12px;margin-bottom:8px;font-weight:600">Progress Billing</div>
+      <div class="gt-row"><span class="label">10% — Deposit Upon Signing</span><span class="amount" id="gt-dep">$4,709.18</span></div>
+      <div class="gt-row"><span class="label">80% — When Equipment Ordering Begins</span><span class="amount" id="gt-mid">$37,673.46</span></div>
+      <div class="gt-row"><span class="label">10% — Substantial Completion</span><span class="amount" id="gt-fin">$4,709.18</span></div>
+    </div>
+  </div>
+
+  <!-- ========== TERMS ========== -->
+  <div class="section page-break">
+    <div class="section-title">Terms &amp; Conditions</div>
+    <div class="terms-grid">
+      <p><strong>Progress Billing:</strong> 10% non-refundable deposit due upon signing. 80% due when equipment is ordered and received. 10% final payment at substantial completion. All invoices due upon receipt; late payments may incur fees.</p>
+      <p><strong>Proposal Validity:</strong> This proposal is valid for 30 days from date of issue. Pricing subject to change due to manufacturer adjustments.</p>
+      <p><strong>Timeline:</strong> Project timelines depend on product availability, manufacturer shipping, and scheduling. Equipment lead time is typically 4–8 weeks. Installation coordinated with builder's construction schedule.</p>
+      <p><strong>Equipment Warranty:</strong> All equipment covered per manufacturer's standard warranty. Alt3 will perform one (1) courtesy replacement of one (1) item (parts + labor) within the manufacturer's warranty period. Additional replacements subject to labor charges.</p>
+      <p><strong>Workmanship Warranty:</strong> Alt3 provides a one-year workmanship warranty from the date of substantial completion. Issues caused by misuse, third-party alterations, or manufacturer defects are excluded.</p>
+      <p><strong>Change Orders:</strong> Additional work not in the original scope requires a change order and additional charges. No work begins without written approval.</p>
+      <p><strong>Cancellations:</strong> The initial deposit is non-refundable. Customer is responsible for restocking fees or non-returnable items if cancelled after equipment is ordered. Completed labor is billable.</p>
+      <p><strong>Liability:</strong> Alt3's liability is limited to the total amount paid under this agreement. Not liable for pre-existing issues, customer-provided equipment, or post-installation modifications.</p>
+      <p><strong>Governing Law:</strong> This agreement is governed by the laws of the State of North Carolina. Disputes resolved in Charlotte, NC courts.</p>
+    </div>
+  </div>
+
+  <!-- ========== SIGNATURE ========== -->
+  <div class="section">
+    <div class="section-title">Acceptance</div>
+    <p style="font-size:.82rem;color:var(--dim);margin-bottom:8px;">By signing below, you authorize Alt3 Smart Homes to proceed with the scope described in this proposal.</p>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Client Signature</div>
+        <p style="font-size:.82rem;margin-top:4px;">Keen Homes</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Alt3 Smart Homes</div>
+        <p style="font-size:.82rem;margin-top:4px;">Ryan Palmer, CEO</p>
+      </div>
+      <div class="sig-block">
+        <div class="line"></div>
+        <div class="label">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">ALT3 SMART HOMES</div>
+    <p>info@alt3.com &nbsp;|&nbsp; alt3smarthomes.com</p>
+    <p style="margin-top:4px;">Simple. Seamless. Smart — by design.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const BASE_A1 = 19631.25;
+  const BASE_B  = 27460.58;
+
+  function fmt(n){ return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  function recalc(){
+    // Since A2/A3 are per-unit with no quantities yet, toggling just shows them as "included in scope"
+    // but doesn't add dollar amounts to grand total (quantities TBD)
+    let a2Shown = false;
+    let a3Shown = false;
+
+    document.querySelectorAll('.fixture-toggle').forEach(cb => {
+      const wrap = cb.closest('.option-toggle');
+      const card = wrap.querySelector('.option-card');
+      if(cb.checked){
+        card.classList.add('selected');
+        // Check which section
+        if(cb.id.includes('ketra')) a2Shown = true;
+        if(cb.id.includes('rania')) a3Shown = true;
+      } else {
+        card.classList.remove('selected');
+      }
+    });
+
+    // Show/hide A2 and A3 rows in grand total (informational only — no dollar impact since qty TBD)
+    const gtA2 = document.getElementById('gt-a2');
+    const gtA3 = document.getElementById('gt-a3');
+    if(gtA2){
+      if(a2Shown){
+        gtA2.style.display = 'flex';
+        gtA2.querySelector('.amount').textContent = 'Qty TBD';
+      } else {
+        gtA2.style.display = 'none';
+      }
+    }
+    if(gtA3){
+      if(a3Shown){
+        gtA3.style.display = 'flex';
+        gtA3.querySelector('.amount').textContent = 'Qty TBD';
+      } else {
+        gtA3.style.display = 'none';
+      }
+    }
+
+    // Grand total is A1 + B (A2/A3 quantities TBD so not included in total yet)
+    const grand = BASE_A1 + BASE_B;
+    document.getElementById('gt-grand').textContent = fmt(grand);
+
+    // Payment schedule
+    const dep = grand * 0.10;
+    const mid = grand * 0.80;
+    const fin = grand * 0.10;
+    document.getElementById('gt-dep').textContent = fmt(dep);
+    document.getElementById('gt-mid').textContent = fmt(mid);
+    document.getElementById('gt-fin').textContent = fmt(fin);
+  }
+
+  document.querySelectorAll('.fixture-toggle').forEach(cb => {
+    cb.addEventListener('change', recalc);
+  });
+
+  // Initial calc
+  recalc();
+})();
+</script>
+</body>
+</html>

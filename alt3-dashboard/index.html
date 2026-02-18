@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt3 Smart Homes — Operations Dashboard</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FFFFFF;--surface:#F8F6F3;--surface2:#F0EDE8;--surface3:#E8E4DE;--border:#E1D8CE;--navy:#113665;--navy-light:#113665;--navy-dark:#0a2340;--taupe:#BEB1A2;--text:#1a1a1a;--text-dim:#5a5550;--text-muted:#8a8480;--green:#2e7d32;--red:#c62828;--blue:#1565c0;--yellow:#f9a825;--radius:8px;--shadow:0 2px 12px rgba(0,0,0,.08)}
+body{font-family:'Neue Montreal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--navy);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;border:none;border-radius:var(--radius);padding:8px 16px;font-size:.875rem;transition:all .15s}
+input,textarea,select{font-family:inherit;background:#fff;color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:.875rem;width:100%;outline:none;transition:border .15s}
+input:focus,textarea:focus,select:focus{border-color:var(--navy)}
+textarea{resize:vertical;min-height:60px}
+
+/* Header */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-logo{height:40px;filter:brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(1200%) hue-rotate(196deg) brightness(95%) contrast(95%)}
+.brand-sub{font-size:.75rem;color:var(--text-dim);margin-top:2px;letter-spacing:.5px}
+
+/* Nav */
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:transparent;color:var(--text-dim);padding:8px 14px;font-weight:500;border-radius:6px;font-size:.8rem}
+nav button:hover{color:var(--text);background:var(--surface2)}
+nav button.active{background:var(--navy);color:#fff;border-radius:6px}
+
+/* Mobile Nav */
+.mobile-nav-toggle{display:none;background:var(--navy);color:#fff;padding:8px 12px;border-radius:6px;font-size:.9rem}
+.nav-menu{display:flex;gap:4px;flex-wrap:wrap}
+@media(max-width:768px){
+  .mobile-nav-toggle{display:block}
+  .nav-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);flex-direction:column;gap:0;padding:8px;z-index:50}
+  .nav-menu.open{display:flex}
+  .nav-menu button{text-align:left;padding:12px 16px;border-radius:0;border-bottom:1px solid var(--border)}
+  .nav-menu button:last-child{border-bottom:none}
+}
+
+/* Pending Alert Banner */
+.pending-alert{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%);border-bottom:2px solid #f59e0b;cursor:pointer;transition:background .15s;text-decoration:none!important;color:var(--text)!important}
+.pending-alert:hover{background:linear-gradient(135deg,#ffedd5 0%,#fed7aa 100%)}
+.pending-alert .alert-left{display:flex;align-items:center;gap:12px}
+.pending-alert .alert-icon{font-size:1.3rem}
+.pending-alert .alert-title{font-weight:600;font-size:.9rem;color:#92400e}
+.pending-alert .alert-detail{font-size:.8rem;color:#b45309;margin-top:2px}
+.pending-alert .alert-action{background:#f59e0b;color:#fff;padding:8px 18px;border-radius:6px;font-weight:600;font-size:.8rem;white-space:nowrap;transition:background .15s}
+.pending-alert:hover .alert-action{background:#d97706}
+
+/* VTO Banner */
+.vto-banner{background:linear-gradient(135deg,#f5f2ee 0%,#eae5df 100%);border-bottom:1px solid var(--border);overflow:hidden;transition:max-height .3s ease}
+.vto-banner.collapsed .vto-body{display:none}
+.vto-toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;cursor:pointer;user-select:none}
+.vto-toggle:hover{background:rgba(17,54,101,.08)}
+.vto-toggle h2{font-size:.95rem;color:var(--navy);font-weight:600;display:flex;align-items:center;gap:8px}
+.vto-toggle .purpose{font-size:.8rem;color:var(--text-dim);font-style:italic;margin-left:12px}
+.vto-toggle .arrow{color:var(--navy);font-size:.8rem;transition:transform .2s}
+.vto-banner.collapsed .arrow{transform:rotate(-90deg)}
+.vto-body{padding:0 24px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.vto-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+.vto-card h4{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:6px;font-weight:700}
+.vto-card p,.vto-card ul{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+.vto-card ul{list-style:none;padding:0}
+.vto-card ul li::before{content:'•';color:var(--navy);margin-right:6px}
+.vto-card .big-num{font-size:1.3rem;font-weight:700;color:var(--navy-light)}
+.vto-process{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:.82rem;color:var(--text-dim)}
+.vto-process span{background:var(--surface3);padding:4px 10px;border-radius:4px;color:var(--navy-light);font-weight:500}
+.vto-process .arrow-step{color:var(--text-muted);font-size:.7rem}
+
+/* Main */
+main{flex:1;padding:24px;max-width:1440px;width:100%;margin:0 auto}
+.section{display:none}
+.section.active{display:block}
+.section-title{font-size:1.1rem;font-weight:600;margin-bottom:16px;color:var(--navy-light);display:flex;align-items:center;gap:8px}
+
+/* Buttons */
+.btn-primary{background:var(--navy);color:#fff;font-weight:600}
+.btn-primary:hover{background:var(--navy-light)}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--surface3)}
+.btn-danger{background:transparent;color:var(--red);padding:4px 8px;font-size:.75rem}
+.btn-sm{padding:5px 10px;font-size:.78rem}
+.btn-success{background:var(--green);color:#fff;font-weight:600}
+.btn-success:hover{opacity:.9}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.modal h3{margin-bottom:16px;color:var(--navy-light)}
+.modal .field{margin-bottom:12px}
+.modal .field label{display:block;font-size:.78rem;color:var(--text-dim);margin-bottom:4px;font-weight:500}
+.modal .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+/* ===== DASHBOARD HOME ===== */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.dash-card h3{color:var(--navy-light);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dash-stat{display:flex;gap:16px;margin-bottom:12px}
+.dash-stat .stat{text-align:center;flex:1}
+.dash-stat .stat .num{font-size:1.5rem;font-weight:700;color:var(--navy-light)}
+.dash-stat .stat .label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px}
+
+/* Financial Card */
+.financial-bar{background:var(--surface2);border-radius:6px;height:8px;margin:8px 0;overflow:hidden;position:relative}
+.financial-bar-fill{background:var(--green);height:100%;transition:width .3s ease}
+
+/* ===== PIPELINE (Kanban) ===== */
+.kanban{display:flex;gap:16px;overflow-x:auto;padding-bottom:16px}
+.kanban-col{min-width:240px;flex:1;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
+.kanban-col-header{padding:12px 14px;font-weight:600;font-size:.85rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.kanban-col-header .count{background:var(--surface3);color:var(--text-dim);font-size:.7rem;padding:2px 8px;border-radius:10px}
+.kanban-cards{padding:8px;min-height:60px}
+.kanban-card{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:8px;cursor:grab;transition:border .15s}
+.kanban-card:hover{border-color:var(--navy)}
+.kanban-card .client{font-weight:600;font-size:.9rem}
+.kanban-card .address{font-size:.75rem;color:var(--text-dim);margin-top:2px}
+.kanban-card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.75rem;color:var(--text-dim)}
+.kanban-card .value{color:var(--navy-light);font-weight:600}
+.kanban-card .type-badge{background:var(--surface3);padding:2px 6px;border-radius:4px;font-size:.68rem;color:var(--text-dim);margin-top:4px;display:inline-block}
+.kanban-card .card-actions{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+
+/* ===== TODO ===== */
+.todo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.todo-column{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.todo-column-header{padding:12px 16px;font-weight:600;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.todo-column-header .person{color:var(--navy-light)}
+.todo-add{display:flex;gap:8px;padding:12px}
+.todo-add input{flex:1}
+.todo-list{padding:8px 12px}
+.todo-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:6px;margin-bottom:4px;transition:background .1s}
+.todo-item:hover{background:var(--surface2)}
+.todo-item.done .todo-text{text-decoration:line-through;color:var(--text-muted)}
+.todo-check{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;background:transparent}
+.todo-check.checked{background:var(--navy);border-color:var(--navy)}
+.todo-check.checked::after{content:'✓';color:#fff;font-size:11px}
+.todo-check{border-color:var(--taupe)}
+.todo-text{flex:1;font-size:.875rem}
+.todo-delete{color:var(--text-muted);cursor:pointer;font-size:.75rem;opacity:0;transition:opacity .15s}
+.todo-item:hover .todo-delete{opacity:1}
+
+/* ===== CALENDAR ===== */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-header h3{font-size:1.1rem}
+.cal-nav{display:flex;gap:8px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.cal-day-name{background:var(--surface);padding:8px;text-align:center;font-size:.75rem;font-weight:600;color:var(--text-dim)}
+.cal-day{background:var(--surface);padding:8px;min-height:90px;cursor:pointer;transition:background .1s;position:relative}
+.cal-day:hover{background:var(--surface2)}
+.cal-day.other-month{opacity:.35}
+.cal-day.today{border:1px solid var(--navy)}
+.cal-day .day-num{font-size:.8rem;font-weight:600;margin-bottom:4px}
+.cal-event{background:var(--navy);color:#fff;font-size:.65rem;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.cal-event:hover{background:var(--navy-dark)}
+
+/* ===== CRM ===== */
+.crm-toolbar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.crm-toolbar input{max-width:300px}
+.crm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.crm-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border .15s}
+.crm-card:hover{border-color:var(--navy)}
+.crm-card .name{font-weight:700;font-size:1rem}
+.crm-card .detail{font-size:.8rem;color:var(--text-dim);margin-top:4px}
+.crm-card .detail span{color:var(--text)}
+.crm-card .status-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;margin-top:8px}
+.status-active{background:rgba(76,175,80,.15);color:var(--green)}
+.status-lead{background:rgba(91,155,213,.15);color:var(--blue)}
+.status-prospect{background:rgba(240,192,64,.15);color:var(--yellow)}
+.status-completed{background:rgba(17,54,101,.15);color:var(--navy-light)}
+.crm-card .notes{font-size:.78rem;color:var(--text-dim);margin-top:8px;border-top:1px solid var(--border);padding-top:8px}
+.crm-card .card-footer{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+
+/* Client Quick Actions */
+.client-actions{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.client-actions a{background:var(--navy);color:#fff;padding:4px 8px;border-radius:4px;font-size:.7rem;text-decoration:none;font-weight:600}
+.client-actions a:hover{background:var(--navy-dark);text-decoration:none}
+
+/* ===== CLIENTS DIRECTORY ===== */
+.clients-toolbar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.clients-toolbar input{max-width:300px}
+.clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.client-directory-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border .15s}
+.client-directory-card:hover{border-color:var(--navy)}
+.client-directory-card .name{font-weight:700;font-size:1rem;margin-bottom:8px}
+.client-directory-card .contact-info{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.client-directory-card .contact-info .contact-item{display:flex;align-items:center;gap:8px;font-size:.85rem}
+.client-directory-card .project-info{background:var(--surface2);padding:8px 10px;border-radius:6px;margin-bottom:12px}
+.client-directory-card .project-info .project{font-size:.85rem;font-weight:600}
+.client-directory-card .project-info .status{font-size:.75rem;color:var(--text-muted)}
+
+/* ===== PROPOSALS ===== */
+.proposals-table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.proposals-table th{text-align:left;padding:12px 16px;font-size:.78rem;color:var(--text-dim);font-weight:600;border-bottom:1px solid var(--border);background:var(--surface2)}
+.proposals-table td{padding:12px 16px;font-size:.875rem;border-bottom:1px solid var(--border)}
+.proposals-table tr:last-child td{border-bottom:none}
+.proposals-table tr:hover td{background:var(--surface2)}
+.prop-status{padding:3px 10px;border-radius:10px;font-size:.72rem;font-weight:600}
+.prop-draft{background:rgba(153,153,153,.15);color:#999}
+.prop-sent{background:rgba(91,155,213,.15);color:var(--blue)}
+.prop-viewed{background:rgba(240,192,64,.15);color:var(--yellow)}
+.prop-signed{background:rgba(76,175,80,.15);color:var(--green)}
+
+/* ===== ROCKS ===== */
+.rocks-quarter{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.rocks-quarter select{width:auto;max-width:200px}
+.rocks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.rock-column{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.rock-column-header{padding:12px 16px;font-weight:700;border-bottom:1px solid var(--border);color:var(--navy-light);display:flex;justify-content:space-between;align-items:center}
+.rock-item{padding:12px 16px;border-bottom:1px solid var(--border);transition:background .1s}
+.rock-item:last-child{border-bottom:none}
+.rock-item:hover{background:var(--surface2)}
+.rock-desc{font-size:.875rem;font-weight:500;margin-bottom:6px}
+.rock-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rock-status{padding:3px 10px;border-radius:10px;font-size:.7rem;font-weight:600;cursor:pointer;user-select:none}
+.rock-on{background:rgba(76,175,80,.15);color:var(--green)}
+.rock-off{background:rgba(231,76,60,.15);color:var(--red)}
+.rock-done{background:rgba(17,54,101,.2);color:var(--navy-light)}
+.rock-due{font-size:.72rem;color:var(--text-muted)}
+.commitment-quote{margin-top:12px;padding:10px 14px;background:var(--surface2);border-left:3px solid var(--navy);font-size:.8rem;color:var(--text-dim);font-style:italic;border-radius:0 var(--radius) var(--radius) 0}
+
+/* ===== SCORECARD ===== */
+.scorecard-wrap{overflow-x:auto;margin-top:8px}
+.scorecard{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:.78rem}
+.scorecard th,.scorecard td{padding:8px 10px;border:1px solid var(--border);text-align:center;white-space:nowrap}
+.scorecard th{background:var(--surface2);color:var(--text-dim);font-weight:600;position:sticky;top:0}
+.scorecard .kpi-label{text-align:left;font-weight:600;color:var(--navy-light);min-width:120px;position:sticky;left:0;background:var(--surface);z-index:1}
+.scorecard .goal-label{text-align:left;color:var(--text-dim);min-width:60px;position:sticky;left:0;background:var(--surface)}
+.scorecard .cat-header{background:var(--surface3);color:var(--navy);font-weight:700;text-align:left;font-size:.8rem}
+.scorecard td.green{background:rgba(76,175,80,.12);color:var(--green)}
+.scorecard td.red{background:rgba(231,76,60,.12);color:var(--red)}
+.scorecard td[contenteditable]{cursor:text}
+.scorecard td[contenteditable]:focus{outline:2px solid var(--navy);background:var(--surface2)}
+.scorecard .total-row td{font-weight:700;border-top:2px solid var(--navy)}
+
+/* ===== ISSUES ===== */
+.issues-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.issues-split{grid-template-columns:1fr}}
+.issues-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.issues-panel-header{padding:12px 16px;font-weight:700;border-bottom:1px solid var(--border);color:var(--navy-light);display:flex;justify-content:space-between;align-items:center}
+.issue-add{display:flex;gap:8px;padding:12px}
+.issue-add input{flex:1}
+.issue-list{padding:8px 12px}
+.issue-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:6px;margin-bottom:4px;transition:background .1s}
+.issue-item:hover{background:var(--surface2)}
+.issue-item.solved .issue-text{text-decoration:line-through;color:var(--text-muted)}
+.issue-num{min-width:22px;height:22px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;flex-shrink:0}
+.issue-text{flex:1;font-size:.85rem}
+.issue-actions{display:flex;gap:4px;opacity:0;transition:opacity .15s}
+.issue-item:hover .issue-actions{opacity:1}
+
+/* ===== LEVEL 10 ===== */
+.l10-container{max-width:800px}
+.l10-meeting-btn{margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.l10-timer-display{font-size:1.5rem;font-weight:700;color:var(--navy-light);font-variant-numeric:tabular-nums}
+.l10-timer-section{font-size:.85rem;color:var(--text-dim)}
+.l10-agenda{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.l10-item{border-bottom:1px solid var(--border)}
+.l10-item:last-child{border-bottom:none}
+.l10-item-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background .1s}
+.l10-item-header:hover{background:var(--surface2)}
+.l10-item-header .name{font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:8px}
+.l10-item-header .duration{font-size:.75rem;color:var(--text-muted);background:var(--surface3);padding:3px 8px;border-radius:4px}
+.l10-item-header .active-indicator{width:8px;height:8px;border-radius:50%;background:var(--navy);display:none}
+.l10-item.active .active-indicator{display:block;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.l10-item-body{padding:0 16px 14px;display:none}
+.l10-item.open .l10-item-body{display:block}
+.l10-item-body textarea{width:100%;min-height:80px;margin-top:8px}
+.l10-item-body .desc{font-size:.8rem;color:var(--text-dim);margin-bottom:4px}
+.l10-rating{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.l10-rating h4{color:var(--navy-light);margin-bottom:12px}
+.rating-stars{display:flex;gap:6px;margin-bottom:12px}
+.rating-star{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;transition:all .15s;font-size:.85rem}
+.rating-star:hover,.rating-star.selected{background:var(--navy);border-color:var(--navy);color:#fff}
+.l10-history{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.l10-history-header{padding:12px 16px;font-weight:700;color:var(--navy-light);border-bottom:1px solid var(--border)}
+.l10-history-item{padding:10px 16px;border-bottom:1px solid var(--border);font-size:.85rem;display:flex;justify-content:space-between;align-items:center}
+.l10-history-item:last-child{border-bottom:none}
+.l10-history-item .date{color:var(--text-dim)}
+.l10-history-item .rating-badge{background:var(--navy);color:#fff;padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:600}
+
+/* ===== FLOATING ACTION BUTTON (FAB) ===== */
+.fab-container{position:fixed;bottom:24px;right:24px;z-index:90}
+.fab-main{width:56px;height:56px;border-radius:50%;background:var(--navy);color:#fff;border:none;box-shadow:0 4px 20px rgba(17,54,101,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:all .3s ease}
+.fab-main:hover{background:var(--navy-dark);transform:scale(1.1)}
+.fab-menu{position:absolute;bottom:72px;right:0;display:flex;flex-direction:column;gap:12px;opacity:0;pointer-events:none;transition:all .3s ease;transform:translateY(20px)}
+.fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.fab-item{background:var(--navy);color:#fff;border:none;padding:12px 16px;border-radius:24px;cursor:pointer;box-shadow:0 2px 12px rgba(17,54,101,.2);font-size:.85rem;font-weight:600;white-space:nowrap;transition:all .2s ease}
+.fab-item:hover{background:var(--navy-dark);transform:translateX(-4px)}
+
+/* Notes Modal */
+.notes-log{max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;background:var(--surface2)}
+.note-item{padding:8px 0;border-bottom:1px solid var(--border)}
+.note-item:last-child{border-bottom:none}
+.note-timestamp{font-size:.7rem;color:var(--text-muted);margin-bottom:2px}
+.note-text{font-size:.85rem;line-height:1.4}
+.documents-section{margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.documents-section h4{color:var(--navy-light);margin-bottom:12px;font-size:.9rem}
+.document-list{display:flex;flex-direction:column;gap:8px}
+.document-item{display:flex;justify-content:between;align-items:center;padding:8px 12px;background:var(--surface2);border-radius:6px}
+.document-item a{flex:1;text-decoration:none;font-weight:600}
+.document-item a:hover{text-decoration:underline}
+.document-add{display:flex;gap:8px;margin-top:8px}
+.document-add input{flex:1}
+
+/* Responsive */
+@media(max-width:768px){
+  .header{padding:12px 16px;position:relative}
+  main{padding:16px}
+  .kanban{flex-direction:column}
+  .kanban-col{min-width:100%}
+  .cal-day{min-height:60px;padding:4px}
+  .cal-event{font-size:.6rem}
+  nav button{padding:6px 10px;font-size:.75rem}
+  .vto-body{grid-template-columns:1fr}
+  .rocks-grid{grid-template-columns:1fr}
+  .dash-grid{grid-template-columns:1fr}
+  .clients-grid{grid-template-columns:1fr}
+  .crm-grid{grid-template-columns:1fr}
+  
+  /* Touch targets */
+  button{min-height:44px}
+  .kanban-card .card-actions button{min-height:32px;padding:4px 8px}
+  .btn-sm{min-height:32px}
+  
+  /* FAB positioning */
+  .fab-container{bottom:16px;right:16px}
+  .fab-main{width:48px;height:48px;font-size:1.3rem}
+  
+  /* Stack cards */
+  .todo-grid{grid-template-columns:1fr}
+  .issues-split{grid-template-columns:1fr}
+}
+
+@media(max-width:480px){
+  main{padding:12px}
+  .header{padding:8px 12px}
+  .modal{padding:16px;margin:8px}
+  .vto-toggle{padding:8px 12px}
+  .vto-body{padding:0 12px 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- PENDING CHANGE ORDER ALERT -->
+<a class="pending-alert" href="proposals/peninsula-bailey-complete.html#change-order" id="pending-co-alert">
+  <div class="alert-left">
+    <span class="alert-icon">⚠️</span>
+    <div>
+      <div class="alert-title">Pending Change Order — Peninsula Club (Alex Bailey)</div>
+      <div class="alert-detail">6 rooms · $15,273.31 · Awaiting client approval</div>
+    </div>
+  </div>
+  <span class="alert-action">Review →</span>
+</a>
+
+<!-- VTO BANNER -->
+<div class="vto-banner collapsed" id="vto-banner">
+  <div class="vto-toggle" onclick="document.getElementById('vto-banner').classList.toggle('collapsed')">
+    <h2>🏠 Vision / Traction Organizer <span class="purpose">"Creating meaningful relationships through meaningful work"</span></h2>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="vto-body">
+    <div class="vto-card">
+      <h4>Niche</h4>
+      <p>Bringing smart home technology to homes over $1,500,000</p>
+    </div>
+    <div class="vto-card">
+      <h4>10-Year Target</h4>
+      <p class="big-num">$30M</p>
+      <p>with 10% net margin</p>
+    </div>
+    <div class="vto-card">
+      <h4>3-Year Picture (Jan 1, 2028)</h4>
+      <p>Revenue: <strong>$10M</strong> · Profit: <strong>$1M</strong> · <strong>8</strong> Employees</p>
+    </div>
+    <div class="vto-card">
+      <h4>1-Year Plan</h4>
+      <p class="big-num">$250K</p>
+      <p>Revenue Target</p>
+    </div>
+    <div class="vto-card">
+      <h4>Core Values</h4>
+      <ul>
+        <li>Commitment to Excellence</li>
+        <li>Customer is Royalty</li>
+        <li>Consideration to the Individual & Alt3</li>
+        <li>Common Ethics</li>
+      </ul>
+    </div>
+    <div class="vto-card">
+      <h4>3 Uniques</h4>
+      <ul>
+        <li>Property investment enhancement</li>
+        <li>Designed for the affluent homebuyer</li>
+        <li>Smart home tech that fits your life—naturally</li>
+      </ul>
+    </div>
+    <div class="vto-card">
+      <h4>Proven Process</h4>
+      <div class="vto-process">
+        <span>Understand</span><span class="arrow-step">→</span>
+        <span>Design</span><span class="arrow-step">→</span>
+        <span>Install</span><span class="arrow-step">→</span>
+        <span>Program</span><span class="arrow-step">→</span>
+        <span>Enjoy</span>
+      </div>
+    </div>
+    <div class="vto-card">
+      <h4>Guarantee</h4>
+      <p style="font-style:italic">"If it's not simple, seamless, and intuitive—we'll make it right."</p>
+    </div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="brand">
+    <img src="assets/logo.png" alt="Alt3 Smart Homes" class="brand-logo">
+    <div class="brand-sub">Operations Dashboard</div>
+  </div>
+  <button class="mobile-nav-toggle" onclick="toggleMobileNav()">☰ Menu</button>
+  <nav id="nav">
+    <div class="nav-menu" id="nav-menu">
+      <button class="active" data-tab="dashboard">🏠 Dashboard</button>
+      <button data-tab="clients">👥 Clients</button>
+      <button data-tab="crm">📊 CRM</button>
+      <button data-tab="proposals">📄 Proposals</button>
+      <button data-tab="scorecard">📈 Scorecard</button>
+      <button data-tab="rocks">🪨 Rocks</button>
+      <button data-tab="l10">📋 Level 10</button>
+      <span id="last-updated" style="margin-left:auto;font-size:.65rem;color:var(--text-muted)"></span>
+      <button onclick="resetAllData()" style="color:var(--text-muted);font-size:.7rem">🔄 Reset</button>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <!-- DASHBOARD HOME (everything on one page) -->
+  <div class="section active" id="sec-dashboard">
+    
+    <!-- FINANCIAL SNAPSHOT -->
+    <div style="margin-bottom:24px">
+      <h2 style="font-size:1.2rem;color:var(--navy);font-weight:700;margin-bottom:12px">💰 Financial Snapshot</h2>
+      <div class="dash-card" id="financial-snapshot"></div>
+    </div>
+
+    <!-- PENDING CHANGE ORDERS -->
+    <div style="margin-bottom:24px" id="pending-change-orders">
+      <h2 style="font-size:1.2rem;color:var(--navy);font-weight:700;margin-bottom:12px">📋 Pending Change Orders</h2>
+      <div id="change-orders-list"></div>
+    </div>
+
+    <!-- COMPANY ROCKS — mini glance -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <h2 style="font-size:.85rem;color:var(--navy);font-weight:700">🪨 Rocks — Q1 2026</h2>
+      <button class="btn-secondary btn-sm" style="font-size:.65rem;padding:2px 8px" onclick="document.querySelector('[data-tab=rocks]').click()">All →</button>
+    </div>
+    <div id="dash-rocks"></div>
+
+    <!-- THIS WEEK SCHEDULE — right under rocks -->
+    <div style="margin-top:16px" id="dash-schedule"></div>
+
+    <!-- DEAL PIPELINE — full kanban -->
+    <div style="margin-top:32px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <h2 style="font-size:1.2rem;color:var(--navy);font-weight:700">💰 Deal Pipeline</h2>
+        <button class="btn-primary btn-sm" onclick="openDealModal()">+ Add Deal</button>
+      </div>
+      <div class="kanban" id="kanban"></div>
+    </div>
+
+    <!-- TO-DOS -->
+    <div style="margin-top:32px">
+      <h2 style="font-size:1.2rem;color:var(--navy);font-weight:700;margin-bottom:12px">✅ To-Do Lists</h2>
+      <div class="todo-grid" id="todo-grid"></div>
+    </div>
+
+    <!-- ISSUES -->
+    <div style="margin-top:32px">
+      <h2 style="font-size:1.2rem;color:var(--navy);font-weight:700;margin-bottom:12px">⚡ Issues</h2>
+      <div class="issues-split" id="issues-split"></div>
+    </div>
+
+    <!-- hidden containers for legacy render functions -->
+    <div id="dash-grid" style="display:none"></div>
+  </div>
+
+  <!-- CLIENTS DIRECTORY TAB -->
+  <div class="section" id="sec-clients">
+    <div class="section-title">👥 Client Directory</div>
+    <div class="clients-toolbar">
+      <input type="text" id="clients-search" placeholder="Search clients..." oninput="renderClientsDirectory()">
+      <button class="btn-primary btn-sm" onclick="openClientDirectoryModal()">+ Add Client</button>
+    </div>
+    <div class="clients-grid" id="clients-directory-grid"></div>
+  </div>
+
+  <!-- ROCKS (separate tab — individual breakdown) -->
+  <div class="section" id="sec-rocks">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="section-title" style="margin:0">🪨 Quarterly Rocks</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="rock-quarter" onchange="renderRocks();renderDashboard()"><option value="Q1-2026" selected>Q1 2026</option></select>
+        <button class="btn-primary btn-sm" onclick="openRockModal()">+ Add Rock</button>
+      </div>
+    </div>
+    <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:20px">Due March 31, 2026 · Click status to cycle</p>
+    <div id="rocks-grid" class="rocks-grid"></div>
+  </div>
+
+  <!-- SCORECARD (separate tab) -->
+  <div class="section" id="sec-scorecard">
+    <div class="section-title">📊 Scorecard — 2026</div>
+    <div class="scorecard-wrap" id="scorecard-wrap"></div>
+  </div>
+
+  <!-- LEVEL 10 (separate tab) -->
+  <div class="section" id="sec-l10">
+    <div class="section-title">📋 Level 10 Meeting</div>
+    <div class="l10-container" id="l10-container"></div>
+  </div>
+
+  <!-- CRM -->
+  <div class="section" id="sec-crm">
+    <div class="section-title">Client Relationship Manager</div>
+    <div class="crm-toolbar">
+      <input type="text" id="crm-search" placeholder="Search clients..." oninput="renderCRM()">
+      <button class="btn-primary btn-sm" onclick="openClientModal()">+ Add Client</button>
+    </div>
+    <div class="crm-grid" id="crm-grid"></div>
+  </div>
+
+  <!-- PROPOSALS -->
+  <div class="section" id="sec-proposals">
+    <div class="section-title">Proposals <button class="btn-primary btn-sm" onclick="openProposalModal()">+ Add Proposal</button></div>
+    <div id="proposals-grouped"></div>
+    <div style="overflow-x:auto;margin-top:24px">
+      <table class="proposals-table" id="proposals-table">
+        <thead><tr><th>Client</th><th>Project</th><th>Version</th><th>Amount</th><th>Status</th><th>Date</th><th>Link</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- FLOATING ACTION BUTTON -->
+<div class="fab-container">
+  <div class="fab-menu" id="fab-menu">
+    <button class="fab-item" onclick="openDealModal();closeFAB()">+ New Deal</button>
+    <button class="fab-item" onclick="openTodoModal();closeFAB()">+ New To-Do</button>
+    <button class="fab-item" onclick="openClientDirectoryModal();closeFAB()">+ New Client</button>
+    <button class="fab-item" onclick="openIssueModal();closeFAB()">+ New Issue</button>
+  </div>
+  <button class="fab-main" id="fab-main" onclick="toggleFAB()">+</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+// 🔧 FIREBASE CONFIG — paste your config values here
+const firebaseConfig = {
+  apiKey: "AIzaSyCLnvrTIIsshy0nP7z1BEAyFZdGeJ-hJwQ",
+  authDomain: "realtyryan-dashboard.firebaseapp.com",
+  databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com",
+  projectId: "realtyryan-dashboard",
+  storageBucket: "realtyryan-dashboard.firebasestorage.app",
+  messagingSenderId: "40229133129",
+  appId: "1:40229133129:web:be8ca0f35c778427301898"
+};
+
+// === Firebase + localStorage hybrid storage ===
+let db = null;
+let fbReady = false;
+const fbCache = {};
+const fbListeners = {};
+
+if (firebaseConfig.apiKey) {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    fbReady = true;
+    console.log('🔥 Firebase connected — real-time sync enabled');
+  } catch(e) {
+    console.warn('Firebase init failed, using localStorage only:', e);
+  }
+}
+
+const LS = {
+  get(k, d) {
+    if (fbReady && fbCache[k] !== undefined) return fbCache[k];
+    try { return JSON.parse(localStorage.getItem('alt3_'+k)) || d } catch { return d }
+  },
+  set(k, v) {
+    localStorage.setItem('alt3_'+k, JSON.stringify(v));
+    if (fbReady && db) {
+      db.ref('dashboard/' + k).set(v).catch(e => console.warn('Firebase write failed:', e));
+    }
+    stampUpdate(); // Auto-update timestamp on ANY data change
+  },
+  listen(k, renderFn) {
+    if (!fbReady || !db) return;
+    if (fbListeners[k]) return;
+    fbListeners[k] = true;
+    db.ref('dashboard/' + k).on('value', (snapshot) => {
+      const val = snapshot.val();
+      if (val !== null && val !== undefined) {
+        fbCache[k] = val;
+        localStorage.setItem('alt3_'+k, JSON.stringify(val));
+        if (renderFn) renderFn();
+      }
+    });
+  }
+};
+
+// === Seed Firebase on first use ===
+(async function seedFirebase() {
+  if (!fbReady || !db) return;
+  const snap = await db.ref('dashboard/_seeded').once('value');
+  if (snap.val()) return;
+  console.log('🌱 Seeding Firebase...');
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith('alt3_')) {
+      const k = key.replace('alt3_', '');
+      try { await db.ref('dashboard/' + k).set(JSON.parse(localStorage.getItem(key))); keys.push(k); } catch(e) {}
+    }
+  }
+  await db.ref('dashboard/_seeded').set(true);
+  console.log('✅ Seeded:', keys);
+})();
+
+// === Navigation ===
+document.querySelectorAll('nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const tabId = 'sec-'+btn.dataset.tab;
+    document.getElementById(tabId).classList.add('active');
+    
+    // Render specific tabs
+    if(btn.dataset.tab==='rocks') renderRocks();
+    if(btn.dataset.tab==='clients') renderClientsDirectory();
+    
+    // Close mobile nav
+    closeMobileNav();
+  });
+});
+
+// === Mobile Navigation ===
+function toggleMobileNav() {
+  document.getElementById('nav-menu').classList.toggle('open');
+}
+
+function closeMobileNav() {
+  document.getElementById('nav-menu').classList.remove('open');
+}
+
+// === Floating Action Button ===
+function toggleFAB() {
+  const menu = document.getElementById('fab-menu');
+  const main = document.getElementById('fab-main');
+  menu.classList.toggle('open');
+  main.style.transform = menu.classList.contains('open') ? 'rotate(45deg)' : 'rotate(0deg)';
+}
+
+function closeFAB() {
+  const menu = document.getElementById('fab-menu');
+  const main = document.getElementById('fab-main');
+  menu.classList.remove('open');
+  main.style.transform = 'rotate(0deg)';
+}
+
+// === Modal ===
+function openModal(html) { document.getElementById('modal-content').innerHTML = html; document.getElementById('modal-overlay').classList.add('show'); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); closeFAB(); }
+
+function stampUpdate(){
+  const now=new Date();
+  const str=now.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  localStorage.setItem('alt3-lastUpdated',now.toISOString());
+  document.getElementById('last-updated').textContent='Updated '+str;
+}
+function showLastUpdated(){
+  const ts=localStorage.getItem('alt3-lastUpdated');
+  if(ts){const d=new Date(ts);document.getElementById('last-updated').textContent='Updated '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
+  else{document.getElementById('last-updated').textContent='';}
+}
+showLastUpdated();
+
+function resetAllData() {
+  if(!confirm('Reset all dashboard data to defaults? This clears any changes you\'ve made.')) return;
+  // Clear ALL alt3 prefixed keys (handles both alt3_ and alt3- prefixes)
+  const toRemove = [];
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k && (k.startsWith('alt3_') || k.startsWith('alt3-'))) toRemove.push(k);
+  }
+  toRemove.forEach(k => localStorage.removeItem(k));
+  localStorage.removeItem('alt3-lastUpdated');
+  location.reload();
+}
+
+// ========================
+// DASHBOARD HOME
+// ========================
+function renderDashboard() {
+  const deals = getDeals();
+  const rocks = getRocks();
+  const todos = getTodos();
+  const financials = getFinancials();
+  
+  // Calculate financial metrics
+  const totalPipeline = deals.reduce((s,d) => s + (d.value||0), 0);
+  const collectedAmount = financials.collected || 0;
+  const outstandingAmount = totalPipeline - collectedAmount;
+  const collectedPct = totalPipeline > 0 ? Math.round((collectedAmount / totalPipeline) * 100) : 0;
+  
+  // Render Financial Snapshot
+  document.getElementById('financial-snapshot').innerHTML = `
+    <h3>💰 Financial Overview</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;margin:16px 0">
+      <div style="text-align:center">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--navy-light)">$${totalPipeline.toLocaleString()}</div>
+        <div style="font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Total Pipeline</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--green)">$${collectedAmount.toLocaleString()}</div>
+        <div style="font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Collected</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--red)">$${outstandingAmount.toLocaleString()}</div>
+        <div style="font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Outstanding</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--navy-light)">${collectedPct}%</div>
+        <div style="font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Collected</div>
+      </div>
+    </div>
+    <div class="financial-bar">
+      <div class="financial-bar-fill" style="width:${collectedPct}%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--text-muted);margin-top:4px">
+      <span>$0</span>
+      <span>$${totalPipeline.toLocaleString()}</span>
+    </div>
+    <button class="btn-secondary btn-sm" onclick="openFinancialsModal()" style="margin-top:12px">Update Financials</button>
+  `;
+  
+  const pipeVal = deals.reduce((s,d) => s + (d.value||0), 0);
+  const activeDeals = deals.filter(d => d.stage !== 'Complete').length;
+  const rocksComplete = rocks.filter(r => r.status === 'complete').length;
+  const totalRocks = rocks.length;
+  const openTodos = Object.values(todos).flat().filter(t => !t.done).length;
+
+  // Active deals detail
+  const activeDealsArr = deals.filter(d => d.stage !== 'Complete');
+  const stageIcon = {'Lead':'🔵','Proposal Sent':'📨','Signed':'✅','In Progress':'🔨'};
+
+  // Rocks detail
+  const rocksByOwner = {};
+  rocks.forEach(r => { if(!rocksByOwner[r.owner]) rocksByOwner[r.owner]=[]; rocksByOwner[r.owner].push(r); });
+
+  // Todos detail
+  const allOpenTodos = [];
+  PEOPLE.forEach(p => (todos[p]||[]).filter(t=>!t.done).forEach(t => allOpenTodos.push({person:p,text:t.text})));
+
+  // This week's schedule
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const weekStart = new Date(now); weekStart.setDate(now.getDate() - dayOfWeek);
+  const weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 6);
+  const allEvents = getEvents();
+  const weekEvents = allEvents.filter(e => {
+    const d = new Date(e.date + 'T00:00:00');
+    return d >= weekStart && d <= weekEnd;
+  }).sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const todayStr = now.toISOString().slice(0,10);
+
+  // Render compact company rocks into dash-rocks
+  const statusLabels = {on:'On Track',off:'Off Track',complete:'Complete'};
+  const statusClass = {on:'rock-on',off:'rock-off',complete:'rock-done'};
+  document.getElementById('dash-rocks').innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
+      <span style="font-size:.78rem;font-weight:700;color:var(--navy)">${rocksComplete}/${totalRocks}</span>
+      <span style="color:var(--green);font-weight:600;font-size:.7rem">● ${rocks.filter(r=>r.status==='on').length} on</span>
+      <span style="color:var(--red);font-weight:600;font-size:.7rem">● ${rocks.filter(r=>r.status==='off').length} off</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+      ${PEOPLE.map(p => {
+        const pRocks = (rocksByOwner[p]||[]);
+        if(!pRocks.length) return '';
+        return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px">
+          <div style="font-size:.7rem;font-weight:700;color:var(--navy);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">${p}</div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            ${pRocks.map(r => `<div style="display:flex;align-items:center;gap:5px">
+              <span class="rock-status ${statusClass[r.status]}" onclick="event.stopPropagation();cycleRock(${r.id})" style="padding:2px 6px;border-radius:4px;font-size:.55rem;min-width:auto;cursor:pointer;transition:all .15s;user-select:none" title="Click to change status">${statusLabels[r.status]}</span>
+              <span style="font-size:.68rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.desc}</span>
+            </div>`).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  // Render this week's schedule — card style
+  const typeColors = {meeting:'var(--navy)',install:'#22c55e',followup:'#eab308',call:'var(--navy)',site:'#8b5cf6',deadline:'#ef4444'};
+  document.getElementById('dash-schedule').innerHTML = `
+    <h2 style="font-size:1.2rem;color:var(--navy);font-weight:700;margin-bottom:16px">📅 Upcoming <span style="font-size:.75rem;font-weight:400;color:var(--text-muted)">${weekStart.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${weekEnd.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></h2>
+    ${weekEvents.length ? `<div style="display:grid;gap:8px">
+      ${weekEvents.map(ev => {
+        const evDate = new Date(ev.date+'T00:00:00');
+        const isToday = ev.date === todayStr;
+        const isPast = ev.date < todayStr;
+        const accent = typeColors[(ev.type||'').toLowerCase()] || 'var(--navy)';
+        const dayLabel = dayNames[evDate.getDay()] + ' ' + evDate.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+        return `<div style="background:var(--surface);border-radius:8px;padding:12px 14px;border-left:3px solid ${accent};${isPast?'opacity:.5':''}${isToday?' box-shadow:0 0 0 1px var(--navy);':''}">
+          <div style="font-size:12px;color:${accent};font-weight:600">${dayLabel}${ev.time?' · '+ev.time:''}</div>
+          <div style="font-weight:600;margin:4px 0 2px;font-size:.92rem">${ev.title}</div>
+          ${ev.notes?`<div style="font-size:12px;color:var(--text-muted)">${ev.notes}</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>` : '<div style="color:var(--text-muted);font-size:.85rem">No events this week</div>'}
+  `;
+}
+
+// ========================
+// FINANCIALS
+// ========================
+function getFinancials() { return LS.get('financials', {collected: 0, notes: ''}); }
+function saveFinancials(f) { LS.set('financials', f); }
+
+function openFinancialsModal() {
+  const f = getFinancials();
+  openModal(`<h3>💰 Update Financial Data</h3>
+    <div class="field"><label>Collected Amount ($)</label><input type="number" id="f-collected" value="${f.collected || 0}"></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes" placeholder="Financial notes, payment details...">${f.notes || ''}</textarea></div>
+    <div class="actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveFinancialsData()">Save</button>
+    </div>`);
+}
+
+function saveFinancialsData() {
+  const collected = parseFloat(document.getElementById('f-collected').value) || 0;
+  const notes = document.getElementById('f-notes').value;
+  saveFinancials({collected, notes});
+  closeModal();
+  renderDashboard();
+}
+
+// ========================
+// CHANGE ORDERS
+// ========================
+function getChangeOrders() { return LS.get('changeOrders', [
+  {id:1,client:'Alex Bailey',project:'Peninsula Club',address:'18235 Peninsula Club Dr, Cornelius NC',rooms:['Great Room','Kitchen','Dining','Recreation','Master Bedroom','Gym'],equipment:10350.81,labor:4922.50,total:15273.31,status:'Pending',dateSent:'2026-02-17',link:'proposals/peninsula-bailey-complete.html#change-order'}
+]); }
+function saveChangeOrders(d){ LS.set('changeOrders',d); }
+
+function renderChangeOrders(){
+  const orders = getChangeOrders().filter(o => o.status === 'Pending');
+  const el = document.getElementById('change-orders-list');
+  const section = document.getElementById('pending-change-orders');
+  if(!orders.length){ section.style.display='none'; return; }
+  section.style.display='block';
+  el.innerHTML = orders.map(o => `
+    <a href="${o.link}" style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--surface);border:1px solid var(--border);border-left:4px solid #f59e0b;border-radius:var(--radius);margin-bottom:8px;text-decoration:none;color:var(--text);transition:all .15s;cursor:pointer" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600;text-transform:uppercase">Pending Approval</span>
+          <span style="font-size:.75rem;color:var(--text-muted)">${o.dateSent}</span>
+        </div>
+        <div style="font-weight:600;font-size:.95rem;margin-bottom:2px">${o.client} — ${o.project}</div>
+        <div style="font-size:.8rem;color:var(--text-dim)">${o.rooms.length} rooms · Equipment $${o.equipment.toLocaleString()} + Labor $${o.labor.toLocaleString()}</div>
+      </div>
+      <div style="text-align:right;margin-left:16px">
+        <div style="font-size:1.3rem;font-weight:700;color:var(--navy)">$${o.total.toLocaleString()}</div>
+        <div style="font-size:.7rem;color:var(--text-muted);margin-top:2px">Review →</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+// ========================
+// PIPELINE
+// ========================
+const STAGES = ['Lead','Proposal Sent','Signed','In Progress','Complete'];
+function getDeals() { return LS.get('deals', [
+  {id:1,client:'Jeffery Davis',address:'1240 Paddock, Charlotte NC',type:'Smart Home + AV + Lighting',value:274426,date:'2026-02-10',stage:'Proposal Sent'},
+  {id:3,client:'Keen Building Co (Bailey)',address:'18235 Peninsula Club Dr, Cornelius NC',type:'Smart Home + AV + Lighting + Shades',value:220246,date:'2025-05-02',stage:'In Progress'},
+  {id:4,client:'Keen Building Co',address:'626 Shelton Ave, Charlotte NC',type:'Smart Home — Spec Home',value:27461,date:'2026-02-17',stage:'Proposal Sent'},
+  {id:5,client:'Alex Bailey',address:'18235 Peninsula Club Dr, Cornelius NC',type:'Add-Ons (AV + Cameras)',value:16037,date:'2026-02-17',stage:'Proposal Sent'}
+]); }
+function saveDeals(d) { LS.set('deals', d); }
+
+function renderPipeline() {
+  const deals = getDeals();
+  document.getElementById('kanban').innerHTML = STAGES.map(stage => {
+    const cards = deals.filter(d => d.stage === stage);
+    return `<div class="kanban-col" ondragover="event.preventDefault()" ondrop="dropDeal(event,'${stage}')">
+      <div class="kanban-col-header">${stage} <span class="count">${cards.length}</span></div>
+      <div class="kanban-cards">${cards.map(c => `
+        <div class="kanban-card" draggable="true" ondragstart="event.dataTransfer.setData('text','${c.id}')">
+          <div class="client">${c.client}</div>
+          <div class="address">${c.address}</div>
+          <div class="type-badge">${c.type}</div>
+          <div class="meta"><span class="value">$${c.value.toLocaleString()}</span><span>${c.date}</span></div>
+          <div class="card-actions">
+            <button class="btn-secondary btn-sm" onclick="openDealNotesModal(${c.id})">Notes</button>
+            <button class="btn-secondary btn-sm" onclick="editDeal(${c.id})">Edit</button>
+            <button class="btn-danger btn-sm" onclick="deleteDeal(${c.id})">Delete</button>
+          </div>
+        </div>`).join('')}</div></div>`;
+  }).join('');
+}
+
+function dropDeal(e, stage) {
+  const id = +e.dataTransfer.getData('text');
+  const deals = getDeals();
+  const d = deals.find(x => x.id === id);
+  if (d) { d.stage = stage; saveDeals(deals); renderPipeline(); }
+}
+
+function openDealModal(deal) {
+  const d = deal || {id:0,client:'',address:'',type:'Lighting',value:'',date:new Date().toISOString().slice(0,10),stage:'Lead'};
+  const types = ['Lighting','Sound','Surveillance','Window Treatments','Landscape Lighting','Entertainment','Smart Home + Lighting','Full Smart Home','Smart Home','Lutron Lighting Control','Smart Home + A/V'];
+  openModal(`<h3>${d.id?'Edit':'New'} Deal</h3>
+    <div class="field"><label>Client Name</label><input id="d-client" value="${d.client}"></div>
+    <div class="field"><label>Address</label><input id="d-address" value="${d.address}"></div>
+    <div class="field"><label>Project Type</label><select id="d-type">${types.map(t=>`<option${t===d.type?' selected':''}>${t}</option>`).join('')}</select></div>
+    <div class="field"><label>Value ($)</label><input type="number" id="d-value" value="${d.value}"></div>
+    <div class="field"><label>Date</label><input type="date" id="d-date" value="${d.date}"></div>
+    <div class="field"><label>Stage</label><select id="d-stage">${STAGES.map(s=>`<option${s===d.stage?' selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveDeal(${d.id})">Save</button></div>`);
+}
+
+function saveDeal(id) {
+  const deals = getDeals();
+  const obj = {client:document.getElementById('d-client').value,address:document.getElementById('d-address').value,type:document.getElementById('d-type').value,value:+document.getElementById('d-value').value,date:document.getElementById('d-date').value,stage:document.getElementById('d-stage').value};
+  if (id) { Object.assign(deals.find(x=>x.id===id), obj); } else { obj.id = Date.now(); deals.push(obj); }
+  saveDeals(deals); closeModal(); renderPipeline();
+}
+function editDeal(id) { openDealModal(getDeals().find(x=>x.id===id)); }
+function deleteDeal(id) { if(confirm('Delete this deal?')){saveDeals(getDeals().filter(x=>x.id!==id));renderPipeline();} }
+
+// ========================
+// DEAL NOTES & DOCUMENTS
+// ========================
+function getDealNotes() { return LS.get('dealNotes', {}); }
+function saveDealNotes(notes) { LS.set('dealNotes', notes); }
+
+function getDealDocs() { return LS.get('dealDocs', {}); }
+function saveDealDocs(docs) { LS.set('dealDocs', docs); }
+
+function openDealNotesModal(dealId) {
+  const deal = getDeals().find(d => d.id === dealId);
+  const allNotes = getDealNotes();
+  const dealNotes = allNotes[dealId] || [];
+  const allDocs = getDealDocs();
+  const dealDocs = allDocs[dealId] || [];
+  
+  openModal(`<h3>📝 ${deal.client} - Notes & Documents</h3>
+    <div style="max-height:500px;overflow-y:auto">
+      <div style="margin-bottom:16px">
+        <h4 style="color:var(--navy-light);margin-bottom:8px">Activity Log</h4>
+        <div class="field">
+          <input id="note-input" placeholder="Add a note..." style="margin-bottom:8px">
+          <button class="btn-primary btn-sm" onclick="addDealNote(${dealId})">Add Note</button>
+        </div>
+        <div class="notes-log">
+          ${dealNotes.length === 0 ? '<p style="color:var(--text-muted);font-size:.85rem">No notes yet.</p>' :
+            dealNotes.slice().reverse().map(note => `
+              <div class="note-item">
+                <div class="note-timestamp">${new Date(note.timestamp).toLocaleDateString()} ${new Date(note.timestamp).toLocaleTimeString()}</div>
+                <div class="note-text">${note.text}</div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+      
+      <div class="documents-section">
+        <h4>📎 Documents</h4>
+        <div class="document-list">
+          ${dealDocs.map((doc, i) => `
+            <div class="document-item">
+              <a href="${doc.url}" target="_blank">${doc.label}</a>
+              <button class="btn-danger" onclick="removeDealDoc(${dealId}, ${i})" style="padding:2px 6px;font-size:.7rem">✕</button>
+            </div>
+          `).join('')}
+        </div>
+        <div class="document-add">
+          <input id="doc-label" placeholder="Document label">
+          <input id="doc-url" placeholder="Document URL">
+          <button class="btn-secondary btn-sm" onclick="addDealDoc(${dealId})">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn-secondary" onclick="closeModal()">Close</button>
+    </div>`);
+}
+
+function addDealNote(dealId) {
+  const input = document.getElementById('note-input');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  const allNotes = getDealNotes();
+  if (!allNotes[dealId]) allNotes[dealId] = [];
+  
+  allNotes[dealId].push({
+    timestamp: Date.now(),
+    text: text
+  });
+  
+  saveDealNotes(allNotes);
+  input.value = '';
+  openDealNotesModal(dealId); // Refresh modal
+}
+
+function addDealDoc(dealId) {
+  const label = document.getElementById('doc-label').value.trim();
+  const url = document.getElementById('doc-url').value.trim();
+  
+  if (!label || !url) {
+    alert('Please provide both label and URL');
+    return;
+  }
+  
+  const allDocs = getDealDocs();
+  if (!allDocs[dealId]) allDocs[dealId] = [];
+  
+  allDocs[dealId].push({ label, url });
+  saveDealDocs(allDocs);
+  openDealNotesModal(dealId); // Refresh modal
+}
+
+function removeDealDoc(dealId, docIndex) {
+  const allDocs = getDealDocs();
+  allDocs[dealId].splice(docIndex, 1);
+  saveDealDocs(allDocs);
+  openDealNotesModal(dealId); // Refresh modal
+}
+
+// ========================
+// CLIENT DIRECTORY
+// ========================
+function getClientsDirectory() { 
+  return LS.get('clients_directory', [
+    {id:1,name:'Jeffery Davis',phone:'',email:'',project:'1240 Paddock',status:'Active'},
+    {id:2,name:'Alex Bailey',phone:'704-960-0403',email:'alex@keenbuildingco.com',project:'Peninsula',status:'Complete'},
+    {id:3,name:'Keen Building Co',phone:'',email:'',project:'626 Shelton',status:'Active'}
+  ]); 
+}
+
+function saveClientsDirectory(clients) { LS.set('clients_directory', clients); }
+
+function renderClientsDirectory() {
+  const q = (document.getElementById('clients-search').value||'').toLowerCase();
+  const clients = getClientsDirectory().filter(c => !q || c.name.toLowerCase().includes(q) || c.project.toLowerCase().includes(q) || c.status.toLowerCase().includes(q));
+  
+  const statusClass = {Active:'status-active',Complete:'status-completed',Lead:'status-lead',Prospect:'status-prospect'};
+  
+  document.getElementById('clients-directory-grid').innerHTML = clients.map(c => `
+    <div class="client-directory-card">
+      <div class="name">${c.name}</div>
+      <div class="contact-info">
+        ${c.phone ? `<div class="contact-item">📱 ${c.phone}</div>` : ''}
+        ${c.email ? `<div class="contact-item">📧 ${c.email}</div>` : ''}
+      </div>
+      <div class="project-info">
+        <div class="project">${c.project}</div>
+        <div class="status">${c.status}</div>
+      </div>
+      <div class="client-actions">
+        ${c.phone ? `<a href="tel:${c.phone}">📞 Call</a>` : ''}
+        ${c.phone ? `<a href="sms:${c.phone}">💬 Text</a>` : ''}
+        ${c.email ? `<a href="mailto:${c.email}">📧 Email</a>` : ''}
+      </div>
+      <div class="card-footer" style="margin-top:12px">
+        <button class="btn-secondary btn-sm" onclick="editClientDirectory(${c.id})">Edit</button>
+        <button class="btn-danger btn-sm" onclick="deleteClientDirectory(${c.id})">Delete</button>
+      </div>
+    </div>
+  `).join('') || '<p style="color:var(--text-muted)">No clients found.</p>';
+}
+
+function openClientDirectoryModal(client) {
+  const c = client || {id:0,name:'',phone:'',email:'',project:'',status:'Lead'};
+  const statuses = ['Lead','Prospect','Active','Complete'];
+  openModal(`<h3>${c.id?'Edit':'New'} Client</h3>
+    <div class="field"><label>Name</label><input id="cd-name" value="${c.name}"></div>
+    <div class="field"><label>Phone</label><input id="cd-phone" value="${c.phone}"></div>
+    <div class="field"><label>Email</label><input id="cd-email" value="${c.email}"></div>
+    <div class="field"><label>Project</label><input id="cd-project" value="${c.project}"></div>
+    <div class="field"><label>Status</label><select id="cd-status">${statuses.map(s=>`<option${s===c.status?' selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveClientDirectory(${c.id})">Save</button></div>`);
+}
+
+function saveClientDirectory(id) {
+  const clients = getClientsDirectory();
+  const obj = {
+    name: document.getElementById('cd-name').value,
+    phone: document.getElementById('cd-phone').value,
+    email: document.getElementById('cd-email').value,
+    project: document.getElementById('cd-project').value,
+    status: document.getElementById('cd-status').value
+  };
+  if(!obj.name) return alert('Name required');
+  if(id){Object.assign(clients.find(x=>x.id===id),obj);} else {obj.id=Date.now();clients.push(obj);}
+  saveClientsDirectory(clients); closeModal(); renderClientsDirectory();
+}
+
+function editClientDirectory(id) { openClientDirectoryModal(getClientsDirectory().find(x=>x.id===id)); }
+
+function deleteClientDirectory(id) { 
+  if(confirm('Delete this client?')){
+    saveClientsDirectory(getClientsDirectory().filter(x=>x.id!==id));
+    renderClientsDirectory();
+  }
+}
+
+// ========================
+// QUICK ADD MODALS (for FAB)
+// ========================
+function openTodoModal() {
+  openModal(`<h3>✅ New To-Do</h3>
+    <div class="field"><label>Assign To</label><select id="todo-person">${PEOPLE.map(p=>`<option>${p}</option>`).join('')}</select></div>
+    <div class="field"><label>Task Description</label><input id="todo-text" placeholder="What needs to be done?"></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveTodoFromModal()">Add Task</button></div>`);
+}
+
+function saveTodoFromModal() {
+  const person = document.getElementById('todo-person').value;
+  const text = document.getElementById('todo-text').value.trim();
+  if (!text) return alert('Task description required');
+  
+  const todos = getTodos();
+  if (!todos[person]) todos[person] = [];
+  todos[person].unshift({text, done: false});
+  saveTodos(todos);
+  closeModal();
+  renderTodos();
+}
+
+function openIssueModal() {
+  openModal(`<h3>⚡ New Issue</h3>
+    <div class="field"><label>Type</label><select id="issue-type"><option>weekly</option><option>quarterly</option></select></div>
+    <div class="field"><label>Issue Description</label><input id="issue-text" placeholder="Describe the issue..."></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveIssueFromModal()">Add Issue</button></div>`);
+}
+
+function saveIssueFromModal() {
+  const type = document.getElementById('issue-type').value;
+  const text = document.getElementById('issue-text').value.trim();
+  if (!text) return alert('Issue description required');
+  
+  const getter = type === 'weekly' ? getWeeklyIssues : getQuarterlyIssues;
+  const saver = type === 'weekly' ? saveWeeklyIssues : saveQuarterlyIssues;
+  const issues = getter();
+  issues.push({id: Date.now(), text, solved: false});
+  saver(issues);
+  closeModal();
+  renderIssues();
+}
+
+// ========================
+// TODOS
+// ========================
+const PEOPLE = ['Ryan','Ally','Jeff'];
+function getTodos() { return LS.get('todos', {Ryan:[],Ally:[{text:'Mail out Dwell items',done:false}],Jeff:[]}); }
+function saveTodos(t) { LS.set('todos',t); }
+
+function renderTodos() {
+  const todos = getTodos();
+  document.getElementById('todo-grid').innerHTML = PEOPLE.map(p => `
+    <div class="todo-column">
+      <div class="todo-column-header"><span class="person">${p}</span><span style="font-size:.75rem;color:var(--text-muted)">${(todos[p]||[]).filter(t=>!t.done).length} open</span></div>
+      <div class="todo-add"><input id="todo-input-${p}" placeholder="Add task..." onkeydown="if(event.key==='Enter')addTodo('${p}')"><button class="btn-primary btn-sm" onclick="addTodo('${p}')">+</button></div>
+      <div class="todo-list">${(todos[p]||[]).map((t,i) => `
+        <div class="todo-item${t.done?' done':''}">
+          <div class="todo-check${t.done?' checked':''}" onclick="toggleTodo('${p}',${i})"></div>
+          <span class="todo-text">${t.text}</span>
+          <span class="todo-delete" onclick="deleteTodo('${p}',${i})">✕</span>
+        </div>`).join('')}</div>
+    </div>`).join('');
+}
+
+function addTodo(person) {
+  const inp = document.getElementById('todo-input-'+person);
+  if (!inp.value.trim()) return;
+  const todos = getTodos();
+  if (!todos[person]) todos[person] = [];
+  todos[person].unshift({text:inp.value.trim(),done:false});
+  saveTodos(todos); inp.value=''; renderTodos();
+}
+function toggleTodo(p,i) { const t=getTodos(); t[p][i].done=!t[p][i].done; saveTodos(t); renderTodos(); }
+function deleteTodo(p,i) { const t=getTodos(); t[p].splice(i,1); saveTodos(t); renderTodos(); }
+function addDashTodo(person) {
+  const inp = document.getElementById('dash-todo-'+person);
+  if (!inp || !inp.value.trim()) return;
+  const todos = getTodos();
+  if (!todos[person]) todos[person] = [];
+  todos[person].unshift({text:inp.value.trim(),done:false});
+  saveTodos(todos); renderDashboard(); renderTodos();
+}
+
+// ========================
+// CALENDAR
+// ========================
+let calDate = new Date();
+function getEvents() { return LS.get('events', []); }
+function saveEvents(e) { LS.set('events', e); }
+
+function renderCalendar() {
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  document.getElementById('cal-title').textContent = calDate.toLocaleString('default',{month:'long',year:'numeric'});
+  const first = new Date(y,m,1);
+  const startDay = first.getDay();
+  const events = getEvents();
+  const today = new Date().toISOString().slice(0,10);
+  let html = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-day-name">${d}</div>`).join('');
+  const startDate = new Date(first); startDate.setDate(startDate.getDate()-startDay);
+  for (let i=0;i<42;i++) {
+    const d = new Date(startDate); d.setDate(d.getDate()+i);
+    const ds = d.toISOString().slice(0,10);
+    const isOther = d.getMonth()!==m;
+    const isToday = ds===today;
+    const dayEvents = events.filter(e=>e.date===ds);
+    html += `<div class="cal-day${isOther?' other-month':''}${isToday?' today':''}" onclick="openEventModal('${ds}')">
+      <div class="day-num">${d.getDate()}</div>
+      ${dayEvents.map(e=>`<div class="cal-event" onclick="event.stopPropagation();editEvent(${e.id})" title="${e.title}">${e.title}</div>`).join('')}
+    </div>`;
+  }
+  if(document.getElementById('cal-grid')) document.getElementById('cal-grid').innerHTML = html;
+}
+function calNav(dir) {
+  if (dir===0) calDate=new Date();
+  else calDate.setMonth(calDate.getMonth()+dir);
+  renderCalendar();
+}
+
+function openEventModal(date, evt) {
+  const e = evt || {id:0,title:'',date:date||new Date().toISOString().slice(0,10),time:'09:00',type:'Install',notes:''};
+  const types = ['Install','Consultation','Site Visit','Follow-up','Level 10 Meeting','Other'];
+  openModal(`<h3>${e.id?'Edit':'New'} Event</h3>
+    <div class="field"><label>Title</label><input id="e-title" value="${e.title}"></div>
+    <div class="field"><label>Date</label><input type="date" id="e-date" value="${e.date}"></div>
+    <div class="field"><label>Time</label><input type="time" id="e-time" value="${e.time}"></div>
+    <div class="field"><label>Type</label><select id="e-type">${types.map(t=>`<option${t===e.type?' selected':''}>${t}</option>`).join('')}</select></div>
+    <div class="field"><label>Notes</label><textarea id="e-notes">${e.notes}</textarea></div>
+    <div class="actions">${e.id?`<button class="btn-danger" onclick="deleteEvent(${e.id})">Delete</button>`:''}
+    <button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveEvent(${e.id})">Save</button></div>`);
+}
+function saveEvent(id) {
+  const events = getEvents();
+  const obj = {title:document.getElementById('e-title').value,date:document.getElementById('e-date').value,time:document.getElementById('e-time').value,type:document.getElementById('e-type').value,notes:document.getElementById('e-notes').value};
+  if(!obj.title) return alert('Title required');
+  if(id){Object.assign(events.find(x=>x.id===id),obj);} else {obj.id=Date.now();events.push(obj);}
+  saveEvents(events); closeModal(); renderCalendar();
+}
+function editEvent(id) { openEventModal(null, getEvents().find(x=>x.id===id)); }
+function deleteEvent(id) { if(confirm('Delete?')){saveEvents(getEvents().filter(x=>x.id!==id));closeModal();renderCalendar();} }
+
+// ========================
+// CRM
+// ========================
+function getClients() { return LS.get('clients', [
+  {id:1,name:'Jeffery Davis',email:'',phone:'',address:'1240 Paddock, Charlotte NC',notes:'Smart Home proposal ($88,049) + Lutron Lighting Control (~$116K). Builder: Keen Building Co.',status:'Active',followUp:'2026-02-20'},
+  {id:2,name:'Keen Building Co (Peninsula)',email:'',phone:'',address:'18235 Peninsula Club Dr, Cornelius NC',notes:'Active install. Builder: Keen Building. Bill (1Touch) doing A/V. Fixer of Things invoice #021626 received. Spark special systems payment made $35,393.',status:'Active',followUp:'2026-02-18'},
+  {id:3,name:'Alex Bailey',email:'',phone:'',address:'',notes:'Project complete. Paid $195,869.45 total. Bill/Allan proposals on file.',status:'Completed',followUp:''}
+]); }
+function saveClients(c) { LS.set('clients',c); }
+
+function renderCRM() {
+  const q = (document.getElementById('crm-search').value||'').toLowerCase();
+  const clients = getClients().filter(c => !q || c.name.toLowerCase().includes(q) || c.address.toLowerCase().includes(q) || (c.notes||'').toLowerCase().includes(q));
+  const statusClass = {Active:'status-active',Lead:'status-lead',Prospect:'status-prospect',Completed:'status-completed'};
+  document.getElementById('crm-grid').innerHTML = clients.map(c => `
+    <div class="crm-card">
+      <div class="name">${c.name}</div>
+      ${c.email?`<div class="detail">📧 <span>${c.email}</span></div>`:''}
+      ${c.phone?`<div class="detail">📱 <span>${c.phone}</span></div>`:''}
+      <div class="detail">📍 <span>${c.address}</span></div>
+      ${c.followUp?`<div class="detail">📅 Follow-up: <span>${c.followUp}</span></div>`:''}
+      <span class="status-badge ${statusClass[c.status]||'status-lead'}">${c.status}</span>
+      ${c.notes?`<div class="notes">${c.notes}</div>`:''}
+      <div class="card-footer">
+        <button class="btn-secondary btn-sm" onclick="editClient(${c.id})">Edit</button>
+        <button class="btn-danger btn-sm" onclick="deleteClient(${c.id})">Delete</button>
+      </div>
+    </div>`).join('') || '<p style="color:var(--text-muted)">No clients found.</p>';
+}
+
+function openClientModal(client) {
+  const c = client || {id:0,name:'',email:'',phone:'',address:'',notes:'',status:'Lead',followUp:''};
+  const statuses = ['Lead','Prospect','Active','Completed'];
+  openModal(`<h3>${c.id?'Edit':'New'} Client</h3>
+    <div class="field"><label>Name</label><input id="c-name" value="${c.name}"></div>
+    <div class="field"><label>Email</label><input id="c-email" value="${c.email}"></div>
+    <div class="field"><label>Phone</label><input id="c-phone" value="${c.phone}"></div>
+    <div class="field"><label>Address</label><input id="c-address" value="${c.address}"></div>
+    <div class="field"><label>Status</label><select id="c-status">${statuses.map(s=>`<option${s===c.status?' selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="field"><label>Follow-up Date</label><input type="date" id="c-followup" value="${c.followUp}"></div>
+    <div class="field"><label>Project Notes</label><textarea id="c-notes">${c.notes}</textarea></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveClient(${c.id})">Save</button></div>`);
+}
+function saveClient(id) {
+  const clients = getClients();
+  const obj = {name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,phone:document.getElementById('c-phone').value,address:document.getElementById('c-address').value,status:document.getElementById('c-status').value,followUp:document.getElementById('c-followup').value,notes:document.getElementById('c-notes').value};
+  if(!obj.name) return alert('Name required');
+  if(id){Object.assign(clients.find(x=>x.id===id),obj);} else {obj.id=Date.now();clients.push(obj);}
+  saveClients(clients); closeModal(); renderCRM();
+}
+function editClient(id) { openClientModal(getClients().find(x=>x.id===id)); }
+function deleteClient(id) { if(confirm('Delete?')){saveClients(getClients().filter(x=>x.id!==id));closeModal();renderCRM();} }
+
+// ========================
+// PROPOSALS
+// ========================
+const BASE_URL = 'https://realtyryanjarvis.github.io/alt3-dashboard/';
+function getProposals() { return LS.get('proposals', [
+  {id:1,client:'Jeffery Davis',project:'1240 Paddock — Complete Proposal',version:'v1.0',amount:274426,status:'Sent',dateSent:'2026-02-17',link:BASE_URL+'proposals/1240-paddock-complete.html'},
+  {id:2,client:'Jeffery Davis',project:'1240 Paddock — Client Experience',version:'v1.0',amount:274426,status:'Sent',dateSent:'2026-02-17',link:BASE_URL+'proposals/1240-paddock/client-experience.html'},
+  {id:3,client:'Jeffery Davis',project:'1240 Paddock — Lighting Detail',version:'v1.0',amount:121974,status:'Sent',dateSent:'2026-02-17',link:BASE_URL+'proposals/1240-paddock-lighting.html'},
+  {id:4,client:'Jeffery Davis',project:'1240 Paddock — Client Presentation',version:'v1.0',amount:274426,status:'Draft',dateSent:'2026-02-17',link:BASE_URL+'proposals/1240-paddock/client-presentation.html'},
+  {id:5,client:'Alex Bailey',project:'Peninsula — Full Reconciliation',version:'v1.0',amount:220246,status:'Draft',dateSent:'2026-02-17',link:BASE_URL+'proposals/peninsula-bailey-complete.html'},
+  {id:6,client:'Alex Bailey',project:'Peninsula — Add-Ons',version:'v1.0',amount:16037,status:'Draft',dateSent:'2026-02-17',link:BASE_URL+'proposals/bailey-addons-complete.html'},
+  {id:7,client:'Keen Building Co',project:'626 Shelton — Spec Home',version:'v1.0',amount:27461,status:'Draft',dateSent:'2026-02-17',link:BASE_URL+'proposals/626-shelton-complete.html'}
+]); }
+function saveProposals(p) { LS.set('proposals',p); }
+
+function renderProposals() {
+  const props = getProposals();
+  const sc = {Draft:'prop-draft',Sent:'prop-sent',Viewed:'prop-viewed',Signed:'prop-signed'};
+
+  // Grouped by client
+  const grouped = {};
+  props.forEach(p => {
+    if (!grouped[p.client]) grouped[p.client] = [];
+    grouped[p.client].push(p);
+  });
+
+  document.getElementById('proposals-grouped').innerHTML = Object.entries(grouped).map(([client, items]) => {
+    const totalVal = items.reduce((s,p) => s + (p.amount||0), 0);
+    return `<div class="dash-card" style="margin-bottom:16px">
+      <h3 style="display:flex;justify-content:space-between;align-items:center">
+        <span>👤 ${client}</span>
+        <span style="font-size:.8rem;font-weight:400;color:var(--text-muted)">${items.length} proposal${items.length>1?'s':''}</span>
+      </h3>
+      <div style="display:grid;gap:8px;margin-top:12px">
+        ${items.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface2);border-radius:6px;border:1px solid var(--border)">
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:.88rem">${p.project}</div>
+            <div style="font-size:.75rem;color:var(--text-muted);margin-top:2px">
+              <span class="prop-status ${sc[p.status]}" style="margin-right:8px">${p.status}</span>
+              ${p.version||'v1.0'} · $${p.amount.toLocaleString()} · ${p.dateSent}
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            ${p.link?`<a href="${p.link}" target="_blank" class="btn-primary btn-sm" style="text-decoration:none;display:inline-block">Open ↗</a>`:''}
+            <button class="btn-secondary btn-sm" onclick="editProposal(${p.id})">Edit</button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Table view below
+  document.querySelector('#proposals-table tbody').innerHTML = props.map(p => `<tr>
+    <td>${p.client}</td><td>${p.project}</td><td>${p.version||'v1.0'}</td><td>$${p.amount.toLocaleString()}</td>
+    <td><span class="prop-status ${sc[p.status]}">${p.status}</span></td>
+    <td>${p.dateSent}</td>
+    <td>${p.link?`<a href="${p.link}" target="_blank">Open ↗</a>`:'-'}</td>
+    <td><button class="btn-secondary btn-sm" onclick="editProposal(${p.id})">Edit</button> <button class="btn-danger btn-sm" onclick="deleteProposal(${p.id})">✕</button></td>
+  </tr>`).join('');
+}
+
+function openProposalModal(prop) {
+  const p = prop || {id:0,client:'',project:'',version:'v1.0',amount:'',status:'Draft',dateSent:new Date().toISOString().slice(0,10),link:''};
+  const statuses = ['Draft','Sent','Viewed','Signed'];
+  openModal(`<h3>${p.id?'Edit':'New'} Proposal</h3>
+    <div class="field"><label>Client</label><input id="p-client" value="${p.client}"></div>
+    <div class="field"><label>Project</label><input id="p-project" value="${p.project}"></div>
+    <div class="field"><label>Version</label><input id="p-version" value="${p.version||'v1.0'}" placeholder="v1.0"></div>
+    <div class="field"><label>Amount ($)</label><input type="number" id="p-amount" value="${p.amount}"></div>
+    <div class="field"><label>Status</label><select id="p-status">${statuses.map(s=>`<option${s===p.status?' selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="field"><label>Date</label><input type="date" id="p-date" value="${p.dateSent}"></div>
+    <div class="field"><label>Link</label><input id="p-link" value="${p.link}" placeholder="https://..."></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveProposal(${p.id})">Save</button></div>`);
+}
+function saveProposal(id) {
+  const proposals = getProposals();
+  const obj = {client:document.getElementById('p-client').value,project:document.getElementById('p-project').value,version:document.getElementById('p-version').value,amount:+document.getElementById('p-amount').value,status:document.getElementById('p-status').value,dateSent:document.getElementById('p-date').value,link:document.getElementById('p-link').value};
+  if(id){Object.assign(proposals.find(x=>x.id===id),obj);} else {obj.id=Date.now();proposals.push(obj);}
+  saveProposals(proposals); closeModal(); renderProposals();
+}
+function editProposal(id) { openProposalModal(getProposals().find(x=>x.id===id)); }
+function deleteProposal(id) { if(confirm('Delete?')){saveProposals(getProposals().filter(x=>x.id!==id));renderProposals();} }
+
+// ========================
+// ROCKS
+// ========================
+const DEFAULT_ROCKS = [
+  {id:1,owner:'Ryan',desc:'Close $150K in revenue',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:2,owner:'Ryan',desc:'Complete Homeworks Training',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:3,owner:'Ryan',desc:'Take 1 Builder to Showroom',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:4,owner:'Ryan',desc:'Sales Opportunities / Leads',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:5,owner:'Ally',desc:'Q1 Lead Generation Plan & Assets',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:6,owner:'Ally',desc:'Launch V2 Website with case study',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:7,owner:'Ally',desc:'Sales Deck updates',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:8,owner:'Jeff',desc:'Develop Homeworks Design Process',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:9,owner:'Jeff',desc:'Define 2026 product line',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:10,owner:'Jeff',desc:'Get Alt3 financially independent',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:11,owner:'Jeff',desc:'Get Lutron Homeworks certification',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:12,owner:'Jeff',desc:'Define relationship with Bill',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:13,owner:'Jeff',desc:'Strategic electrician partnership',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:14,owner:'Jeff',desc:'Window treatment strategy',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+  {id:15,owner:'Jeff',desc:'Tech company messaging',status:'on',due:'2026-03-31',quarter:'Q1-2026'},
+];
+const COMMITMENTS = {
+  Ryan: '"I commit to stop bulldozing meetings until the 2-minute drill."',
+  Ally: '"I commit to taking extreme ownership and reducing bugs."'
+};
+
+function getRocks() { return LS.get('rocks', DEFAULT_ROCKS); }
+function saveRocks(r) { LS.set('rocks', r); }
+
+function renderRocks() {
+  const rocks = getRocks();
+  const q = document.getElementById('rock-quarter').value;
+  const filtered = rocks.filter(r => r.quarter === q);
+  const statusLabels = {on:'On Track',off:'Off Track',complete:'Complete'};
+  const statusClass = {on:'rock-on',off:'rock-off',complete:'rock-done'};
+  const nextStatus = {on:'off',off:'complete',complete:'on'};
+
+  document.getElementById('rocks-grid').innerHTML = PEOPLE.map(p => {
+    const pRocks = filtered.filter(r => r.owner === p);
+    return `<div class="rock-column">
+      <div class="rock-column-header"><span>${p}</span><span style="font-size:.75rem;color:var(--text-muted)">${pRocks.filter(r=>r.status==='complete').length}/${pRocks.length}</span></div>
+      ${pRocks.map(r => `<div class="rock-item">
+        <div class="rock-desc">${r.desc}</div>
+        <div class="rock-meta">
+          <span class="rock-status ${statusClass[r.status]}" onclick="cycleRock(${r.id})">${statusLabels[r.status]}</span>
+          <span class="rock-due">Due: ${r.due}</span>
+          <button class="btn-danger btn-sm" onclick="deleteRock(${r.id})">✕</button>
+        </div>
+      </div>`).join('')}
+      ${COMMITMENTS[p] ? `<div class="commitment-quote">${p}: ${COMMITMENTS[p]}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function cycleRock(id) {
+  const rocks = getRocks();
+  const r = rocks.find(x => x.id === id);
+  const next = {on:'off',off:'complete',complete:'on'};
+  if (r) { r.status = next[r.status]; saveRocks(rocks); renderRocks(); renderDashboard(); }
+}
+
+function deleteRock(id) { if(confirm('Delete rock?')){saveRocks(getRocks().filter(x=>x.id!==id));renderRocks();} }
+
+function openRockModal() {
+  const q = document.getElementById('rock-quarter').value;
+  openModal(`<h3>New Rock</h3>
+    <div class="field"><label>Description</label><input id="r-desc"></div>
+    <div class="field"><label>Owner</label><select id="r-owner">${PEOPLE.map(p=>`<option>${p}</option>`).join('')}</select></div>
+    <div class="field"><label>Due Date</label><input type="date" id="r-due" value="2026-03-31"></div>
+    <div class="actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveRock()">Save</button></div>`);
+}
+function saveRock() {
+  const rocks = getRocks();
+  rocks.push({id:Date.now(),owner:document.getElementById('r-owner').value,desc:document.getElementById('r-desc').value,status:'on',due:document.getElementById('r-due').value,quarter:document.getElementById('rock-quarter').value});
+  saveRocks(rocks); closeModal(); renderRocks();
+}
+
+// ========================
+// SCORECARD
+// ========================
+const QUARTERS = [
+  {key:'Q1-2026',label:'Q1 2026',months:['Jan','Feb','Mar'],start:'2026-01-01',end:'2026-03-31',active:true},
+  {key:'Q2-2026',label:'Q2 2026',months:['Apr','May','Jun'],start:'2026-04-01',end:'2026-06-30'},
+  {key:'Q3-2026',label:'Q3 2026',months:['Jul','Aug','Sep'],start:'2026-07-01',end:'2026-09-30'},
+  {key:'Q4-2026',label:'Q4 2026',months:['Oct','Nov','Dec'],start:'2026-10-01',end:'2026-12-31'}
+];
+const SC_KPIS = [
+  {cat:'Revenue',kpis:[
+    {key:'revenue_booked',name:'Revenue Booked',format:'$',goal:150000},
+    {key:'revenue_collected',name:'Revenue Collected',format:'$',goal:150000},
+    {key:'expenses',name:'Expenses',format:'$',goal:0,lowerBetter:true}
+  ]},
+  {cat:'Sales',kpis:[
+    {key:'proposals_sent',name:'Proposals Sent',format:'#',goal:5},
+    {key:'proposals_signed',name:'Proposals Signed',format:'#',goal:3},
+    {key:'close_rate',name:'Close Rate',format:'%',goal:60},
+    {key:'avg_deal_size',name:'Avg Deal Size',format:'$',goal:50000}
+  ]},
+  {cat:'Pipeline',kpis:[
+    {key:'leads_new',name:'New Leads',format:'#',goal:8},
+    {key:'active_projects',name:'Active Projects',format:'#',goal:3},
+    {key:'builder_meetings',name:'Builder Meetings',format:'#',goal:4}
+  ]},
+  {cat:'Marketing',kpis:[
+    {key:'social_posts',name:'Social Posts',format:'#',goal:12},
+    {key:'website_visits',name:'Website Visits',format:'#',goal:200},
+    {key:'email_subscribers',name:'Email Subscribers',format:'#',goal:50}
+  ]}
+];
+
+function getScorecard() { return LS.get('scorecard', {}); }
+function saveScorecard(s) { LS.set('scorecard', s); }
+
+function renderScorecard() {
+  const sc = getScorecard();
+  // Running totals across quarters
+  const runningTotals = {};
+
+  let html = `<div style="display:grid;grid-template-columns:1fr;gap:24px">`;
+
+  QUARTERS.forEach((q,qi) => {
+    const isCurrent = q.active;
+    html += `<div style="background:var(--surface);border:${isCurrent?'2px solid var(--navy)':'1px solid var(--border)'};border-radius:var(--radius);overflow:hidden;${isCurrent?'box-shadow:0 4px 20px rgba(17,54,101,.1)':''}">
+      <div style="padding:14px 20px;background:${isCurrent?'var(--navy)':'var(--surface2)'};display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-weight:700;font-size:1rem;color:${isCurrent?'#fff':'var(--navy)'}">${q.label}</span>
+          <span style="font-size:.75rem;color:${isCurrent?'rgba(255,255,255,.7)':'var(--text-muted)'};margin-left:8px">${q.months.join(' · ')}</span>
+        </div>
+        ${isCurrent?'<span style="font-size:.65rem;background:rgba(255,255,255,.2);color:#fff;padding:3px 10px;border-radius:10px;font-weight:600">CURRENT</span>':''}
+      </div>
+      <div style="padding:0;overflow-x:auto">
+        <table class="scorecard" style="margin:0;border:none;border-radius:0">
+          <thead><tr>
+            <th style="text-align:left;min-width:150px">KPI</th>
+            <th>Goal</th>
+            ${q.months.map(m=>`<th>${m}</th>`).join('')}
+            <th style="background:var(--surface3)">Q Total</th>
+            <th style="background:var(--surface3)">YTD</th>
+          </tr></thead><tbody>`;
+
+    SC_KPIS.forEach(cat => {
+      html += `<tr><td class="cat-header" colspan="${q.months.length+4}">${cat.cat}</td></tr>`;
+      cat.kpis.forEach(kpi => {
+        let qTotal = 0;
+        if(!runningTotals[kpi.key]) runningTotals[kpi.key] = 0;
+
+        html += `<tr><td class="kpi-label">${kpi.name}</td>
+          <td style="text-align:center;color:var(--text-dim);font-size:.72rem">${kpi.format==='$'?'$':''}${kpi.goal.toLocaleString()}${kpi.format==='%'?'%':''}</td>`;
+
+        q.months.forEach(m => {
+          const key = `${kpi.key}_${q.key}_${m}`;
+          const val = sc[key] !== undefined ? sc[key] : '';
+          const numVal = parseFloat(val);
+          const isNum = val !== '' && !isNaN(numVal);
+          if(isNum) qTotal += numVal;
+          const goalPer = kpi.goal / (kpi.format==='%' ? 1 : q.months.length);
+          const cls = isNum ? (kpi.lowerBetter ? (numVal <= goalPer ? 'green' : 'red') : (numVal >= goalPer ? 'green' : 'red')) : '';
+          html += `<td class="${cls}" contenteditable="true" data-key="${key}" onblur="updateScorecard(this)">${val}</td>`;
+        });
+
+        if(qi <= QUARTERS.findIndex(x=>x.active)) runningTotals[kpi.key] += qTotal;
+        const ytd = runningTotals[kpi.key];
+        const goalHit = kpi.lowerBetter ? qTotal <= kpi.goal : qTotal >= kpi.goal;
+        const ytdGoal = kpi.goal * (qi+1);
+        const ytdHit = kpi.lowerBetter ? ytd <= ytdGoal : ytd >= ytdGoal;
+
+        html += `<td class="total-row" style="font-weight:700;color:${qTotal>0?(goalHit?'var(--green)':'var(--red)'):'var(--text-muted)'}">${qTotal?((kpi.format==='$'?'$':'')+qTotal.toLocaleString()+(kpi.format==='%'?'%':'')):''}</td>`;
+        html += `<td class="total-row" style="font-weight:700;color:${ytd>0?(ytdHit?'var(--green)':'var(--red)'):'var(--text-muted)'}">${ytd?((kpi.format==='$'?'$':'')+ytd.toLocaleString()+(kpi.format==='%'?'%':'')):''}</td>`;
+        html += `</tr>`;
+      });
+    });
+
+    html += `</tbody></table></div></div>`;
+  });
+
+  html += `</div>`;
+  document.getElementById('scorecard-wrap').innerHTML = html;
+}
+
+function updateScorecard(el) {
+  const sc = getScorecard();
+  const val = el.textContent.trim();
+  sc[el.dataset.key] = val === '' ? '' : parseFloat(val) || val;
+  saveScorecard(sc);
+  renderScorecard();
+}
+
+// ========================
+// ISSUES
+// ========================
+const DEFAULT_QUARTERLY_ISSUES = [
+  {id:1,text:"Ryan's real estate business is growing",solved:false},
+  {id:2,text:"Completing To-Do's and upholding meeting cadences",solved:false},
+  {id:3,text:"Determining if Bill is the correct partner",solved:false},
+  {id:4,text:"Creating proposal format/process",solved:false},
+  {id:5,text:"CEDIA 2025 Product Highlights",solved:false},
+  {id:6,text:"Onboarding strategic partners",solved:false},
+  {id:7,text:"Sales materials alignment",solved:false},
+  {id:8,text:"Social media content",solved:false},
+  {id:9,text:"Realtor network optimization",solved:false},
+  {id:10,text:"Google business/customer engagement",solved:false},
+];
+
+function getWeeklyIssues() { return LS.get('weeklyIssues', []); }
+function saveWeeklyIssues(i) { LS.set('weeklyIssues', i); }
+function getQuarterlyIssues() { return LS.get('quarterlyIssues', DEFAULT_QUARTERLY_ISSUES); }
+function saveQuarterlyIssues(i) { LS.set('quarterlyIssues', i); }
+
+function renderIssues() {
+  const weekly = getWeeklyIssues();
+  const quarterly = getQuarterlyIssues();
+
+  document.getElementById('issues-split').innerHTML = `
+    <div class="issues-panel">
+      <div class="issues-panel-header"><span>🔥 Weekly Issues (IDS)</span><span style="font-size:.75rem;color:var(--text-muted)">${weekly.filter(i=>!i.solved).length} open</span></div>
+      <div class="issue-add"><input id="weekly-issue-input" placeholder="Add issue..." onkeydown="if(event.key==='Enter')addIssue('weekly')"><button class="btn-primary btn-sm" onclick="addIssue('weekly')">+</button></div>
+      <div class="issue-list">${weekly.map((iss,i) => `
+        <div class="issue-item${iss.solved?' solved':''}">
+          <div class="issue-num">${i+1}</div>
+          <span class="issue-text">${iss.text}</span>
+          <div class="issue-actions">
+            <button class="btn-sm ${iss.solved?'btn-secondary':'btn-success'}" onclick="toggleIssue('weekly',${iss.id})">${iss.solved?'Reopen':'Solve'}</button>
+            <button class="btn-danger btn-sm" onclick="deleteIssue('weekly',${iss.id})">✕</button>
+            ${i>0?`<button class="btn-secondary btn-sm" onclick="moveIssue('weekly',${i},-1)">↑</button>`:''}
+            ${i<weekly.length-1?`<button class="btn-secondary btn-sm" onclick="moveIssue('weekly',${i},1)">↓</button>`:''}
+          </div>
+        </div>`).join('')}</div>
+    </div>
+    <div class="issues-panel">
+      <div class="issues-panel-header"><span>📋 Quarterly Issues</span><span style="font-size:.75rem;color:var(--text-muted)">${quarterly.filter(i=>!i.solved).length} open</span></div>
+      <div class="issue-add"><input id="quarterly-issue-input" placeholder="Add issue..." onkeydown="if(event.key==='Enter')addIssue('quarterly')"><button class="btn-primary btn-sm" onclick="addIssue('quarterly')">+</button></div>
+      <div class="issue-list">${quarterly.map((iss,i) => `
+        <div class="issue-item${iss.solved?' solved':''}">
+          <div class="issue-num">${i+1}</div>
+          <span class="issue-text">${iss.text}</span>
+          <div class="issue-actions">
+            <button class="btn-sm ${iss.solved?'btn-secondary':'btn-success'}" onclick="toggleIssue('quarterly',${iss.id})">${iss.solved?'Reopen':'Solve'}</button>
+            <button class="btn-danger btn-sm" onclick="deleteIssue('quarterly',${iss.id})">✕</button>
+          </div>
+        </div>`).join('')}</div>
+    </div>`;
+}
+
+function addIssue(type) {
+  const inp = document.getElementById(type+'-issue-input');
+  if (!inp.value.trim()) return;
+  const getter = type==='weekly' ? getWeeklyIssues : getQuarterlyIssues;
+  const saver = type==='weekly' ? saveWeeklyIssues : saveQuarterlyIssues;
+  const issues = getter();
+  issues.push({id:Date.now(),text:inp.value.trim(),solved:false});
+  saver(issues); inp.value=''; renderIssues();
+}
+
+function toggleIssue(type, id) {
+  const getter = type==='weekly' ? getWeeklyIssues : getQuarterlyIssues;
+  const saver = type==='weekly' ? saveWeeklyIssues : saveQuarterlyIssues;
+  const issues = getter();
+  const iss = issues.find(x=>x.id===id);
+  if(iss) iss.solved = !iss.solved;
+  saver(issues); renderIssues(); renderDashboard();
+}
+
+function deleteIssue(type, id) {
+  const getter = type==='weekly' ? getWeeklyIssues : getQuarterlyIssues;
+  const saver = type==='weekly' ? saveWeeklyIssues : saveQuarterlyIssues;
+  saver(getter().filter(x=>x.id!==id)); renderIssues();
+}
+
+function moveIssue(type, idx, dir) {
+  const getter = type==='weekly' ? getWeeklyIssues : getQuarterlyIssues;
+  const saver = type==='weekly' ? saveWeeklyIssues : saveQuarterlyIssues;
+  const issues = getter();
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= issues.length) return;
+  [issues[idx], issues[newIdx]] = [issues[newIdx], issues[idx]];
+  saver(issues); renderIssues();
+}
+
+// ========================
+// LEVEL 10 MEETING
+// ========================
+const L10_AGENDA = [
+  {name:'Segue',duration:5,desc:'Share a personal & professional best from the week.'},
+  {name:'Scorecard Review',duration:5,desc:'Review weekly KPIs — are we hitting our numbers?'},
+  {name:'Rock Review',duration:5,desc:'Quick on/off track check for each quarterly rock.'},
+  {name:'Customer/Employee Headlines',duration:5,desc:'Any good or bad news about customers or team?'},
+  {name:'To-Do List Review',duration:5,desc:'Review last week\'s to-dos. Done or not done?'},
+  {name:'IDS — Issue Solving',duration:60,desc:'Identify, Discuss, Solve. Tackle the issues list.'},
+  {name:'Conclude',duration:5,desc:'Recap to-dos, cascading message, rate meeting 1-10.'},
+];
+
+let l10Timer = null;
+let l10StartTime = null;
+let l10ElapsedSec = 0;
+let l10ActiveSection = -1;
+let l10SectionStart = 0;
+
+function getL10Notes() { return LS.get('l10Notes', {}); }
+function saveL10Notes(n) { LS.set('l10Notes', n); }
+function getL10History() { return LS.get('l10History', []); }
+function saveL10History(h) { LS.set('l10History', h); }
+function getL10Rating() { return LS.get('l10Rating', 0); }
+function saveL10Rating(r) { LS.set('l10Rating', r); }
+
+function renderL10() {
+  const notes = getL10Notes();
+  const history = getL10History();
+  const rating = getL10Rating();
+  const running = !!l10Timer;
+
+  let sectionElapsed = '';
+  if (running && l10ActiveSection >= 0) {
+    const secSpent = Math.floor((Date.now() - l10SectionStart) / 1000);
+    const m = Math.floor(secSpent/60), s = secSpent%60;
+    sectionElapsed = `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  const totalMin = Math.floor(l10ElapsedSec / 60);
+  const totalSec = l10ElapsedSec % 60;
+
+  document.getElementById('l10-container').innerHTML = `
+    <div class="l10-meeting-btn">
+      <button class="${running?'btn-danger':'btn-primary'}" onclick="${running?'stopL10()':'startL10()'}">
+        ${running ? '⏹ End Meeting' : '▶ Start Meeting'}
+      </button>
+      <span class="l10-timer-display">${String(totalMin).padStart(2,'0')}:${String(totalSec).padStart(2,'0')}</span>
+      ${running && l10ActiveSection >= 0 ? `<span class="l10-timer-section">${L10_AGENDA[l10ActiveSection].name}: ${sectionElapsed} / ${L10_AGENDA[l10ActiveSection].duration}:00</span>` : ''}
+    </div>
+    <div class="l10-agenda">
+      ${L10_AGENDA.map((item, i) => `
+        <div class="l10-item${notes['open_'+i]?' open':''}${l10ActiveSection===i?' active':''}">
+          <div class="l10-item-header" onclick="toggleL10Item(${i})">
+            <span class="name">
+              <span class="active-indicator"></span>
+              ${item.name}
+            </span>
+            <span class="duration">${item.duration} min</span>
+          </div>
+          <div class="l10-item-body">
+            <div class="desc">${item.desc}</div>
+            ${running?`<button class="btn-sm ${l10ActiveSection===i?'btn-secondary':'btn-primary'}" onclick="setL10Section(${i})" style="margin-top:6px">${l10ActiveSection===i?'Active ✓':'Set Active'}</button>`:''}
+            <textarea placeholder="Meeting notes..." onblur="saveL10Note(${i},this.value)">${notes['note_'+i]||''}</textarea>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="l10-rating">
+      <h4>Rate This Meeting (1-10)</h4>
+      <div class="rating-stars">
+        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<div class="rating-star${rating===n?' selected':''}" onclick="rateL10(${n})">${n}</div>`).join('')}
+      </div>
+      ${running?`<button class="btn-primary" onclick="concludeL10()">Save & Conclude Meeting</button>`:''}
+    </div>
+    <div class="l10-history">
+      <div class="l10-history-header">Meeting History</div>
+      ${history.length === 0 ? '<div style="padding:16px;color:var(--text-muted);font-size:.85rem">No meetings recorded yet.</div>' :
+        history.slice().reverse().map(h => `
+        <div class="l10-history-item">
+          <span class="date">${h.date} — ${h.duration} min</span>
+          <span class="rating-badge">${h.rating}/10</span>
+        </div>`).join('')}
+    </div>`;
+}
+
+function toggleL10Item(i) {
+  const notes = getL10Notes();
+  notes['open_'+i] = !notes['open_'+i];
+  saveL10Notes(notes);
+  renderL10();
+}
+
+function saveL10Note(i, val) {
+  const notes = getL10Notes();
+  notes['note_'+i] = val;
+  saveL10Notes(notes);
+}
+
+function setL10Section(i) {
+  l10ActiveSection = i;
+  l10SectionStart = Date.now();
+  renderL10();
+}
+
+function rateL10(n) { saveL10Rating(n); renderL10(); }
+
+function startL10() {
+  l10StartTime = Date.now();
+  l10ElapsedSec = 0;
+  l10ActiveSection = 0;
+  l10SectionStart = Date.now();
+  l10Timer = setInterval(() => {
+    l10ElapsedSec = Math.floor((Date.now() - l10StartTime) / 1000);
+    renderL10();
+  }, 1000);
+  // Clear previous notes
+  const notes = {};
+  L10_AGENDA.forEach((_, i) => { notes['open_'+i] = (i === 0); });
+  saveL10Notes(notes);
+  saveL10Rating(0);
+  renderL10();
+}
+
+function stopL10() {
+  if (l10Timer) { clearInterval(l10Timer); l10Timer = null; }
+  l10ActiveSection = -1;
+  renderL10();
+}
+
+function concludeL10() {
+  const rating = getL10Rating();
+  const duration = Math.floor(l10ElapsedSec / 60);
+  const history = getL10History();
+  history.push({
+    date: new Date().toISOString().slice(0,10),
+    duration: duration,
+    rating: rating || '-'
+  });
+  saveL10History(history);
+  stopL10();
+  // Reset notes
+  saveL10Notes({});
+  saveL10Rating(0);
+  renderL10();
+}
+
+// === INIT ===
+renderDashboard(); renderChangeOrders(); renderPipeline(); renderTodos(); renderCalendar(); renderCRM(); renderProposals(); renderRocks(); renderScorecard(); renderIssues(); renderL10(); renderClientsDirectory();
+
+// === Firebase real-time listeners (sync changes across devices) ===
+LS.listen('deals', () => { renderPipeline(); renderDashboard(); });
+LS.listen('todos', () => { renderTodos(); renderDashboard(); });
+LS.listen('events', renderCalendar);
+LS.listen('clients', renderCRM);
+LS.listen('proposals', renderProposals);
+LS.listen('rocks', () => { renderRocks(); renderDashboard(); });
+LS.listen('scorecard', renderScorecard);
+LS.listen('weeklyIssues', () => { renderIssues(); renderDashboard(); });
+LS.listen('quarterlyIssues', renderIssues);
+LS.listen('l10Notes', renderL10);
+LS.listen('l10History', renderL10);
+LS.listen('l10Rating', renderL10);
+LS.listen('clients_directory', renderClientsDirectory);
+LS.listen('dealNotes', () => {});
+LS.listen('dealDocs', () => {});
+LS.listen('financials', renderDashboard);
+</script>
+</body>
+</html>
+<!-- deployed Tue Feb 17 17:35 EST 2026 -->

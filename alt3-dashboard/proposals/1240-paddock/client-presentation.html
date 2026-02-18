@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1240 Paddock — Intelligent Living by Alt3 Smart Homes</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/neue-montreal');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap');
+
+:root {
+  --navy: #113665;
+  --navy-light: #1a4a8a;
+  --navy-dark: #0c2647;
+  --navy-glow: rgba(17, 54, 101, 0.3);
+  --taupe: #BEB1A2;
+  --cream: #E1D8CE;
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1A1A1A;
+  --text-primary: #F5F0EB;
+  --text-secondary: #A09890;
+  --text-muted: #6B6560;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Neue Montreal', -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+body { background: var(--bg-primary); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 2px; }
+
+/* Typography */
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Fade-in animation classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+/* Navy line accent */
+.copper-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--navy), transparent);
+  margin: 24px 0;
+}
+.copper-line-center {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--navy), transparent);
+  margin: 24px auto;
+}
+
+/* Section spacing */
+section {
+  padding: 120px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(17,54,101,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 20% 80%, rgba(17,54,101,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(17,54,101,0.03) 0%, transparent 50%),
+    var(--bg-primary);
+}
+
+/* Animated floating orbs */
+.hero-bg::before, .hero-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 20s ease-in-out infinite;
+}
+.hero-bg::before {
+  width: 400px; height: 400px;
+  background: rgba(17,54,101,0.06);
+  top: 10%; left: 20%;
+}
+.hero-bg::after {
+  width: 300px; height: 300px;
+  background: rgba(17,54,101,0.04);
+  bottom: 20%; right: 15%;
+  animation-delay: -10s;
+  animation-direction: reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(40px, 30px) scale(1.02); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 24px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--taupe);
+  border: 1px solid rgba(190,177,162,0.3);
+  padding: 8px 20px;
+  margin-bottom: 48px;
+  font-weight: 500;
+}
+
+.hero h1 {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: clamp(42px, 7vw, 96px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+.hero h1 span {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy), var(--navy-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--text-secondary);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  max-width: 500px;
+  margin: 0 auto 12px;
+  line-height: 1.7;
+}
+
+.hero-address {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-top: 48px;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: pulse-down 2s ease-in-out infinite;
+}
+.scroll-indicator::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--navy), transparent);
+}
+
+@keyframes pulse-down {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ─── NAV DOT ─── */
+.nav-dots {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(17,54,101,0.2);
+  border: 1px solid rgba(17,54,101,0.3);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.nav-dot.active {
+  background: var(--navy);
+  box-shadow: 0 0 12px var(--navy-glow);
+}
+
+/* ─── VISION SECTION ─── */
+.vision {
+  padding-top: 160px;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--taupe);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.section-body {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+  max-width: 640px;
+}
+
+/* Scenario cards */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2px;
+  margin-top: 80px;
+}
+
+.scenario-card {
+  background: var(--bg-secondary);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+.scenario-card:hover {
+  background: var(--bg-tertiary);
+}
+.scenario-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--navy), transparent);
+}
+
+.scenario-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--taupe);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.scenario-title {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.scenario-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* ─── AI BRAIN ─── */
+.ai-brain {
+  text-align: center;
+  padding: 160px 24px;
+}
+
+.brain-visual {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 60px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brain-core {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--navy), var(--navy-dark));
+  box-shadow: 0 0 60px var(--navy-glow), 0 0 120px rgba(17,54,101,0.1);
+  animation: core-pulse 3s ease-in-out infinite;
+}
+
+@keyframes core-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 60px var(--navy-glow), 0 0 120px rgba(17,54,101,0.1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 80px var(--navy-glow), 0 0 160px rgba(17,54,101,0.15); }
+}
+
+.brain-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(17,54,101,0.15);
+  animation: ring-rotate 20s linear infinite;
+}
+.brain-ring:nth-child(2) { width: 130px; height: 130px; }
+.brain-ring:nth-child(3) { width: 170px; height: 170px; animation-duration: 30s; animation-direction: reverse; }
+.brain-ring:nth-child(4) { width: 200px; height: 200px; animation-duration: 25s; }
+
+/* Ring dots */
+.brain-ring::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  background: var(--navy);
+  border-radius: 50%;
+  top: -3px; left: 50%;
+  box-shadow: 0 0 10px var(--navy-glow);
+}
+
+@keyframes ring-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ai-brain .section-body {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ai-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  margin-top: 80px;
+  text-align: left;
+}
+
+.ai-feature {
+  padding: 32px 0;
+  border-top: 1px solid rgba(190,177,162,0.15);
+}
+
+.ai-feature h4 {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.ai-feature p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* ─── ROOM EXPERIENCES ─── */
+.rooms { padding: 160px 24px; }
+
+.room-experience {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 2px;
+  min-height: 500px;
+}
+
+.room-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.room-visual-inner {
+  position: absolute;
+  inset: 0;
+}
+
+/* CSS-art room visuals */
+.room-kitchen .room-visual-inner {
+  background:
+    linear-gradient(135deg, #1a1410 0%, #0d0b08 40%, #1a1510 100%);
+}
+.room-kitchen .room-visual-inner::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 60%;
+  height: 40%;
+  background: radial-gradient(ellipse at center, rgba(255,200,120,0.08), transparent 70%);
+  filter: blur(40px);
+}
+.room-kitchen .room-visual-inner::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,200,120,0.2), transparent);
+}
+
+.room-theater .room-visual-inner {
+  background:
+    linear-gradient(180deg, #0a0a12 0%, #05050a 50%, #0a0810 100%);
+}
+.room-theater .room-visual-inner::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 35%;
+  background: radial-gradient(ellipse at center, rgba(100,120,255,0.06), transparent 70%);
+  border: 1px solid rgba(100,120,255,0.04);
+  filter: blur(1px);
+}
+
+.room-arrival .room-visual-inner {
+  background:
+    linear-gradient(180deg, #0d0d10 0%, #0a0a0d 50%, #10100d 100%);
+}
+.room-arrival .room-visual-inner::before {
+  content: '';
+  position: absolute;
+  bottom: 20%;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--navy-glow), transparent);
+  box-shadow: 0 0 30px var(--navy-glow);
+}
+
+.room-outdoor .room-visual-inner {
+  background:
+    linear-gradient(180deg, #0a0d0a 0%, #080a08 50%, #0d100d 100%);
+}
+.room-outdoor .room-visual-inner::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  width: 4px;
+  height: 4px;
+  background: #f0e8d0;
+  border-radius: 50%;
+  box-shadow:
+    40px 20px 0 1px rgba(240,232,208,0.5),
+    80px -10px 0 0px rgba(240,232,208,0.3),
+    120px 30px 0 1px rgba(240,232,208,0.4),
+    20px 60px 0 0px rgba(240,232,208,0.2);
+}
+
+.room-content {
+  padding: 60px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-secondary);
+}
+
+.room-content .scenario-time {
+  margin-bottom: 12px;
+}
+
+.room-content h3 {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 300;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.room-content p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+.voice-command {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--taupe);
+  background: rgba(17,54,101,0.08);
+  border: 1px solid rgba(17,54,101,0.15);
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+.voice-command::before {
+  content: '🎙 ';
+}
+
+.room-experience:nth-child(even) .room-visual { order: 2; }
+.room-experience:nth-child(even) .room-content { order: 1; }
+
+/* ─── TECHNOLOGY ─── */
+.technology {
+  text-align: center;
+  padding: 160px 24px;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2px;
+  margin-top: 80px;
+}
+
+.tech-card {
+  background: var(--bg-secondary);
+  padding: 48px 32px;
+  transition: all 0.4s;
+  position: relative;
+}
+.tech-card:hover {
+  background: var(--bg-tertiary);
+}
+.tech-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--navy);
+  transition: width 0.4s;
+}
+.tech-card:hover::after {
+  width: 60%;
+}
+
+.tech-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: rgba(17,54,101,0.08);
+  border: 1px solid rgba(17,54,101,0.15);
+}
+
+.tech-card h4 {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.tech-card .tech-brand {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--taupe);
+  margin-bottom: 12px;
+}
+
+.tech-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* ─── INVESTMENT ─── */
+.investment {
+  padding: 160px 24px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 48px;
+  margin-top: 80px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.investment-quote {
+  margin-top: 80px;
+  padding: 48px;
+  border-left: 2px solid var(--navy);
+  max-width: 700px;
+}
+
+.investment-quote p {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* ─── PROCESS ─── */
+.process {
+  text-align: center;
+  padding: 160px 24px;
+}
+
+.process-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 80px;
+  flex-wrap: wrap;
+}
+
+.process-step {
+  text-align: center;
+  padding: 40px;
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.process-step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--taupe);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.process-step h4 {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.process-step p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.process-arrow {
+  color: var(--navy);
+  font-size: 20px;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* ─── CTA ─── */
+.cta {
+  text-align: center;
+  padding: 160px 24px 120px;
+  position: relative;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--navy));
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 48px;
+  padding: 16px 48px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+  color: #FFFFFF;
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.4s;
+  border: none;
+}
+.cta-button:hover {
+  box-shadow: 0 8px 40px var(--navy-glow);
+  transform: translateY(-2px);
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center;
+  padding: 60px 24px;
+  border-top: 1px solid rgba(17,54,101,0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+.footer-links {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+.footer-links a {
+  color: var(--navy);
+  text-decoration: none;
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  section { padding: 80px 20px; }
+
+  .room-experience {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .room-visual { min-height: 250px; }
+  .room-experience:nth-child(even) .room-visual { order: 0; }
+  .room-experience:nth-child(even) .room-content { order: 0; }
+  .room-content { padding: 40px 28px; }
+
+  .nav-dots { display: none; }
+
+  .scenario-grid { grid-template-columns: 1fr; }
+  .scenario-card { padding: 36px 28px; }
+
+  .process-steps { flex-direction: column; }
+  .process-arrow { transform: rotate(90deg); }
+
+  .investment-quote { padding: 32px 24px; }
+}
+
+/* ─── SEPARATOR ─── */
+.section-sep {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.section-sep-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(17,54,101,0.15), transparent);
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-section="hero"></div>
+  <div class="nav-dot" data-section="vision"></div>
+  <div class="nav-dot" data-section="ai-brain"></div>
+  <div class="nav-dot" data-section="rooms"></div>
+  <div class="nav-dot" data-section="technology"></div>
+  <div class="nav-dot" data-section="investment"></div>
+  <div class="nav-dot" data-section="process"></div>
+  <div class="nav-dot" data-section="cta"></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge reveal">Prepared exclusively for Jeffery Davis</div>
+    <h1 class="reveal reveal-delay-1">Welcome to<br><span>Intelligent Living</span></h1>
+    <p class="hero-sub reveal reveal-delay-2">Your home at 1240 Paddock is about to think, adapt, and respond — before you even ask.</p>
+    <p class="hero-sub reveal reveal-delay-3" style="color: var(--text-muted); font-size: 14px;">Simple. Seamless. Smart — by design.</p>
+    <div class="hero-address reveal reveal-delay-4">1240 PADDOCK &nbsp;·&nbsp; CHARLOTTE, NC</div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Explore</span>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision" id="vision">
+  <div class="section-label reveal">The Vision</div>
+  <h2 class="section-title reveal reveal-delay-1">Imagine a home that<br>knows you intimately.</h2>
+  <p class="section-body reveal reveal-delay-2">Not a home filled with gadgets. A home that feels effortless. Where technology dissolves into the background and life simply… flows. That's what we design.</p>
+  <div class="copper-line reveal reveal-delay-2"></div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card reveal">
+      <div class="scenario-time">06:45 AM — WAKE</div>
+      <h3 class="scenario-title">A Gentle Morning</h3>
+      <p class="scenario-body">Before your alarm, the bedroom fills with a warm amber glow that mimics sunrise. Shades rise slowly. Your favorite playlist begins at a whisper. The kitchen lights warm up as you walk in — coffee's already brewing.</p>
+    </div>
+    <div class="scenario-card reveal reveal-delay-1">
+      <div class="scenario-time">06:30 PM — ENTERTAIN</div>
+      <h3 class="scenario-title">An Evening Transformed</h3>
+      <p class="scenario-body">Guests are arriving. One word: <em>"Josh, dinner party."</em> Lights shift to a candlelit warmth. Music fills the living and dining spaces. Landscape lighting paints the exterior in soft warm tones. The home becomes the host.</p>
+    </div>
+    <div class="scenario-card reveal reveal-delay-2">
+      <div class="scenario-time">10:30 PM — REST</div>
+      <h3 class="scenario-title">Total Peace of Mind</h3>
+      <p class="scenario-body"><em>"Josh, goodnight."</em> Every light fades. Doors lock. Shades close. Security arms. The thermostat adjusts. Landscape lighting shifts to soft security mode. One command. Complete serenity.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"><div class="section-sep-line"></div></div>
+
+<!-- AI BRAIN -->
+<section class="ai-brain" id="ai-brain">
+  <div class="section-label reveal">The Intelligence</div>
+
+  <div class="brain-visual reveal reveal-delay-1">
+    <div class="brain-core"></div>
+    <div class="brain-ring"></div>
+    <div class="brain-ring"></div>
+    <div class="brain-ring"></div>
+  </div>
+
+  <h2 class="section-title reveal reveal-delay-2">Your Home<br>Has a Brain.</h2>
+  <div class="copper-line-center reveal reveal-delay-2"></div>
+  <p class="section-body reveal reveal-delay-3">Powered by <strong style="color: var(--text-primary);">Josh.ai</strong> — the only AI built exclusively for the luxury home. It doesn't sell your data. It doesn't listen when you don't want it to. It simply makes your home <em>intelligent</em>.</p>
+
+  <div class="ai-features">
+    <div class="ai-feature reveal">
+      <h4>Natural Conversation</h4>
+      <p>Speak naturally. "Josh, make the living room feel cozy" — and it understands. No rigid commands, no apps, no manuals. Just your voice.</p>
+    </div>
+    <div class="ai-feature reveal reveal-delay-1">
+      <h4>Learns Your Patterns</h4>
+      <p>Over time, Josh anticipates. It knows when you wake, how you like your evenings, which lights you prefer on cloudy days. Your home adapts to <em>you</em>.</p>
+    </div>
+    <div class="ai-feature reveal reveal-delay-2">
+      <h4>Total System Orchestration</h4>
+      <p>Lighting, shades, sound, security, climate — all coordinated by one intelligence. No silos. No separate apps. One brain. Total harmony.</p>
+    </div>
+    <div class="ai-feature reveal reveal-delay-3">
+      <h4>Privacy by Design</h4>
+      <p>Unlike consumer assistants, Josh.ai was built for trust. Your data stays yours. No advertising. No third-party sharing. Ever.</p>
+    </div>
+    <div class="ai-feature reveal reveal-delay-4">
+      <h4>Reduces Daily Decisions</h4>
+      <p>Research shows we make 150+ home-related micro-decisions daily. Josh reduces that to under 50 — freeing your mind for what actually matters.</p>
+    </div>
+    <div class="ai-feature reveal">
+      <h4>Wellness-Tuned Lighting</h4>
+      <p>Ketra's circadian lighting mimics the sun's natural rhythm. Better sleep, better energy, better mood — backed by science, delivered invisibly.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"><div class="section-sep-line"></div></div>
+
+<!-- ROOM EXPERIENCES -->
+<section class="rooms" id="rooms">
+  <div style="text-align: center; margin-bottom: 80px;">
+    <div class="section-label reveal">Experience by Room</div>
+    <h2 class="section-title reveal reveal-delay-1">Feel Every Space.</h2>
+    <div class="copper-line-center reveal reveal-delay-2"></div>
+  </div>
+
+  <!-- Kitchen -->
+  <div class="room-experience room-kitchen reveal">
+    <div class="room-visual">
+      <div class="room-visual-inner"></div>
+    </div>
+    <div class="room-content">
+      <div class="scenario-time">KITCHEN & LIVING</div>
+      <h3>Morning unfolds<br>without a single switch.</h3>
+      <p>As dawn approaches, Ketra lighting warms from cool blue to soft amber, syncing with your circadian rhythm. Shades rise in silence. Music begins — barely there, perfectly chosen. You don't configure anything. It just happens.</p>
+      <div class="voice-command">"Josh, good morning."</div>
+    </div>
+  </div>
+
+  <!-- Theater -->
+  <div class="room-experience room-theater reveal">
+    <div class="room-visual">
+      <div class="room-visual-inner"></div>
+    </div>
+    <div class="room-content">
+      <div class="scenario-time">BONUS ROOM / THEATER</div>
+      <h3>One command.<br>Total immersion.</h3>
+      <p>The lights dim to darkness. Shades close completely. The projector or display powers on. Surround sound calibrates. Room temperature adjusts for comfort. You said five words. The room did everything else.</p>
+      <div class="voice-command">"Josh, movie night."</div>
+    </div>
+  </div>
+
+  <!-- Arrival -->
+  <div class="room-experience room-arrival reveal">
+    <div class="room-visual">
+      <div class="room-visual-inner"></div>
+    </div>
+    <div class="room-content">
+      <div class="scenario-time">ARRIVAL EXPERIENCE</div>
+      <h3>Your home recognizes<br>you're almost there.</h3>
+      <p>Geofencing detects your approach. The driveway illuminates. Landscape lighting activates a welcome path. Interior lights warm to your preferred evening setting. Climate adjusts. Security disarms. The garage opens. Home.</p>
+      <div class="voice-command">Automatic — no command needed.</div>
+    </div>
+  </div>
+
+  <!-- Outdoor -->
+  <div class="room-experience room-outdoor reveal">
+    <div class="room-visual">
+      <div class="room-visual-inner"></div>
+    </div>
+    <div class="room-content">
+      <div class="scenario-time">OUTDOOR LIVING</div>
+      <h3>The landscape<br>becomes the stage.</h3>
+      <p>Architectural lighting transforms your property at dusk — automatically. Trees glow. Pathways guide. The patio becomes an extension of your living room, with sound zones that follow the conversation. Entertain effortlessly, indoors and out.</p>
+      <div class="voice-command">"Josh, patio evening."</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"><div class="section-sep-line"></div></div>
+
+<!-- TECHNOLOGY -->
+<section class="technology" id="technology">
+  <div class="section-label reveal">The Technology</div>
+  <h2 class="section-title reveal reveal-delay-1">Curated. Not Compiled.</h2>
+  <div class="copper-line-center reveal reveal-delay-1"></div>
+  <p class="section-body reveal reveal-delay-2" style="max-width: 600px; margin: 0 auto;">Every brand we specify is chosen for a reason — reliability, beauty, longevity, and seamless integration. No compromises.</p>
+
+  <div class="tech-grid">
+    <div class="tech-card reveal">
+      <div class="tech-icon">💡</div>
+      <h4>Light Brilliantly</h4>
+      <div class="tech-brand">Lutron · Ketra</div>
+      <p>Circadian-tuned lighting that promotes wellness. Every shade of white, every mood, calibrated to the sun's natural arc.</p>
+    </div>
+    <div class="tech-card reveal reveal-delay-1">
+      <div class="tech-icon">🧠</div>
+      <h4>Think Intelligently</h4>
+      <div class="tech-brand">Josh.ai</div>
+      <p>Privacy-first AI that orchestrates your entire home through natural voice. The brain behind the beauty.</p>
+    </div>
+    <div class="tech-card reveal reveal-delay-2">
+      <div class="tech-icon">🔊</div>
+      <h4>Tune Dynamically</h4>
+      <div class="tech-brand">MartinLogan · Sonos</div>
+      <p>Architectural speakers that disappear into walls and ceilings. Reference-quality sound you feel, not see.</p>
+    </div>
+    <div class="tech-card reveal reveal-delay-3">
+      <div class="tech-icon">🪟</div>
+      <h4>Glide Effortlessly</h4>
+      <div class="tech-brand">Lutron Palladiom</div>
+      <p>Motorized shades and draperies that respond to sunlight, time, and scene — in absolute silence.</p>
+    </div>
+    <div class="tech-card reveal reveal-delay-4">
+      <div class="tech-icon">🔒</div>
+      <h4>Monitor Confidently</h4>
+      <div class="tech-brand">Surveillance Suite</div>
+      <p>Intelligent cameras and access control that know the difference between a guest, a delivery, and a concern.</p>
+    </div>
+    <div class="tech-card reveal">
+      <div class="tech-icon">🌿</div>
+      <h4>Transform Outdoors</h4>
+      <div class="tech-brand">Landscape Lighting</div>
+      <p>Architectural outdoor lighting that extends your living space and transforms the property at twilight.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"><div class="section-sep-line"></div></div>
+
+<!-- INVESTMENT -->
+<section class="investment" id="investment">
+  <div style="text-align: center;">
+    <div class="section-label reveal">The Investment</div>
+    <h2 class="section-title reveal reveal-delay-1">Smart Homes Are<br>Smart Investments.</h2>
+    <div class="copper-line-center reveal reveal-delay-1"></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number">20%</div>
+      <div class="stat-label">Average return on investment<br>for smart home technology</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-number">30–40%</div>
+      <div class="stat-label">Faster sale speed compared<br>to non-smart homes</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-number">$60K+</div>
+      <div class="stat-label">Potential value increase from Ketra<br>lighting on premium properties</div>
+    </div>
+  </div>
+
+  <div class="investment-quote reveal">
+    <p>"This isn't a gadget purchase — it's an investment in daily quality of life, property value, and a home designed to stay relevant for 10 to 20 years."</p>
+  </div>
+</section>
+
+<div class="section-sep"><div class="section-sep-line"></div></div>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-label reveal">Our Process</div>
+  <h2 class="section-title reveal reveal-delay-1">Architect, Not Assembly Line.</h2>
+  <div class="copper-line-center reveal reveal-delay-1"></div>
+  <p class="section-body reveal reveal-delay-2" style="max-width: 600px; margin: 0 auto; text-align: center;">Like a custom home architect, we design around your life — not a catalog. Every system, every scene, every detail is tailored to how <em>you</em> live.</p>
+
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="process-step-num">01</div>
+      <h4>Design</h4>
+      <p>We learn how you live, then architect a system that feels invisible and intuitive.</p>
+    </div>
+    <div class="process-arrow reveal">→</div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="process-step-num">02</div>
+      <h4>Install</h4>
+      <p>Expert integration, clean wiring, and meticulous attention to every detail.</p>
+    </div>
+    <div class="process-arrow reveal">→</div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="process-step-num">03</div>
+      <h4>Program</h4>
+      <p>Scenes, automation, and AI tuned to your preferences and daily rhythm.</p>
+    </div>
+    <div class="process-arrow reveal">→</div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="process-step-num">04</div>
+      <h4>Support</h4>
+      <p>Ongoing care, updates, and refinement. Your home keeps getting smarter.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"><div class="section-sep-line"></div></div>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="section-label reveal">Next Step</div>
+  <h2 class="section-title reveal reveal-delay-1">Ready to Make<br>1240 Paddock <span style="background: linear-gradient(135deg, var(--navy-light), var(--navy)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Intelligent</span>?</h2>
+  <div class="copper-line-center reveal reveal-delay-2"></div>
+  <p class="section-body reveal reveal-delay-2" style="max-width: 540px; margin: 0 auto; text-align: center;">Let's schedule a design consultation to explore what's possible for your home. No pressure, no jargon — just a conversation about how you want to live.</p>
+  <a href="mailto:info@alt3.com?subject=1240%20Paddock%20—%20Design%20Consultation" class="cta-button reveal reveal-delay-3">Schedule a Consultation</a>
+  <div style="margin-top: 32px;" class="reveal reveal-delay-4">
+    <p style="font-size: 13px; color: var(--text-muted);">
+      <a href="mailto:info@alt3.com" style="color: var(--navy); text-decoration: none;">info@alt3.com</a> &nbsp;·&nbsp;
+      <a href="https://alt3smarthomes.com" style="color: var(--navy); text-decoration: none;">alt3smarthomes.com</a> &nbsp;·&nbsp;
+      <a href="https://instagram.com/alt3smarthomes" style="color: var(--navy); text-decoration: none;">@alt3smarthomes</a>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">ALT3</div>
+  <div class="footer-tagline">SMART HOMES</div>
+  <div class="footer-links">552 Marsh Rd, Charlotte, NC 28209</div>
+</footer>
+
+<script>
+// IntersectionObserver for reveal animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav dots
+const sections = ['hero','vision','ai-brain','rooms','technology','investment','process','cta'];
+const dots = document.querySelectorAll('.nav-dot');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = sections.indexOf(entry.target.id);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    document.getElementById(sections[i])?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.cdnfonts.com/css/neue-montreal" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 1080px;
+  height: 1080px;
+  font-family: 'Neue Montreal', sans-serif;
+  background: #FAFAFA;
+  overflow: hidden;
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px;
+}
+
+.headline {
+  font-size: 84px;
+  font-weight: 600;
+  line-height: 1.06;
+  color: #1d1d1f;
+  letter-spacing: -2.5px;
+  margin-bottom: 32px;
+}
+
+.headline span {
+  background: linear-gradient(135deg, #113665 0%, #4a8fe7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sub {
+  font-size: 21px;
+  font-weight: 400;
+  color: #86868b;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+}
+
+.brand {
+  position: absolute;
+  bottom: 60px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #86868b;
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+  <div class="content">
+    <h1 class="headline">Your home<br>should just<br><span>know.</span></h1>
+    <p class="sub">Simple. Seamless. Smart — by design.</p>
+  </div>
+  <div class="brand">Alt3 Smart Homes</div>
+</body>
+</html>
