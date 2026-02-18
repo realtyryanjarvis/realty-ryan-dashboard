@@ -25,6 +25,22 @@ a{color:inherit;text-decoration:none}
 #cinematic{position:relative;width:100%;height:100vh;height:100dvh;background:#0a0806;overflow:hidden;z-index:10}
 #cinematic .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#1a1410 0%,#0d0a07 50%,#000 100%)}
 #cinematic .hero-texture{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+#cinematic .hero-wireframe{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:auto;opacity:0;filter:grayscale(1) brightness(2) contrast(3) invert(1);mix-blend-mode:screen;z-index:1;animation:wireframeIn 2s ease 3.5s forwards}
+@keyframes wireframeIn{to{opacity:.12}}
+/* Floor Plans Section */
+.floor-plans-section{padding:80px 24px;background:var(--cream);text-align:center}
+.floor-plans-section h2{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:8px}
+.floor-plans-section .sub{color:var(--muted);font-size:.95rem;margin-bottom:40px}
+.floor-plans-tabs{display:flex;justify-content:center;gap:12px;margin-bottom:32px}
+.floor-plans-tabs button{padding:10px 28px;border:1px solid var(--border);background:transparent;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-radius:6px;cursor:pointer;transition:all .3s}
+.floor-plans-tabs button.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.floor-plan-img{max-width:1000px;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.08);border:1px solid var(--border)}
+.floor-plan-img img{width:100%;display:block;transition:opacity .4s}
+.floor-plan-img img.hidden{opacity:0;height:0;overflow:hidden}
+.floor-plan-stats{display:flex;justify-content:center;gap:40px;margin-top:32px;flex-wrap:wrap}
+.floor-plan-stats .fp-stat{text-align:center}
+.floor-plan-stats .fp-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--copper)}
+.floor-plan-stats .fp-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:4px}
 #cinematic .title-group{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3;pointer-events:none}
 .address-letters{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
 .address-letters span{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,72px);font-weight:400;letter-spacing:.35em;color:var(--copper);opacity:0;animation:letterIn .6s ease forwards}
@@ -294,6 +310,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
 <section id="cinematic">
   <div class="hero-bg"></div>
   <div class="hero-texture"></div>
+  <img src="images/design-intent-page-01.jpg" alt="" class="hero-wireframe" loading="eager">
   <div class="title-group">
     <div class="address-letters" id="addressLetters"></div>
     <div class="city-line" id="cityLine">Charlotte, North Carolina</div>
@@ -597,34 +614,25 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
 </section>
 
 <!-- ═══════ FLOOR PLANS ═══════ -->
-<section class="floorplans" id="plans">
+<section class="floor-plans-section" id="plans">
   <h2 class="ani">The Blueprint</h2>
-  <div class="doc-grid">
-    <div class="doc-card ani ani-d1">
-      <div class="doc-icon">📐</div>
-      <h4>Design Intent</h4>
-      <p style="font-size:13px;color:var(--muted)">Full design specifications</p>
-      <span class="doc-btn">Download PDF</span>
-    </div>
-    <div class="doc-card ani ani-d2">
-      <div class="doc-icon">📋</div>
-      <h4>MOG Document</h4>
-      <p style="font-size:13px;color:var(--muted)">Materials &amp; options guide</p>
-      <span class="doc-btn">Download PDF</span>
-    </div>
-    <div class="doc-card ani ani-d3">
-      <div class="doc-icon">🏗️</div>
-      <h4>Floor Plans</h4>
-      <p style="font-size:13px;color:var(--muted)">Complete room layouts</p>
-      <span class="doc-btn">Download PDF</span>
-    </div>
+  <div class="sub ani ani-d1">8,614 total square feet across two meticulously planned levels</div>
+  <div class="floor-plans-tabs ani ani-d1">
+    <button class="active" onclick="showFloor('first',this)">First Floor</button>
+    <button onclick="showFloor('second',this)">Second Floor</button>
   </div>
-  <div class="fp-placeholder ani">
-    <p style="font-size:20px;margin-bottom:8px;opacity:.2">⬡ ⬡ ⬡</p>
-    <p>Interactive Floor Plan Coming Soon</p>
+  <div class="floor-plan-img ani ani-d2">
+    <img id="fp-first" src="images/approved-first-floor-plan-detailed.jpg" alt="First Floor Plan — 3,968 SF">
+    <img id="fp-second" src="images/approved-second-floor-plan-detailed.jpg" alt="Second Floor Plan — 2,756 SF" class="hidden">
   </div>
-  <div class="walkthrough-cta ani ani-d2">
-    <a href="walkthrough.html">🏠 &nbsp;Explore the Floor Plan — Virtual Walkthrough</a>
+  <div class="floor-plan-stats ani ani-d3">
+    <div class="fp-stat"><div class="fp-num">3,968</div><div class="fp-lbl">First Floor SF</div></div>
+    <div class="fp-stat"><div class="fp-num">2,756</div><div class="fp-lbl">Second Floor SF</div></div>
+    <div class="fp-stat"><div class="fp-num">1,025</div><div class="fp-lbl">3-Car Garage SF</div></div>
+    <div class="fp-stat"><div class="fp-num">745</div><div class="fp-lbl">Outdoor Living SF</div></div>
+  </div>
+  <div class="walkthrough-cta ani ani-d2" style="margin-top:40px">
+    <a href="walkthrough.html">🏠 &nbsp;Explore Room by Room — Interactive Walkthrough</a>
   </div>
 </section>
 
@@ -953,6 +961,13 @@ function handleForm(e){
   btn.style.background='#2d5a27';
   setTimeout(()=>{btn.textContent='Request Private Preview';btn.style.background='';},3000);
   return false;
+}
+// Floor plan tab switching
+function showFloor(floor, btn) {
+  document.getElementById('fp-first').classList.toggle('hidden', floor !== 'first');
+  document.getElementById('fp-second').classList.toggle('hidden', floor !== 'second');
+  document.querySelectorAll('.floor-plans-tabs button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 }
 </script>
 </body>
