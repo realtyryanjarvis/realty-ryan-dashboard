@@ -7,48 +7,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #FFFFFF; font-family: 'Work Sans', sans-serif; color: #1a1a1a; min-height: 100vh; }
+body { background: #F7F6F3; font-family: 'Work Sans', sans-serif; color: #1a1a1a; min-height: 100vh; }
 
-.header-compact { background: #F8F6F3; border-bottom: 2px solid #7A3B14; }
+.header-compact { background: #1B2A4A; }
 .hdr-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 10px; }
-.hdr-top h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #1a1a1a; }
-.back-link { font-size: 13px; color: #c97a3b; text-decoration: none; font-weight: 500; }
-.back-link:hover { color: #e08a42; }
+.hdr-top h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF; }
+.back-link { font-size: 13px; color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; }
+.back-link:hover { color: #FFFFFF; }
 
 /* Summary Bar */
-.summary-bar { display: flex; justify-content: center; gap: 0; padding: 8px 24px 14px; background: #F8F6F3; }
+.summary-bar { display: flex; justify-content: center; gap: 0; padding: 8px 24px 14px; background: #1B2A4A; }
 .sb-item { text-align: center; padding: 0 24px; }
-.sb-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: #1a1a1a; display: block; line-height: 1; }
-.sb-num.accent { color: #7A3B14; }
-.sb-lbl { font-size: 10px; color: #8a8480; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; display: block; }
-.sb-divider { width: 1px; height: 36px; background: #E8E4DE; align-self: center; }
+.sb-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: rgba(255,255,255,0.95); display: block; line-height: 1; }
+.sb-num.accent { color: #D4944A; }
+.sb-lbl { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; display: block; }
+.sb-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.15); align-self: center; }
 
 /* Section */
 .section-header { padding: 16px 24px 8px; display: flex; align-items: center; gap: 12px; }
-.section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #1a1a1a; letter-spacing: 0.08em; }
-.section-badge { background: #7A3B14; color: #FFFFFF; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; }
+.section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #1B2A4A; letter-spacing: 0.08em; letter-spacing: 0.08em; }
+.section-badge { background: #B87333; color: #FFFFFF; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; }
 
 /* Campaign Cards */
 .campaigns-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; padding: 12px 24px 24px; }
-.campaign-card { background: #F8F6F3; border-radius: 8px; border: 1px solid #E1D8CE; overflow: hidden; transition: border-color 0.2s; }
-.campaign-card:hover { border-color: #7A3B14; }
+.campaign-card { background: #FFFFFF; border-radius: 8px; border: 1px solid #e8e5e0; overflow: hidden; transition: border-color 0.2s; }
+.campaign-card:hover { border-color: #B87333; }
 .campaign-card-header { padding: 16px; cursor: pointer; }
-.campaign-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.campaign-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; } margin-bottom: 4px; }
 .campaign-desc { font-size: 11px; color: #8a8480; margin-bottom: 12px; }
 .campaign-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .cs-item { text-align: center; }
 .cs-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #c97a3b; }
 .cs-label { font-size: 9px; color: #8a8480; text-transform: uppercase; letter-spacing: 0.06em; }
-.campaign-last-send { font-size: 10px; color: #E1D8CE; margin-top: 10px; }
+.campaign-last-send { font-size: 10px; color: #bbb; margin-top: 10px; }
 .expand-toggle { font-size: 11px; color: #7A3B14; cursor: pointer; margin-top: 8px; user-select: none; }
 .expand-toggle:hover { color: #c97a3b; }
 
 /* Expandable Detail */
 .campaign-detail { display: none; border-top: 1px solid #E8E4DE; padding: 12px 16px; }
 .campaign-detail.open { display: block; }
-.email-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #F0EDE8; font-size: 12px; }
+.email-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0eeeb; font-size: 12px; }
 .email-row:last-child { border-bottom: none; }
-.er-label { color: #1a1a1a; font-weight: 500; }
+.er-label { color: #FFFFFF; font-weight: 500; }
 .er-subject { color: #8a8480; font-size: 11px; margin-left: 8px; }
 .er-stats { display: flex; gap: 16px; color: #8a8480; font-size: 11px; }
 .er-stat-val { color: #c97a3b; font-weight: 600; }
@@ -57,13 +57,13 @@ body { background: #FFFFFF; font-family: 'Work Sans', sans-serif; color: #1a1a1a
 .activity-feed { padding: 0 24px 24px; }
 .activity-table { width: 100%; border-collapse: collapse; }
 .activity-table th { font-size: 10px; color: #8a8480; text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 12px; text-align: left; border-bottom: 1px solid #E1D8CE; }
-.activity-table td { font-size: 12px; padding: 10px 12px; border-bottom: 1px solid #F0EDE8; color: #1a1a1a; }
-.activity-table tr:hover td { background: rgba(122,59,20,0.1); }
+.activity-table td { font-size: 12px; padding: 10px 12px; border-bottom: 1px solid #f0eeeb; color: #1a1a1a; } }
+.activity-table tr:hover td { background: rgba(184,115,51,0.08); }
 .td-muted { color: #8a8480; }
 .td-campaign { color: #c97a3b; font-weight: 500; }
 
 .loading { text-align: center; padding: 40px; color: #8a8480; font-size: 14px; }
-.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #E1D8CE; }
+.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #bbb; }
 
 @media (max-width: 768px) {
   .campaigns-grid { grid-template-columns: 1fr; padding: 8px 16px 16px; }
