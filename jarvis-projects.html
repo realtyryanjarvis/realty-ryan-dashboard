@@ -221,14 +221,70 @@ const DEFAULT_CARDS = [
   {id:22,name:'Erica Finley — Hot Buyer Lead',desc:'Add to FUB as hot buyer lead (name currently misspelled as "Finely" in FUB). Get contact details and buyer criteria from Ryan.',biz:'realty-ryan',priority:'high',status:'up-next',assignee:'together',date:'2026-02-18'}
 ];
 
-const LS = {
-  get(k,d){ try{return JSON.parse(localStorage.getItem('jp_'+k))||d}catch{return d}},
-  set(k,v){localStorage.setItem('jp_'+k,JSON.stringify(v))}
+// Firebase Realtime DB — live sync, no localStorage
+const FB_BASE = 'https://realtyryan-dashboard-default-rtdb.firebaseio.com/realty-ryan/jarvis_projects';
+
+const FB = {
+  async get() {
+    try {
+      const r = await fetch(`${FB_BASE}/cards.json`);
+      const data = await r.json();
+      if (!data) return null;
+      // Firebase stores as object or array — normalize to array
+      if (Array.isArray(data)) return data.filter(Boolean);
+      return Object.values(data);
+    } catch(e) { console.error('FB get error:', e); return null; }
+  },
+  async set(cards) {
+    try {
+      // Store as object keyed by id for better Firebase behavior
+      const obj = {};
+      cards.forEach(c => { obj[c.id] = c; });
+      await fetch(`${FB_BASE}/cards.json`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(obj)
+      });
+    } catch(e) { console.error('FB set error:', e); }
+  },
+  async init(defaults) {
+    const existing = await FB.get();
+    if (existing && existing.length > 0) return existing;
+    // First run — seed Firebase with defaults
+    await FB.set(defaults);
+    return defaults;
+  },
+  // Real-time listener using SSE (Server-Sent Events)
+  listen(callback) {
+    const evtSource = new EventSource(`${FB_BASE}/cards.json?ns=realtyryan-dashboard-default-rtdb`);
+    evtSource.addEventListener('put', (e) => {
+      try {
+        const msg = JSON.parse(e.data);
+        if (msg.path === '/') {
+          // Full update
+          const data = msg.data;
+          if (!data) return;
+          const arr = Array.isArray(data) ? data.filter(Boolean) : Object.values(data);
+          callback(arr);
+        }
+      } catch(err) { console.error('SSE parse error:', err); }
+    });
+    evtSource.addEventListener('patch', (e) => {
+      // Partial update — just refetch
+      FB.get().then(data => { if (data) callback(data); });
+    });
+    evtSource.onerror = () => {
+      // Reconnect after 5s
+      setTimeout(() => FB.listen(callback), 5000);
+    };
+    return evtSource;
+  }
 };
 
 let currentFilter = 'all';
-let cards = LS.get('cards', DEFAULT_CARDS);
+let cards = DEFAULT_CARDS; // Will be replaced by Firebase data on init
 let dragCardId = null;
+let fbReady = false;
 
 const ASSIGNEE_MAP = {
   jarvis: {emoji:'🤖', label:'Jarvis', cls:'avatar-jarvis'},
@@ -330,7 +386,7 @@ function dropCard(e, colEl) {
   if (card && card.status !== newStatus) {
     card.status = newStatus;
     card.date = new Date().toISOString().slice(0,10);
-    LS.set('cards', cards);
+    FB.set(cards);
     render();
   }
   dragCardId = null;
@@ -381,7 +437,7 @@ function saveCard(){
   if(!card.name) return alert('Project name required');
   if(id){ cards = cards.map(c => c.id === parseInt(id) ? card : c); }
   else { cards.push(card); }
-  LS.set('cards', cards);
+  FB.set(cards);
   closeModal();
   render();
 }
@@ -390,7 +446,7 @@ function deleteCard(){
   const id = parseInt(document.getElementById('card-id').value);
   if(confirm('Delete this project?')){
     cards = cards.filter(c => c.id !== id);
-    LS.set('cards', cards);
+    FB.set(cards);
     closeModal();
     render();
   }
@@ -418,7 +474,19 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 renderTabs();
-render();
+
+// Initialize from Firebase, then listen for real-time updates
+(async () => {
+  cards = await FB.init(DEFAULT_CARDS);
+  fbReady = true;
+  render();
+  
+  // Real-time listener — updates board when Firebase changes (other devices, Jarvis, etc.)
+  FB.listen((newCards) => {
+    cards = newCards;
+    render();
+  });
+})();
 </script>
 </body>
 </html>
