@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charlotte Neighborhoods | Realty Ryan & Associates</title>
+<meta name="description" content="Explore Charlotte's best neighborhoods — Myers Park, Dilworth, South End, Eastover, and more. Your guide to living in Charlotte, NC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style id="gate-style">.site-hidden{display:none!important}</style>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f6;--primary:#201408;--accent:#793315;--border:#ded9d3;--muted:#7b7269;--white:#fff;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--primary);-webkit-font-smoothing:antialiased}
+.container{max-width:1280px;margin:0 auto;padding:0 clamp(24px,5vw,64px)}
+.section-pad{padding:clamp(80px,10vw,140px) 0}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400}
+a{color:inherit;text-decoration:none}
+
+/* PASSWORD GATE */
+#password-gate{position:fixed;inset:0;z-index:9999;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-direction:column}
+#password-gate .gate-box{text-align:center;max-width:360px;padding:24px}
+#password-gate h2{font-family:var(--serif);color:var(--white);font-size:28px;margin-bottom:8px;font-weight:400}
+#password-gate p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:32px}
+#password-gate input{width:100%;padding:14px 20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-family:var(--sans);border-radius:2px;outline:none;margin-bottom:16px;text-align:center;letter-spacing:.08em}
+#password-gate input::placeholder{color:rgba(255,255,255,.3)}
+#password-gate button{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:600;cursor:pointer;font-family:var(--sans)}
+#password-gate .gate-error{color:#c0392b;font-size:12px;margin-top:12px;opacity:0;transition:opacity .3s}
+#password-gate .gate-error.show{opacity:1}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;transition:background .4s,padding .4s,backdrop-filter .4s}
+.nav.scrolled{background:rgba(32,20,8,.92);backdrop-filter:blur(20px);padding:14px 0}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 clamp(24px,5vw,64px);display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--serif);font-size:18px;color:var(--white);letter-spacing:.04em;font-weight:500}
+.nav-logo span{font-weight:300;opacity:.7}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.75);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--white)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.nav-toggle span{display:block;width:24px;height:1.5px;background:#fff;margin:5px 0;transition:.3s}
+
+/* HERO */
+.hero{position:relative;min-height:85vh;display:flex;align-items:center;justify-content:center;background:var(--primary);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#201408 0%,#3a2510 50%,#201408 100%);z-index:0}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:900px}
+.hero-eyebrow{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.25em;color:rgba(255,255,255,.45);margin-bottom:28px;font-weight:500}
+.hero h1{font-size:clamp(42px,7vw,84px);color:var(--white);line-height:1.06;font-weight:400;margin-bottom:24px}
+.hero h1 em{font-style:italic}
+.hero-sub{font-size:clamp(14px,1.6vw,17px);color:rgba(255,255,255,.5);line-height:1.7;max-width:540px;margin:0 auto 48px;font-weight:300}
+.hero-cta{display:inline-block;padding:16px 48px;border:1px solid rgba(255,255,255,.25);color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.2em;font-weight:500;transition:all .4s}
+.hero-cta:hover{background:var(--white);color:var(--primary)}
+
+/* OVERVIEW */
+.overview{text-align:center}
+.overview h2{font-size:clamp(28px,4vw,44px);margin-bottom:20px}
+.overview .divider{width:48px;height:1px;background:var(--accent);margin:24px auto}
+.overview p{max-width:720px;margin:0 auto 24px;font-size:clamp(15px,1.4vw,17px);line-height:1.8;color:var(--muted);font-weight:300}
+.overview p.lead{font-size:clamp(16px,1.6vw,19px);color:var(--primary);font-weight:400;line-height:1.7}
+
+/* NEIGHBORHOODS */
+.neighborhoods h2{font-size:clamp(28px,4vw,44px);text-align:center;margin-bottom:16px}
+.neighborhoods .section-sub{text-align:center;color:var(--muted);font-size:14px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:60px}
+.hood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:32px}
+.hood-card{background:var(--white);border:1px solid var(--border);padding:40px 36px;transition:transform .3s,box-shadow .3s}
+.hood-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(32,20,8,.08)}
+.hood-card h3{font-size:24px;margin-bottom:6px}
+.hood-card .hood-tagline{font-size:13px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;font-weight:500;margin-bottom:20px}
+.hood-card p{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:20px;font-weight:300}
+.hood-meta{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:12px;color:var(--primary);border-top:1px solid var(--border);padding-top:20px}
+.hood-meta span{display:flex;align-items:center;gap:6px}
+.hood-meta .label{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:500;font-size:10px}
+
+/* MARKET SNAPSHOT */
+.market{background:var(--primary);color:var(--white)}
+.market h2{font-size:clamp(28px,4vw,44px);text-align:center;margin-bottom:16px}
+.market .section-sub{text-align:center;color:rgba(255,255,255,.45);font-size:14px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:60px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;text-align:center}
+.stat-num{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px;color:var(--white)}
+.stat-label{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.45);font-weight:500}
+.market-note{text-align:center;color:rgba(255,255,255,.35);font-size:12px;margin-top:48px}
+
+/* CTA */
+.cta-section{text-align:center}
+.cta-section h2{font-size:clamp(28px,4vw,48px);margin-bottom:16px}
+.cta-section .divider{width:48px;height:1px;background:var(--accent);margin:24px auto}
+.cta-section p{max-width:560px;margin:0 auto 40px;font-size:16px;color:var(--muted);line-height:1.7;font-weight:300}
+.cta-btn{display:inline-block;padding:18px 56px;background:var(--accent);color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.2em;font-weight:600;transition:background .3s}
+.cta-btn:hover{background:#8f3d1a}
+.cta-links{margin-top:32px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.cta-links a{font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .3s}
+.cta-links a:hover{color:var(--accent)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:48px 0;text-align:center}
+.footer p{font-size:12px;color:var(--muted)}
+
+/* TEXT RYAN */
+.text-ryan{position:fixed;bottom:28px;right:28px;z-index:90;display:flex;align-items:center;gap:8px;padding:14px 28px;background:var(--accent);color:#fff;border-radius:999px;font-size:13px;font-weight:600;font-family:var(--sans);box-shadow:0 4px 20px rgba(121,51,21,.35);transition:transform .3s,box-shadow .3s;text-decoration:none}
+.text-ryan:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(121,51,21,.45)}
+.text-ryan svg{width:18px;height:18px;fill:currentColor}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(32,20,8,.97);flex-direction:column;align-items:center;justify-content:center;gap:28px}
+  .nav-links.open{display:flex}
+  .nav-toggle{display:block}
+  .hood-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .hero{min-height:70vh}
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="password-gate">
+  <div class="gate-box">
+    <h2>Realty Ryan & Associates</h2>
+    <p>Enter the access code to continue</p>
+    <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+    <button id="gate-submit">Enter</button>
+    <div class="gate-error" id="gate-error">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/realtyryanhomes/" class="nav-logo">Realty Ryan <span>& Associates</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/realtyryanhomes/">Home</a></li>
+      <li><a href="/realtyryanhomes/listings.html">Listings</a></li>
+      <li><a href="/realtyryanhomes/builders.html">Builders</a></li>
+      <li><a href="/realtyryanhomes/charlotte.html">Charlotte</a></li>
+      <li><a href="/realtyryanhomes/lake-norman.html">Lake Norman</a></li>
+      <li><a href="/realtyryanhomes/belmont.html">Belmont</a></li>
+      <li><a href="/realtyryanhomes/south-carolina.html">South Carolina</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Explore the Queen City</div>
+    <h1>Charlotte, <em>North Carolina</em></h1>
+    <p class="hero-sub">A city of old oaks and new ambition. Where Southern roots meet modern momentum — and every neighborhood tells a different story.</p>
+    <a href="#neighborhoods" class="hero-cta">Explore Neighborhoods</a>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview section-pad">
+  <div class="container fade-in">
+    <h2>Why Charlotte</h2>
+    <div class="divider"></div>
+    <p class="lead">Charlotte doesn't ask for your attention — it earns it. The second-largest financial hub in the country, a culinary scene that punches way above its weight, and a quality of life that keeps pulling people from the coasts. Four mild seasons. No state income tax on the horizon debates. An airport that can get you anywhere nonstop.</p>
+    <p>The metro has added more than 200,000 residents in the past five years, yet Charlotte still feels navigable — a city of distinct neighborhoods, each with its own rhythm. From the century-old canopy of Myers Park to the crane-dotted skyline of South End, from the gallery walks of NoDa to the quiet estates of Eastover, the city offers range that few Sun Belt metros can match. It's a place where a young professional, a growing family, and a downsizing empty-nester can all find exactly what they're looking for — often within a ten-minute drive of each other.</p>
+    <p>This is Charlotte right now: established enough to trust, dynamic enough to bet on.</p>
+  </div>
+</section>
+
+<!-- NEIGHBORHOODS -->
+<section class="neighborhoods section-pad" id="neighborhoods">
+  <div class="container">
+    <h2 class="fade-in">The Neighborhoods</h2>
+    <div class="section-sub fade-in">Where Charlotte lives</div>
+    <div class="hood-grid">
+
+      <div class="hood-card fade-in">
+        <h3>Myers Park</h3>
+        <div class="hood-tagline">Old Charlotte at its finest</div>
+        <p>Tree-lined boulevards, brick Georgian estates, and the kind of quiet confidence that comes from a century of good taste. Queens Road winds through like a postcard. Myers Park Traditional, Selwyn Elementary, and the proximity to Freedom Park make this the neighborhood Charlotte families aspire to.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $750K – $5M+</span>
+          <span><span class="label">Schools</span> Myers Park High, Selwyn Elem</span>
+          <span><span class="label">Vibe</span> Established, elegant, family</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Dilworth</h3>
+        <div class="hood-tagline">Charlotte's most walkable neighborhood</div>
+        <p>Historic bungalows with deep front porches, a Saturday morning scene at Latta Park, and East Boulevard's stretch of restaurants and coffee shops that make car keys optional. Dilworth has the rare combination of genuine walkability and residential calm that most neighborhoods only promise.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $600K – $2.5M</span>
+          <span><span class="label">Schools</span> Dilworth Elementary, Myers Park High</span>
+          <span><span class="label">Vibe</span> Walkable, historic, community-driven</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>South End</h3>
+        <div class="hood-tagline">Where the energy is</div>
+        <p>The LYNX light rail is the spine, breweries and rooftop bars are the personality, and a steady stream of new high-rises and townhomes keep the skyline changing. South End is Charlotte's engine for young professionals — urban without the friction, social without trying too hard.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $350K – $1.2M</span>
+          <span><span class="label">Schools</span> Sedgefield Middle, South Meck High</span>
+          <span><span class="label">Vibe</span> Urban, social, transit-connected</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Sedgefield</h3>
+        <div class="hood-tagline">South End's quieter neighbor</div>
+        <p>Right next door to South End but with a residential heartbeat. New construction is blending with midcentury originals, Park Road Shopping Center anchors daily life, and the value proposition here — for now — is one of Charlotte's best-kept secrets. That window is closing.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $450K – $1.5M</span>
+          <span><span class="label">Schools</span> Sedgefield Elementary, South Meck High</span>
+          <span><span class="label">Vibe</span> Up-and-coming, new construction, value</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Plaza Midwood</h3>
+        <div class="hood-tagline">Eclectic. Unapologetic.</div>
+        <p>Central Avenue is the corridor — taquerias next to craft cocktail bars next to vintage shops. Plaza Midwood is where Charlotte's creative class eats, drinks, and argues about what Charlotte used to be. The homes range from Craftsman bungalows to bold new builds, and the vibe is unmistakably its own.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $400K – $1.2M</span>
+          <span><span class="label">Schools</span> Shamrock Gardens Elem, Garinger High</span>
+          <span><span class="label">Vibe</span> Eclectic, foodie, independent</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>NoDa</h3>
+        <div class="hood-tagline">Charlotte's arts district</div>
+        <p>Galleries, murals, live music, and the kind of breweries where the bartender remembers your order. NoDa — North Davidson — has been Charlotte's creative heart for two decades. The monthly gallery crawl still draws crowds, and the neighborhood has held onto its soul even as investment has poured in.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $350K – $900K</span>
+          <span><span class="label">Schools</span> Highland Mill Montessori, North Meck High</span>
+          <span><span class="label">Vibe</span> Artistic, creative, brewery culture</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Villa Heights</h3>
+        <div class="hood-tagline">Charlotte's hottest infill market</div>
+        <p>Optimist Hall turned this neighborhood into a destination, and builders followed. Modern new construction on every block, walkable to NoDa's galleries and restaurants, and a pace of transformation that makes last year's comps irrelevant. If you want to be ahead of the curve, this is the curve.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $500K – $1.1M</span>
+          <span><span class="label">Schools</span> Villa Heights Elem, Garinger High</span>
+          <span><span class="label">Vibe</span> New construction, walkable, momentum</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Eastover</h3>
+        <div class="hood-tagline">Ultra-luxury. Ultra-private.</div>
+        <p>Charlotte's most prestigious residential enclave. Gated estates on sprawling lots, mature hardwoods, and the kind of privacy that money can buy when you know where to spend it. Close to SouthPark's shopping and dining, but a world apart in feel. This is legacy real estate.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $1.5M – $8M+</span>
+          <span><span class="label">Schools</span> Eastover Elementary, Myers Park High</span>
+          <span><span class="label">Vibe</span> Estate living, private, prestigious</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Ballantyne</h3>
+        <div class="hood-tagline">Suburban luxury, corporate hub</div>
+        <p>Golf courses, top-rated schools, and a corporate corridor that keeps the talent local. Ballantyne is Charlotte's answer to the family that wants space, polish, and a 15-minute commute. The Ballantyne Hotel, Stonecrest shopping, and a manicured community feel make this south Charlotte's gold standard for suburban living.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $500K – $2.5M</span>
+          <span><span class="label">Schools</span> Ardrey Kell High, Community House Middle</span>
+          <span><span class="label">Vibe</span> Family, golf, corporate, polished</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Mammoth Oaks</h3>
+        <div class="hood-tagline">New luxury in 28270</div>
+        <p>A boutique luxury subdivision in one of Charlotte's most sought-after zip codes. New construction with the finishes and floorplans that today's buyers actually want, zoned for Providence Day and Ardrey Kell — the school pairing that drives south Charlotte's premium. Limited inventory, high demand.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $900K – $1.8M</span>
+          <span><span class="label">Schools</span> Providence Day, Ardrey Kell High</span>
+          <span><span class="label">Vibe</span> New luxury, elite schools, exclusive</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>SouthPark</h3>
+        <div class="hood-tagline">Shopping, dining, refined living</div>
+        <p>Anchored by SouthPark Mall and the boutique corridor of Phillips Place, this is Charlotte's commercial and social center of gravity for the well-heeled. High-end condos, renovated ranches, and new custom builds share space with some of the city's best restaurants. Central to everything, convenient to everyone.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $500K – $3M+</span>
+          <span><span class="label">Schools</span> Sharon Elementary, South Meck High</span>
+          <span><span class="label">Vibe</span> Upscale, convenient, dining destination</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Cotswold</h3>
+        <div class="hood-tagline">Central and underrated</div>
+        <p>Cotswold Village shops give it a neighborhood anchor, the location is unbeatable — central to Uptown, SouthPark, and Plaza Midwood — and the housing stock is an interesting mix of midcentury ranches and contemporary new builds. It's the kind of neighborhood that locals know and newcomers discover second.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $400K – $1.5M</span>
+          <span><span class="label">Schools</span> Cotswold Elementary, Myers Park High</span>
+          <span><span class="label">Vibe</span> Central, village feel, mix of old + new</span>
+        </div>
+      </div>
+
+      <div class="hood-card fade-in">
+        <h3>Uptown</h3>
+        <div class="hood-tagline">The city center</div>
+        <p>Panthers, Hornets, Spectrum Center, the epicenter of Charlotte's corporate life — and an increasingly interesting residential play. High-rise condos with skyline views, walkable nightlife, and the pulse of a city that's still figuring out how urban it wants to be. For the buyer who wants to be in the middle of it all.</p>
+        <div class="hood-meta">
+          <span><span class="label">Price Range</span> $250K – $1.5M</span>
+          <span><span class="label">Schools</span> First Ward Elem, various magnets</span>
+          <span><span class="label">Vibe</span> Urban core, nightlife, condos, corporate</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MARKET SNAPSHOT -->
+<section class="market section-pad">
+  <div class="container">
+    <h2 class="fade-in">Market Snapshot</h2>
+    <div class="section-sub fade-in">Charlotte Metro — Early 2026</div>
+    <div class="stat-grid fade-in">
+      <div>
+        <div class="stat-num">$425K</div>
+        <div class="stat-label">Median Home Price</div>
+      </div>
+      <div>
+        <div class="stat-num">28</div>
+        <div class="stat-label">Avg Days on Market</div>
+      </div>
+      <div>
+        <div class="stat-num">2.1</div>
+        <div class="stat-label">Months of Inventory</div>
+      </div>
+      <div>
+        <div class="stat-num">+4.8%</div>
+        <div class="stat-label">Year-over-Year Growth</div>
+      </div>
+    </div>
+    <p class="market-note">Figures are approximate and reflect current market conditions. Contact Ryan for neighborhood-specific data.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section section-pad">
+  <div class="container fade-in">
+    <h2>Thinking About Charlotte?</h2>
+    <div class="divider"></div>
+    <p>Whether you're relocating, investing, or just exploring — let's talk about which neighborhood fits your life. No pressure, just perspective from someone who knows every street.</p>
+    <a href="sms:5089542159" class="cta-btn">Text Ryan</a>
+    <div class="cta-links">
+      <a href="tel:5089542159">Call 508-954-2159</a>
+      <a href="mailto:ryanpalmer@hmproperties.com">Email Ryan</a>
+      <a href="https://search.realtyryan.com" target="_blank">Search Listings</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Realty Ryan & Associates. Charlotte, North Carolina.</p>
+  </div>
+</footer>
+
+<!-- TEXT RYAN BUTTON -->
+<a href="sms:5089542159" class="text-ryan">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+  Text Ryan
+</a>
+
+<script>
+// Password gate
+(function(){
+  const k='rra_auth';
+  if(sessionStorage.getItem(k)==='1'){document.getElementById('password-gate').remove();return}
+  document.querySelectorAll('body > *:not(#password-gate):not(script):not(style)').forEach(el=>el.classList.add('site-hidden'));
+  document.getElementById('gate-submit').addEventListener('click',tryLogin);
+  document.getElementById('gate-pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin()});
+  function tryLogin(){
+    const pw=document.getElementById('gate-pw').value;
+    if(pw==='Swim5life50!'){
+      sessionStorage.setItem(k,'1');
+      document.getElementById('password-gate').remove();
+      document.querySelectorAll('.site-hidden').forEach(el=>el.classList.remove('site-hidden'));
+      document.getElementById('gate-style')?.remove();
+    }else{
+      document.getElementById('gate-error').classList.add('show');
+      document.getElementById('gate-pw').value='';
+    }
+  }
+})();
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)});
+
+// Mobile nav toggle
+document.getElementById('nav-toggle').addEventListener('click',()=>{
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+// Fade-in on scroll
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

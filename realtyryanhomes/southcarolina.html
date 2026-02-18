@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South Carolina | Realty Ryan &amp; Associates</title>
+<meta name="description" content="Explore South Carolina's Charlotte metro communities — Fort Mill, Rock Hill, Tega Cay, Lake Wylie, Indian Land & Clover. Lower taxes, larger lots, lake access.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #f8f7f6;
+  --primary: #201408;
+  --accent: #793315;
+  --border: #ded9d3;
+  --muted: #7b7269;
+  --white: #ffffff;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--primary); -webkit-font-smoothing: antialiased; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px); }
+.section-pad { padding: clamp(80px, 10vw, 140px) 0; }
+.serif { font-family: var(--serif); }
+.accent { color: var(--accent); }
+.muted { color: var(--muted); }
+.uppercase { text-transform: uppercase; letter-spacing: 0.15em; font-size: 11px; font-weight: 600; }
+.divider { width: 48px; height: 1px; background: var(--accent); margin: 24px 0; }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 0;
+  transition: background 0.4s, padding 0.4s;
+}
+.nav.scrolled {
+  background: rgba(32, 20, 8, 0.92);
+  backdrop-filter: blur(20px); padding: 14px 0;
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo { font-family: var(--serif); font-size: 18px; color: var(--white); letter-spacing: 0.04em; font-weight: 500; }
+.nav-logo span { font-weight: 300; opacity: 0.7; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,0.75); font-size: 12px; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 500; transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span { display: block; width: 24px; height: 1.5px; background: #fff; margin: 5px 0; transition: 0.3s; }
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--primary); overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg, #201408 0%, #3a2510 40%, #1a2a1a 70%, #201408 100%);
+}
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(121,51,21,0.15) 0%, transparent 70%);
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: center;
+  padding: 0 24px; max-width: 900px;
+}
+.hero-eyebrow {
+  font-family: var(--sans); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.25em; color: rgba(255,255,255,0.45); margin-bottom: 32px; font-weight: 500;
+}
+.hero h1 {
+  font-size: clamp(44px, 8vw, 96px); color: var(--white); line-height: 1.05;
+  font-weight: 400; margin-bottom: 28px;
+}
+.hero h1 em { font-style: italic; }
+.hero-sub {
+  font-size: clamp(14px, 1.6vw, 17px); color: rgba(255,255,255,0.5);
+  line-height: 1.7; max-width: 520px; margin: 0 auto 48px; font-weight: 300;
+}
+.hero-cta {
+  display: inline-block; padding: 16px 48px;
+  border: 1px solid rgba(255,255,255,0.25); color: var(--white);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em;
+  font-weight: 500; transition: all 0.4s;
+}
+.hero-cta:hover { background: var(--white); color: var(--primary); }
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2;
+  color: rgba(255,255,255,0.3); font-size: 11px; letter-spacing: 0.15em;
+  text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.hero-scroll::after {
+  content: ''; width: 1px; height: 40px; background: rgba(255,255,255,0.2);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse { 0%,100% { opacity: 0.2; } 50% { opacity: 0.6; } }
+
+/* OVERVIEW */
+.overview { background: var(--bg); }
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 8vw, 100px); align-items: start; }
+.overview-left h2 { font-size: clamp(28px, 3.5vw, 44px); line-height: 1.2; margin-bottom: 24px; }
+.overview-left p { color: var(--muted); line-height: 1.8; font-size: 15px; font-weight: 300; margin-bottom: 16px; }
+.overview-highlights { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
+.overview-highlights li { display: flex; gap: 16px; align-items: flex-start; }
+.overview-highlights .hl-icon {
+  width: 40px; height: 40px; min-width: 40px; border-radius: 50%;
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.overview-highlights .hl-text h4 { font-size: 16px; font-weight: 500; font-family: var(--sans); margin-bottom: 4px; }
+.overview-highlights .hl-text p { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.6; margin: 0; }
+
+/* TOWN CARDS */
+.towns { background: var(--primary); color: var(--white); }
+.towns-header { text-align: center; margin-bottom: clamp(48px, 6vw, 80px); }
+.towns-header h2 { font-size: clamp(28px, 3.5vw, 44px); margin-bottom: 16px; }
+.towns-header p { color: rgba(255,255,255,0.45); font-size: 15px; font-weight: 300; max-width: 560px; margin: 0 auto; }
+.towns-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.town-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  padding: clamp(28px, 3vw, 40px); transition: all 0.4s; position: relative; overflow: hidden;
+}
+.town-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.town-card:hover::before { transform: scaleX(1); }
+.town-card:hover { background: rgba(255,255,255,0.07); }
+.town-card-eyebrow {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--accent); margin-bottom: 16px; font-weight: 600; font-family: var(--sans);
+}
+.town-card h3 { font-size: clamp(22px, 2.5vw, 30px); margin-bottom: 16px; line-height: 1.2; }
+.town-card p { color: rgba(255,255,255,0.5); font-size: 14px; line-height: 1.75; font-weight: 300; margin-bottom: 16px; }
+.town-card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.town-card-tags span {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500;
+  padding: 5px 12px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.5);
+}
+
+/* TAX SECTION */
+.tax-section { background: var(--bg); }
+.tax-inner { max-width: 860px; margin: 0 auto; text-align: center; }
+.tax-inner h2 { font-size: clamp(28px, 3.5vw, 44px); margin-bottom: 16px; }
+.tax-inner .subtitle { color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.7; margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.tax-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; }
+.tax-card {
+  padding: 32px; border: 1px solid var(--border); background: var(--white);
+}
+.tax-card h4 { font-family: var(--sans); font-size: 14px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.tax-card p { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+.tax-card .tax-highlight { font-family: var(--serif); font-size: 28px; color: var(--accent); margin-bottom: 12px; }
+
+/* MARKET SNAPSHOT */
+.market { background: var(--primary); color: var(--white); }
+.market-header { text-align: center; margin-bottom: clamp(48px, 6vw, 64px); }
+.market-header h2 { font-size: clamp(28px, 3.5vw, 44px); margin-bottom: 16px; }
+.market-header p { color: rgba(255,255,255,0.45); font-size: 15px; font-weight: 300; }
+.market-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
+.market-stat h3 { font-size: clamp(32px, 4vw, 52px); color: var(--white); margin-bottom: 8px; }
+.market-stat p { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.45); font-weight: 500; }
+.market-note { text-align: center; margin-top: 48px; color: rgba(255,255,255,0.3); font-size: 12px; font-weight: 300; }
+
+/* CTA */
+.cta-section { background: var(--bg); text-align: center; }
+.cta-section h2 { font-size: clamp(28px, 4vw, 52px); line-height: 1.15; margin-bottom: 20px; }
+.cta-section h2 em { font-style: italic; }
+.cta-section p { color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.7; max-width: 520px; margin: 0 auto 40px; }
+.cta-btn {
+  display: inline-block; padding: 18px 56px;
+  background: var(--accent); color: var(--white);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em;
+  font-weight: 600; transition: all 0.4s; border: none; cursor: pointer;
+}
+.cta-btn:hover { background: var(--primary); }
+
+/* FOOTER */
+.footer {
+  padding: 48px 0; border-top: 1px solid var(--border);
+  text-align: center; font-size: 12px; color: var(--muted); font-weight: 300;
+}
+
+/* TEXT RYAN FLOATING BUTTON */
+.text-ryan {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  background: var(--accent); color: var(--white);
+  padding: 14px 28px; border-radius: 50px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.04em; text-decoration: none;
+  box-shadow: 0 4px 24px rgba(121,51,21,0.35);
+  transition: all 0.3s;
+  display: flex; align-items: center; gap: 8px;
+}
+.text-ryan:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 32px rgba(32,20,8,0.4); }
+
+/* PASSWORD GATE */
+.auth-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--primary); display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 24px;
+}
+.auth-gate h2 { font-family: var(--serif); color: var(--white); font-size: 28px; font-weight: 400; }
+.auth-gate input {
+  padding: 14px 24px; width: 280px; border: 1px solid rgba(255,255,255,0.15);
+  background: transparent; color: var(--white); font-family: var(--sans); font-size: 14px;
+  text-align: center; outline: none; letter-spacing: 0.08em;
+}
+.auth-gate input::placeholder { color: rgba(255,255,255,0.3); }
+.auth-gate input:focus { border-color: var(--accent); }
+.auth-gate .auth-error { color: var(--accent); font-size: 12px; height: 16px; }
+.auth-gate .auth-sub { color: rgba(255,255,255,0.35); font-size: 12px; font-weight: 300; }
+
+/* MOBILE NAV */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 99;
+  background: rgba(32,20,8,0.97); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: var(--white); font-size: 18px; font-family: var(--serif);
+  opacity: 0.8; transition: opacity 0.3s;
+}
+.mobile-menu a:hover { opacity: 1; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .towns-grid { grid-template-columns: repeat(2, 1fr); }
+  .market-stats { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .towns-grid { grid-template-columns: 1fr; }
+  .tax-grid { grid-template-columns: 1fr; }
+  .market-stats { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div class="auth-gate" id="authGate">
+  <h2>Realty Ryan &amp; Associates</h2>
+  <p class="auth-sub">Enter password to continue</p>
+  <input type="password" id="authInput" placeholder="Password" autocomplete="off">
+  <p class="auth-error" id="authError"></p>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/realtyryanhomes/" class="nav-logo">Realty Ryan <span>&amp; Associates</span></a>
+    <ul class="nav-links">
+      <li><a href="/realtyryanhomes/">Home</a></li>
+      <li><a href="/realtyryanhomes/charlotte.html">Charlotte</a></li>
+      <li><a href="/realtyryanhomes/lakenorman.html">Lake Norman</a></li>
+      <li><a href="/realtyryanhomes/belmont.html">Belmont</a></li>
+      <li><a href="/realtyryanhomes/southcarolina.html" style="color:var(--white)">South Carolina</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/realtyryanhomes/">Home</a>
+  <a href="/realtyryanhomes/charlotte.html">Charlotte</a>
+  <a href="/realtyryanhomes/lakenorman.html">Lake Norman</a>
+  <a href="/realtyryanhomes/belmont.html">Belmont</a>
+  <a href="/realtyryanhomes/southcarolina.html">South Carolina</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Charlotte Metro &middot; York County</p>
+    <h1><em>South Carolina</em></h1>
+    <p class="hero-sub">Just across the state line — where lower taxes, larger lots, and lake living meet Charlotte's momentum.</p>
+    <a href="#overview" class="hero-cta">Discover the SC Side</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview section-pad" id="overview">
+  <div class="container">
+    <div class="overview-grid">
+      <div class="overview-left">
+        <p class="uppercase accent">Why South Carolina</p>
+        <div class="divider"></div>
+        <h2>Charlotte's Growth Extends <em>South of the Border</em></h2>
+        <p>York County, South Carolina, has become one of the fastest-growing corridors in the nation — and for good reason. Just 20 to 30 minutes from Uptown Charlotte via I-77, the SC side offers newer communities, significantly larger lots, lake access, and a tax structure that puts more money back in your pocket.</p>
+        <p>Top-rated Fort Mill and Clover school districts, massive retail and commercial growth in Indian Land, and the waterfront lifestyle of Lake Wylie and Tega Cay make this region one of the most compelling options in the greater Charlotte market.</p>
+      </div>
+      <div>
+        <ul class="overview-highlights">
+          <li>
+            <div class="hl-icon">💰</div>
+            <div class="hl-text">
+              <h4>Tax Advantages</h4>
+              <p>Lower property tax rates, homestead exemptions, and no tax on groceries give SC homeowners a meaningful edge.</p>
+            </div>
+          </li>
+          <li>
+            <div class="hl-icon">🏫</div>
+            <div class="hl-text">
+              <h4>Top-Rated Schools</h4>
+              <p>Fort Mill schools consistently rank among the best in the Carolinas, driving family migration to York County.</p>
+            </div>
+          </li>
+          <li>
+            <div class="hl-icon">⛵</div>
+            <div class="hl-text">
+              <h4>Lake Access</h4>
+              <p>Lake Wylie offers waterfront living, boating, and year-round outdoor recreation minutes from the city.</p>
+            </div>
+          </li>
+          <li>
+            <div class="hl-icon">🚀</div>
+            <div class="hl-text">
+              <h4>I-77 Growth Corridor</h4>
+              <p>Massive infrastructure investment and commercial development along I-77 from Fort Mill to Indian Land.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOWNS -->
+<section class="towns section-pad" id="towns">
+  <div class="container">
+    <div class="towns-header">
+      <p class="uppercase" style="color:var(--accent); margin-bottom:16px;">Communities</p>
+      <h2>Where to Live on the SC Side</h2>
+      <p>Six distinct areas, each with its own character — from walkable town centers to lakefront retreats.</p>
+    </div>
+    <div class="towns-grid">
+
+      <div class="town-card">
+        <p class="town-card-eyebrow">Top Growth Corridor</p>
+        <h3>Fort Mill</h3>
+        <p>The crown jewel of York County. Master-planned communities like Kingsley and Baxter blend walkable town centers with top-rated schools and a straight shot to Charlotte via I-77. Where most Charlotte-bound SC buyers start looking — and often stay.</p>
+        <div class="town-card-tags">
+          <span>Kingsley</span><span>Baxter</span><span>Top Schools</span><span>Walkable</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <p class="town-card-eyebrow">Revitalized &amp; Affordable</p>
+        <h3>Rock Hill</h3>
+        <p>South Carolina's fifth-largest city is in the middle of a renaissance. The Riverwalk along the Catawba, Knowledge Park's tech corridor, Winthrop University's campus energy, and a revitalized downtown with real restaurants and culture — all at price points well below Fort Mill.</p>
+        <div class="town-card-tags">
+          <span>Riverwalk</span><span>Winthrop</span><span>Downtown</span><span>Manchester Meadows</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <p class="town-card-eyebrow">Lake Peninsula</p>
+        <h3>Tega Cay</h3>
+        <p>A tight-knit city on a peninsula jutting into Lake Wylie. Golf course community, family-focused events year-round, and a lake lifestyle that feels like vacation. Small enough that neighbors know each other, close enough that Charlotte's still 25 minutes away.</p>
+        <div class="town-card-tags">
+          <span>Lake Wylie</span><span>Golf</span><span>Family</span><span>Tight-Knit</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <p class="town-card-eyebrow">Waterfront Living</p>
+        <h3>Lake Wylie</h3>
+        <p>The lake itself is the draw — 325 miles of shoreline straddling the NC/SC border. The SC side offers everything from luxury waterfront estates to affordable homes with lake access. The Buster Boyd Bridge connects you to Belmont and Charlotte's west side in minutes.</p>
+        <div class="town-card-tags">
+          <span>Waterfront</span><span>Boating</span><span>Buster Boyd Bridge</span><span>Luxury + Value</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <p class="town-card-eyebrow">Explosive Growth</p>
+        <h3>Indian Land</h3>
+        <p>Once a quiet crossroads, now one of the fastest-growing communities in the Southeast. Sun City caters to 55+ buyers, while new master-planned neighborhoods, retail centers, and rapidly improving schools are transforming the landscape almost monthly.</p>
+        <div class="town-card-tags">
+          <span>Sun City 55+</span><span>New Construction</span><span>Retail</span><span>Schools</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <p class="town-card-eyebrow">Small Town Charm</p>
+        <h3>Clover</h3>
+        <p>The last affordable frontier in York County. More rural, more land, and a genuine small-town feel that's increasingly hard to find this close to Charlotte. Growing fast, but still early enough to get value. Perfect for buyers who want space and a slower pace.</p>
+        <div class="town-card-tags">
+          <span>Acreage</span><span>Affordable</span><span>Rural</span><span>Growing</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TAX BENEFITS -->
+<section class="tax-section section-pad" id="taxes">
+  <div class="container">
+    <div class="tax-inner">
+      <p class="uppercase accent" style="margin-bottom:16px;">SC vs NC</p>
+      <h2>The Tax Advantage</h2>
+      <p class="subtitle">South Carolina's tax structure offers real savings for homeowners. Here's how the SC side stacks up against North Carolina.</p>
+      <div class="tax-grid">
+        <div class="tax-card">
+          <p class="tax-highlight">4%</p>
+          <h4>Owner-Occupied Rate</h4>
+          <p>SC taxes primary residences at just 4% of assessed value — compared to NC's 100% valuation method. This results in meaningfully lower annual property tax bills.</p>
+        </div>
+        <div class="tax-card">
+          <p class="tax-highlight">$50K</p>
+          <h4>Homestead Exemption</h4>
+          <p>SC homeowners 65+ (or disabled) can exempt the first $50,000 of fair market value from property taxes — a significant benefit for retirees.</p>
+        </div>
+        <div class="tax-card">
+          <p class="tax-highlight">0%</p>
+          <h4>Tax on Groceries</h4>
+          <p>South Carolina charges no state sales tax on groceries. Combined with generally lower property taxes, the day-to-day cost of living tilts in SC's favor.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET SNAPSHOT -->
+<section class="market section-pad" id="market">
+  <div class="container">
+    <div class="market-header">
+      <p class="uppercase" style="color:var(--accent); margin-bottom:16px;">Market Snapshot</p>
+      <h2>York County by the Numbers</h2>
+      <p>A look at the SC-side Charlotte metro market.</p>
+    </div>
+    <div class="market-stats">
+      <div class="market-stat">
+        <h3>$415K</h3>
+        <p>Median Sale Price</p>
+      </div>
+      <div class="market-stat">
+        <h3>18</h3>
+        <p>Avg Days on Market</p>
+      </div>
+      <div class="market-stat">
+        <h3>98.5%</h3>
+        <p>Sale-to-List Ratio</p>
+      </div>
+      <div class="market-stat">
+        <h3>+12%</h3>
+        <p>YoY Price Growth</p>
+      </div>
+    </div>
+    <p class="market-note">Source: Canopy MLS, York County. Figures approximate and subject to change.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section section-pad">
+  <div class="container">
+    <p class="uppercase accent" style="margin-bottom:16px;">Ready to Explore</p>
+    <h2>Cross the Line.<br><em>Find Your Home.</em></h2>
+    <p>Whether it's Fort Mill's top schools, Lake Wylie's waterfront, or Indian Land's brand-new builds — Ryan knows the SC side inside and out.</p>
+    <a href="sms:5089542159" class="cta-btn">Text Ryan &rarr;</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- TEXT RYAN FLOATING BUTTON -->
+<a href="sms:5089542159" class="text-ryan" id="textRyan">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  Text Ryan
+</a>
+
+<script>
+// PASSWORD GATE
+(function() {
+  const PASS = 'Swim5life50!';
+  const KEY = 'rra_auth';
+  const gate = document.getElementById('authGate');
+  const input = document.getElementById('authInput');
+  const error = document.getElementById('authError');
+
+  if (sessionStorage.getItem(KEY) === 'true') {
+    gate.style.display = 'none';
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      if (input.value === PASS) {
+        sessionStorage.setItem(KEY, 'true');
+        gate.style.display = 'none';
+        document.body.style.overflow = '';
+      } else {
+        error.textContent = 'Incorrect password';
+        input.value = '';
+        setTimeout(() => error.textContent = '', 2000);
+      }
+    }
+  });
+
+  input.focus();
+})();
+
+// NAV SCROLL
+window.addEventListener('scroll', function() {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// MOBILE MENU
+document.getElementById('navToggle').addEventListener('click', function() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+document.querySelectorAll('#mobileMenu a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
