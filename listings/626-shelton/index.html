@@ -59,7 +59,7 @@ a{color:inherit;text-decoration:none}
 
 .city-line{font-family:'Inter',sans-serif;font-size:clamp(11px,1.4vw,16px);letter-spacing:.45em;text-transform:uppercase;color:rgba(255,255,255,.7);opacity:0;animation:fadeUp .8s ease 2.4s forwards;font-weight:300;transform:translateY(12px)}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-.scroll-indicator{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fadeUp .8s ease 5.5s forwards}
+.scroll-indicator{position:absolute;bottom:36px;left:0;right:0;z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fadeUp .8s ease 5.5s forwards}
 .scroll-indicator span{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:300}
 .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--copper),transparent);animation:scrollPulse 2s ease-in-out infinite}
 @keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
@@ -385,7 +385,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
 <!-- ═══════ EDITORIAL: THE ARRIVAL ═══════ -->
 <section class="editorial" id="story">
   <div class="edit-photo">
-    <div style="width:100%;height:100%;min-height:400px;background:linear-gradient(135deg,#201408,#3a2a1a);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px"><span style="color:#793315;font-family:Playfair Display,serif;font-size:1.1rem;letter-spacing:.15em;text-transform:uppercase">Photography Coming Soon</span><span style="color:rgba(255,255,255,.4);font-size:.85rem">626 Shelton St front exterior rendering</span></div>
+    <img src="sketches/exterior-front.png" alt="626 Shelton St — Architectural Illustration" loading="lazy" style="width:100%;height:100%;min-height:400px;object-fit:cover">
   </div>
   <div class="edit-text">
     <span class="section-tag ani">The Arrival</span>
@@ -401,7 +401,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
 <!-- ═══════ EDITORIAL: THE HEART ═══════ -->
 <section class="editorial reverse">
   <div class="edit-photo">
-    <div style="width:100%;height:100%;min-height:400px;background:linear-gradient(135deg,#201408,#3a2a1a);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px"><span style="color:#793315;font-family:Playfair Display,serif;font-size:1.1rem;letter-spacing:.15em;text-transform:uppercase">Photography Coming Soon</span><span style="color:rgba(255,255,255,.4);font-size:.85rem">626 Shelton kitchen rendering</span></div>
+    <img src="sketches/kitchen.png" alt="626 Shelton Kitchen — Architectural Illustration" loading="lazy" style="width:100%;height:100%;min-height:400px;object-fit:cover">
   </div>
   <div class="edit-text">
     <span class="section-tag ani">The Heart</span>
@@ -426,7 +426,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
 <!-- ═══════ EDITORIAL: THE RETREAT ═══════ -->
 <section class="editorial">
   <div class="edit-photo">
-    <div style="width:100%;height:100%;min-height:400px;background:linear-gradient(135deg,#201408,#3a2a1a);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px"><span style="color:#793315;font-family:Playfair Display,serif;font-size:1.1rem;letter-spacing:.15em;text-transform:uppercase">Photography Coming Soon</span><span style="color:rgba(255,255,255,.4);font-size:.85rem">626 Shelton outdoor living rendering</span></div>
+    <img src="sketches/exterior-rear.png" alt="626 Shelton Outdoor Living — Architectural Illustration" loading="lazy" style="width:100%;height:100%;min-height:400px;object-fit:cover">
   </div>
   <div class="edit-text">
     <span class="section-tag ani">The Retreat</span>
@@ -451,7 +451,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
 <!-- ═══════ EDITORIAL: UPSTAIRS ═══════ -->
 <section class="editorial reverse" style="min-height:auto;background:var(--cream);border-top:1px solid var(--border)">
   <div class="edit-photo" style="min-height:400px;overflow:hidden">
-    <div style="width:100%;height:100%;min-height:400px;background:linear-gradient(135deg,#201408,#3a2a1a);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px"><span style="color:#793315;font-family:Playfair Display,serif;font-size:1.1rem;letter-spacing:.15em;text-transform:uppercase">Photography Coming Soon</span><span style="color:rgba(255,255,255,.4);font-size:.85rem">Loft rendering</span></div>
+    <img src="sketches/great-room.png" alt="626 Shelton Great Room — Architectural Illustration" loading="lazy" style="width:100%;height:100%;min-height:400px;object-fit:cover">
   </div>
   <div class="edit-text">
     <span class="section-tag ani">The Upper Level</span>
@@ -634,9 +634,11 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
     <div class="fp-stat"><div class="fp-num">1,025</div><div class="fp-lbl">3-Car Garage SF</div></div>
     <div class="fp-stat"><div class="fp-num">745</div><div class="fp-lbl">Outdoor Living SF</div></div>
   </div>
+  <!-- walkthrough CTA hidden for pre-sale — add back when ready
   <div class="walkthrough-cta ani ani-d2" style="margin-top:40px">
-    <a href="walkthrough.html">🏠 &nbsp;Explore Room by Room — Interactive Walkthrough</a>
+    <a href="walkthrough.html">Explore Room by Room — Interactive Walkthrough</a>
   </div>
+  -->
 </section>
 
 <!-- ═══════ CRAFTED BY — KEEN × REALTY RYAN ═══════ -->
@@ -671,7 +673,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
       <div class="partner-headshot-wrap"><img src="images/ryan-palmer.avif" alt="Ryan Palmer — Broker, Corcoran HM Properties" class="partner-headshot"></div>
       <h3>Realty Ryan</h3>
       <div class="partner-tagline">Your Advocate, Start to Close</div>
-      <p>Ryan Palmer — Broker with Corcoran HM Properties. Top 1% NC Realtor with 150+ transactions and Christie's International Real Estate Marketing Specialist designation.</p>
+      <p>Ryan Palmer — Broker with Corcoran HM Properties. Top 1% NC Realtor with 150+ transactions.</p>
       <p>For 626 Shelton, Ryan and Keen partnered from concept through completion — aligning the builder's craftsmanship vision with the market's desire for a home that doesn't exist anywhere else in Charlotte.</p>
       <p>From design reviews to pricing strategy to white-glove buyer experience, this listing represents the full partnership.</p>
       <a href="tel:+15089542159" class="partner-link">508-954-2159 →</a>
@@ -812,7 +814,7 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
   <img src="https://assets.cribflyer-proxy.com/cdn-cgi/image/width=500,fit=contain,rotate=0,format=auto,quality=100/5748/2/3233701/asset.jpg" alt="Ryan Palmer" class="agent-photo ani">
   <h3 class="ani ani-d1">Ryan Palmer</h3>
   <div class="agent-title ani ani-d2">Broker · Corcoran HM Properties</div>
-  <p class="agent-bio ani ani-d3">Top 1% NC Realtor. 150+ transactions. Christie's International Real Estate Marketing Specialist. Your advocate from first showing to closing table.</p>
+  <p class="agent-bio ani ani-d3">Top 1% NC Realtor. 150+ transactions. Your advocate from first showing to closing table.</p>
   <img src="https://assets.cribflyer-proxy.com/cdn-cgi/image/width=500,fit=contain,rotate=0,format=auto,quality=100/5748/3/3233842/asset.png" alt="Corcoran HM Properties" class="brokerage-logo ani ani-d4">
 </section>
 
