@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Error><Code>PermanentRedirect</Code><Message>The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint.</Message><Endpoint>pdf.s3-ap-southeast-2.amazonaws.com</Endpoint><Bucket>pdf</Bucket><RequestId>3GVJ8TS9674GRFXE</RequestId><HostId>Z9AevMrKnNE+0yu7LA9Tfy81iJVdNMm2YM753N24PN2YGGxeIe1g2QOwTo6Ozb8ggLR8QHUfUBbg8QI9O4rKD0QxXKRQKWs3</HostId></Error>
