@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Field Mapper — Realty Ryan</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #1a1a2e; color: #fff; }
+  
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; background: #16213e; border-bottom: 2px solid #0f3460;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header h1 { font-size: 18px; font-weight: 600; }
+  .header .controls { display: flex; gap: 8px; align-items: center; }
+  
+  .btn {
+    padding: 7px 14px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 12px; font-weight: 600; transition: all 0.2s;
+  }
+  .btn-primary { background: #0f3460; color: #fff; }
+  .btn-primary:hover { background: #1a4a8a; }
+  .btn-success { background: #1b8a4a; color: #fff; }
+  .btn-success:hover { background: #22a85a; }
+  .btn-danger { background: #c0392b; color: #fff; }
+  .btn-outline { background: transparent; color: #a0a0a0; border: 1px solid #333; }
+  .btn-outline:hover { border-color: #0f3460; color: #fff; }
+  
+  .main { display: flex; height: calc(100vh - 52px); }
+  
+  .sidebar {
+    width: 320px; min-width: 320px; background: #16213e;
+    border-right: 1px solid #0f3460; overflow-y: auto; padding: 12px;
+    display: flex; flex-direction: column;
+  }
+  
+  .sidebar h3 { font-size: 12px; color: #888; margin: 12px 0 8px; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .field-list { display: flex; flex-direction: column; gap: 4px; flex: 1; overflow-y: auto; }
+  
+  .field-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 10px; background: #1a1a2e; border-radius: 5px;
+    border: 1px solid transparent; cursor: pointer; transition: all 0.15s;
+  }
+  .field-item:hover { border-color: #0f3460; }
+  .field-item.active { border-color: #3498db; background: #0f3460; }
+  .field-item .field-name { font-size: 12px; font-weight: 500; }
+  .field-item .field-meta { font-size: 10px; color: #555; font-family: monospace; }
+  .field-item .delete-btn {
+    background: none; border: none; color: #555; cursor: pointer;
+    font-size: 16px; padding: 0 4px; line-height: 1;
+  }
+  .field-item .delete-btn:hover { color: #e74c3c; }
+  
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200;
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #16213e; border-radius: 12px; padding: 20px; width: 340px;
+    border: 1px solid #0f3460; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .modal h2 { font-size: 16px; margin-bottom: 16px; }
+  .modal label { font-size: 11px; color: #888; display: block; margin-bottom: 3px; margin-top: 10px; }
+  .modal input, .modal select {
+    width: 100%; padding: 8px 10px; border: 1px solid #333; border-radius: 5px;
+    background: #1a1a2e; color: #fff; font-size: 13px;
+  }
+  .modal input:focus, .modal select:focus { border-color: #3498db; outline: none; }
+  .modal .modal-actions { display: flex; gap: 8px; margin-top: 16px; }
+  .modal .modal-actions .btn { flex: 1; padding: 10px; }
+  
+  .canvas-area {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  }
+  
+  .toolbar {
+    display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+    background: #16213e; border-bottom: 1px solid #0f3460;
+  }
+  .toolbar .zoom-controls { display: flex; align-items: center; gap: 6px; }
+  .toolbar .zoom-controls .btn { padding: 4px 10px; font-size: 14px; }
+  .toolbar .zoom-label { font-size: 12px; color: #888; min-width: 45px; text-align: center; }
+  .toolbar .mode-label { font-size: 12px; color: #3498db; font-weight: 600; margin-left: auto; }
+  
+  .canvas-wrapper {
+    flex: 1; overflow: auto; position: relative; background: #0a0a15;
+    display: flex; align-items: flex-start; justify-content: center; padding: 20px;
+  }
+  
+  .page-container {
+    position: relative; cursor: crosshair; user-select: none;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+  .page-container img {
+    display: block; pointer-events: none;
+  }
+  
+  .field-marker {
+    position: absolute; background: rgba(52, 152, 219, 0.15);
+    border: 1.5px solid rgba(52, 152, 219, 0.8); border-radius: 2px;
+    cursor: move; overflow: hidden;
+    font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    display: flex; align-items: center; padding: 0 3px;
+    pointer-events: all; transition: background 0.1s;
+  }
+  .field-marker:hover { background: rgba(52, 152, 219, 0.3); }
+  .field-marker.active { border-color: #e74c3c; background: rgba(231, 76, 60, 0.2); }
+  .field-marker.type-checkbox { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.8); }
+  .field-marker.type-signature { background: rgba(155,89,182,0.15); border-color: rgba(155,89,182,0.8); }
+  .field-marker.type-initial { background: rgba(241,196,15,0.15); border-color: rgba(241,196,15,0.8); }
+  .field-marker.type-date_signed { background: rgba(230,126,34,0.15); border-color: rgba(230,126,34,0.8); }
+  
+  .field-marker .resize-handle {
+    position: absolute; bottom: 0; right: 0; width: 8px; height: 8px;
+    background: #3498db; cursor: nwse-resize; border-radius: 1px;
+  }
+  
+  .draw-rect {
+    position: absolute; border: 2px dashed #3498db; background: rgba(52,152,219,0.1);
+    pointer-events: none; z-index: 50;
+  }
+  
+  .page-nav {
+    display: flex; align-items: center; gap: 12px; justify-content: center;
+    padding: 8px; background: #16213e; border-top: 1px solid #0f3460;
+  }
+  .page-nav span { font-size: 13px; }
+  
+  .toast {
+    position: fixed; bottom: 20px; right: 20px; padding: 10px 18px;
+    background: #1b8a4a; color: #fff; border-radius: 8px; font-size: 12px;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 300;
+  }
+  .toast.show { opacity: 1; }
+  
+  .stats-row {
+    display: flex; gap: 8px; margin-bottom: 8px;
+  }
+  .stat-pill {
+    flex: 1; text-align: center; padding: 6px; background: #1a1a2e; border-radius: 5px;
+  }
+  .stat-pill .num { font-size: 18px; font-weight: 700; color: #3498db; }
+  .stat-pill .lbl { font-size: 9px; color: #666; text-transform: uppercase; }
+  
+  .instructions {
+    background: #0f3460; border-radius: 6px; padding: 10px; margin-bottom: 8px;
+    font-size: 11px; line-height: 1.5; color: #a0c4e8;
+  }
+  .instructions strong { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 Form 2-T Field Mapper</h1>
+  <div class="controls">
+    <button class="btn btn-outline" onclick="importMapping()">📥 Import</button>
+    <button class="btn btn-primary" onclick="exportMapping()">📤 Export</button>
+    <button class="btn btn-success" onclick="saveMapping()">💾 Save</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <div class="instructions">
+      <strong>Click + drag</strong> on the form to draw a field box.<br>
+      Release to set the size, then name it.<br>
+      <strong>Drag markers</strong> to reposition. <strong>Drag corner</strong> to resize.
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-pill"><div class="num" id="totalFields">0</div><div class="lbl">Fields</div></div>
+      <div class="stat-pill"><div class="num" id="totalPages">0</div><div class="lbl">Pages</div></div>
+    </div>
+    
+    <h3>Page <span id="currentPageLabel">1</span> Fields</h3>
+    <div class="field-list" id="fieldList"></div>
+    
+    <h3 style="margin-top:16px">All Fields</h3>
+    <div class="field-list" id="allFieldsList" style="max-height: 300px;"></div>
+  </div>
+  
+  <div class="canvas-area">
+    <div class="toolbar">
+      <div class="zoom-controls">
+        <button class="btn btn-outline" onclick="zoomOut()">−</button>
+        <span class="zoom-label" id="zoomLabel">100%</span>
+        <button class="btn btn-outline" onclick="zoomIn()">+</button>
+        <button class="btn btn-outline" onclick="zoomFit()">Fit</button>
+      </div>
+      <div class="mode-label">🎯 Draw mode — click & drag to create fields</div>
+    </div>
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <div class="page-container" id="pageContainer">
+        <img id="pageImage" src="images/form2t-page-1.png" alt="Form page" />
+        <div id="markersLayer"></div>
+        <div class="draw-rect" id="drawRect" style="display:none;"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="btn btn-outline" onclick="prevPage()">← Prev</button>
+      <span>Page <strong id="pageNum">1</strong> of <span id="totalPagesNav">14</span></span>
+      <button class="btn btn-outline" onclick="nextPage()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Field Modal -->
+<div class="modal-overlay" id="fieldModal">
+  <div class="modal">
+    <h2 id="modalTitle">New Field</h2>
+    <label>Field Name</label>
+    <input type="text" id="fieldName" placeholder="e.g. buyer_name, purchase_price" />
+    <label>Field Type</label>
+    <select id="fieldType">
+      <option value="text">Text</option>
+      <option value="checkbox">Checkbox ☑</option>
+      <option value="date">Date</option>
+      <option value="currency">Currency ($)</option>
+      <option value="address">Address</option>
+      <option value="signature">✍️ Signature</option>
+      <option value="initial">Initials</option>
+      <option value="date_signed">Date Signed</option>
+    </select>
+    <label>Signer (for e-sign)</label>
+    <select id="fieldSigner">
+      <option value="">N/A — auto-filled</option>
+      <option value="buyer">Buyer</option>
+      <option value="seller">Seller</option>
+      <option value="buyer_agent">Buyer's Agent</option>
+      <option value="seller_agent">Seller's Agent</option>
+    </select>
+    <label>Font Size (pt)</label>
+    <input type="number" id="fieldFontSize" value="10" min="6" max="18" />
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-success" onclick="confirmField()">✓ Add Field</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// State
+let currentPage = 1;
+const TOTAL_PAGES = 14;
+const PDF_W = 612, PDF_H = 792;
+let fieldMappings = {}; // { "page": [{ name, type, signer, x, y, w, h, fontSize }] }
+let zoom = 1;
+let activeFieldIdx = null;
+
+// Drawing state
+let isDrawing = false;
+let drawStart = null;
+let drawCurrent = null;
+
+// Drag/resize state  
+let dragState = null;
+let resizeState = null;
+
+// ===== PERSISTENCE =====
+function loadMappings() {
+  const saved = localStorage.getItem('rr_form2t_mappings');
+  if (saved) fieldMappings = JSON.parse(saved);
+  updateStats();
+}
+
+function saveMapping() {
+  localStorage.setItem('rr_form2t_mappings', JSON.stringify(fieldMappings));
+  showToast('💾 Saved!');
+}
+
+function exportMapping() {
+  const blob = new Blob([JSON.stringify(fieldMappings, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'form2t-mappings.json'; a.click();
+  showToast('📤 Exported!');
+}
+
+function importMapping() {
+  const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+  input.onchange = e => {
+    const r = new FileReader();
+    r.onload = () => {
+      fieldMappings = JSON.parse(r.result);
+      localStorage.setItem('rr_form2t_mappings', JSON.stringify(fieldMappings));
+      renderAll(); showToast('📥 Imported!');
+    };
+    r.readAsText(e.target.files[0]);
+  };
+  input.click();
+}
+
+// ===== ZOOM =====
+function setZoom(z) {
+  zoom = Math.max(0.3, Math.min(3, z));
+  const img = document.getElementById('pageImage');
+  // Base width at 100% = 850px
+  img.style.width = (850 * zoom) + 'px';
+  document.getElementById('zoomLabel').textContent = Math.round(zoom * 100) + '%';
+  renderMarkers();
+}
+function zoomIn() { setZoom(zoom + 0.15); }
+function zoomOut() { setZoom(zoom - 0.15); }
+function zoomFit() {
+  const wrapperW = document.getElementById('canvasWrapper').clientWidth - 40;
+  setZoom(wrapperW / 850);
+}
+
+// ===== PAGE NAV =====
+function goToPage(p) {
+  currentPage = Math.max(1, Math.min(TOTAL_PAGES, p));
+  document.getElementById('pageImage').src = `images/form2t-page-${currentPage}.png`;
+  document.getElementById('pageNum').textContent = currentPage;
+  document.getElementById('currentPageLabel').textContent = currentPage;
+  activeFieldIdx = null;
+  renderAll();
+}
+function prevPage() { goToPage(currentPage - 1); }
+function nextPage() { goToPage(currentPage + 1); }
+
+// ===== COORDINATE HELPERS =====
+function imgRect() { return document.getElementById('pageImage').getBoundingClientRect(); }
+function clientToPdf(clientX, clientY) {
+  const r = imgRect();
+  return {
+    x: Math.round(((clientX - r.left) / r.width) * PDF_W * 10) / 10,
+    y: Math.round(((clientY - r.top) / r.height) * PDF_H * 10) / 10
+  };
+}
+function pdfToPercent(x, y, w, h) {
+  return {
+    left: (x / PDF_W * 100) + '%',
+    top: (y / PDF_H * 100) + '%',
+    width: (w / PDF_W * 100) + '%',
+    height: (h / PDF_H * 100) + '%'
+  };
+}
+
+// ===== DRAWING (click + drag to create field box) =====
+const container = document.getElementById('pageContainer');
+const drawRect = document.getElementById('drawRect');
+
+container.addEventListener('mousedown', function(e) {
+  if (e.target.closest('.field-marker')) return;
+  if (e.button !== 0) return;
+  
+  isDrawing = true;
+  drawStart = { clientX: e.clientX, clientY: e.clientY, ...clientToPdf(e.clientX, e.clientY) };
+  drawCurrent = { ...drawStart };
+  drawRect.style.display = 'block';
+  updateDrawRect();
+  e.preventDefault();
+});
+
+document.addEventListener('mousemove', function(e) {
+  if (isDrawing) {
+    drawCurrent = { clientX: e.clientX, clientY: e.clientY, ...clientToPdf(e.clientX, e.clientY) };
+    updateDrawRect();
+    return;
+  }
+  if (dragState) {
+    const r = imgRect();
+    const dx = ((e.clientX - dragState.startClientX) / r.width) * PDF_W;
+    const dy = ((e.clientY - dragState.startClientY) / r.height) * PDF_H;
+    const fields = fieldMappings[String(currentPage)];
+    const f = fields[dragState.index];
+    f.x = Math.round((dragState.origX + dx) * 10) / 10;
+    f.y = Math.round((dragState.origY + dy) * 10) / 10;
+    renderMarkers();
+  }
+  if (resizeState) {
+    const r = imgRect();
+    const dx = ((e.clientX - resizeState.startClientX) / r.width) * PDF_W;
+    const dy = ((e.clientY - resizeState.startClientY) / r.height) * PDF_H;
+    const fields = fieldMappings[String(currentPage)];
+    const f = fields[resizeState.index];
+    f.w = Math.max(10, Math.round((resizeState.origW + dx) * 10) / 10);
+    f.h = Math.max(8, Math.round((resizeState.origH + dy) * 10) / 10);
+    renderMarkers();
+  }
+});
+
+document.addEventListener('mouseup', function(e) {
+  if (isDrawing) {
+    isDrawing = false;
+    drawRect.style.display = 'none';
+    
+    const x = Math.min(drawStart.x, drawCurrent.x);
+    const y = Math.min(drawStart.y, drawCurrent.y);
+    const w = Math.abs(drawCurrent.x - drawStart.x);
+    const h = Math.abs(drawCurrent.y - drawStart.y);
+    
+    // Minimum size to count as a draw (not just a click)
+    if (w > 5 && h > 3) {
+      pendingField = { x, y, w: Math.round(w * 10) / 10, h: Math.round(h * 10) / 10 };
+      openModal();
+    }
+    return;
+  }
+  if (dragState) {
+    dragState = null;
+    renderFieldList();
+  }
+  if (resizeState) {
+    resizeState = null;
+    renderFieldList();
+  }
+});
+
+function updateDrawRect() {
+  const r = imgRect();
+  const x1 = drawStart.clientX - r.left;
+  const y1 = drawStart.clientY - r.top;
+  const x2 = drawCurrent.clientX - r.left;
+  const y2 = drawCurrent.clientY - r.top;
+  
+  const left = Math.min(x1, x2);
+  const top = Math.min(y1, y2);
+  const w = Math.abs(x2 - x1);
+  const h = Math.abs(y2 - y1);
+  
+  // Convert to percentage of image
+  drawRect.style.left = (left / r.width * 100) + '%';
+  drawRect.style.top = (top / r.height * 100) + '%';
+  drawRect.style.width = (w / r.width * 100) + '%';
+  drawRect.style.height = (h / r.height * 100) + '%';
+}
+
+// ===== MODAL =====
+let pendingField = null;
+let editingIndex = null;
+
+function openModal(editIdx) {
+  editingIndex = editIdx !== undefined ? editIdx : null;
+  const modal = document.getElementById('fieldModal');
+  modal.classList.add('show');
+  
+  if (editingIndex !== null) {
+    const f = fieldMappings[String(currentPage)][editingIndex];
+    document.getElementById('modalTitle').textContent = 'Edit Field';
+    document.getElementById('fieldName').value = f.name;
+    document.getElementById('fieldType').value = f.type;
+    document.getElementById('fieldSigner').value = f.signer || '';
+    document.getElementById('fieldFontSize').value = f.fontSize || 10;
+  } else {
+    document.getElementById('modalTitle').textContent = 'New Field';
+    document.getElementById('fieldName').value = '';
+    document.getElementById('fieldType').value = 'text';
+    document.getElementById('fieldSigner').value = '';
+    document.getElementById('fieldFontSize').value = 10;
+  }
+  
+  setTimeout(() => document.getElementById('fieldName').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('fieldModal').classList.remove('show');
+  pendingField = null;
+  editingIndex = null;
+}
+
+function confirmField() {
+  const name = document.getElementById('fieldName').value.trim();
+  if (!name) { document.getElementById('fieldName').style.borderColor = '#e74c3c'; return; }
+  
+  const type = document.getElementById('fieldType').value;
+  const signer = document.getElementById('fieldSigner').value;
+  const fontSize = parseInt(document.getElementById('fieldFontSize').value) || 10;
+  const key = String(currentPage);
+  
+  if (editingIndex !== null) {
+    // Editing existing
+    const f = fieldMappings[key][editingIndex];
+    f.name = name; f.type = type; f.signer = signer; f.fontSize = fontSize;
+  } else if (pendingField) {
+    // New field from draw
+    if (!fieldMappings[key]) fieldMappings[key] = [];
+    fieldMappings[key].push({
+      name, type, signer, fontSize,
+      x: pendingField.x, y: pendingField.y,
+      w: pendingField.w, h: pendingField.h
+    });
+  }
+  
+  closeModal();
+  renderAll();
+  showToast(`${editingIndex !== null ? 'Updated' : 'Added'}: ${name}`);
+}
+
+document.getElementById('fieldName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') confirmField();
+  if (e.key === 'Escape') closeModal();
+});
+
+// ===== RENDER =====
+function renderMarkers() {
+  const layer = document.getElementById('markersLayer');
+  layer.innerHTML = '';
+  const fields = fieldMappings[String(currentPage)] || [];
+  
+  fields.forEach((f, i) => {
+    const marker = document.createElement('div');
+    marker.className = 'field-marker type-' + f.type + (i === activeFieldIdx ? ' active' : '');
+    
+    const pos = pdfToPercent(f.x, f.y, f.w, f.h);
+    marker.style.left = pos.left;
+    marker.style.top = pos.top;
+    marker.style.width = pos.width;
+    marker.style.height = pos.height;
+    
+    const typeIcon = { signature: '✍️', initial: '🖊', checkbox: '☑', date_signed: '📅', currency: '$' }[f.type] || '';
+    marker.textContent = typeIcon + ' ' + f.name;
+    marker.title = `${f.name} (${f.type})${f.signer ? ' — ' + f.signer : ''}\nx:${f.x} y:${f.y} w:${f.w} h:${f.h}`;
+    
+    // Click to select
+    marker.addEventListener('click', e => {
+      e.stopPropagation();
+      activeFieldIdx = i;
+      renderMarkers();
+      renderFieldList();
+    });
+    
+    // Double click to edit
+    marker.addEventListener('dblclick', e => {
+      e.stopPropagation();
+      openModal(i);
+    });
+    
+    // Drag to move
+    marker.addEventListener('mousedown', e => {
+      if (e.target.classList.contains('resize-handle')) return;
+      e.stopPropagation();
+      activeFieldIdx = i;
+      dragState = {
+        index: i,
+        startClientX: e.clientX, startClientY: e.clientY,
+        origX: f.x, origY: f.y
+      };
+      renderMarkers();
+    });
+    
+    // Resize handle
+    const handle = document.createElement('div');
+    handle.className = 'resize-handle';
+    handle.addEventListener('mousedown', e => {
+      e.stopPropagation();
+      activeFieldIdx = i;
+      resizeState = {
+        index: i,
+        startClientX: e.clientX, startClientY: e.clientY,
+        origW: f.w, origH: f.h
+      };
+    });
+    marker.appendChild(handle);
+    
+    layer.appendChild(marker);
+  });
+}
+
+function renderFieldList() {
+  const list = document.getElementById('fieldList');
+  const fields = fieldMappings[String(currentPage)] || [];
+  
+  list.innerHTML = fields.length ? fields.map((f, i) => `
+    <div class="field-item ${i === activeFieldIdx ? 'active' : ''}" onclick="selectField(${i})">
+      <div>
+        <div class="field-name">${f.name} <span style="color:#666;font-size:10px">${f.type}${f.signer ? ' · ' + f.signer : ''}</span></div>
+        <div class="field-meta">x:${f.x} y:${f.y} w:${f.w} h:${f.h}</div>
+      </div>
+      <div style="display:flex;gap:4px;">
+        <button class="delete-btn" title="Edit" onclick="event.stopPropagation();openModal(${i})" style="color:#3498db">✎</button>
+        <button class="delete-btn" title="Delete" onclick="event.stopPropagation();deleteField(${i})">×</button>
+      </div>
+    </div>
+  `).join('') : '<div style="color:#444;font-size:11px;padding:8px;">Draw a box on the form to add a field.</div>';
+  
+  // All fields
+  const allList = document.getElementById('allFieldsList');
+  let html = '';
+  let count = 0;
+  Object.keys(fieldMappings).sort((a, b) => a - b).forEach(page => {
+    fieldMappings[page].forEach((f, i) => {
+      count++;
+      html += `<div class="field-item" onclick="goToPage(${page});selectField(${i})">
+        <div>
+          <div class="field-name">${f.name}</div>
+          <div class="field-meta">p${page} · ${f.type}${f.signer ? ' · ' + f.signer : ''}</div>
+        </div>
+        <button class="delete-btn" onclick="event.stopPropagation();deleteFieldOnPage(${page},${i})">×</button>
+      </div>`;
+    });
+  });
+  allList.innerHTML = html || '<div style="color:#444;font-size:11px;padding:8px;">No fields yet.</div>';
+}
+
+function selectField(i) {
+  activeFieldIdx = i;
+  renderMarkers();
+  renderFieldList();
+}
+
+function deleteField(i) {
+  const key = String(currentPage);
+  fieldMappings[key].splice(i, 1);
+  if (!fieldMappings[key].length) delete fieldMappings[key];
+  if (activeFieldIdx === i) activeFieldIdx = null;
+  renderAll();
+}
+
+function deleteFieldOnPage(page, i) {
+  const key = String(page);
+  fieldMappings[key].splice(i, 1);
+  if (!fieldMappings[key].length) delete fieldMappings[key];
+  renderAll();
+}
+
+function updateStats() {
+  let total = 0, pages = new Set();
+  Object.keys(fieldMappings).forEach(p => {
+    total += fieldMappings[p].length;
+    if (fieldMappings[p].length) pages.add(p);
+  });
+  document.getElementById('totalFields').textContent = total;
+  document.getElementById('totalPages').textContent = pages.size;
+}
+
+function renderAll() {
+  renderMarkers();
+  renderFieldList();
+  updateStats();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Delete key to remove active field
+document.addEventListener('keydown', e => {
+  if (document.getElementById('fieldModal').classList.contains('show')) return;
+  if (e.key === 'Delete' || e.key === 'Backspace') {
+    if (activeFieldIdx !== null && document.activeElement === document.body) {
+      deleteField(activeFieldIdx);
+    }
+  }
+});
+
+// Image load
+document.getElementById('pageImage').addEventListener('load', renderMarkers);
+
+// Init
+loadMappings();
+setZoom(1);
+renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form 2-T Filler — Realty Ryan</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e0e0e0; }
+  
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; background: #14141f; border-bottom: 2px solid #2a2a3a;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .header h1 { font-size: 18px; font-weight: 600; color: #fff; }
+  .header h1 a { color: #4a9eff; text-decoration: none; font-size: 13px; margin-left: 12px; }
+  .header .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+  
+  .btn {
+    padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 12px; font-weight: 600; transition: all 0.2s;
+  }
+  .btn-primary { background: #4a9eff; color: #fff; }
+  .btn-primary:hover { background: #3a8eef; }
+  .btn-success { background: #22c55e; color: #fff; }
+  .btn-success:hover { background: #1aad50; }
+  .btn-warn { background: #e67e22; color: #fff; }
+  .btn-outline { background: transparent; color: #aaa; border: 1px solid #333; }
+  .btn-outline:hover { border-color: #4a9eff; color: #fff; }
+  .btn-danger { background: #ef4444; color: #fff; }
+  
+  .tabs {
+    display: flex; background: #14141f; border-bottom: 1px solid #2a2a3a;
+    padding: 0 24px; gap: 0;
+  }
+  .tab {
+    padding: 10px 20px; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: #888; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .tab:hover { color: #ccc; }
+  .tab.active { color: #4a9eff; border-bottom-color: #4a9eff; }
+  
+  .tab-content { display: none; padding: 20px 24px; max-width: 1200px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+  
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+  
+  .section {
+    background: #14141f; border: 1px solid #2a2a3a; border-radius: 10px;
+    padding: 16px; margin-bottom: 16px;
+  }
+  .section h3 {
+    font-size: 13px; color: #4a9eff; text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #2a2a3a;
+  }
+  .section.full-width { grid-column: 1 / -1; }
+  
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 11px; color: #888; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 8px 10px; background: #1a1a2a; border: 1px solid #333;
+    border-radius: 6px; color: #fff; font-size: 13px; transition: border-color 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: #4a9eff; outline: none; }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .field select { appearance: auto; }
+  
+  .row { display: flex; gap: 10px; }
+  .row > .field { flex: 1; }
+  
+  .deal-bar {
+    display: flex; gap: 10px; align-items: center; padding: 12px 24px;
+    background: #14141f; border-bottom: 1px solid #2a2a3a; flex-wrap: wrap;
+  }
+  .deal-bar select { padding: 7px 10px; background: #1a1a2a; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 12px; }
+  .deal-bar input { padding: 7px 10px; background: #1a1a2a; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 12px; width: 200px; }
+  
+  /* MLS Lookup Section */
+  .mls-section {
+    background: #14141f; border: 1px solid #2a2a3a; border-radius: 10px;
+    padding: 20px; margin-bottom: 20px;
+  }
+  .mls-section h3 {
+    font-size: 14px; color: #4a9eff; margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid #2a2a3a; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .mls-row {
+    display: flex; gap: 10px; align-items: flex-end;
+  }
+  .mls-row .field { flex: 1; margin-bottom: 0; }
+  .mls-row .btn { height: 38px; white-space: nowrap; }
+  
+  .mls-banner {
+    padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
+    margin-top: 12px; display: none;
+  }
+  .mls-banner.success { background: #22c55e20; color: #22c55e; border: 1px solid #22c55e44; display: block; }
+  .mls-banner.warning { background: #e67e2220; color: #e67e22; border: 1px solid #e67e2244; display: block; }
+
+  /* Info Cards */
+  .info-card {
+    background: #111119; border: 1px solid #222233; border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 16px; opacity: 0.85;
+  }
+  .info-card:hover { opacity: 1; }
+  .info-card h4 {
+    font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .info-card .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 6px 16px;
+  }
+  .info-card .card-field { font-size: 12px; }
+  .info-card .card-field .card-label { color: #555; font-size: 10px; text-transform: uppercase; }
+  .info-card .card-field .card-value { color: #aaa; }
+  .info-card input[data-field] {
+    background: transparent; border: 1px solid transparent; color: #aaa;
+    padding: 2px 4px; font-size: 12px; border-radius: 4px; width: 100%;
+  }
+  .info-card input[data-field]:focus { border-color: #4a9eff; color: #fff; background: #1a1a2a; outline: none; }
+  
+  /* Subsection headers */
+  .subsection-title {
+    font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px;
+    margin: 20px 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid #1a1a2a;
+  }
+  .subsection-title:first-child { margin-top: 0; }
+
+  /* Preview */
+  .preview-container { max-width: 900px; margin: 0 auto; }
+  .preview-page { position: relative; margin-bottom: 20px; background: #fff; }
+  .preview-page img { width: 100%; display: block; }
+  .preview-overlay {
+    position: absolute; font-size: 11px; color: #000; font-family: 'Courier New', monospace;
+    white-space: nowrap; pointer-events: none;
+  }
+  
+  /* Signature tracking */
+  .sig-table { width: 100%; border-collapse: collapse; }
+  .sig-table th, .sig-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #2a2a3a; font-size: 13px; }
+  .sig-table th { color: #888; font-size: 11px; text-transform: uppercase; }
+  .status-badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .status-badge.sent { background: #4a9eff22; color: #4a9eff; }
+  .status-badge.viewed { background: #e67e2222; color: #e67e22; }
+  .status-badge.signed { background: #22c55e22; color: #22c55e; }
+  .status-badge.completed { background: #22c55e44; color: #22c55e; }
+  .status-badge.draft { background: #33333366; color: #888; }
+  
+  /* Print styles */
+  @media print {
+    body { background: #fff; }
+    .header, .tabs, .deal-bar, .tab-content:not(.preview-active), .no-print { display: none !important; }
+    .tab-content.preview-active { display: block !important; padding: 0; }
+    .preview-page { page-break-after: always; margin: 0; box-shadow: none; }
+    .preview-overlay { color: #000; }
+  }
+  
+  .toast {
+    position: fixed; bottom: 20px; right: 20px; background: #22c55e; color: #fff;
+    padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    z-index: 999; display: none; animation: fadeIn 0.3s;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📝 Form 2-T — Offer to Purchase <a href="../index.html">← Dashboard</a> <a href="form-mapper.html">🗺 Mapper</a></h1>
+  <div class="controls">
+    <button class="btn btn-outline" onclick="printPreview()">🖨 Print</button>
+    <button class="btn btn-primary" onclick="downloadPreviewHTML()">📄 Download HTML</button>
+    <button class="btn btn-success" onclick="sendForSignature()">✍️ Send for Signature</button>
+  </div>
+</div>
+
+<div class="deal-bar">
+  <label style="font-size:12px;color:#888">Load Deal:</label>
+  <select id="dealSelect" onchange="loadDeal(this.value)">
+    <option value="">— New Deal —</option>
+  </select>
+  <input type="text" id="dealName" placeholder="Deal name to save as...">
+  <button class="btn btn-primary" onclick="saveDeal()">💾 Save</button>
+  <button class="btn btn-danger" onclick="deleteDeal()" style="font-size:11px;padding:6px 10px">🗑</button>
+  <span id="firebaseStatus" style="font-size:10px;color:#555;margin-left:auto">☁️ Syncing...</span>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('input')">📋 Deal Info</div>
+  <div class="tab" onclick="switchTab('preview')">👁 Preview</div>
+  <div class="tab" onclick="switchTab('signature')">✍️ Signature</div>
+</div>
+
+<!-- INPUT TAB -->
+<div class="tab-content active" id="tab-input">
+
+  <!-- MLS LOOKUP -->
+  <div class="mls-section">
+    <h3>🔍 MLS Lookup</h3>
+    <div class="mls-row">
+      <div class="field">
+        <label>MLS # or Property Address</label>
+        <input type="text" id="mlsInput" placeholder="Enter MLS number or property address...">
+      </div>
+      <button class="btn btn-primary" onclick="pullFromMLS()" style="margin-bottom:0">🔍 Pull from MLS</button>
+    </div>
+    <div class="mls-banner" id="mlsBanner"></div>
+  </div>
+
+  <!-- PROPERTY & LISTING AGENT CARDS (shown after MLS pull) -->
+  <div id="mlsCards" style="display:none">
+    <div class="info-card">
+      <h4>🏠 Property Info</h4>
+      <div class="card-grid">
+        <div class="card-field"><div class="card-label">Address</div><input data-field="property_address"></div>
+        <div class="card-field"><div class="card-label">City</div><input data-field="city"></div>
+        <div class="card-field"><div class="card-label">County</div><input data-field="county"></div>
+        <div class="card-field"><div class="card-label">Zip</div><input data-field="zip"></div>
+        <div class="card-field"><div class="card-label">PID</div><input data-field="pin"></div>
+        <div class="card-field"><div class="card-label">List Price</div><input data-field="list_price"></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>🏢 Listing Agent</h4>
+      <div class="card-grid">
+        <div class="card-field"><div class="card-label">Name</div><input data-field="seller_agent_name"></div>
+        <div class="card-field"><div class="card-label">Firm</div><input data-field="seller_agent_firm"></div>
+        <div class="card-field"><div class="card-label">License #</div><input data-field="seller_agent_license"></div>
+        <div class="card-field"><div class="card-label">Firm License #</div><input data-field="seller_agent_firm_license"></div>
+        <div class="card-field"><div class="card-label">Phone</div><input data-field="seller_agent_phone"></div>
+        <div class="card-field"><div class="card-label">Email</div><input data-field="seller_agent_email"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPERTY INFO (manual fallback, hidden when MLS cards shown) -->
+  <div id="manualPropertySection">
+    <div class="section full-width">
+      <h3>🏠 Property Info</h3>
+      <div class="field"><label>Property Address</label><input type="text" data-field="property_address"></div>
+      <div class="row">
+        <div class="field"><label>City</label><input type="text" data-field="city"></div>
+        <div class="field"><label>County</label><input type="text" data-field="county"></div>
+        <div class="field"><label>Zip</label><input type="text" data-field="zip"></div>
+      </div>
+      <div class="field"><label>PIN / PID</label><input type="text" data-field="pin"></div>
+      <div class="field"><label>Legal Description</label><textarea data-field="legal_description"></textarea></div>
+      <div class="field"><label>List Price (reference)</label><input type="text" data-field="list_price" placeholder="From MLS"></div>
+    </div>
+    <div class="section full-width">
+      <h3>🏢 Listing Agent</h3>
+      <div class="row">
+        <div class="field"><label>Agent Name</label><input type="text" data-field="seller_agent_name"></div>
+        <div class="field"><label>Firm Name</label><input type="text" data-field="seller_agent_firm"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>License #</label><input type="text" data-field="seller_agent_license"></div>
+        <div class="field"><label>Firm License #</label><input type="text" data-field="seller_agent_firm_license"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Phone</label><input type="tel" data-field="seller_agent_phone"></div>
+        <div class="field"><label>Email</label><input type="email" data-field="seller_agent_email"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGAL DESCRIPTION (always visible, may not come from MLS) -->
+  <div class="section full-width" id="legalDescSection">
+    <h3>📜 Legal Description</h3>
+    <div class="field"><textarea data-field="legal_description" placeholder="Lot X, Block Y, Subdivision Name..."></textarea></div>
+  </div>
+
+  <!-- OFFER DETAILS -->
+  <div class="form-grid">
+
+    <div class="section">
+      <h3>👤 Buyer Info</h3>
+      <div class="field"><label>Buyer Name(s)</label><input type="text" data-field="buyer_name"></div>
+      <div class="field"><label>Buyer 2 Name</label><input type="text" data-field="buyer2_name"></div>
+      <div class="field"><label>Entity Name (if applicable)</label><input type="text" data-field="entity_buyer_name"></div>
+      <div class="field"><label>Buyer Address</label><input type="text" data-field="buyer_address"></div>
+      <div class="row">
+        <div class="field"><label>Buyer Email</label><input type="email" data-field="buyer_email"></div>
+        <div class="field"><label>Buyer Phone</label><input type="tel" data-field="buyer_phone"></div>
+      </div>
+      <div class="field"><label>Buyer Fax</label><input type="text" data-field="buyer_fax"></div>
+    </div>
+
+    <div class="section">
+      <h3>💰 Offer Terms</h3>
+      <div class="field"><label>Purchase Price ($)</label><input type="text" data-field="purchase_price" id="purchasePrice" placeholder="350,000"></div>
+      <div class="row">
+        <div class="field"><label>Due Diligence Fee ($)</label><input type="text" data-field="due_diligence_fee" placeholder="2,000"></div>
+        <div class="field"><label>Earnest Money ($)</label><input type="text" data-field="earnest_money" placeholder="5,000"></div>
+      </div>
+      <div class="field"><label>Additional Earnest Money ($)</label><input type="text" data-field="additional_earnest_money"></div>
+      <div class="field"><label>Seller Concessions ($)</label><input type="text" data-field="seller_concessions"></div>
+    </div>
+
+    <div class="section">
+      <h3>📅 Key Dates</h3>
+      <div class="field"><label>Due Diligence Deadline</label><input type="date" data-field="due_diligence_deadline"></div>
+      <div class="field"><label>Closing Date</label><input type="date" data-field="closing_date"></div>
+      <div class="field"><label>Possession Date</label><input type="date" data-field="possession_date"></div>
+    </div>
+
+    <div class="section">
+      <h3>🏦 Financing</h3>
+      <div class="field">
+        <label>Loan Type</label>
+        <select data-field="loan_type">
+          <option value="">Select...</option>
+          <option value="conventional">Conventional</option>
+          <option value="fha">FHA</option>
+          <option value="va">VA</option>
+          <option value="usda">USDA/RD</option>
+          <option value="cash">Cash (No Financing)</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Loan Amount ($)</label><input type="text" data-field="loan_amount"></div>
+    </div>
+
+    <div class="section">
+      <h3>🏦 Escrow Agent</h3>
+      <div class="field"><label>Escrow Agent Name</label><input type="text" data-field="escrow_agent_name"></div>
+      <div class="field"><label>Escrow Agent Address</label><input type="text" data-field="escrow_agent_address"></div>
+    </div>
+
+    <div class="section">
+      <h3>👤 Seller Info</h3>
+      <div class="field"><label>Seller Name(s)</label><input type="text" data-field="seller_name"></div>
+      <div class="field"><label>Seller Address</label><input type="text" data-field="seller_address"></div>
+      <div class="row">
+        <div class="field"><label>Seller Email</label><input type="email" data-field="seller_email"></div>
+        <div class="field"><label>Seller Phone</label><input type="tel" data-field="seller_phone"></div>
+      </div>
+      <div class="field"><label>Seller Fax</label><input type="text" data-field="seller_fax"></div>
+    </div>
+
+    <div class="section full-width">
+      <h3>🛋 Personal Property Included</h3>
+      <div class="field"><textarea data-field="personal_property" placeholder="Refrigerator, washer, dryer, etc."></textarea></div>
+    </div>
+
+    <div class="section full-width">
+      <h3>📝 Additional Terms</h3>
+      <div class="field"><textarea data-field="additional_terms" style="min-height:100px"></textarea></div>
+    </div>
+
+  </div>
+
+  <!-- BUYER'S AGENT CARD -->
+  <div class="info-card" id="buyerAgentCard">
+    <h4>🏢 Buyer's Agent (Ryan Palmer)</h4>
+    <div class="card-grid">
+      <div class="card-field"><div class="card-label">Name</div><input data-field="buyer_agent_name"></div>
+      <div class="card-field"><div class="card-label">Firm</div><input data-field="buyer_agent_firm"></div>
+      <div class="card-field"><div class="card-label">License #</div><input data-field="buyer_agent_license"></div>
+      <div class="card-field"><div class="card-label">Firm License #</div><input data-field="buyer_agent_firm_license"></div>
+      <div class="card-field"><div class="card-label">Phone</div><input data-field="buyer_agent_phone"></div>
+      <div class="card-field"><div class="card-label">Email</div><input data-field="buyer_agent_email"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PREVIEW TAB -->
+<div class="tab-content" id="tab-preview">
+  <div class="preview-container" id="previewContainer"></div>
+</div>
+
+<!-- SIGNATURE TAB -->
+<div class="tab-content" id="tab-signature">
+  <div style="max-width:800px;margin:0 auto">
+    <div class="section">
+      <h3>✍️ Send for Signature via Dropbox Sign</h3>
+      <p style="font-size:12px;color:#888;margin-bottom:16px">
+        ⚠️ Note: Direct browser-to-HelloSign API calls may be blocked by CORS. 
+        If you get CORS errors, use the API through a server-side proxy or the HelloSign dashboard directly.
+      </p>
+      <div class="field"><label>Document Title</label><input type="text" id="sigTitle" placeholder="Offer to Purchase - 123 Main St"></div>
+      <div class="field"><label>Message to Signers</label><textarea id="sigMessage" placeholder="Please review and sign the attached Offer to Purchase and Contract."></textarea></div>
+      
+      <h3 style="margin-top:16px">Signers</h3>
+      <div id="signerList"></div>
+      <button class="btn btn-outline" onclick="addSigner()" style="margin-top:8px">+ Add Signer</button>
+      
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn btn-success" onclick="sendForSignature()" style="font-size:14px;padding:10px 24px">✍️ Send for Signature</button>
+        <button class="btn btn-primary" onclick="checkSignatureStatus()">🔄 Check Status</button>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h3>📋 Signature Requests</h3>
+      <table class="sig-table">
+        <thead><tr><th>Title</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="sigRequestsBody">
+          <tr><td colspan="4" style="color:#666;text-align:center">No signature requests yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============= CONFIG =============
+const AGENT_DEFAULTS = {
+  buyer_agent_name: 'Ryan Palmer',
+  buyer_agent_firm: 'Corcoran HM Properties',
+  buyer_agent_license: '315654',
+  buyer_agent_firm_license: 'C18059',
+  buyer_agent_phone: '508-954-2159',
+  buyer_agent_email: 'ryanpalmer@hmproperties.com'
+};
+
+const HELLOSIGN_API_KEY = '589ba5d3f3c5a635352c09254515e984c01d5e29529b1284ba8eb32b976d16c8';
+const HELLOSIGN_BASE = 'https://api.hellosign.com/v3';
+
+const IDX_API_KEY = 'n7sPFcEjrAnAihx-uq46z8';
+const IDX_BASE = 'https://api.idxbroker.com';
+
+// ============= FIREBASE =============
+const firebaseConfig = {
+  apiKey: "AIzaSyCLnvrTIIsshy0nP7z1BEAyFZdGeJ-hJwQ",
+  authDomain: "realtyryan-dashboard.firebaseapp.com",
+  databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com",
+  projectId: "realtyryan-dashboard",
+  storageBucket: "realtyryan-dashboard.firebasestorage.app",
+  messagingSenderId: "40229133129",
+  appId: "1:40229133129:web:be8ca0f35c778427301898"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const dealsRef = db.ref('realty-ryan/form2t_deals');
+
+function syncDealToFirebase(name, data) {
+  const key = name.replace(/[.#$/\[\]]/g, '_');
+  dealsRef.child(key).set({ ...data, _name: name, _synced: new Date().toISOString() })
+    .then(() => { document.getElementById('firebaseStatus').textContent = '☁️ Synced'; })
+    .catch(e => { document.getElementById('firebaseStatus').textContent = '⚠️ Sync failed'; console.warn('Firebase sync error:', e); });
+}
+
+function deleteDealFromFirebase(name) {
+  const key = name.replace(/[.#$/\[\]]/g, '_');
+  dealsRef.child(key).remove().catch(e => console.warn('Firebase delete error:', e));
+}
+
+function syncAllDealsToFirebase() {
+  const deals = JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}');
+  Object.entries(deals).forEach(([name, data]) => syncDealToFirebase(name, data));
+  document.getElementById('firebaseStatus').textContent = '☁️ Synced';
+}
+
+// Initial sync on load
+setTimeout(syncAllDealsToFirebase, 2000);
+
+// ============= MLS LOOKUP =============
+let mlsDataLoaded = false;
+
+async function pullFromMLS() {
+  const input = document.getElementById('mlsInput').value.trim();
+  if (!input) { toast('Enter an MLS # or address', '#ef4444'); return; }
+  
+  const banner = document.getElementById('mlsBanner');
+  banner.className = 'mls-banner'; banner.style.display = 'none';
+  
+  toast('Pulling from MLS...', '#4a9eff');
+  
+  try {
+    // Try as MLS number first
+    const resp = await fetch(IDX_BASE + '/mls/searchresults/' + encodeURIComponent(input), {
+      headers: {
+        'accesskey': IDX_API_KEY,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    
+    const data = await resp.json();
+    
+    // IDX returns array or object; extract first result
+    let listing = null;
+    if (Array.isArray(data) && data.length > 0) listing = data[0];
+    else if (data && typeof data === 'object') {
+      const keys = Object.keys(data);
+      if (keys.length > 0) listing = data[keys[0]];
+    }
+    
+    if (!listing) throw new Error('No results found');
+    
+    // Map IDX fields to our form fields
+    const fieldMap = {
+      property_address: listing.address || listing.streetName || '',
+      city: listing.cityName || listing.city || '',
+      county: listing.countyName || listing.county || '',
+      zip: listing.zipcode || listing.zip || '',
+      pin: listing.parcelNumber || listing.pid || '',
+      legal_description: listing.legalDescription || listing.legal || '',
+      list_price: listing.listingPrice || listing.price || listing.currentPrice || '',
+      seller_agent_name: listing.listingAgentName || listing.agentName || '',
+      seller_agent_firm: listing.listingOfficeName || listing.officeName || '',
+      seller_agent_license: listing.listingAgentLicense || '',
+      seller_agent_phone: listing.listingAgentPhone || listing.agentPhone || '',
+      seller_agent_email: listing.listingAgentEmail || listing.agentEmail || ''
+    };
+    
+    // Fill fields
+    Object.entries(fieldMap).forEach(([field, val]) => {
+      if (val) {
+        document.querySelectorAll(`[data-field="${field}"]`).forEach(el => { el.value = val; });
+      }
+    });
+    
+    // Set list price as placeholder on purchase price
+    if (fieldMap.list_price) {
+      const pp = document.getElementById('purchasePrice');
+      if (pp) pp.placeholder = 'List: $' + Number(String(fieldMap.list_price).replace(/[,$]/g,'')).toLocaleString();
+    }
+    
+    // Show MLS cards, hide manual sections
+    mlsDataLoaded = true;
+    document.getElementById('mlsCards').style.display = 'block';
+    document.getElementById('manualPropertySection').style.display = 'none';
+    document.getElementById('legalDescSection').style.display = fieldMap.legal_description ? 'none' : 'block';
+    
+    banner.className = 'mls-banner success';
+    banner.textContent = '✅ Property data pulled from MLS';
+    banner.style.display = 'block';
+    
+    toast('✅ MLS data loaded!');
+  } catch(err) {
+    console.warn('MLS lookup error:', err);
+    
+    // Show warning, keep manual fields
+    mlsDataLoaded = false;
+    document.getElementById('mlsCards').style.display = 'none';
+    document.getElementById('manualPropertySection').style.display = 'block';
+    document.getElementById('legalDescSection').style.display = 'block';
+    
+    banner.className = 'mls-banner warning';
+    banner.textContent = '⚠️ MLS lookup unavailable — fill manually (' + err.message + ')';
+    banner.style.display = 'block';
+    
+    toast('MLS lookup failed — fill manually', '#e67e22');
+  }
+}
+
+// ============= TAB SWITCHING =============
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => { t.classList.remove('active'); t.classList.remove('preview-active'); });
+  document.querySelector(`.tab-content#tab-${tab}`).classList.add('active');
+  document.querySelectorAll('.tab')[['input','preview','signature'].indexOf(tab)].classList.add('active');
+  if (tab === 'preview') { generatePreview(); document.getElementById('tab-preview').classList.add('preview-active'); }
+  if (tab === 'signature') initSigners();
+}
+
+// ============= DEAL DATA =============
+function getDealData() {
+  const data = {};
+  // For fields that appear multiple times (cards + manual), take the first non-empty value
+  const seen = {};
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const f = el.dataset.field;
+    if (!seen[f] || (!data[f] && el.value)) {
+      data[f] = el.value;
+      seen[f] = true;
+    }
+  });
+  return data;
+}
+
+function setDealData(data) {
+  document.querySelectorAll('[data-field]').forEach(el => {
+    if (data[el.dataset.field] !== undefined) el.value = data[el.dataset.field];
+  });
+}
+
+function saveDeal() {
+  const name = document.getElementById('dealName').value.trim();
+  if (!name) { toast('Enter a deal name', '#ef4444'); return; }
+  const deals = JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}');
+  const dealData = { ...getDealData(), _saved: new Date().toISOString() };
+  deals[name] = dealData;
+  localStorage.setItem('rr_form2t_deals', JSON.stringify(deals));
+  loadDealList();
+  document.getElementById('dealSelect').value = name;
+  syncDealToFirebase(name, dealData);
+  toast('Deal saved: ' + name);
+}
+
+function loadDeal(name) {
+  if (!name) { 
+    // Reset to defaults
+    document.querySelectorAll('[data-field]').forEach(el => el.value = '');
+    setDealData(AGENT_DEFAULTS);
+    document.getElementById('mlsCards').style.display = 'none';
+    document.getElementById('manualPropertySection').style.display = 'block';
+    document.getElementById('legalDescSection').style.display = 'block';
+    mlsDataLoaded = false;
+    return;
+  }
+  const deals = JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}');
+  if (deals[name]) {
+    setDealData(deals[name]);
+    document.getElementById('dealName').value = name;
+    // If property data exists, show cards
+    const d = deals[name];
+    if (d.property_address && d.seller_agent_name) {
+      document.getElementById('mlsCards').style.display = 'block';
+      document.getElementById('manualPropertySection').style.display = 'none';
+      mlsDataLoaded = true;
+    }
+  }
+}
+
+function deleteDeal() {
+  const name = document.getElementById('dealSelect').value;
+  if (!name) return;
+  if (!confirm('Delete deal: ' + name + '?')) return;
+  const deals = JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}');
+  delete deals[name];
+  localStorage.setItem('rr_form2t_deals', JSON.stringify(deals));
+  deleteDealFromFirebase(name);
+  loadDealList();
+  document.querySelectorAll('[data-field]').forEach(el => el.value = '');
+  setDealData(AGENT_DEFAULTS);
+  toast('Deal deleted');
+}
+
+function loadDealList() {
+  const deals = JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}');
+  const sel = document.getElementById('dealSelect');
+  sel.innerHTML = '<option value="">— New Deal —</option>';
+  Object.keys(deals).sort().forEach(name => {
+    sel.innerHTML += `<option value="${name}">${name}</option>`;
+  });
+}
+
+// ============= PREVIEW =============
+function generatePreview() {
+  const data = getDealData();
+  const mappings = JSON.parse(localStorage.getItem('rr_form2t_mappings') || '[]');
+  const container = document.getElementById('previewContainer');
+  container.innerHTML = '';
+  
+  for (let p = 1; p <= 14; p++) {
+    const div = document.createElement('div');
+    div.className = 'preview-page';
+    div.innerHTML = `<img src="images/form2t-page-${p}.png" alt="Page ${p}">`;
+    
+    const pageFields = mappings.filter(f => f.page === p && f.dealField);
+    pageFields.forEach(f => {
+      const val = data[f.dealField];
+      if (!val && f.type !== 'signature' && f.type !== 'initial' && f.type !== 'date_signed') return;
+      
+      let displayVal = val || '';
+      if (f.type === 'currency' && displayVal) displayVal = '$' + Number(displayVal.replace(/[,$]/g,'')).toLocaleString();
+      if (f.type === 'date' && displayVal) { try { displayVal = new Date(displayVal+'T12:00').toLocaleDateString(); } catch(e){} }
+      if (f.type === 'initial' && f.dealField === 'buyer_initials') displayVal = getInitials(data.buyer_name);
+      if (f.type === 'initial' && f.dealField === 'seller_initials') displayVal = getInitials(data.seller_name);
+      if (f.type === 'signature') displayVal = '';
+      if (f.type === 'date_signed') displayVal = '';
+      
+      if (!displayVal) return;
+      
+      const overlay = document.createElement('div');
+      overlay.className = 'preview-overlay';
+      overlay.style.left = f.x + '%';
+      overlay.style.top = f.y + '%';
+      overlay.style.fontSize = (f.h > 3 ? 13 : 11) + 'px';
+      overlay.textContent = displayVal;
+      div.appendChild(overlay);
+    });
+    
+    container.appendChild(div);
+  }
+}
+
+function getInitials(name) {
+  if (!name) return '';
+  return name.split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0,3);
+}
+
+function printPreview() {
+  switchTab('preview');
+  setTimeout(() => window.print(), 300);
+}
+
+function downloadPreviewHTML() {
+  switchTab('preview');
+  setTimeout(() => {
+    const html = document.getElementById('previewContainer').innerHTML;
+    const fullHTML = `<!DOCTYPE html><html><head><style>
+      body{margin:0;font-family:Courier New,monospace}
+      .preview-page{position:relative;page-break-after:always}
+      .preview-page img{width:100%;display:block}
+      .preview-overlay{position:absolute;font-size:11px;color:#000;white-space:nowrap}
+      @media print{.preview-page{margin:0}}
+    </style></head><body>${html}</body></html>`;
+    const blob = new Blob([fullHTML], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Form2T-Filled.html';
+    a.click();
+  }, 500);
+}
+
+// ============= SIGNATURE / HELLOSIGN =============
+let signers = [];
+
+function initSigners() {
+  const data = getDealData();
+  if (signers.length === 0) {
+    signers = [
+      { role: "Buyer", name: data.buyer_name || '', email: data.buyer_email || '' },
+      { role: "Seller", name: data.seller_name || '', email: data.seller_email || '' },
+      { role: "Buyer's Agent", name: data.buyer_agent_name || '', email: data.buyer_agent_email || '' },
+    ];
+    if (data.seller_agent_name) {
+      signers.push({ role: "Seller's Agent", name: data.seller_agent_name, email: data.seller_agent_email || '' });
+    }
+  }
+  renderSigners();
+  loadSigRequests();
+}
+
+function addSigner() {
+  signers.push({ role: 'Additional Signer', name: '', email: '' });
+  renderSigners();
+}
+
+function renderSigners() {
+  const div = document.getElementById('signerList');
+  div.innerHTML = signers.map((s, i) => `
+    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
+      <input style="width:120px;padding:6px 8px;background:#1a1a2a;border:1px solid #333;border-radius:4px;color:#fff;font-size:12px"
+        value="${s.role}" onchange="signers[${i}].role=this.value" placeholder="Role">
+      <input style="flex:1;padding:6px 8px;background:#1a1a2a;border:1px solid #333;border-radius:4px;color:#fff;font-size:12px"
+        value="${s.name}" onchange="signers[${i}].name=this.value" placeholder="Name">
+      <input style="flex:1;padding:6px 8px;background:#1a1a2a;border:1px solid #333;border-radius:4px;color:#fff;font-size:12px"
+        value="${s.email}" onchange="signers[${i}].email=this.value" placeholder="Email">
+      <span style="cursor:pointer;color:#ef4444" onclick="signers.splice(${i},1);renderSigners()">×</span>
+    </div>
+  `).join('');
+}
+
+async function sendForSignature() {
+  const title = document.getElementById('sigTitle')?.value || getDealData().property_address || 'Form 2-T Offer';
+  const message = document.getElementById('sigMessage')?.value || 'Please review and sign the attached Offer to Purchase.';
+  
+  if (signers.length === 0) { toast('Add at least one signer', '#ef4444'); return; }
+  const missing = signers.find(s => !s.email || !s.name);
+  if (missing) { toast('All signers need name and email', '#ef4444'); return; }
+  
+  if (!confirm(`Send "${title}" to ${signers.length} signer(s) for signature?`)) return;
+  
+  const fd = new FormData();
+  fd.append('title', title);
+  fd.append('subject', title);
+  fd.append('message', message);
+  fd.append('test_mode', '1');
+  
+  signers.forEach((s, i) => {
+    fd.append(`signers[${i}][email_address]`, s.email);
+    fd.append(`signers[${i}][name]`, s.name);
+    fd.append(`signers[${i}][order]`, i);
+  });
+  
+  try {
+    toast('Sending signature request...', '#4a9eff');
+    
+    const resp = await fetch(HELLOSIGN_BASE + '/signature_request/send', {
+      method: 'POST',
+      headers: { 'Authorization': 'Basic ' + btoa(HELLOSIGN_API_KEY + ':') },
+      body: fd
+    });
+    
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.error_msg || `HTTP ${resp.status}`);
+    }
+    
+    const result = await resp.json();
+    const sr = result.signature_request;
+    
+    const requests = JSON.parse(localStorage.getItem('rr_form2t_sig_requests') || '[]');
+    requests.unshift({
+      id: sr.signature_request_id,
+      title: sr.title,
+      date: new Date().toISOString(),
+      status: 'sent',
+      signers: sr.signatures.map(s => ({ name: s.signer_name, email: s.signer_email_address, status: s.status_code }))
+    });
+    localStorage.setItem('rr_form2t_sig_requests', JSON.stringify(requests));
+    
+    loadSigRequests();
+    toast('✅ Signature request sent!');
+  } catch(err) {
+    console.error('HelloSign error:', err);
+    toast('❌ ' + err.message + ' (CORS? Use server proxy or HelloSign dashboard)', '#ef4444');
+  }
+}
+
+async function checkSignatureStatus() {
+  const requests = JSON.parse(localStorage.getItem('rr_form2t_sig_requests') || '[]');
+  if (requests.length === 0) { toast('No requests to check', '#e67e22'); return; }
+  
+  for (const req of requests) {
+    try {
+      const resp = await fetch(HELLOSIGN_BASE + '/signature_request/' + req.id, {
+        headers: { 'Authorization': 'Basic ' + btoa(HELLOSIGN_API_KEY + ':') }
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        const sr = data.signature_request;
+        req.status = sr.is_complete ? 'completed' : 'sent';
+        req.signers = sr.signatures.map(s => ({ name: s.signer_name, email: s.signer_email_address, status: s.status_code }));
+        if (sr.signatures.some(s => s.status_code === 'signed')) req.status = 'partially_signed';
+        if (sr.is_complete) req.status = 'completed';
+      }
+    } catch(e) { console.warn('Status check failed:', e); }
+  }
+  localStorage.setItem('rr_form2t_sig_requests', JSON.stringify(requests));
+  loadSigRequests();
+  toast('Status updated');
+}
+
+function loadSigRequests() {
+  const requests = JSON.parse(localStorage.getItem('rr_form2t_sig_requests') || '[]');
+  const tbody = document.getElementById('sigRequestsBody');
+  if (requests.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="color:#666;text-align:center">No signature requests yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = requests.map(r => `
+    <tr>
+      <td>${r.title}</td>
+      <td style="color:#888">${new Date(r.date).toLocaleDateString()}</td>
+      <td><span class="status-badge ${r.status}">${r.status}</span></td>
+      <td style="font-size:11px;color:#888">${(r.signers||[]).map(s => s.name + ': ' + s.status).join(', ')}</td>
+    </tr>
+  `).join('');
+}
+
+// ============= TOAST =============
+function toast(msg, color) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color || '#22c55e';
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+
+// ============= INIT =============
+function init() {
+  setDealData(AGENT_DEFAULTS);
+  loadDealList();
+}
+
+init();
+</script>
+</body>
+</html>

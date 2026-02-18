@@ -6,440 +6,296 @@
 <title>Write Offer — Realty Ryan</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:#1a1408; font-family:'Work Sans',sans-serif; color:#FAFAFA; min-height:100vh; padding:20px; }
-.container { max-width:600px; margin:0 auto; }
-.header { text-align:center; margin-bottom:24px; padding-bottom:16px; border-bottom:2px solid #7A3B14; }
-.header h1 { font-family:'Cormorant Garamond',Georgia,serif; font-size:28px; font-weight:600; color:#C89B5B; }
-.header p { font-size:13px; color:#857D52; margin-top:4px; }
-.section { background:#261A05; border-radius:8px; padding:16px; margin-bottom:16px; }
-.section-title { font-size:14px; font-weight:600; color:#7A3B14; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #3a2a10; }
-.field { margin-bottom:12px; }
-.field label { display:block; font-size:12px; color:#857D52; margin-bottom:4px; font-weight:500; }
-.field input, .field select, .field textarea { width:100%; padding:10px 12px; background:#1a1408; border:1px solid #3a2a10; border-radius:6px; color:#FAFAFA; font-family:'Work Sans',sans-serif; font-size:14px; outline:none; }
-.field input:focus, .field select:focus, .field textarea:focus { border-color:#7A3B14; }
-.field textarea { min-height:80px; resize:vertical; }
-.row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-.upload-area { border:2px dashed #3a2a10; border-radius:8px; padding:20px; text-align:center; cursor:pointer; transition:border-color 0.2s; }
-.upload-area:hover { border-color:#7A3B14; }
-.upload-area.has-file { border-color:#46d67a; border-style:solid; }
-.upload-area input[type=file] { display:none; }
-.upload-area .icon { font-size:24px; margin-bottom:4px; }
-.upload-area .label { font-size:12px; color:#857D52; }
-.upload-area .filename { font-size:12px; color:#46d67a; margin-top:4px; word-break:break-all; }
-.upload-area.optional .label::after { content:" (optional)"; color:#5C3D14; }
-.upload-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.btn { width:100%; padding:14px; background:#7A3B14; color:#FAFAFA; border:none; border-radius:8px; font-family:'Work Sans',sans-serif; font-size:16px; font-weight:600; cursor:pointer; margin-top:8px; }
-.btn:hover { background:#9A4B1A; }
-.btn:active { transform:scale(0.98); }
-.back { display:inline-block; color:#7A3B14; text-decoration:none; font-size:13px; margin-bottom:16px; }
-.back:hover { color:#C89B5B; }
-.required::after { content:" *"; color:#ff887c; }
-.note { font-size:11px; color:#5C3D14; margin-top:4px; }
-@media (max-width: 480px) {
-  body { padding:12px; }
-  .header h1 { font-size:22px; }
-  .row, .row3, .upload-grid { grid-template-columns:1fr; }
-  .field input, .field select, .field textarea { font-size:16px; padding:12px; }
-  .btn { padding:16px; font-size:17px; min-height:50px; }
-  .section { padding:14px 12px; }
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
+.header-compact { background: #261A05; border-bottom: 2px solid #7A3B14; }
+.hdr-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 10px; }
+.hdr-top h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; margin: 0; }
+.btn-action { padding: 8px 16px; background: #7A3B14; color: #FAFAFA; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+.btn-action:hover { background: #9A4B1A; text-decoration: none; }
+  if(dealSpan)textEl.appendChild(dealSpan);
+  input.focus();
+  input.select();
+  function save(){
+    const newText=input.value.trim();
+    if(!newText)return cancel();
+    textEl.innerHTML="";
+    textEl.appendChild(document.createTextNode(newText));
+    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
+    // Save edit to localStorage
+    const id=item.dataset.id;
+    const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
+    edits[id]=newText;
+    localStorage.setItem("rr_todo_edits",JSON.stringify(edits));
+    // Also update local todos if applicable
+    const person=item.dataset.person;
+    const local=getLocalTodos();
+    if(local[person]){
+      const lt=local[person].find(t=>t.id===id);
+      if(lt){lt.text=newText;saveLocalTodos(local)}
+    }
+  }
+  function cancel(){
+    textEl.innerHTML="";
+    textEl.appendChild(document.createTextNode(currentText));
+    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
+  }
+  input.addEventListener("keydown",function(ev){
+    if(ev.key==="Enter"){ev.preventDefault();save()}
+    if(ev.key==="Escape")cancel();
+  });
+  input.addEventListener("blur",save);
+});
+
+// Apply saved edits on load
+(function(){
+  const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
+  Object.keys(edits).forEach(id=>{
+    const item=document.querySelector(`.todo-item[data-id="${id}"]`);
+    if(item){
+      const textEl=item.querySelector(".todo-text");
+      const dealSpan=textEl.querySelector(".todo-deal");
+      textEl.innerHTML="";
+      textEl.appendChild(document.createTextNode(edits[id]));
+      if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
+    }
+  });
+})();
+
+// Drag & Drop
 </style>
 </head>
 <body>
-<div class="container">
-<a href="index.html" class="back">← Back to Dashboard</a>
 
-<div class="header">
-  <h1>📝 Write Offer</h1>
-  <p>Build and send an offer package via Dropbox Sign</p>
-</div>
-
-<!-- Buyer Info -->
-<div class="section">
-  <div class="section-title">Buyer 1</div>
-  <div class="field"><label class="required">Full Legal Name</label><input type="text" id="buyer1Name" placeholder="e.g. John Smith"></div>
-  <div class="row">
-    <div class="field"><label class="required">Email</label><input type="email" id="buyer1Email" placeholder="buyer@email.com"></div>
-    <div class="field"><label>Phone</label><input type="tel" id="buyer1Phone" placeholder="704-555-1234"></div>
+<div class="header-compact">
+  <div class="hdr-top">
+    <h1>📝 Write Offer — Form 2-T</h1>
+    <a href="index.html" class="btn-action">← Back to Dashboard</a>
   </div>
 </div>
 
-<div class="section" id="buyer2Section" style="display:none;">
-  <div class="section-title">Buyer 2 <span onclick="removeBuyer2()" style="float:right;cursor:pointer;font-size:12px;color:#ff887c;">✕ Remove</span></div>
-  <div class="field"><label>Full Legal Name</label><input type="text" id="buyer2Name" placeholder="e.g. Jane Smith"></div>
-  <div class="row">
-    <div class="field"><label>Email</label><input type="email" id="buyer2Email" placeholder="buyer2@email.com"></div>
-    <div class="field"><label>Phone</label><input type="tel" id="buyer2Phone" placeholder="704-555-5678"></div>
-  </div>
-</div>
+<div style="padding: 20px 24px;">
+  });
+  updateTodoCount();
+  initDragDrop();
+})();
 
-<div id="addBuyer2Btn" class="section" style="padding:12px;text-align:center;cursor:pointer;border:2px dashed #3a2a10;background:transparent;" onclick="addBuyer2()">
-  <span style="color:#7A3B14;font-weight:500;">+ Add Second Buyer</span>
-</div>
+function addInlineTodo(input){
+  const text=input.value.trim();
+  if(!text)return;
+  const person=input.dataset.person;
+  const id="local-"+Date.now();
+  const todo={id:id,text:text,priority:"medium",deal:"",done:false};
+  const local=getLocalTodos();
+  if(!local[person])local[person]=[];
+  local[person].push(todo);
+  saveLocalTodos(local);
+  const list=input.closest(".todo-column").querySelector(".todo-list");
+  list.insertAdjacentHTML("beforeend",renderTodoItem(todo,person));
+  initDragDrop();
+  input.value="";
+  updateTodoCount();
+  // Track unsent items for Jarvis sync
+  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
+  const personName=person.charAt(0).toUpperCase()+person.slice(1);
+  unsent.push({person:personName,text:text,time:new Date().toLocaleString()});
+  localStorage.setItem("rr_todo_unsent",JSON.stringify(unsent));
+  showSyncBadge();
+}
 
-<!-- Entity / LLC -->
-<div class="section">
-  <div class="section-title">Purchasing Entity</div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="entityBuyer" style="width:auto;" onchange="toggleEntity()">
-    <label for="entityBuyer" style="font-size:14px;color:#FAFAFA;margin:0;">Buying as an LLC / Entity</label>
-  </div>
-  <div id="entityFields" style="display:none;margin-top:12px;">
-    <div class="field"><label class="required">Entity Name</label><input type="text" id="entityName" placeholder="e.g. Smith Properties LLC"></div>
-    <div class="field"><label>State of Formation</label><input type="text" id="entityState" placeholder="e.g. North Carolina"></div>
-    <p class="note">Buyer(s) will sign in their personal name as authorized member/manager of the entity. Entity buyer signature block will be used on Page 13 of Form 2-T.</p>
-  </div>
-</div>
-
-<!-- Property Info -->
-<div class="section">
-  <div class="section-title">Property</div>
-  <div class="field"><label class="required">Property Address</label><input type="text" id="propertyAddress" placeholder="123 Main St, Charlotte, NC 28202"></div>
-  <div class="row">
-    <div class="field"><label>MLS #</label><input type="text" id="mlsNumber" placeholder="MLS#"></div>
-    <div class="field"><label>Listing Agent Email</label><input type="email" id="listingAgentEmail" placeholder="agent@email.com"></div>
-  </div>
-</div>
-
-<!-- Offer Terms -->
-<div class="section">
-  <div class="section-title">Offer Terms</div>
-  <div class="row">
-    <div class="field"><label class="required">Offer Price</label><input type="text" id="offerPrice" placeholder="$500,000"></div>
-    <div class="field"><label class="required">Earnest Money</label><input type="text" id="earnestMoney" placeholder="$5,000"></div>
-  </div>
-  <div class="row">
-    <div class="field"><label class="required">Due Diligence Fee</label><input type="text" id="ddFee" placeholder="$3,000"></div>
-    <div class="field"><label class="required">DD Period (days)</label><input type="number" id="ddPeriod" placeholder="21"></div>
-  </div>
-  <div class="row">
-    <div class="field"><label class="required">Settlement Date</label><input type="date" id="settlementDate"></div>
-    <div class="field"><label class="required">Purchase Type</label>
-      <select id="purchaseType" onchange="toggleFinancing()">
-        <option value="loan">Loan (Financed)</option>
-        <option value="cash">Cash — No Loan</option>
-      </select>
-    </div>
-  </div>
-  <div id="loanTypeRow" class="row">
-    <div class="field"><label>Loan Type</label>
-      <select id="financingType">
-        <option value="conventional">Conventional</option>
-        <option value="fha">FHA</option>
-        <option value="va">VA</option>
-        <option value="usda">USDA</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-    <div class="field"><label>Lender</label><input type="text" id="lender" placeholder="e.g. Atlantic Bay Mortgage"></div>
-  </div>
-  <div class="row">
-    <div class="field"><label>Seller Concessions ($)</label><input type="text" id="sellerConcessions" placeholder="$0"></div>
-    <div class="field"><label>Or % of Purchase Price</label><input type="text" id="sellerConcessionsPercent" placeholder="e.g. 3%"></div>
-  </div>
-  <div class="field"><label>Escrow Agent</label><input type="text" id="escrowAgent" placeholder="Norwood Armstrong and Stokes" value="Norwood Armstrong and Stokes"></div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="hasPropertyToSell" style="width:auto;">
-    <label for="hasPropertyToSell" style="font-size:14px;color:#FAFAFA;margin:0;">Buyer has property to sell/lease to complete purchase</label>
-  </div>
-  <!-- Home warranty: always No, hardcoded in Form 2-T -->
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="subjectToLeases" style="width:auto;">
-    <label for="subjectToLeases" style="font-size:14px;color:#FAFAFA;margin:0;">Property is subject to any lease(s)</label>
-  </div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="hasFuelTank" style="width:auto;">
-    <label for="hasFuelTank" style="font-size:14px;color:#FAFAFA;margin:0;">Fuel tank on property</label>
-  </div>
-  <div class="field"><label>Additional Terms / Notes</label><textarea id="additionalTerms" placeholder="Any special conditions, contingencies, or notes..."></textarea></div>
-</div>
-
-<!-- Additional Provisions Addendum -->
-<div class="section">
-  <div class="section-title">Additional Provisions Addendum</div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="includeAddendum" style="width:auto;" onchange="toggleAddendum()">
-    <label for="includeAddendum" style="font-size:14px;color:#FAFAFA;margin:0;">Include Additional Provisions Addendum</label>
-  </div>
-  <div id="addendumFields" style="display:none;margin-top:12px;">
-    <div class="row">
-      <div class="field"><label>Offer Expiration Date</label><input type="date" id="offerExpDate"></div>
-      <div class="field"><label>Expiration Time</label><input type="time" id="offerExpTime" value="17:00"></div>
-    </div>
-    <div class="field"><label>Additional Provisions</label><textarea id="addendumText" placeholder="e.g. Seller to provide home warranty at closing, offer expires 2/20/2026 at 5:00 PM..." style="min-height:100px;"></textarea></div>
-    <p class="note">NC Additional Provisions Addendum (Form 2A12-T) will be auto-attached to the offer package.</p>
-  </div>
-</div>
-
-<!-- Special Instructions -->
-<div class="section">
-  <div class="section-title">🤖 Special Instructions for Jarvis</div>
-  <div class="field"><textarea id="jarvisPrompt" placeholder="Anything unusual or out of the ordinary about this offer? Write it here in plain English and Jarvis will handle it.&#10;&#10;Examples:&#10;• Buyer wants to close in 14 days, make sure that's reflected everywhere&#10;• Include a kick-out clause — seller can keep marketing&#10;• Buyer is selling their home first, needs a contingency&#10;• We need to escalate to $520K if there are competing offers" style="min-height:120px;"></textarea></div>
-  <p class="note">Jarvis will read this and adjust the offer package accordingly — custom clauses, special terms, whatever you need.</p>
-</div>
-
-<!-- Disclosures Received -->
-<div class="section">
-  <div class="section-title">Disclosures Received</div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="recvPropertyDisclosure" style="width:auto;" checked>
-    <label for="recvPropertyDisclosure" style="font-size:14px;color:#FAFAFA;margin:0;">Residential Property Disclosure received</label>
-  </div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="recvMineralDisclosure" style="width:auto;" checked>
-    <label for="recvMineralDisclosure" style="font-size:14px;color:#FAFAFA;margin:0;">Mineral, Oil & Gas Rights Disclosure received</label>
-  </div>
-  <div class="field" style="display:flex;align-items:center;gap:10px;">
-    <input type="checkbox" id="leadPaint" style="width:auto;">
-    <label for="leadPaint" style="font-size:14px;color:#FAFAFA;margin:0;">Lead-Based Paint Disclosure required (built before 1978)</label>
-  </div>
-  <p class="note">Lead paint auto-checks if MLS shows year built before 1978</p>
-</div>
-
-<!-- Fixtures & Exclusions -->
-<div class="section">
-  <div class="section-title">Fixtures & Exclusions</div>
-  <div class="field"><label>Items Leased or Not Owned (2d)</label><input type="text" id="itemsLeased" placeholder="N/A" value="N/A"></div>
-  <div class="field"><label>Other Items That Do Not Convey (2e)</label><input type="text" id="itemsNotConvey" placeholder="N/A" value="N/A"></div>
-</div>
-
-<!-- Personal Property -->
-<div class="section">
-  <div class="section-title">Personal Property to Convey</div>
-  <p class="note" style="margin-bottom:12px;">Appliances, fixtures, and items included in the offer</p>
-  <div class="field"><textarea id="personalProperty" style="min-height:120px;">All appliances present in the home at the time of showing (including, without limitation, washer, dryer, refrigerator(s), wine fridge(s), and other kitchen/laundry appliances), in-wall and built-in surround sound systems (including speakers, wiring, amplifiers, receivers, and related components), and all pool equipment and accessories shall be included in the sale and conveyed to Buyer in their existing "as-is" condition, free of liens.</textarea></div>
-</div>
-
-<!-- Documents -->
-<div class="section">
-  <div class="section-title">Required Documents</div>
-  <p class="note" style="margin-bottom:12px;">Form 2-T will be auto-attached. These should be included but won't block submission.</p>
-  <div class="upload-grid">
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf" onchange="fileSelected(this)">
-      <div class="icon">📄</div>
-      <div class="label">Form 220 (Compensation)</div>
-      <div class="filename"></div>
-    </div>
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf" onchange="fileSelected(this)">
-      <div class="icon">🏠</div>
-      <div class="label">Property Disclosure</div>
-      <div class="filename"></div>
-    </div>
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf" onchange="fileSelected(this)">
-      <div class="icon">⛏️</div>
-      <div class="label">Mineral/Oil & Gas Disclosure</div>
-      <div class="filename"></div>
-    </div>
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf" onchange="fileSelected(this)">
-      <div class="icon">🎨</div>
-      <div class="label">Lead Based Paint</div>
-      <div class="filename"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Optional Docs (initials) -->
-<div class="section">
-  <div class="section-title">Optional Attachments (Buyer Initials)</div>
-  <p class="note" style="margin-bottom:12px;">These will be attached for buyer to initial at the top</p>
-  <div class="upload-grid">
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
-      <div class="icon">📐</div>
-      <div class="label">Survey</div>
-      <div class="filename"></div>
-    </div>
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
-      <div class="icon">🏘️</div>
-      <div class="label">HOA Documents</div>
-      <div class="filename"></div>
-    </div>
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
-      <div class="icon">📏</div>
-      <div class="label">Floor Plan</div>
-      <div class="filename"></div>
-    </div>
-    <div class="upload-area optional" onclick="this.querySelector('input').click()">
-      <input type="file" accept=".pdf,.jpg,.png" onchange="fileSelected(this)">
-      <div class="icon">📋</div>
-      <div class="label">Current MLS Sheet</div>
-      <div class="filename"></div>
-    </div>
-  </div>
-</div>
-
-<button class="btn" onclick="submitOffer()">📝 Send Offer Package</button>
-
-</div>
-
-<script>
-function fileSelected(input) {
-  const area = input.closest('.upload-area');
-  const fn = area.querySelector('.filename');
-  if (input.files.length > 0) {
-    fn.textContent = input.files[0].name;
-    area.classList.add('has-file');
-  } else {
-    fn.textContent = '';
-    area.classList.remove('has-file');
+// Sync badge — shows when there are unsent todos for Jarvis
+function showSyncBadge(){
+  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
+  let badge=document.getElementById("jarvis-sync-badge");
+  if(unsent.length===0){if(badge)badge.style.display="none";return}
+  if(!badge){
+    badge=document.createElement("div");
+    badge.id="jarvis-sync-badge";
+    badge.style.cssText="position:fixed;bottom:20px;right:20px;background:#7A3B14;color:#FAFAFA;padding:10px 16px;border-radius:24px;cursor:pointer;font-size:13px;font-family:Work Sans,sans-serif;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,0.4);display:flex;align-items:center;gap:8px;";
+    badge.onclick=syncToJarvis;
+    document.body.appendChild(badge);
   }
+  badge.innerHTML=`🤖 <span>${unsent.length} new todo${unsent.length>1?"s":""}</span> <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:12px;font-weight:600;">Send to Jarvis</span>`;
+  badge.style.display="flex";
 }
 
-function addBuyer2() {
-  document.getElementById('buyer2Section').style.display = 'block';
-  document.getElementById('addBuyer2Btn').style.display = 'none';
+function syncToJarvis(){
+  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
+  if(unsent.length===0)return;
+  let msg="📌 NEW TODOS from dashboard:
+";
+  unsent.forEach(t=>{msg+=`
+• ${t.person}: ${t.text}`});
+  window.open("sms:+15089542159&body="+encodeURIComponent(msg),"_blank");
+  localStorage.setItem("rr_todo_unsent","[]");
+  showSyncBadge();
 }
-function removeBuyer2() {
-  document.getElementById('buyer2Section').style.display = 'none';
-  document.getElementById('addBuyer2Btn').style.display = 'block';
-  document.getElementById('buyer2Name').value = '';
-  document.getElementById('buyer2Email').value = '';
-  document.getElementById('buyer2Phone').value = '';
-}
-function toggleEntity() {
-  document.getElementById('entityFields').style.display = document.getElementById('entityBuyer').checked ? 'block' : 'none';
-}
-function toggleFinancing() {
-  const isCash = document.getElementById('purchaseType').value === 'cash';
-  document.getElementById('loanTypeRow').style.display = isCash ? 'none' : 'grid';
-}
-function toggleAddendum() {
-  document.getElementById('addendumFields').style.display = document.getElementById('includeAddendum').checked ? 'block' : 'none';
-}
-// Home warranty removed — always "No home warranty" (hardcoded)
 
-function submitOffer() {
-  const data = {
-    buyer1Name: document.getElementById('buyer1Name').value,
-    buyer1Email: document.getElementById('buyer1Email').value,
-    buyer1Phone: document.getElementById('buyer1Phone').value,
-    buyer2Name: document.getElementById('buyer2Name').value,
-    buyer2Email: document.getElementById('buyer2Email').value,
-    buyer2Phone: document.getElementById('buyer2Phone').value,
-    entityBuyer: document.getElementById('entityBuyer').checked,
-    entityName: document.getElementById('entityName').value,
-    entityState: document.getElementById('entityState').value,
-    propertyAddress: document.getElementById('propertyAddress').value,
-    mlsNumber: document.getElementById('mlsNumber').value,
-    listingAgentEmail: document.getElementById('listingAgentEmail').value,
-    offerPrice: document.getElementById('offerPrice').value,
-    earnestMoney: document.getElementById('earnestMoney').value,
-    ddFee: document.getElementById('ddFee').value,
-    ddPeriod: document.getElementById('ddPeriod').value,
-    settlementDate: document.getElementById('settlementDate').value,
-    financingType: document.getElementById('financingType').value,
-    additionalTerms: document.getElementById('additionalTerms').value
-  };
+// Show badge on load if unsent items exist
+showSyncBadge();
 
-  // Validate required fields
-  const required = ['buyer1Name','buyer1Email','propertyAddress','offerPrice','earnestMoney','ddFee','ddPeriod','settlementDate'];
-  for (const f of required) {
-    if (!data[f]) {
-      alert('Please fill in all required fields');
-      document.getElementById(f).focus();
-      return;
+function toggleTodo(id){
+  const el=document.querySelector(`.todo-item[data-id="${id}"]`);
+  if(!el)return;
+  el.classList.toggle("done");
+  const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
+  if(el.classList.contains("done")){doneTodos[id]=true}else{delete doneTodos[id]}
+  localStorage.setItem("rr_todos_done",JSON.stringify(doneTodos));
+  // For local todos
+  const local=getLocalTodos();
+  const person=el.dataset.person;
+  if(local[person]){
+    const lt=local[person].find(t=>t.id===id);
+    if(lt){lt.done=!lt.done;saveLocalTodos(local)}
+  }
+  updateTodoCount();
+}
+
+function updateTodoCount(){
+  const all=document.querySelectorAll(".todo-item");
+  const active=[...all].filter(e=>!e.classList.contains("done")).length;
+  const ct=document.getElementById("todo-count");
+  if(ct)ct.textContent=active;
+  // Update per-column counts
+  document.querySelectorAll(".todo-column").forEach(col=>{
+    const items=col.querySelectorAll(".todo-item");
+    const activeCol=[...items].filter(e=>!e.classList.contains("done")).length;
+    const badge=col.querySelector(".todo-column-count");
+    if(badge)badge.textContent=activeCol;
+  });
+}
+
+// Delete todo
+function deleteTodo(id){
+  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
+  if(!item)return;
+  item.style.transition="opacity 0.2s";item.style.opacity="0";
+  setTimeout(()=>{
+    item.remove();
+    // Remove from local todos
+    const person=item.dataset.person;
+    const local=getLocalTodos();
+    if(local[person]){
+      local[person]=local[person].filter(t=>t.id!==id);
+      saveLocalTodos(local);
     }
-  }
-  if (data.entityBuyer && !data.entityName) {
-    alert('Please enter the entity name');
-    document.getElementById('entityName').focus();
-    return;
-  }
-
-  // Count attached files
-  const files = document.querySelectorAll('.upload-area input[type=file]');
-  let fileCount = 0;
-  let fileNames = [];
-  files.forEach(f => { if(f.files.length > 0) { fileCount++; fileNames.push(f.files[0].name); } });
-
-  // Build message for Jarvis
-  let msg = `📝 NEW OFFER\n`;
-  msg += `Buyer 1: ${data.buyer1Name}\n`;
-  msg += `Email: ${data.buyer1Email}\n`;
-  if(data.buyer1Phone) msg += `Phone: ${data.buyer1Phone}\n`;
-  if(data.buyer2Name) {
-    msg += `Buyer 2: ${data.buyer2Name}\n`;
-    if(data.buyer2Email) msg += `Email 2: ${data.buyer2Email}\n`;
-    if(data.buyer2Phone) msg += `Phone 2: ${data.buyer2Phone}\n`;
-  }
-  if(data.entityBuyer) {
-    msg += `\n🏢 ENTITY PURCHASE\n`;
-    msg += `Entity: ${data.entityName}\n`;
-    if(data.entityState) msg += `State: ${data.entityState}\n`;
-    msg += `(Pg 13 entity buyer signature block)\n`;
-  }
-  msg += `\nProperty: ${data.propertyAddress}\n`;
-  if(data.mlsNumber) msg += `MLS#: ${data.mlsNumber}\n`;
-  if(data.listingAgentEmail) msg += `Listing Agent: ${data.listingAgentEmail}\n`;
-  msg += `\nOFFER TERMS:\n`;
-  msg += `Price: ${data.offerPrice}\n`;
-  msg += `Earnest Money: ${data.earnestMoney}\n`;
-  msg += `DD Fee: ${data.ddFee}\n`;
-  msg += `DD Period: ${data.ddPeriod} days\n`;
-  msg += `Settlement: ${data.settlementDate}\n`;
-  const purchaseType = document.getElementById('purchaseType').value;
-  if (purchaseType === 'cash') {
-    msg += `Financing: cash\n`;
-  } else {
-    msg += `Financing: ${data.financingType}\n`;
-    const lender = document.getElementById('lender').value.trim();
-    if(lender) msg += `Lender: ${lender}\n`;
-  }
-  const sc = document.getElementById('sellerConcessions').value.trim();
-  const scp = document.getElementById('sellerConcessionsPercent').value.trim();
-  if(sc) msg += `Seller Concessions: ${sc}\n`;
-  else if(scp) msg += `Seller Concessions: ${scp}\n`;
-  else msg += `Seller Concessions: None\n`;
-  const ea = document.getElementById('escrowAgent').value.trim();
-  if(ea) msg += `Escrow Agent: ${ea}\n`;
-  if(data.additionalTerms) msg += `Notes: ${data.additionalTerms}\n`;
-  // Addendum
-  const hasAddendum = document.getElementById('includeAddendum').checked;
-  if(hasAddendum) {
-    msg += `\n📎 ADDITIONAL PROVISIONS ADDENDUM\n`;
-    const expDate = document.getElementById('offerExpDate').value;
-    const expTime = document.getElementById('offerExpTime').value;
-    if(expDate) msg += `Offer Expires: ${expDate} at ${expTime || '5:00 PM'}\n`;
-    const addText = document.getElementById('addendumText').value.trim();
-    if(addText) msg += `Provisions: ${addText}\n`;
-  }
-  msg += `Recv Property Disclosure: ${document.getElementById('recvPropertyDisclosure').checked ? 'YES' : 'NO'}\n`;
-  msg += `Recv Mineral Disclosure: ${document.getElementById('recvMineralDisclosure').checked ? 'YES' : 'NO'}\n`;
-  msg += `Lead Paint Required: ${document.getElementById('leadPaint').checked ? 'YES' : 'NO'}\n`;
-  const hpts = document.getElementById('hasPropertyToSell').checked;
-  msg += `Has Property to Sell: ${hpts ? 'YES' : 'NO'}\n`;
-  msg += `Home Warranty: No\n`;
-  msg += `Subject to Leases: ${document.getElementById('subjectToLeases').checked ? 'YES' : 'NO'}\n`;
-  msg += `Fuel Tank: ${document.getElementById('hasFuelTank').checked ? 'YES' : 'NO'}\n`;
-  const il = document.getElementById('itemsLeased').value.trim();
-  const inc = document.getElementById('itemsNotConvey').value.trim();
-  msg += `Items Leased/Not Owned: ${il || 'N/A'}\n`;
-  msg += `Items Not Conveying: ${inc || 'N/A'}\n`;
-  const pp = document.getElementById('personalProperty').value.trim();
-  if(pp) msg += `\nPERSONAL PROPERTY TO CONVEY:\n${pp}\n`;
-  // Jarvis special instructions
-  const jarvis = document.getElementById('jarvisPrompt').value.trim();
-  if(jarvis) msg += `\n🤖 SPECIAL INSTRUCTIONS:\n${jarvis}\n`;
-  msg += `\nAttachments: ${fileCount} files`;
-  if(fileNames.length > 0) msg += ` (${fileNames.join(', ')})`;
-
-  // Text Jarvis directly
-  window.open("sms:+17044529982&body=" + encodeURIComponent(msg), "_blank");
-
-  // Show confirmation
-  document.querySelector('.btn').textContent = '✅ Sent to Jarvis — Offer Package Building...';
-  document.querySelector('.btn').style.background = '#46d67a';
-  document.querySelector('.btn').style.color = '#1a1408';
-  document.querySelector('.btn').disabled = true;
+    // Track server-rendered deletions
+    const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
+    if(!dels.includes(id))dels.push(id);
+    localStorage.setItem("rr_todo_deletes",JSON.stringify(dels));
+    updateTodoCount();
+  },200);
 }
+
+// Cycle priority: high → medium → low → high
+function cyclePriority(id){
+  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
+  if(!item)return;
+  const order=["high","medium","low"];
+  const current=item.dataset.priority||"medium";
+  const next=order[(order.indexOf(current)+1)%3];
+  item.classList.remove("high","medium","low");
+  item.classList.add(next);
+  item.dataset.priority=next;
+  // Save priority change
+  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
+  pris[id]=next;
+  localStorage.setItem("rr_todo_priorities",JSON.stringify(pris));
+  // Update local todos
+  const person=item.dataset.person;
+  const local=getLocalTodos();
+  if(local[person]){
+    const lt=local[person].find(t=>t.id===id);
+    if(lt){lt.priority=next;saveLocalTodos(local)}
+  }
+}
+
+// Apply saved deletions and priorities on load
+(function(){
+  const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
+  dels.forEach(id=>{
+    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
+    if(el)el.remove();
+  });
+  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
+  Object.keys(pris).forEach(id=>{
+    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
+    if(el){
+      el.classList.remove("high","medium","low");
+      el.classList.add(pris[id]);
+      el.dataset.priority=pris[id];
+    }
+  });
+})();
+
+// Edit todo on double-click
+document.addEventListener("dblclick",function(e){
+  const textEl=e.target.closest(".todo-text");
+  if(!textEl)return;
+  const item=textEl.closest(".todo-item");
+  if(!item||item.querySelector(".todo-edit-input"))return;
+  const currentText=textEl.childNodes[0]?textEl.childNodes[0].textContent.trim():textEl.textContent.trim();
+  const input=document.createElement("input");
+  input.type="text";
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+// Print
+function f2tPrint() {
+  f2tPreview();
+  setTimeout(() => window.print(), 500);
+}
+
+// Send for Signature via Dropbox Sign
+async function f2tSendForSignature() {
+  const buyerEmail = document.getElementById('f2t-buyer-email').value.trim();
+  const buyerName = document.getElementById('f2t-buyer-name').value.trim();
+  const sellerEmail = document.getElementById('f2t-seller-email').value.trim();
+  const sellerName = document.getElementById('f2t-seller-name').value.trim();
+
+  if (!buyerEmail || !buyerName) { alert('Buyer name and email are required.'); return; }
+  if (!sellerEmail || !sellerName) { alert('Seller name and email are required.'); return; }
+
+  if (!confirm(`Send Form 2-T for signature to:
+• ${buyerName} (${buyerEmail})
+• ${sellerName} (${sellerEmail})
+
+Proceed?`)) return;
+
+  const dealName = document.getElementById('f2t-deal-name').value.trim() || 'Form 2-T';
+
+  try {
+    const formData = new FormData();
+    formData.append('title', `Form 2-T: ${dealName}`);
+    formData.append('subject', `Offer to Purchase - ${dealName}`);
+    formData.append('message', 'Please review and sign the attached Form 2-T Offer to Purchase and Contract.');
+    formData.append('signers[0][email_address]', buyerEmail);
+    formData.append('signers[0][name]', buyerName);
+    formData.append('signers[0][order]', '0');
+    formData.append('signers[1][email_address]', sellerEmail);
+    formData.append('signers[1][name]', sellerName);
+    formData.append('signers[1][order]', '1');
+    formData.append('test_mode', '1');
+
+    const resp = await fetch('https://api.hellosign.com/v3/signature_request/send', {
+      method: 'POST',
+      headers: { 'Authorization': 'Basic ' + btoa('589ba5d3f3c5a635352c09254515e984c01d5e29529b1284ba8eb32b976d16c8:') },
+      body: formData
+    });
+
+    if (!resp.ok) throw new Error('Dropbox Sign error: ' + resp.status);
+    const result = await resp.json();
+    f2tShowBanner('f2t-mls-banner', '✍️ Signature request sent! ID: ' + (result.signature_request?.signature_request_id || 'sent'), true);
+  } catch (err) {
+    f2tShowBanner('f2t-mls-banner', '✕ Signature error: ' + err.message, false);
+  }
+}
+
+// Init
+f2tPopulateDealSelect();
 </script>
 </body>
 </html>
