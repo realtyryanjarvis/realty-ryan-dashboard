@@ -7,32 +7,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #F7F6F3; font-family: 'Work Sans', sans-serif; color: #1a1a1a; min-height: 100vh; }
-.wo-header { background: #1B2A4A; border-bottom: none; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+body { background: #f8f7f6; font-family: 'Work Sans', sans-serif; color: #201408; min-height: 100vh; }
+.wo-header { background: #201408; border-bottom: none; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
 .wo-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF; margin: 0; }
 .wo-back { padding: 8px 16px; background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
-.wo-back:hover { background: #a06228; text-decoration: none; }
+.wo-back:hover { background: #793315; text-decoration: none; }
 </style>
 <style>
 #writeOfferPanel { padding: 20px 24px; }
 .f2t-deal-bar { display:flex; gap:8px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
-.f2t-input { width:100%; padding:10px 12px; background:#F7F6F3; border:1px solid #ddd; border-radius:6px; color:#1a1a1a; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
-.f2t-input:focus { border-color:#B87333; }
-.f2t-select { padding:10px 12px; background:#F7F6F3; border:1px solid #ddd; border-radius:6px; color:#1a1a1a; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
-.f2t-select:focus { border-color:#B87333; }
+.f2t-input { width:100%; padding:10px 12px; background:#f8f7f6; border:1px solid #ddd; border-radius:6px; color:#201408; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
+.f2t-input:focus { border-color:#9a5a30; }
+.f2t-select { padding:10px 12px; background:#f8f7f6; border:1px solid #ddd; border-radius:6px; color:#201408; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
+.f2t-select:focus { border-color:#9a5a30; }
 .f2t-textarea { resize:vertical; min-height:80px; }
 .f2t-label { display:block; font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.08em; margin:10px 0 4px; }
 .f2t-label:first-of-type { margin-top:0; }
-.f2t-btn { padding:10px 18px; background:#B87333; color:#1a1a1a; border:none; border-radius:6px; font-family:'Work Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap; }
-.f2t-btn:hover { background:#a06228; }
-.f2t-btn-gold { background:#B87333; }
-.f2t-btn-gold:hover { background:#d4874a; }
-.f2t-btn-danger { background:#5a1a1a; }
-.f2t-btn-danger:hover { background:#7a2a2a; }
-.f2t-btn-sign { background:#2a5a3a; }
-.f2t-btn-sign:hover { background:#3a7a4a; }
-.f2t-section-card { background:#1B2A4A; border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:12px; }
-.f2t-section-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#B87333; margin-bottom:12px; letter-spacing:0.06em; }
+.f2t-btn { padding:10px 18px; background:#793315; color:#ffffff; border:none; border-radius:6px; font-family:'Work Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap; }
+.f2t-btn:hover { background:#201408; }
+.f2t-btn-gold { background:#793315; }
+.f2t-btn-gold:hover { background:#5a2510; }
+.f2t-btn-danger { background:#7b7269; }
+.f2t-btn-danger:hover { background:#5a534c; }
+.f2t-btn-sign { background:#201408; }
+.f2t-btn-sign:hover { background:#793315; }
+.f2t-section-card { background:#ffffff; border:1px solid #ded9d3; border-radius:8px; padding:16px; margin-bottom:12px; }
+.f2t-section-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#793315; margin-bottom:12px; letter-spacing:0.06em; }
 .f2t-mls-row { display:flex; gap:8px; }
 .f2t-banner { padding:10px 14px; border-radius:6px; font-size:13px; margin-top:10px; }
 .f2t-banner.f2t-success { background:rgba(70,214,122,0.15); border:1px solid #46d67a; color:#46d67a; }
@@ -41,7 +41,7 @@ body { background: #F7F6F3; font-family: 'Work Sans', sans-serif; color: #1a1a1a
 .f2t-readonly-grid-compact { grid-template-columns:1fr 1fr 1fr; }
 .f2t-ro-item { }
 .f2t-ro-label { display:block; font-size:10px; color:#888; text-transform:uppercase; letter-spacing:0.08em; }
-.f2t-ro-value { display:block; font-size:14px; color:#1a1a1a; margin-top:2px; }
+.f2t-ro-value { display:block; font-size:14px; color:#201408; margin-top:2px; }
 .f2t-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .f2t-agent-card { margin-top:12px; }
 .f2t-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
