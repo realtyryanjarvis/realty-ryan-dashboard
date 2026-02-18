@@ -3,245 +3,497 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Write Offer — Realty Ryan</title>
+<title>Write Offer — Form 2-T | Realty Ryan</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
-.header-compact { background: #261A05; border-bottom: 2px solid #7A3B14; }
-.hdr-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 10px; }
-.hdr-top h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; margin: 0; }
-.btn-action { padding: 8px 16px; background: #7A3B14; color: #FAFAFA; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
-.btn-action:hover { background: #9A4B1A; text-decoration: none; }
-  if(dealSpan)textEl.appendChild(dealSpan);
-  input.focus();
-  input.select();
-  function save(){
-    const newText=input.value.trim();
-    if(!newText)return cancel();
-    textEl.innerHTML="";
-    textEl.appendChild(document.createTextNode(newText));
-    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
-    // Save edit to localStorage
-    const id=item.dataset.id;
-    const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
-    edits[id]=newText;
-    localStorage.setItem("rr_todo_edits",JSON.stringify(edits));
-    // Also update local todos if applicable
-    const person=item.dataset.person;
-    const local=getLocalTodos();
-    if(local[person]){
-      const lt=local[person].find(t=>t.id===id);
-      if(lt){lt.text=newText;saveLocalTodos(local)}
-    }
-  }
-  function cancel(){
-    textEl.innerHTML="";
-    textEl.appendChild(document.createTextNode(currentText));
-    if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
-  }
-  input.addEventListener("keydown",function(ev){
-    if(ev.key==="Enter"){ev.preventDefault();save()}
-    if(ev.key==="Escape")cancel();
-  });
-  input.addEventListener("blur",save);
-});
-
-// Apply saved edits on load
-(function(){
-  const edits=JSON.parse(localStorage.getItem("rr_todo_edits")||"{}");
-  Object.keys(edits).forEach(id=>{
-    const item=document.querySelector(`.todo-item[data-id="${id}"]`);
-    if(item){
-      const textEl=item.querySelector(".todo-text");
-      const dealSpan=textEl.querySelector(".todo-deal");
-      textEl.innerHTML="";
-      textEl.appendChild(document.createTextNode(edits[id]));
-      if(dealSpan){textEl.appendChild(document.createTextNode(" "));textEl.appendChild(dealSpan)}
-    }
-  });
-})();
-
-// Drag & Drop
+.wo-header { background: #261A05; border-bottom: 2px solid #7A3B14; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+.wo-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: #FAFAFA; margin: 0; }
+.wo-back { padding: 8px 16px; background: #7A3B14; color: #FAFAFA; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+.wo-back:hover { background: #9A4B1A; text-decoration: none; }
+</style>
+<style>
+#writeOfferPanel { padding: 20px 24px; }
+.f2t-deal-bar { display:flex; gap:8px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
+.f2t-input { width:100%; padding:10px 12px; background:#1a1408; border:1px solid #5C3D14; border-radius:6px; color:#FAFAFA; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
+.f2t-input:focus { border-color:#c97a3b; }
+.f2t-select { padding:10px 12px; background:#1a1408; border:1px solid #5C3D14; border-radius:6px; color:#FAFAFA; font-family:'Work Sans',sans-serif; font-size:13px; outline:none; }
+.f2t-select:focus { border-color:#c97a3b; }
+.f2t-textarea { resize:vertical; min-height:80px; }
+.f2t-label { display:block; font-size:11px; color:#857D52; text-transform:uppercase; letter-spacing:0.08em; margin:10px 0 4px; }
+.f2t-label:first-of-type { margin-top:0; }
+.f2t-btn { padding:10px 18px; background:#7A3B14; color:#FAFAFA; border:none; border-radius:6px; font-family:'Work Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap; }
+.f2t-btn:hover { background:#9A4B1A; }
+.f2t-btn-gold { background:#c97a3b; }
+.f2t-btn-gold:hover { background:#e08a42; }
+.f2t-btn-danger { background:#5a1a1a; }
+.f2t-btn-danger:hover { background:#7a2a2a; }
+.f2t-btn-sign { background:#2a5a3a; }
+.f2t-btn-sign:hover { background:#3a7a4a; }
+.f2t-section-card { background:#261A05; border:1px solid #5C3D14; border-radius:8px; padding:16px; margin-bottom:12px; }
+.f2t-section-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#c97a3b; margin-bottom:12px; letter-spacing:0.06em; }
+.f2t-mls-row { display:flex; gap:8px; }
+.f2t-banner { padding:10px 14px; border-radius:6px; font-size:13px; margin-top:10px; }
+.f2t-banner.f2t-success { background:rgba(70,214,122,0.15); border:1px solid #46d67a; color:#46d67a; }
+.f2t-banner.f2t-error { background:rgba(255,68,68,0.15); border:1px solid #ff4444; color:#ff887c; }
+.f2t-readonly-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.f2t-readonly-grid-compact { grid-template-columns:1fr 1fr 1fr; }
+.f2t-ro-item { }
+.f2t-ro-label { display:block; font-size:10px; color:#857D52; text-transform:uppercase; letter-spacing:0.08em; }
+.f2t-ro-value { display:block; font-size:14px; color:#FAFAFA; margin-top:2px; }
+.f2t-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.f2t-agent-card { margin-top:12px; }
+.f2t-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+#f2t-preview-section { margin-top:20px; }
+.f2t-preview-page { position:relative; margin-bottom:12px; background:#fff; border-radius:4px; overflow:hidden; }
+.f2t-preview-page img { width:100%; display:block; }
+.f2t-overlay-text { position:absolute; font-family:'Work Sans',sans-serif; color:#000; white-space:nowrap; overflow:hidden; }
+.f2t-overlay-check { position:absolute; font-size:14px; font-weight:bold; color:#000; }
+@media(max-width:768px){
+  .f2t-form-grid { grid-template-columns:1fr; }
+  .f2t-readonly-grid-compact { grid-template-columns:1fr 1fr; }
+  .f2t-mls-row { flex-direction:column; }
+}
+@media(max-width:480px){
+  .f2t-readonly-grid { grid-template-columns:1fr; }
+  .f2t-readonly-grid-compact { grid-template-columns:1fr; }
+  .f2t-deal-bar { flex-direction:column; }
+  .f2t-actions { flex-direction:column; }
+  .f2t-actions .f2t-btn { width:100%; }
+}
 </style>
 </head>
 <body>
 
-<div class="header-compact">
-  <div class="hdr-top">
-    <h1>📝 Write Offer — Form 2-T</h1>
-    <a href="index.html" class="btn-action">← Back to Dashboard</a>
+<div class="wo-header">
+  <h1>📝 Write Offer — Form 2-T</h1>
+  <a href="index.html" class="wo-back">← Back to Dashboard</a>
+</div>
+
+<!-- ========== FORM 2-T WRITE OFFER PANEL ========== -->
+<div id="writeOfferPanel" >
+
+  <!-- Deal Bar -->
+  <div class="f2t-deal-bar">
+    <select id="f2t-deal-select" class="f2t-select" onchange="f2tLoadDeal(this.value)">
+      <option value="">— Load Deal —</option>
+    </select>
+    <input type="text" id="f2t-deal-name" class="f2t-input" placeholder="Deal name (e.g. Smith - 123 Main St)" style="flex:1;">
+    <button class="f2t-btn" onclick="f2tSaveDeal()">💾 Save</button>
+    <button class="f2t-btn f2t-btn-danger" onclick="f2tDeleteDeal()">🗑 Delete</button>
   </div>
+
+  <!-- MLS Lookup -->
+  <div class="f2t-section-card">
+    <div class="f2t-section-title">MLS Lookup</div>
+    <div class="f2t-mls-row">
+      <input type="text" id="f2t-mls-query" class="f2t-input" placeholder="MLS # or Property Address" style="flex:1;">
+      <button class="f2t-btn f2t-btn-gold" onclick="f2tMlsLookup()">🔍 Pull from MLS</button>
+    </div>
+    <div id="f2t-mls-banner" class="f2t-banner" ></div>
+  </div>
+
+  <!-- Property & Listing Agent Info Card -->
+  <div class="f2t-section-card" id="f2t-property-card" >
+    <div class="f2t-section-title">Property & Listing Agent Info</div>
+    <div class="f2t-readonly-grid">
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Address</span><span class="f2t-ro-value" id="f2t-ro-address">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">City / County / Zip</span><span class="f2t-ro-value" id="f2t-ro-city-county-zip">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">PID / PIN</span><span class="f2t-ro-value" id="f2t-ro-pid">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">List Price</span><span class="f2t-ro-value" id="f2t-ro-list-price">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Listing Agent</span><span class="f2t-ro-value" id="f2t-ro-listing-agent">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Listing Firm</span><span class="f2t-ro-value" id="f2t-ro-listing-firm">—</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Legal Description</span><span class="f2t-ro-value" id="f2t-ro-legal">—</span></div>
+    </div>
+  </div>
+
+  <!-- Form Sections -->
+  <div class="f2t-form-grid">
+    <!-- Buyer Info -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Buyer Info</div>
+      <label class="f2t-label">Buyer Name</label>
+      <input type="text" class="f2t-input" data-field="buyer_name" id="f2t-buyer-name">
+      <label class="f2t-label">Buyer 2 Name</label>
+      <input type="text" class="f2t-input" data-field="buyer2_name" id="f2t-buyer2-name">
+      <label class="f2t-label">Entity Name</label>
+      <input type="text" class="f2t-input" data-field="buyer_entity" id="f2t-buyer-entity">
+      <label class="f2t-label">Address</label>
+      <input type="text" class="f2t-input" data-field="buyer_address" id="f2t-buyer-address">
+      <label class="f2t-label">Email</label>
+      <input type="email" class="f2t-input" data-field="buyer_email" id="f2t-buyer-email">
+      <label class="f2t-label">Phone</label>
+      <input type="tel" class="f2t-input" data-field="buyer_phone" id="f2t-buyer-phone">
+    </div>
+
+    <!-- Offer Terms -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Offer Terms</div>
+      <label class="f2t-label">Purchase Price</label>
+      <input type="text" class="f2t-input" data-field="purchase_price" id="f2t-purchase-price" placeholder="">
+      <label class="f2t-label">Due Diligence Fee</label>
+      <input type="text" class="f2t-input" data-field="due_diligence_fee" id="f2t-dd-fee">
+      <label class="f2t-label">Earnest Money</label>
+      <input type="text" class="f2t-input" data-field="earnest_money" id="f2t-earnest-money">
+      <label class="f2t-label">Additional Earnest Money</label>
+      <input type="text" class="f2t-input" data-field="additional_earnest" id="f2t-addl-earnest">
+      <label class="f2t-label">Seller Concessions</label>
+      <input type="text" class="f2t-input" data-field="seller_concession_amount" id="f2t-seller-concessions">
+    </div>
+
+    <!-- Key Dates -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Key Dates</div>
+      <label class="f2t-label">Due Diligence Deadline</label>
+      <input type="date" class="f2t-input" data-field="dd_period_date" id="f2t-dd-deadline">
+      <label class="f2t-label">Closing Date</label>
+      <input type="date" class="f2t-input" data-field="settlement_date" id="f2t-closing-date">
+      <label class="f2t-label">Possession Date</label>
+      <input type="date" class="f2t-input" data-field="possession_date" id="f2t-possession-date">
+    </div>
+
+    <!-- Financing -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Financing</div>
+      <label class="f2t-label">Loan Type</label>
+      <select class="f2t-select f2t-input" data-field="loan_type" id="f2t-loan-type">
+        <option value="">Select…</option>
+        <option value="Conventional">Conventional</option>
+        <option value="FHA">FHA</option>
+        <option value="VA">VA</option>
+        <option value="USDA">USDA</option>
+        <option value="Cash">Cash</option>
+        <option value="Other">Other</option>
+      </select>
+      <label class="f2t-label">Loan Amount</label>
+      <input type="text" class="f2t-input" data-field="loan_amount" id="f2t-loan-amount">
+    </div>
+
+    <!-- Seller Info -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Seller Info</div>
+      <label class="f2t-label">Seller Name</label>
+      <input type="text" class="f2t-input" data-field="seller_name" id="f2t-seller-name">
+      <label class="f2t-label">Seller Address</label>
+      <input type="text" class="f2t-input" data-field="seller_address" id="f2t-seller-address">
+      <label class="f2t-label">Seller Email</label>
+      <input type="email" class="f2t-input" data-field="seller_email" id="f2t-seller-email">
+      <label class="f2t-label">Seller Phone</label>
+      <input type="tel" class="f2t-input" data-field="seller_phone" id="f2t-seller-phone">
+    </div>
+
+    <!-- Escrow -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Escrow</div>
+      <label class="f2t-label">Escrow Agent Name</label>
+      <input type="text" class="f2t-input" data-field="escrow_agent" id="f2t-escrow-agent">
+      <label class="f2t-label">Escrow Agent Address</label>
+      <input type="text" class="f2t-input" data-field="escrow_address" id="f2t-escrow-address">
+    </div>
+
+    <!-- Personal Property -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Personal Property</div>
+      <textarea class="f2t-input f2t-textarea" data-field="personal_property" id="f2t-personal-property" rows="4" placeholder="List personal property included…"></textarea>
+    </div>
+
+    <!-- Additional Terms -->
+    <div class="f2t-section-card">
+      <div class="f2t-section-title">Additional Terms</div>
+      <textarea class="f2t-input f2t-textarea" data-field="additional_terms" id="f2t-additional-terms" rows="4" placeholder="Additional terms and conditions…"></textarea>
+    </div>
+  </div>
+
+  <!-- Buyer's Agent Card -->
+  <div class="f2t-section-card f2t-agent-card">
+    <div class="f2t-section-title">Buyer's Agent</div>
+    <div class="f2t-readonly-grid f2t-readonly-grid-compact">
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Agent</span><span class="f2t-ro-value">Ryan Palmer</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Firm</span><span class="f2t-ro-value">Corcoran HM Properties</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">License #</span><span class="f2t-ro-value">315654</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Firm License #</span><span class="f2t-ro-value">C18059</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Phone</span><span class="f2t-ro-value">508-954-2159</span></div>
+      <div class="f2t-ro-item"><span class="f2t-ro-label">Email</span><span class="f2t-ro-value">ryanpalmer@hmproperties.com</span></div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="f2t-actions">
+    <button class="f2t-btn f2t-btn-gold" onclick="f2tPreview()">👁 Preview</button>
+    <button class="f2t-btn" onclick="f2tPrint()">🖨 Print</button>
+    <button class="f2t-btn f2t-btn-sign" onclick="f2tSendForSignature()">✍️ Send for Signature</button>
+    <a href="index.html" class="f2t-btn" style="text-decoration:none;text-align:center;background:#5a1a1a;">← Back</a>
+  </div>
+
+  <!-- Preview Section -->
+  <div id="f2t-preview-section" >
+    <div class="f2t-section-title" style="padding:16px 0 8px;">Form 2-T Preview</div>
+    <div id="f2t-preview-pages"></div>
+  </div>
+
 </div>
-
-<div style="padding: 20px 24px;">
-  });
-  updateTodoCount();
-  initDragDrop();
-})();
-
-function addInlineTodo(input){
-  const text=input.value.trim();
-  if(!text)return;
-  const person=input.dataset.person;
-  const id="local-"+Date.now();
-  const todo={id:id,text:text,priority:"medium",deal:"",done:false};
-  const local=getLocalTodos();
-  if(!local[person])local[person]=[];
-  local[person].push(todo);
-  saveLocalTodos(local);
-  const list=input.closest(".todo-column").querySelector(".todo-list");
-  list.insertAdjacentHTML("beforeend",renderTodoItem(todo,person));
-  initDragDrop();
-  input.value="";
-  updateTodoCount();
-  // Track unsent items for Jarvis sync
-  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
-  const personName=person.charAt(0).toUpperCase()+person.slice(1);
-  unsent.push({person:personName,text:text,time:new Date().toLocaleString()});
-  localStorage.setItem("rr_todo_unsent",JSON.stringify(unsent));
-  showSyncBadge();
-}
-
-// Sync badge — shows when there are unsent todos for Jarvis
-function showSyncBadge(){
-  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
-  let badge=document.getElementById("jarvis-sync-badge");
-  if(unsent.length===0){if(badge)badge.style.display="none";return}
-  if(!badge){
-    badge=document.createElement("div");
-    badge.id="jarvis-sync-badge";
-    badge.style.cssText="position:fixed;bottom:20px;right:20px;background:#7A3B14;color:#FAFAFA;padding:10px 16px;border-radius:24px;cursor:pointer;font-size:13px;font-family:Work Sans,sans-serif;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,0.4);display:flex;align-items:center;gap:8px;";
-    badge.onclick=syncToJarvis;
-    document.body.appendChild(badge);
-  }
-  badge.innerHTML=`🤖 <span>${unsent.length} new todo${unsent.length>1?"s":""}</span> <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:12px;font-weight:600;">Send to Jarvis</span>`;
-  badge.style.display="flex";
-}
-
-function syncToJarvis(){
-  const unsent=JSON.parse(localStorage.getItem("rr_todo_unsent")||"[]");
-  if(unsent.length===0)return;
-  let msg="📌 NEW TODOS from dashboard:
-";
-  unsent.forEach(t=>{msg+=`
-• ${t.person}: ${t.text}`});
-  window.open("sms:+15089542159&body="+encodeURIComponent(msg),"_blank");
-  localStorage.setItem("rr_todo_unsent","[]");
-  showSyncBadge();
-}
-
-// Show badge on load if unsent items exist
-showSyncBadge();
-
-function toggleTodo(id){
-  const el=document.querySelector(`.todo-item[data-id="${id}"]`);
-  if(!el)return;
-  el.classList.toggle("done");
-  const doneTodos=JSON.parse(localStorage.getItem("rr_todos_done")||"{}");
-  if(el.classList.contains("done")){doneTodos[id]=true}else{delete doneTodos[id]}
-  localStorage.setItem("rr_todos_done",JSON.stringify(doneTodos));
-  // For local todos
-  const local=getLocalTodos();
-  const person=el.dataset.person;
-  if(local[person]){
-    const lt=local[person].find(t=>t.id===id);
-    if(lt){lt.done=!lt.done;saveLocalTodos(local)}
-  }
-  updateTodoCount();
-}
-
-function updateTodoCount(){
-  const all=document.querySelectorAll(".todo-item");
-  const active=[...all].filter(e=>!e.classList.contains("done")).length;
-  const ct=document.getElementById("todo-count");
-  if(ct)ct.textContent=active;
-  // Update per-column counts
-  document.querySelectorAll(".todo-column").forEach(col=>{
-    const items=col.querySelectorAll(".todo-item");
-    const activeCol=[...items].filter(e=>!e.classList.contains("done")).length;
-    const badge=col.querySelector(".todo-column-count");
-    if(badge)badge.textContent=activeCol;
-  });
-}
-
-// Delete todo
-function deleteTodo(id){
-  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
-  if(!item)return;
-  item.style.transition="opacity 0.2s";item.style.opacity="0";
-  setTimeout(()=>{
-    item.remove();
-    // Remove from local todos
-    const person=item.dataset.person;
-    const local=getLocalTodos();
-    if(local[person]){
-      local[person]=local[person].filter(t=>t.id!==id);
-      saveLocalTodos(local);
-    }
-    // Track server-rendered deletions
-    const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
-    if(!dels.includes(id))dels.push(id);
-    localStorage.setItem("rr_todo_deletes",JSON.stringify(dels));
-    updateTodoCount();
-  },200);
-}
-
-// Cycle priority: high → medium → low → high
-function cyclePriority(id){
-  const item=document.querySelector(`.todo-item[data-id="${id}"]`);
-  if(!item)return;
-  const order=["high","medium","low"];
-  const current=item.dataset.priority||"medium";
-  const next=order[(order.indexOf(current)+1)%3];
-  item.classList.remove("high","medium","low");
-  item.classList.add(next);
-  item.dataset.priority=next;
-  // Save priority change
-  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
-  pris[id]=next;
-  localStorage.setItem("rr_todo_priorities",JSON.stringify(pris));
-  // Update local todos
-  const person=item.dataset.person;
-  const local=getLocalTodos();
-  if(local[person]){
-    const lt=local[person].find(t=>t.id===id);
-    if(lt){lt.priority=next;saveLocalTodos(local)}
-  }
-}
-
-// Apply saved deletions and priorities on load
-(function(){
-  const dels=JSON.parse(localStorage.getItem("rr_todo_deletes")||"[]");
-  dels.forEach(id=>{
-    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
-    if(el)el.remove();
-  });
-  const pris=JSON.parse(localStorage.getItem("rr_todo_priorities")||"{}");
-  Object.keys(pris).forEach(id=>{
-    const el=document.querySelector(`.todo-item[data-id="${id}"]`);
-    if(el){
-      el.classList.remove("high","medium","low");
-      el.classList.add(pris[id]);
-      el.dataset.priority=pris[id];
-    }
-  });
-})();
-
-// Edit todo on double-click
-document.addEventListener("dblclick",function(e){
-  const textEl=e.target.closest(".todo-text");
-  if(!textEl)return;
-  const item=textEl.closest(".todo-item");
-  if(!item||item.querySelector(".todo-edit-input"))return;
-  const currentText=textEl.childNodes[0]?textEl.childNodes[0].textContent.trim():textEl.textContent.trim();
-  const input=document.createElement("input");
-  input.type="text";
-</div>
+<!-- ========== END FORM 2-T PANEL ========== -->
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<!-- Form 2-T JavaScript -->
+<script>
+// Firebase init
+const f2tFirebaseConfig = {
+  apiKey: "AIzaSyCLnvrTIIsshy0nP7z1BEAyFZdGeJ-hJwQ",
+  authDomain: "realtyryan-dashboard.firebaseapp.com",
+  databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com",
+  projectId: "realtyryan-dashboard",
+  storageBucket: "realtyryan-dashboard.firebasestorage.app",
+  messagingSenderId: "40229133129",
+  appId: "1:40229133129:web:be8ca0f35c778427301898"
+};
+const f2tApp = firebase.initializeApp(f2tFirebaseConfig, 'form2t');
+const f2tDb = firebase.database(f2tApp);
+const f2tDealsRef = f2tDb.ref('realty-ryan/form2t_deals');
+
+// Field mappings
+let f2tMappings = null;
+fetch('forms/form2t-mappings-clean.json').then(r=>r.json()).then(d=>{f2tMappings=d}).catch(()=>{});
+
+// Buyer agent constants
+const F2T_AGENT = {
+  buyer_agent_name: 'Ryan Palmer',
+  buyer_agent_firm: 'Corcoran HM Properties',
+  buyer_agent_license: '315654',
+  buyer_agent_firm_license: 'C18059',
+  buyer_agent_phone: '508-954-2159',
+  buyer_agent_email: 'ryanpalmer@hmproperties.com'
+};
+
+// Toggle panel
+function toggleWriteOffer() {
+  const panel = document.getElementById('writeOfferPanel');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+// Get all form data
+function f2tGetFormData() {
+  const data = {};
+  document.querySelectorAll('#writeOfferPanel [data-field]').forEach(el => {
+    data[el.dataset.field] = el.value;
+  });
+  // Add agent info
+  Object.assign(data, F2T_AGENT);
+  return data;
+}
+
+// Set form data
+function f2tSetFormData(data) {
+  if (!data) return;
+  document.querySelectorAll('#writeOfferPanel [data-field]').forEach(el => {
+    if (data[el.dataset.field] !== undefined) el.value = data[el.dataset.field];
+  });
+}
+
+// MLS Lookup
+async function f2tMlsLookup() {
+  const q = document.getElementById('f2t-mls-query').value.trim();
+  if (!q) return;
+  const banner = document.getElementById('f2t-mls-banner');
+  banner.style.display = 'block';
+  banner.className = 'f2t-banner';
+  banner.textContent = 'Searching MLS…';
+
+  try {
+    // Try by MLS number first, then address search
+    const isNum = /^\d+$/.test(q);
+    let url = isNum
+      ? `https://api.idxbroker.com/mls/listing/${q}`
+      : `https://api.idxbroker.com/mls/searchresults?query=${encodeURIComponent(q)}`;
+
+    const resp = await fetch(url, {
+      headers: { 'accesskey': 'n7sPFcEjrAnAihx-uq46z8', 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    if (!resp.ok) throw new Error('MLS lookup failed: ' + resp.status);
+    const result = await resp.json();
+    const listing = Array.isArray(result) ? result[0] : result;
+    if (!listing) throw new Error('No results found');
+
+    // Fill fields
+    const addr = listing.address || listing.streetName || '';
+    const city = listing.cityName || listing.city || '';
+    const county = listing.countyName || listing.county || '';
+    const zip = listing.zipcode || listing.zip || '';
+    const pid = listing.parcelNumber || listing.pid || '';
+    const legal = listing.legalDescription || '';
+    const listPrice = listing.listingPrice || listing.price || '';
+    const listAgent = listing.listingAgentName || listing.agentName || '';
+    const listFirm = listing.listingOfficeName || listing.officeName || '';
+
+    document.getElementById('f2t-ro-address').textContent = addr;
+    document.getElementById('f2t-ro-city-county-zip').textContent = `${city}, ${county}, ${zip}`;
+    document.getElementById('f2t-ro-pid').textContent = pid;
+    document.getElementById('f2t-ro-list-price').textContent = listPrice ? `$${Number(listPrice).toLocaleString()}` : '—';
+    document.getElementById('f2t-ro-listing-agent').textContent = listAgent;
+    document.getElementById('f2t-ro-listing-firm').textContent = listFirm;
+    document.getElementById('f2t-ro-legal').textContent = legal || '—';
+
+    // Auto-fill form fields
+    const si = (id, v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
+    si('f2t-seller-name', listing.ownerName || '');
+    si('f2t-purchase-price', '');
+    if (listPrice) document.getElementById('f2t-purchase-price').placeholder = `List: $${Number(listPrice).toLocaleString()}`;
+
+    // Store MLS data for mapping
+    window.f2tMlsData = { street_address: addr, city, county, zip_code: zip, pid_pin: pid, other_description: legal, seller_name: listing.ownerName || '' };
+
+    document.getElementById('f2t-property-card').style.display = 'block';
+    banner.className = 'f2t-banner f2t-success';
+    banner.textContent = '✓ Property data loaded from MLS';
+  } catch (err) {
+    banner.className = 'f2t-banner f2t-error';
+    banner.textContent = '✕ ' + err.message;
+  }
+}
+
+// Deal management
+function f2tGetDeals() {
+  try { return JSON.parse(localStorage.getItem('rr_form2t_deals') || '{}'); } catch(e) { return {}; }
+}
+
+function f2tSaveDeals(deals) {
+  localStorage.setItem('rr_form2t_deals', JSON.stringify(deals));
+  f2tSyncToFirebase(deals);
+}
+
+function f2tSyncToFirebase(deals) {
+  try { f2tDealsRef.set(deals); } catch(e) { console.warn('Firebase sync failed', e); }
+}
+
+// Load from Firebase on init
+f2tDealsRef.on('value', snap => {
+  const fbDeals = snap.val();
+  if (fbDeals) {
+    localStorage.setItem('rr_form2t_deals', JSON.stringify(fbDeals));
+    f2tPopulateDealSelect();
+  }
+});
+
+function f2tPopulateDealSelect() {
+  const sel = document.getElementById('f2t-deal-select');
+  const deals = f2tGetDeals();
+  sel.innerHTML = '<option value="">— Load Deal —</option>';
+  Object.keys(deals).forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k; opt.textContent = k;
+    sel.appendChild(opt);
+  });
+}
+
+function f2tSaveDeal() {
+  const name = document.getElementById('f2t-deal-name').value.trim();
+  if (!name) { alert('Enter a deal name first.'); return; }
+  const deals = f2tGetDeals();
+  deals[name] = { ...f2tGetFormData(), _mlsData: window.f2tMlsData || null, _updated: new Date().toISOString() };
+  f2tSaveDeals(deals);
+  f2tPopulateDealSelect();
+  document.getElementById('f2t-deal-select').value = name;
+  f2tShowBanner('f2t-mls-banner', '💾 Deal saved: ' + name, true);
+}
+
+function f2tLoadDeal(name) {
+  if (!name) return;
+  const deals = f2tGetDeals();
+  const deal = deals[name];
+  if (!deal) return;
+  document.getElementById('f2t-deal-name').value = name;
+  f2tSetFormData(deal);
+  if (deal._mlsData) {
+    window.f2tMlsData = deal._mlsData;
+    const m = deal._mlsData;
+    document.getElementById('f2t-ro-address').textContent = m.street_address || '—';
+    document.getElementById('f2t-ro-city-county-zip').textContent = `${m.city||''}, ${m.county||''}, ${m.zip_code||''}`;
+    document.getElementById('f2t-ro-pid').textContent = m.pid_pin || '—';
+    document.getElementById('f2t-ro-legal').textContent = m.other_description || '—';
+    document.getElementById('f2t-property-card').style.display = 'block';
+  }
+}
+
+function f2tDeleteDeal() {
+  const name = document.getElementById('f2t-deal-select').value || document.getElementById('f2t-deal-name').value.trim();
+  if (!name) return;
+  if (!confirm('Delete deal "' + name + '"?')) return;
+  const deals = f2tGetDeals();
+  delete deals[name];
+  f2tSaveDeals(deals);
+  f2tPopulateDealSelect();
+  document.getElementById('f2t-deal-name').value = '';
+  f2tShowBanner('f2t-mls-banner', '🗑 Deal deleted', false);
+}
+
+function f2tShowBanner(id, msg, isSuccess) {
+  const b = document.getElementById(id);
+  b.style.display = 'block';
+  b.className = 'f2t-banner ' + (isSuccess ? 'f2t-success' : 'f2t-error');
+  b.textContent = msg;
+  setTimeout(() => { b.style.display = 'none'; }, 3000);
+}
+
+// Preview
+function f2tPreview() {
+  const section = document.getElementById('f2t-preview-section');
+  const pages = document.getElementById('f2t-preview-pages');
+  if (section.style.display !== 'none') { section.style.display = 'none'; return; }
+  pages.innerHTML = '';
+  const formData = f2tGetFormData();
+  if (window.f2tMlsData) Object.assign(formData, window.f2tMlsData);
+
+  const IMG_W = 612; // PDF page width in points
+  for (let p = 1; p <= 14; p++) {
+    const container = document.createElement('div');
+    container.className = 'f2t-preview-page';
+    const img = document.createElement('img');
+    img.src = `forms/images/form2t-page-${p}.png`;
+    img.alt = `Page ${p}`;
+    container.appendChild(img);
+
+    // Overlay mapped fields
+    if (f2tMappings && f2tMappings[String(p)]) {
+      f2tMappings[String(p)].forEach(field => {
+        const val = formData[field.name];
+        if (!val) return;
+        if (field.type === 'checkbox') {
+          if (val === 'true' || val === true || val === '✓') {
+            const chk = document.createElement('div');
+            chk.className = 'f2t-overlay-check';
+            chk.textContent = '✓';
+            chk.style.left = (field.x / IMG_W * 100) + '%';
+            chk.style.top = (field.y / 792 * 100) + '%';
+            chk.style.fontSize = (field.fontSize || 10) + 'px';
+            container.appendChild(chk);
+          }
+        } else {
+          const txt = document.createElement('div');
+          txt.className = 'f2t-overlay-text';
+          txt.textContent = val;
+          txt.style.left = (field.x / IMG_W * 100) + '%';
+          txt.style.top = (field.y / 792 * 100) + '%';
+          txt.style.fontSize = (field.fontSize || 10) + 'px';
+          txt.style.maxWidth = (field.w / IMG_W * 100) + '%';
+          container.appendChild(txt);
+        }
+      });
+    }
+    pages.appendChild(container);
+  }
+  section.style.display = 'block';
+  section.scrollIntoView({ behavior: 'smooth' });
+}
 
 // Print
 function f2tPrint() {
@@ -259,11 +511,7 @@ async function f2tSendForSignature() {
   if (!buyerEmail || !buyerName) { alert('Buyer name and email are required.'); return; }
   if (!sellerEmail || !sellerName) { alert('Seller name and email are required.'); return; }
 
-  if (!confirm(`Send Form 2-T for signature to:
-• ${buyerName} (${buyerEmail})
-• ${sellerName} (${sellerEmail})
-
-Proceed?`)) return;
+  if (!confirm(`Send Form 2-T for signature to:\n• ${buyerName} (${buyerEmail})\n• ${sellerName} (${sellerEmail})\n\nProceed?`)) return;
 
   const dealName = document.getElementById('f2t-deal-name').value.trim() || 'Form 2-T';
 
@@ -297,5 +545,6 @@ Proceed?`)) return;
 // Init
 f2tPopulateDealSelect();
 </script>
+
 </body>
 </html>
