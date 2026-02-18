@@ -919,6 +919,15 @@ footer .footer-copy{font-size:12px;color:rgba(248,247,246,.3)}
   <div class="footer-copy">© 2026 Ryan Palmer · Corcoran HM Properties</div>
 </footer>
 
+<!-- ═══════ FLOATING TEXT BUTTON ═══════ -->
+<a href="sms:+15089542159" id="floatingText" style="position:fixed;bottom:24px;right:24px;z-index:150;display:flex;align-items:center;gap:10px;padding:14px 24px;background:var(--copper);color:#fff;border-radius:50px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.25);transition:all .3s;text-transform:uppercase">
+  <span style="font-size:18px">💬</span> Text Ryan
+</a>
+<style>
+#floatingText:hover{background:#201408;transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,0,0,.35)}
+@media(max-width:600px){#floatingText{padding:12px 20px;font-size:12px;bottom:16px;right:16px}}
+</style>
+
 <!-- ═══════ LIGHTBOX ═══════ -->
 <div id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
