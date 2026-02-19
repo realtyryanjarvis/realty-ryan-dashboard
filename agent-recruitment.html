@@ -42,7 +42,32 @@ section.surface{background:var(--surface)}
   .section-sub{font-size:.95rem}
 }
 @media(max-width:768px){
-  .split{grid-template-columns:1fr;gap:32px}
+  :root{--section-gap:24px}
+  html{font-size:16px}
+  .container{padding:0 18px}
+  .split{grid-template-columns:1fr;gap:28px}
+  section{padding:var(--section-gap) 0}
+  section:not(.hero):not(.cta-section){min-height:auto;padding:40px 0}
+  .hero{min-height:90vh;padding:60px 0}
+  .section-title{font-size:clamp(1.6rem,6vw,2.2rem);margin-bottom:10px}
+  .section-sub{font-size:.92rem}
+  .section-label{font-size:.68rem;margin-bottom:8px}
+  /* Vision 3-col → 1 col */
+  .vision-grid{grid-template-columns:1fr !important}
+  /* What You Get 2-col → 1 col */
+  .benefits-grid{grid-template-columns:1fr !important}
+  /* Team 4-col → 2 col */
+  .team-grid{grid-template-columns:1fr 1fr !important;gap:12px !important}
+  /* Why Now 3-col → 1 col */
+  .stats-grid{grid-template-columns:1fr !important}
+  /* Timeline circles */
+  .timeline-line{left:20px !important}
+  .timeline-circle{width:40px !important;height:40px !important;font-size:1rem !important}
+  .timeline-item{gap:14px !important}
+  /* JARVIS dashboard mock */
+  .jarvis-mock{max-width:100% !important;padding:24px !important}
+  /* CTA section */
+  .cta-section{padding:48px 18px !important;min-height:auto !important}
 }
 </style>
 </head>
@@ -74,7 +99,7 @@ section.surface{background:var(--surface)}
       <div class="section-sub" style="margin:0 auto">Realty Ryan & Associates isn't built like a traditional real estate team. We're building a technology-first brokerage where every agent has access to AI-powered tools, world-class marketing, and operational systems that let you focus on what matters — relationships and deals.</div>
     </div>
 
-    <div class="fade-in" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px;max-width:860px;margin-left:auto;margin-right:auto">
+    <div class="fade-in vision-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px;max-width:860px;margin-left:auto;margin-right:auto">
       <div style="text-align:center;padding:28px 20px;background:var(--surface);border:2px solid var(--accent);border-radius:16px">
         <div style="font-family:var(--serif);font-size:clamp(2.4rem,4vw,3.2rem);font-weight:700;color:var(--accent)">AI</div>
         <div style="font-size:.95rem;font-weight:600;color:var(--primary);margin-top:6px">Operations Engine</div>
@@ -120,7 +145,7 @@ section.surface{background:var(--surface)}
         </div>
       </div>
       <div class="fade-in" style="display:flex;justify-content:center">
-        <div style="background:var(--dark);border-radius:20px;padding:36px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.15)">
+        <div class="jarvis-mock" style="background:var(--dark);border-radius:20px;padding:36px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.15)">
           <div style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;font-weight:600">JARVIS Dashboard · Live</div>
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="padding:14px 16px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.08)">
@@ -157,7 +182,7 @@ section.surface{background:var(--surface)}
       <div class="section-sub" style="margin:0 auto">From your first listing to your hundredth, every tool is built and ready.</div>
     </div>
 
-    <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px;margin:0 auto">
+    <div class="fade-in benefits-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px;margin:0 auto">
       <div style="padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:16px">
         <div style="font-size:1.6rem;margin-bottom:10px">🎬</div>
         <h3 style="font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--primary);margin-bottom:8px">Cinematic Marketing</h3>
@@ -262,26 +287,26 @@ section.surface{background:var(--surface)}
     </div>
 
     <div class="fade-in" style="max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:0;position:relative">
-      <div style="position:absolute;left:24px;top:24px;bottom:24px;width:2px;background:var(--border)"></div>
+      <div class="timeline-line" style="position:absolute;left:24px;top:24px;bottom:24px;width:2px;background:var(--border)"></div>
       
-      <div style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
-        <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">7a</div>
+      <div class="timeline-item" style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
+        <div class="timeline-circle" style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">7a</div>
         <div style="padding-top:8px"><strong style="color:var(--primary);font-size:1rem">Morning Briefing Arrives</strong><br><span style="color:var(--muted);font-size:.88rem">JARVIS sends your daily briefing: active deals, upcoming deadlines, new leads overnight, and calendar for the day. No logging in required.</span></div>
       </div>
-      <div style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
-        <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">9a</div>
+      <div class="timeline-item" style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
+        <div class="timeline-circle" style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">9a</div>
         <div style="padding-top:8px"><strong style="color:var(--primary);font-size:1rem">Listing Appointment</strong><br><span style="color:var(--muted);font-size:.88rem">Walk in with an iPad presentation, CMA with live market data, and a printed leave-behind packet — all auto-generated by JARVIS the night before.</span></div>
       </div>
-      <div style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
-        <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">12p</div>
+      <div class="timeline-item" style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
+        <div class="timeline-circle" style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">12p</div>
         <div style="padding-top:8px"><strong style="color:var(--primary);font-size:1rem">New Lead Comes In</strong><br><span style="color:var(--muted);font-size:.88rem">JARVIS responds in under a minute, captures their info, and puts them in your pipeline with a follow-up sequence. You get a text alert.</span></div>
       </div>
-      <div style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
-        <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">3p</div>
+      <div class="timeline-item" style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
+        <div class="timeline-circle" style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">3p</div>
         <div style="padding-top:8px"><strong style="color:var(--primary);font-size:1rem">Showing Prep — Automatic</strong><br><span style="color:var(--muted);font-size:.88rem">Buyer's agent vetted, Forewarn background check run, showing confirmed via ShowingTime. You just show up and sell.</span></div>
       </div>
-      <div style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
-        <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">6p</div>
+      <div class="timeline-item" style="display:flex;gap:20px;align-items:flex-start;padding:16px 0">
+        <div class="timeline-circle" style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;z-index:1;font-weight:700;font-family:var(--serif)">6p</div>
         <div style="padding-top:8px"><strong style="color:var(--primary);font-size:1rem">End of Day — Zero Admin</strong><br><span style="color:var(--muted);font-size:.88rem">JARVIS has already updated your CRM, sent follow-ups, and prepped tomorrow's schedule. You close your laptop and live your life.</span></div>
       </div>
     </div>
@@ -298,7 +323,7 @@ section.surface{background:var(--surface)}
       <div class="section-title">Who Has <strong>Your Back</strong></div>
     </div>
 
-    <div class="fade-in" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:860px;margin:0 auto">
+    <div class="fade-in team-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:860px;margin:0 auto">
       <div style="text-align:center;padding:24px 16px;background:var(--white);border:1px solid var(--border);border-radius:16px">
         <div style="width:80px;height:80px;border-radius:50%;background:var(--surface);border:2px solid var(--border);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:2rem">👤</div>
         <div style="font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--primary)">Ryan Palmer</div>
@@ -338,7 +363,7 @@ section.surface{background:var(--surface)}
       <div class="section-sub" style="margin:0 auto;max-width:580px">AI is reshaping real estate. The agents who adopt it now will dominate the next decade. The ones who wait will wonder what happened. This isn't hype — we're already running it, and the results speak for themselves.</div>
     </div>
 
-    <div class="fade-in" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;max-width:800px;margin-left:auto;margin-right:auto">
+    <div class="fade-in stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;max-width:800px;margin-left:auto;margin-right:auto">
       <div style="text-align:center;padding:28px 20px;background:var(--white);border:2px solid var(--accent);border-radius:16px">
         <div style="font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;color:var(--accent)">99%</div>
         <div style="font-size:.9rem;font-weight:600;color:var(--primary);margin-top:6px">List-to-Sale Ratio</div>
