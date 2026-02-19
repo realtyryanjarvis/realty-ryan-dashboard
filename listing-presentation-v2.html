@@ -616,70 +616,58 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <div class="section-sub" style="margin:0 auto">Lake Norman · Top 4 Active Listings</div>
     </div>
 
-    <!-- Comp Cards -->
-    <div style="display:flex;flex-direction:column;gap:18px;margin-top:28px;max-width:860px;margin-left:auto;margin-right:auto">
+    <!-- Comp Cards — 2x2 Grid -->
+    <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px;max-width:900px;margin-left:auto;margin-right:auto">
 
       <!-- Comp 1 -->
-      <div class="fade-in" style="display:grid;grid-template-columns:260px 1fr;background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04)">
-        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;min-height:180px;position:relative">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;height:200px;position:relative">
           <img src="listing-presentation-assets/comp-1890-yacht-club.jpg" alt="1890 Yacht Club Dr" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
-          <div style="font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;z-index:1">MLS Photo</div>
+          <span style="position:absolute;top:12px;right:12px;padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent);backdrop-filter:blur(8px);z-index:2">Active</span>
         </div>
-        <div style="padding:24px 28px;display:flex;flex-direction:column;justify-content:center">
-          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">1890 Yacht Club Dr, Denver</div>
-          <div style="font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--accent);margin-top:4px">$15,000,000</div>
-          <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
-            <span style="padding:4px 14px;border-radius:12px;font-size:.8rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent)">Active</span>
-            <span style="font-size:1rem;font-weight:700;color:var(--primary)">145 <span style="font-size:.75rem;font-weight:500;color:var(--muted)">Days on Market</span></span>
-          </div>
+        <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">1890 Yacht Club Dr, Denver</div>
+          <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-top:4px">$15,000,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--primary);margin-top:8px">145 <span style="font-size:.78rem;font-weight:500;color:var(--muted)">Days on Market</span></div>
         </div>
       </div>
 
       <!-- Comp 2 -->
-      <div class="fade-in" style="display:grid;grid-template-columns:260px 1fr;background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04)">
-        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;min-height:180px;position:relative">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;height:200px;position:relative">
           <img src="listing-presentation-assets/comp-18019-harbor-light.jpg" alt="18019 Harbor Light Blvd" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
-          <div style="font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;z-index:1">MLS Photo</div>
+          <span style="position:absolute;top:12px;right:12px;padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent);backdrop-filter:blur(8px);z-index:2">Active</span>
         </div>
-        <div style="padding:24px 28px;display:flex;flex-direction:column;justify-content:center">
-          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">18019 Harbor Light Blvd, Cornelius</div>
-          <div style="font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--accent);margin-top:4px">$14,500,000</div>
-          <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
-            <span style="padding:4px 14px;border-radius:12px;font-size:.8rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent)">Active</span>
-            <span style="font-size:1rem;font-weight:700;color:#c0392b">1,192 <span style="font-size:.75rem;font-weight:500;color:var(--muted)">Days on Market</span></span>
-          </div>
+        <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">18019 Harbor Light Blvd, Cornelius</div>
+          <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-top:4px">$14,500,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:#c0392b;margin-top:8px">1,192 <span style="font-size:.78rem;font-weight:500;color:var(--muted)">Days on Market</span></div>
         </div>
       </div>
 
       <!-- Comp 3 -->
-      <div class="fade-in" style="display:grid;grid-template-columns:260px 1fr;background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04)">
-        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;min-height:180px;position:relative">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;height:200px;position:relative">
           <img src="listing-presentation-assets/comp-18308-shearer.jpg" alt="18308 Shearer Rd" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
-          <div style="font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;z-index:1">MLS Photo</div>
+          <span style="position:absolute;top:12px;right:12px;padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent);backdrop-filter:blur(8px);z-index:2">Active</span>
         </div>
-        <div style="padding:24px 28px;display:flex;flex-direction:column;justify-content:center">
-          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">18308 Shearer Rd, Davidson</div>
-          <div style="font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--accent);margin-top:4px">$14,000,000</div>
-          <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
-            <span style="padding:4px 14px;border-radius:12px;font-size:.8rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent)">Active</span>
-            <span style="font-size:1rem;font-weight:700;color:var(--primary)">195 <span style="font-size:.75rem;font-weight:500;color:var(--muted)">Days on Market</span></span>
-          </div>
+        <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">18308 Shearer Rd, Davidson</div>
+          <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-top:4px">$14,000,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--primary);margin-top:8px">195 <span style="font-size:.78rem;font-weight:500;color:var(--muted)">Days on Market</span></div>
         </div>
       </div>
 
       <!-- Comp 4 -->
-      <div class="fade-in" style="display:grid;grid-template-columns:260px 1fr;background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04)">
-        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;min-height:180px;position:relative">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;height:200px;position:relative">
           <img src="listing-presentation-assets/comp-440-beech-tree.jpg" alt="440 Beech Tree Rd" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
-          <div style="font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;z-index:1">MLS Photo</div>
+          <span style="position:absolute;top:12px;right:12px;padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent);backdrop-filter:blur(8px);z-index:2">Active</span>
         </div>
-        <div style="padding:24px 28px;display:flex;flex-direction:column;justify-content:center">
-          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">440 Beech Tree Rd, Mooresville</div>
-          <div style="font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--accent);margin-top:4px">$12,000,000</div>
-          <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
-            <span style="padding:4px 14px;border-radius:12px;font-size:.8rem;font-weight:600;background:rgba(121,51,21,.08);color:var(--accent)">Active</span>
-            <span style="font-size:1rem;font-weight:700;color:var(--primary)">181 <span style="font-size:.75rem;font-weight:500;color:var(--muted)">Days on Market</span></span>
-          </div>
+        <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">440 Beech Tree Rd, Mooresville</div>
+          <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-top:4px">$12,000,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--primary);margin-top:8px">181 <span style="font-size:.78rem;font-weight:500;color:var(--muted)">Days on Market</span></div>
         </div>
       </div>
 
