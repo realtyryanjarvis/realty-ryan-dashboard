@@ -19,7 +19,8 @@ html{scroll-behavior:smooth;font-size:18px}
 body{font-family:var(--sans);background:var(--white);color:var(--primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--accent);color:#fff}
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
-.fade-in{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-in{opacity:1;transform:translateY(0);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-in.will-animate{opacity:0;transform:translateY(40px)}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 section{padding:var(--section-gap) 0;display:flex;align-items:center}
 section:not(.hero):not(.cta-section){min-height:100vh}
@@ -404,8 +405,14 @@ section.surface{background:var(--surface)}
 @keyframes scrollDot{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(7px)}}
 </style>
 <script>
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+try{
+  const els=document.querySelectorAll('.fade-in');
+  if('IntersectionObserver' in window){
+    els.forEach(el=>el.classList.add('will-animate'));
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');e.target.classList.remove('will-animate')}})},{threshold:.1,rootMargin:'0px 0px -20px 0px'});
+    els.forEach(el=>obs.observe(el));
+  }
+}catch(e){}
 </script>
 </body>
 </html>
