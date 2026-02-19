@@ -615,32 +615,101 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <div class="section-sub" style="margin:0 auto">Currently active luxury listings in the Lake Norman market</div>
     </div>
 
-    <!-- Active Comp Card — single featured -->
-    <div class="fade-in" style="margin-top:24px;max-width:800px;margin-left:auto;margin-right:auto">
-      <div style="display:grid;grid-template-columns:1fr 1fr;background:var(--white);border:2px solid var(--accent);border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.06)">
-        <div style="background:linear-gradient(135deg,#e8ddd4 0%,#d4c5b5 100%);display:flex;align-items:center;justify-content:center;min-height:260px;position:relative">
-          <img src="listing-presentation-assets/comp-18019-harbor-light.jpg" alt="18019 Harbor Light Blvd" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
-          <span style="position:absolute;top:14px;right:14px;padding:5px 16px;border-radius:12px;font-size:.8rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff;z-index:2">Active</span>
+    <!-- Active Comp Cards — Grid -->
+    <div class="fade-in" style="margin-top:24px;max-width:900px;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+
+      <!-- 1: 1890 Yacht Club -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-1890-yacht-club.jpg" alt="1890 Yacht Club Dr" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
         </div>
-        <div style="padding:28px 30px;display:flex;flex-direction:column;justify-content:center">
-          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">18019 Harbor Light Blvd</div>
-          <div style="font-size:.85rem;color:var(--muted);margin-top:2px">Cornelius, NC 28031</div>
-          <div style="font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;color:var(--accent);margin-top:10px">$14,500,000</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px">
-            <div style="text-align:center;padding:10px 6px;background:var(--surface);border-radius:8px">
-              <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">6</div>
-              <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Beds</div>
-            </div>
-            <div style="text-align:center;padding:10px 6px;background:var(--surface);border-radius:8px">
-              <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">11</div>
-              <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Baths</div>
-            </div>
-            <div style="text-align:center;padding:10px 6px;background:var(--surface);border-radius:8px">
-              <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">15K</div>
-              <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Sq Ft</div>
-            </div>
-          </div>
-          <div style="font-size:1rem;font-weight:700;color:#c0392b;margin-top:14px">1,192 <span style="font-size:.82rem;font-weight:500;color:var(--muted)">Days on Market</span></div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">1890 Yacht Club Dr</div>
+          <div style="font-size:.68rem;color:var(--muted)">Denver · 11 BD / 12 BA · 5,162 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$15,000,000</div>
+        </div>
+      </div>
+
+      <!-- 2: 18019 Harbor Light -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-18019-harbor-light.jpg" alt="18019 Harbor Light" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">18019 Harbor Light Blvd</div>
+          <div style="font-size:.68rem;color:var(--muted)">Cornelius · 6 BD / 11 BA · 15,048 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$14,500,000</div>
+        </div>
+      </div>
+
+      <!-- 3: 18308 Shearer -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-18308-shearer.jpg" alt="18308 Shearer Rd" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">18308 Shearer Road</div>
+          <div style="font-size:.68rem;color:var(--muted)">Davidson · 5 BD / 10 BA · 14,734 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$14,000,000</div>
+        </div>
+      </div>
+
+      <!-- 4: 440 Beech Tree -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-440-beech-tree.jpg" alt="440 Beech Tree Rd" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">440 Beech Tree Road</div>
+          <div style="font-size:.68rem;color:var(--muted)">Mooresville · 5 BD / 8 BA · 7,612 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$12,000,000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: remaining 3 comps -->
+    <div class="fade-in" style="margin-top:12px;max-width:900px;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+
+      <!-- 5: 17235 Connor Quay -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-17235-connor-quay.jpg" alt="17235 Connor Quay Ct" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">17235 Connor Quay Ct</div>
+          <div style="font-size:.68rem;color:var(--muted)">Cornelius · 6 BD / 10 BA · 14,587 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$10,995,000</div>
+        </div>
+      </div>
+
+      <!-- 6: 16921 Jetton -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-16921-jetton.jpg" alt="16921 Jetton Rd" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">16921 Jetton Road</div>
+          <div style="font-size:.68rem;color:var(--muted)">Cornelius · 7 BD / 12 BA · 9,712 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$9,595,000</div>
+        </div>
+      </div>
+
+      <!-- 7: 22554 John Gamble -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:140px;position:relative;background:linear-gradient(135deg,#e8ddd4,#d4c5b5)">
+          <img src="listing-presentation-assets/comp-22554-john-gamble.jpg" alt="22554 John Gamble Rd" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(121,51,21,.9);color:#fff">Active</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--primary)">22554 John Gamble Rd</div>
+          <div style="font-size:.68rem;color:var(--muted)">Cornelius · 5 BD / 6 BA · 6,704 SF</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:6px">$8,250,000</div>
         </div>
       </div>
     </div>
@@ -658,66 +727,72 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <div class="section-sub" style="margin:0 auto">Luxury homes that have recently sold in the Lake Norman market</div>
     </div>
 
-    <!-- Closed Comp Cards — compact table-style -->
-    <div class="fade-in" style="margin-top:24px;max-width:860px;margin-left:auto;margin-right:auto;display:flex;flex-direction:column;gap:10px">
+    <!-- Closed Comp Cards — horizontal scroll -->
+    <div class="fade-in" style="margin-top:24px;max-width:900px;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
 
       <!-- Comp: 355 Pelham -->
-      <div style="display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 24px;background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.03)">
-        <div>
-          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">355 Pelham Lane</div>
-          <div style="font-size:.78rem;color:var(--muted)">Mooresville · 5 BD / 7 BA · 9,115 SF</div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:120px;position:relative;background:linear-gradient(135deg,#d4c5b5 0%,#c4b5a3 100%);display:flex;align-items:center;justify-content:center">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:600;color:rgba(255,255,255,.7);text-align:center;padding:0 10px">355 Pelham</div>
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(45,106,79,.85);color:#fff">Sold</span>
         </div>
-        <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;color:var(--accent);text-align:right">$12,000,000</div>
-        <div style="text-align:center;min-width:70px">
-          <span style="padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(45,106,79,.1);color:var(--success)">Sold</span>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--primary)">355 Pelham Lane</div>
+          <div style="font-size:.65rem;color:var(--muted)">Mooresville · 5 BD / 7 BA · 9,115 SF</div>
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--accent);margin-top:6px">$12,000,000</div>
         </div>
       </div>
 
       <!-- Comp: 16716 Belle Isle -->
-      <div style="display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 24px;background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.03)">
-        <div>
-          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">16716 Belle Isle Drive</div>
-          <div style="font-size:.78rem;color:var(--muted)">Cornelius · 5 BD / 5 BA · 7,209 SF</div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:120px;position:relative;background:linear-gradient(135deg,#d4c5b5 0%,#c4b5a3 100%);display:flex;align-items:center;justify-content:center">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:600;color:rgba(255,255,255,.7);text-align:center;padding:0 10px">16716 Belle Isle</div>
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(45,106,79,.85);color:#fff">Sold</span>
         </div>
-        <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;color:var(--accent);text-align:right">$11,500,000</div>
-        <div style="text-align:center;min-width:70px">
-          <span style="padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(45,106,79,.1);color:var(--success)">Sold</span>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--primary)">16716 Belle Isle Dr</div>
+          <div style="font-size:.65rem;color:var(--muted)">Cornelius · 5 BD / 5 BA · 7,209 SF</div>
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--accent);margin-top:6px">$11,500,000</div>
         </div>
       </div>
 
       <!-- Comp: 149 S Longfellow -->
-      <div style="display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 24px;background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.03)">
-        <div>
-          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">149 S Longfellow Lane</div>
-          <div style="font-size:.78rem;color:var(--muted)">Mooresville · The Point · 5 BD / 6 BA · 8,124 SF</div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:120px;position:relative;background:linear-gradient(135deg,#d4c5b5 0%,#c4b5a3 100%);display:flex;align-items:center;justify-content:center">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:600;color:rgba(255,255,255,.7);text-align:center;padding:0 10px">149 S Longfellow</div>
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(45,106,79,.85);color:#fff">Sold</span>
         </div>
-        <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;color:var(--accent);text-align:right">$10,750,000</div>
-        <div style="text-align:center;min-width:70px">
-          <span style="padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(45,106,79,.1);color:var(--success)">Sold</span>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--primary)">149 S Longfellow Ln</div>
+          <div style="font-size:.65rem;color:var(--muted)">Mooresville · The Point · 5 BD / 6 BA · 8,124 SF</div>
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--accent);margin-top:6px">$10,750,000</div>
         </div>
       </div>
 
       <!-- Comp: 124 Wellcraft -->
-      <div style="display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 24px;background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.03)">
-        <div>
-          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">124 Wellcraft Court</div>
-          <div style="font-size:.78rem;color:var(--muted)">Mooresville · Williams Subdivision · 6 BD / 6 BA · 8,216 SF</div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:120px;position:relative;background:linear-gradient(135deg,#d4c5b5 0%,#c4b5a3 100%);display:flex;align-items:center;justify-content:center">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:600;color:rgba(255,255,255,.7);text-align:center;padding:0 10px">124 Wellcraft</div>
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(45,106,79,.85);color:#fff">Sold</span>
         </div>
-        <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;color:var(--accent);text-align:right">$10,450,000</div>
-        <div style="text-align:center;min-width:70px">
-          <span style="padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(45,106,79,.1);color:var(--success)">Sold</span>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--primary)">124 Wellcraft Court</div>
+          <div style="font-size:.65rem;color:var(--muted)">Mooresville · 6 BD / 6 BA · 8,216 SF</div>
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--accent);margin-top:6px">$10,450,000</div>
         </div>
       </div>
 
-      <!-- Comp: 170 Broad Sound -->
-      <div style="display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 24px;background:var(--surface);border:2px solid var(--accent);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.03)">
-        <div>
-          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--primary)">170 Broad Sound Place <span style="font-size:.7rem;font-weight:600;color:var(--accent);margin-left:6px">NEIGHBOR</span></div>
-          <div style="font-size:.78rem;color:var(--muted)">Mooresville · The Point · 5 BD / 7 BA · 11,802 SF · Sold Off-Market 8/23/24</div>
+      <!-- Comp: 170 Broad Sound — NEIGHBOR -->
+      <div style="background:var(--white);border:2px solid var(--accent);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
+        <div style="height:120px;position:relative;background:linear-gradient(135deg,#c4a882 0%,#b09070 100%);display:flex;align-items:center;justify-content:center">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:600;color:rgba(255,255,255,.9);text-align:center;padding:0 10px">170 Broad Sound</div>
+          <span style="position:absolute;top:8px;left:8px;padding:3px 10px;border-radius:8px;font-size:.55rem;font-weight:700;background:var(--accent);color:#fff;letter-spacing:.05em">NEIGHBOR</span>
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:600;background:rgba(45,106,79,.85);color:#fff">Sold</span>
         </div>
-        <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;color:var(--accent);text-align:right">$10,000,000</div>
-        <div style="text-align:center;min-width:70px">
-          <span style="padding:4px 14px;border-radius:12px;font-size:.75rem;font-weight:600;background:rgba(45,106,79,.1);color:var(--success)">Sold</span>
+        <div style="padding:12px 14px">
+          <div style="font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--primary)">170 Broad Sound Pl</div>
+          <div style="font-size:.65rem;color:var(--muted)">Mooresville · The Point · Off-Market 8/24</div>
+          <div style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--accent);margin-top:6px">$10,000,000</div>
         </div>
       </div>
 
