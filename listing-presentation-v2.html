@@ -149,42 +149,43 @@ section.cream .card{background:var(--white)}
 footer{text-align:center;padding:24px;border-top:1px solid var(--border);min-height:auto!important;display:block!important}
 footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 
-/* ── iPad Optimization (13-inch — keep text large) ── */
+/* ── iPad Optimization (13-inch — fit each section in one screen) ── */
 @media(min-width:768px) and (max-width:1400px){
-  :root{--section-gap:36px}
+  :root{--section-gap:28px}
   section{padding:var(--section-gap) 0}
+  section:not(.hero):not(.quote-section):not(.cta-section){min-height:100vh}
   .hero{min-height:100svh;min-height:100vh}
-  .container{max-width:960px;padding:0 36px}
-  .split{gap:36px}
-  .section-title{font-size:clamp(2rem,3.6vw,2.8rem);margin-bottom:14px}
-  .section-sub{font-size:1rem;line-height:1.55;max-width:520px}
-  .section-label{font-size:.7rem;margin-bottom:8px}
-  .card{padding:22px;border-radius:12px}
-  .card h3{font-size:1rem;margin-bottom:6px}
-  .card p{font-size:.85rem;line-height:1.5}
-  .card .icon{font-size:1.6rem;margin-bottom:10px}
-  .stat-card{padding:20px 14px;border-radius:12px}
-  .stat-card .number{font-size:1.8rem}
-  .stat-card .label{font-size:.75rem}
-  .stats-row{gap:14px;margin-top:24px}
-  .card-grid{margin-top:24px;gap:14px}
-  .timeline{margin-top:28px}
-  .timeline-step h4{font-size:.9rem}
-  .timeline-step p{font-size:.8rem}
-  .timeline-dot{width:34px;height:34px;font-size:.8rem}
-  .case{padding:22px!important}
-  .case-addr{font-size:1.05rem!important;margin-bottom:8px!important}
-  .case-bullets li{font-size:.8rem;padding:2px 0 2px 14px}
-  .badge{padding:7px 14px;font-size:.75rem}
-  .badge-wrap{gap:6px;margin:16px 0}
-  .quote{font-size:clamp(1.05rem,1.8vw,1.3rem);line-height:1.6}
-  .quote-attr{margin-top:14px;font-size:.7rem}
-  .cta-name{font-size:2rem}
-  .cta-phone a{font-size:1.1rem}
-  .ed-img{height:min(45vh,380px)}
-  .editorial-scroll{margin-top:24px}
-  .reel-wrap{max-width:240px}
-  .hero-content img{height:30px!important}
+  .container{max-width:960px;padding:0 32px}
+  .split{gap:28px}
+  .section-title{font-size:clamp(1.8rem,3.2vw,2.4rem);margin-bottom:10px}
+  .section-sub{font-size:.95rem;line-height:1.5;max-width:520px}
+  .section-label{font-size:.65rem;margin-bottom:6px}
+  .card{padding:18px;border-radius:12px}
+  .card h3{font-size:.95rem;margin-bottom:5px}
+  .card p{font-size:.82rem;line-height:1.45}
+  .card .icon{font-size:1.4rem;margin-bottom:8px}
+  .stat-card{padding:16px 12px;border-radius:12px}
+  .stat-card .number{font-size:1.6rem}
+  .stat-card .label{font-size:.72rem}
+  .stats-row{gap:12px;margin-top:18px}
+  .card-grid{margin-top:20px;gap:12px}
+  .timeline{margin-top:24px}
+  .timeline-step h4{font-size:.85rem}
+  .timeline-step p{font-size:.78rem}
+  .timeline-dot{width:32px;height:32px;font-size:.75rem}
+  .case{padding:18px!important}
+  .case-addr{font-size:1rem!important;margin-bottom:6px!important}
+  .case-bullets li{font-size:.78rem;padding:2px 0 2px 14px}
+  .badge{padding:6px 12px;font-size:.7rem}
+  .badge-wrap{gap:5px;margin:12px 0}
+  .quote{font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.55}
+  .quote-attr{margin-top:12px;font-size:.65rem}
+  .cta-name{font-size:1.8rem}
+  .cta-phone a{font-size:1rem}
+  .ed-img{height:min(38vh,320px)}
+  .editorial-scroll{margin-top:20px}
+  .reel-wrap{max-width:220px}
+  .hero-content img{height:26px!important}
 }
 
 /* ── RESPONSIVE ── */
@@ -235,32 +236,32 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
   <div class="container">
     <!-- Centered headshot + bio -->
     <div class="fade-in" style="text-align:center;max-width:720px;margin:0 auto">
-      <div style="width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid var(--border);margin:0 auto 20px">
+      <div style="width:100px;height:100px;border-radius:50%;overflow:hidden;border:3px solid var(--border);margin:0 auto 14px">
         <img src="realtyryanhomes/images/ryan-palmer.avif" alt="Ryan Palmer" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.display='none'">
       </div>
       <div style="font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px">About Ryan</div>
-      <div style="font-family:var(--serif);font-size:clamp(1.5rem,2.8vw,2rem);font-weight:600;color:var(--primary);line-height:1.25;margin-bottom:10px">Ryan Palmer doesn't list homes —<br>he launches them.</div>
-      <p style="font-size:1.05rem;color:var(--muted);line-height:1.6;max-width:540px;margin:0 auto">8 years of selling Charlotte real estate. Top 1% in North & South Carolina. Cinematic marketing, AI-powered operations, and a global network that gets homes sold.</p>
+      <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:600;color:var(--primary);line-height:1.25;margin-bottom:8px">Ryan Palmer doesn't list homes —<br>he launches them.</div>
+      <p style="font-size:.95rem;color:var(--muted);line-height:1.5;max-width:540px;margin:0 auto">8 years of selling Charlotte real estate. Top 1% in North & South Carolina. Cinematic marketing, AI-powered operations, and a global network that gets homes sold.</p>
     </div>
 
     <!-- ═══ AWARDS: THREE CATEGORIES ═══ -->
 
     <!-- Global Recognition -->
-    <div class="fade-in" style="margin-top:32px;max-width:820px;margin-left:auto;margin-right:auto">
+    <div class="fade-in" style="margin-top:20px;max-width:820px;margin-left:auto;margin-right:auto">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div style="font-size:1.4rem">🌍</div>
         <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">Global Recognition</div>
         <div style="flex:1;height:1px;background:var(--border)"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div style="padding:24px;background:rgba(121,51,21,.06);border:2px solid var(--accent);border-radius:14px;display:flex;align-items:flex-start;gap:16px">
+        <div style="padding:16px;background:rgba(121,51,21,.06);border:2px solid var(--accent);border-radius:14px;display:flex;align-items:flex-start;gap:16px">
           <div style="font-size:2rem;line-height:1;flex-shrink:0">🏅</div>
           <div>
             <div style="font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--accent);line-height:1.2;margin-bottom:4px">Christie's Masters Circle</div>
             <div style="font-size:.9rem;color:var(--muted);line-height:1.4">Elite network for top global agents — Christie's International Real Estate</div>
           </div>
         </div>
-        <div style="padding:24px;background:rgba(121,51,21,.06);border:2px solid var(--accent);border-radius:14px;display:flex;align-items:flex-start;gap:16px">
+        <div style="padding:16px;background:rgba(121,51,21,.06);border:2px solid var(--accent);border-radius:14px;display:flex;align-items:flex-start;gap:16px">
           <div style="font-size:2rem;line-height:1;flex-shrink:0">🏆</div>
           <div>
             <div style="font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--accent);line-height:1.2;margin-bottom:4px">Best Overall Social — Global</div>
@@ -271,23 +272,23 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
     </div>
 
     <!-- National Recognition -->
-    <div class="fade-in" style="margin-top:24px;max-width:820px;margin-left:auto;margin-right:auto">
+    <div class="fade-in" style="margin-top:14px;max-width:820px;margin-left:auto;margin-right:auto">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div style="font-size:1.4rem">🇺🇸</div>
         <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">National Recognition</div>
         <div style="flex:1;height:1px;background:var(--border)"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
-        <div style="padding:24px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
+        <div style="padding:16px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
           <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-bottom:6px">Top 1%</div>
           <div style="font-size:.85rem;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.06em">Agents in NC & SC</div>
         </div>
-        <div style="padding:24px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
+        <div style="padding:16px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
           <div style="font-size:1.6rem;margin-bottom:6px">⭐</div>
           <div style="font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--primary);line-height:1.2;margin-bottom:4px">Top Producer</div>
           <div style="font-size:.85rem;color:var(--muted)">Corcoran 2025</div>
         </div>
-        <div style="padding:24px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
+        <div style="padding:16px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
           <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-bottom:6px">Top 50</div>
           <div style="font-size:.85rem;font-weight:600;color:var(--primary)">out of 17,000+ agents</div>
         </div>
@@ -295,22 +296,22 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
     </div>
 
     <!-- Local Recognition -->
-    <div class="fade-in" style="margin-top:24px;max-width:820px;margin-left:auto;margin-right:auto">
+    <div class="fade-in" style="margin-top:14px;max-width:820px;margin-left:auto;margin-right:auto">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div style="font-size:1.4rem">📍</div>
         <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">Local Recognition — North & South Carolina</div>
         <div style="flex:1;height:1px;background:var(--border)"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
-        <div style="padding:24px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
+        <div style="padding:16px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
           <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-bottom:6px">99%</div>
           <div style="font-size:.85rem;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.06em">List-to-Sale Ratio</div>
         </div>
-        <div style="padding:24px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
+        <div style="padding:16px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
           <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-bottom:6px">½</div>
           <div style="font-size:.85rem;font-weight:600;color:var(--primary)">Charlotte Avg Days on Market</div>
         </div>
-        <div style="padding:24px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
+        <div style="padding:16px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.04)">
           <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--accent);margin-bottom:6px">📰</div>
           <div style="font-size:.85rem;font-weight:600;color:var(--primary)">Front Cover Agent — Real Producers Magazine</div>
         </div>
@@ -870,13 +871,13 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- ═══════════════════════════════════════════ -->
 <section id="network">
   <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto;margin-bottom:24px">
+    <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto;margin-bottom:18px">
       <div class="section-label">The Power of Network</div>
       <div class="section-title">Your Buyer Might Already Be <strong>in My Phone</strong></div>
     </div>
 
     <!-- Stats -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;max-width:760px;margin-left:auto;margin-right:auto" class="fade-in">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;max-width:760px;margin-left:auto;margin-right:auto" class="fade-in">
       <div style="text-align:center;padding:20px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px">
         <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;color:var(--accent)">3</div>
         <div style="font-size:.75rem;font-weight:600;color:var(--primary);margin-top:4px">Global Luxury Networks</div>
@@ -906,8 +907,8 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       </div>
     </div>
 
-    <div class="fade-in" style="margin-top:20px;text-align:center;max-width:520px;margin-left:auto;margin-right:auto">
-      <p style="font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--muted);line-height:1.6">"Your home doesn't need more exposure — it needs the right exposure to the right people."</p>
+    <div class="fade-in" style="margin-top:14px;text-align:center;max-width:520px;margin-left:auto;margin-right:auto">
+      <p style="font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--muted);line-height:1.5">"Your home doesn't need more exposure — it needs the right exposure to the right people."</p>
     </div>
   </div>
 </section>
@@ -1009,20 +1010,20 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 
       <!-- LEFT: Fake invitation card -->
       <div style="flex:1;display:flex;flex-direction:column;gap:20px">
-        <div style="background:#1a1a1a;border-radius:18px;padding:40px 36px;text-align:center;position:relative;overflow:hidden;flex:1;display:flex;flex-direction:column;justify-content:center;min-height:420px;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+        <div style="background:#1a1a1a;border-radius:18px;padding:28px 28px;text-align:center;position:relative;overflow:hidden;flex:1;display:flex;flex-direction:column;justify-content:center;min-height:340px;box-shadow:0 20px 60px rgba(0,0,0,.2)">
           <!-- Gold foil border effect -->
           <div style="position:absolute;inset:8px;border:1px solid rgba(193,155,96,.4);border-radius:12px;pointer-events:none"></div>
           <div style="position:absolute;inset:14px;border:1px solid rgba(193,155,96,.15);border-radius:10px;pointer-events:none"></div>
 
-          <div style="font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(193,155,96,.7);margin-bottom:16px">You Are Cordially Invited</div>
+          <div style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(193,155,96,.7);margin-bottom:10px">You Are Cordially Invited</div>
 
-          <div style="font-size:3rem;margin-bottom:12px">🥂</div>
+          <div style="font-size:2.4rem;margin-bottom:8px">🥂</div>
 
-          <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:#c19b60;line-height:1.2;margin-bottom:6px">Luxury Agent<br>Launch Party</div>
+          <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;color:#c19b60;line-height:1.2;margin-bottom:4px">Luxury Agent<br>Launch Party</div>
 
-          <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#c19b60,transparent);margin:14px auto"></div>
+          <div style="width:50px;height:1px;background:linear-gradient(90deg,transparent,#c19b60,transparent);margin:10px auto"></div>
 
-          <div style="font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:16px">
+          <div style="font-size:.8rem;color:rgba(255,255,255,.85);line-height:1.6;margin-bottom:12px">
             An exclusive preview of<br>
             <strong style="color:#fff;font-size:1rem">168 Broad Sound Place</strong><br>
             <span style="color:rgba(255,255,255,.5)">Mooresville, NC</span>
@@ -1031,7 +1032,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
           <div style="font-size:.75rem;color:rgba(193,155,96,.8);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px">Thursday Evening · Six O'Clock</div>
           <div style="font-size:.7rem;color:rgba(255,255,255,.4)">Champagne · Premium Sushi · Private Tour</div>
 
-          <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#c19b60,transparent);margin:18px auto 14px"></div>
+          <div style="width:50px;height:1px;background:linear-gradient(90deg,transparent,#c19b60,transparent);margin:12px auto 10px"></div>
 
           <div style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(193,155,96,.5)">By Invitation Only</div>
           <div style="font-family:var(--serif);font-size:.85rem;color:rgba(255,255,255,.6);margin-top:8px">Hosted by Ryan Palmer</div>
@@ -1042,10 +1043,10 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <!-- RIGHT: Event details + Veuve visual -->
       <div style="flex:1;display:flex;flex-direction:column;gap:16px">
         <!-- Veuve-style champagne visual -->
-        <div style="background:linear-gradient(145deg,#f7a600 0%,#e8960a 40%,#d4850f 100%);border-radius:18px;padding:32px;text-align:center;position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 40px rgba(247,166,0,.2)">
-          <div style="position:absolute;top:-20px;right:-20px;font-size:8rem;opacity:.1;transform:rotate(15deg)">🍾</div>
-          <div style="font-size:4.5rem;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))">🥂</div>
-          <div style="font-family:var(--serif);font-size:1.4rem;font-weight:700;color:#1a1a1a;text-shadow:0 1px 2px rgba(255,255,255,.2)">Veuve Clicquot</div>
+        <div style="background:linear-gradient(145deg,#f7a600 0%,#e8960a 40%,#d4850f 100%);border-radius:16px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:140px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 40px rgba(247,166,0,.2)">
+          <div style="position:absolute;top:-20px;right:-20px;font-size:6rem;opacity:.1;transform:rotate(15deg)">🍾</div>
+          <div style="font-size:3rem;margin-bottom:6px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))">🥂</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:700;color:#1a1a1a;text-shadow:0 1px 2px rgba(255,255,255,.2)">Veuve Clicquot</div>
           <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,26,26,.6);margin-top:4px">Champagne · Served Exclusively</div>
         </div>
 
@@ -1062,7 +1063,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
         </div>
 
         <!-- What happens -->
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;flex:1">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;flex:1">
           <div style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px">What Happens at the Launch</div>
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;gap:10px;align-items:flex-start">
