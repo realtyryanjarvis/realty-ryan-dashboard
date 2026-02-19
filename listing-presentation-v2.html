@@ -445,7 +445,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
     <!-- Vimeo Video — loads when scrolled into view, no border/outline -->
     <div class="fade-in" style="max-width:800px;margin:24px auto 0">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:14px">
-        <iframe id="social-video" data-src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0&quality=1080p#t=1s" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <iframe id="social-video" src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=0&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0&quality=1080p#t=1s" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen loading="eager"></iframe>
       </div>
     </div>
   </div>
@@ -1283,13 +1283,18 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.15 });
 document.querySelectorAll('.fade-in,.fade-left,.fade-right').forEach(el => io.observe(el));
 
-// Lazy-load Vimeo when scrolled into view
+// Play Vimeo when scrolled into view (iframe pre-loaded eagerly)
 const vidFrame = document.getElementById('social-video');
-if(vidFrame && vidFrame.dataset.src){
+if(vidFrame){
   const vidObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ vidFrame.src = vidFrame.dataset.src; vidObs.unobserve(e.target); }});
-  }, { threshold: 0.3 });
-  vidObs.observe(vidFrame);
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        vidFrame.contentWindow.postMessage('{"method":"play"}','*');
+        vidObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  vidObs.observe(vidFrame.parentElement);
 }
 
 // Fixed nav issue - check if nav exists
