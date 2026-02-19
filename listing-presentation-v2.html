@@ -207,7 +207,8 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
   .ed-img{height:min(45vh,400px)}
   .editorial-scroll{margin-top:28px;padding:0 0!important;gap:10px!important}
   .editorial-bleed{width:100vw!important;left:50%!important;transform:translateX(-50%)!important}
-  .reel-wrap{max-width:280px}
+  .reel-wrap{max-width:340px}
+  #reel-video-wrap{width:340px!important}
 
   /* Hero logo */
   .hero-content img{max-height:160px!important}
@@ -409,7 +410,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
         </div>
       </div>
       <div class="fade-right" style="display:flex;justify-content:center">
-        <div id="reel-video-wrap" style="width:260px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid var(--border)">
+        <div id="reel-video-wrap" style="width:340px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid var(--border)">
           <video id="reel-video" muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block">
             <source src="listing-presentation-assets/reel-cinematic.mp4" type="video/mp4">
           </video>
@@ -443,7 +444,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 
     <!-- Vimeo Video — autoplay on scroll, no audio, no Vimeo branding -->
     <div class="fade-in" style="max-width:800px;margin:24px auto 0">
-      <div style="position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid var(--border)">
+      <div style="position:relative;aspect-ratio:16/9;overflow:hidden">
         <iframe id="social-video" src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=0&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
     </div>
