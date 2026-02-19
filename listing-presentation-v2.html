@@ -1007,42 +1007,90 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- ═══════════════════════════════════════════ -->
 <section>
   <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto;margin-bottom:28px">
+    <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto;margin-bottom:32px">
       <div class="section-label">The Home Launch</div>
       <div class="section-title">An Exclusive Event. <strong>Not an Open House.</strong></div>
-      <div class="section-sub" style="margin:12px auto 0">Think Selling Sunset — not a Sunday open house with a sign in the yard. We host a curated, invite-only luxury launch event designed to get the top agents in the market inside your home.</div>
+      <div class="section-sub" style="margin:12px auto 0">Think Selling Sunset — not a Sunday open house with a sign in the yard.</div>
     </div>
 
-    <div class="fade-in" style="max-width:760px;margin:0 auto">
-      <!-- Event description -->
-      <div style="padding:28px;background:var(--white);border:2px solid var(--accent);border-radius:14px;margin-bottom:20px">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-          <div style="font-size:2.2rem">🥂</div>
-          <div>
-            <div style="font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--primary)">Luxury Agent Launch Party</div>
-            <div style="font-size:.85rem;color:var(--muted)">By invitation only — Charlotte's top-producing agents</div>
+    <!-- Split: Invitation + Veuve bottles visual -->
+    <div class="split fade-in" style="gap:32px;align-items:stretch;max-width:900px;margin:0 auto">
+
+      <!-- LEFT: Fake invitation card -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+        <div style="background:#1a1a1a;border-radius:18px;padding:40px 36px;text-align:center;position:relative;overflow:hidden;flex:1;display:flex;flex-direction:column;justify-content:center;min-height:420px;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+          <!-- Gold foil border effect -->
+          <div style="position:absolute;inset:8px;border:1px solid rgba(193,155,96,.4);border-radius:12px;pointer-events:none"></div>
+          <div style="position:absolute;inset:14px;border:1px solid rgba(193,155,96,.15);border-radius:10px;pointer-events:none"></div>
+
+          <div style="font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(193,155,96,.7);margin-bottom:16px">You Are Cordially Invited</div>
+
+          <div style="font-size:3rem;margin-bottom:12px">🥂</div>
+
+          <div style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:#c19b60;line-height:1.2;margin-bottom:6px">Luxury Agent<br>Launch Party</div>
+
+          <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#c19b60,transparent);margin:14px auto"></div>
+
+          <div style="font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:16px">
+            An exclusive preview of<br>
+            <strong style="color:#fff;font-size:1rem">168 Broad Sound Place</strong><br>
+            <span style="color:rgba(255,255,255,.5)">Mooresville, NC</span>
           </div>
+
+          <div style="font-size:.75rem;color:rgba(193,155,96,.8);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px">Thursday Evening · Six O'Clock</div>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.4)">Champagne · Premium Sushi · Private Tour</div>
+
+          <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#c19b60,transparent);margin:18px auto 14px"></div>
+
+          <div style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(193,155,96,.5)">By Invitation Only</div>
+          <div style="font-family:var(--serif);font-size:.85rem;color:rgba(255,255,255,.6);margin-top:8px">Hosted by Ryan Palmer</div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,.3);margin-top:2px">Corcoran HM Properties</div>
         </div>
-        <p style="font-size:.95rem;color:var(--primary);line-height:1.8;margin-bottom:16px">Before your home ever hits the public market, we host an exclusive launch event for the top luxury agents in Charlotte, Lake Norman, and beyond. Catered with premium sushi, styled, and designed to showcase your home as the premiere listing it is. Our media team is on-site creating professional content that every attending agent can send directly to their buyers — giving your home exposure through the most trusted channels in luxury real estate.</p>
-        <p style="font-size:.9rem;color:var(--muted);line-height:1.7">This isn't about foot traffic. It's about getting the right agents in the room — the ones with Corcoran, Christie's, and Sotheby's connections — so they walk out and call their clients that night. One conversation at a launch event can be worth more than 6 months on MLS.</p>
       </div>
 
-      <!-- What's included -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-        <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center">
-          <div style="font-size:1.8rem;margin-bottom:8px">🎯</div>
-          <div style="font-size:.9rem;font-weight:600;color:var(--primary);margin-bottom:4px">Curated Guest List</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.5">Top-producing luxury agents hand-selected based on active buyer matches</div>
+      <!-- RIGHT: Event details + Veuve visual -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:16px">
+        <!-- Veuve-style champagne visual -->
+        <div style="background:linear-gradient(145deg,#f7a600 0%,#e8960a 40%,#d4850f 100%);border-radius:18px;padding:32px;text-align:center;position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 40px rgba(247,166,0,.2)">
+          <div style="position:absolute;top:-20px;right:-20px;font-size:8rem;opacity:.1;transform:rotate(15deg)">🍾</div>
+          <div style="font-size:4.5rem;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))">🥂</div>
+          <div style="font-family:var(--serif);font-size:1.4rem;font-weight:700;color:#1a1a1a;text-shadow:0 1px 2px rgba(255,255,255,.2)">Veuve Clicquot</div>
+          <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,26,26,.6);margin-top:4px">Champagne · Served Exclusively</div>
         </div>
-        <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center">
-          <div style="font-size:1.8rem;margin-bottom:8px">🍾</div>
-          <div style="font-size:.9rem;font-weight:600;color:var(--primary);margin-bottom:4px">Sushi & Full Production</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.5">Premium catering, staging, branded materials, and a cinematic atmosphere that matches the home</div>
+
+        <!-- Key stats -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="background:var(--white);border:2px solid var(--accent);border-radius:14px;padding:20px;text-align:center">
+            <div style="font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;color:var(--accent)">50+</div>
+            <div style="font-size:.8rem;font-weight:600;color:var(--primary);margin-top:4px">Top Agents Invited</div>
+          </div>
+          <div style="background:var(--white);border:2px solid var(--accent);border-radius:14px;padding:20px;text-align:center">
+            <div style="font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;color:var(--accent)">48hr</div>
+            <div style="font-size:.8rem;font-weight:600;color:var(--primary);margin-top:4px">Before MLS Goes Live</div>
+          </div>
         </div>
-        <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center">
-          <div style="font-size:1.8rem;margin-bottom:8px">📱</div>
-          <div style="font-size:.9rem;font-weight:600;color:var(--primary);margin-bottom:4px">Media Team On-Site</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.5">Professional video and photos agents can send directly to their buyers — your home marketed through their trusted relationships</div>
+
+        <!-- What happens -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;flex:1">
+          <div style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px">What Happens at the Launch</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="font-size:1.1rem;flex-shrink:0">🎯</div>
+              <div><strong style="font-size:.85rem;color:var(--primary)">Curated Guest List</strong><br><span style="font-size:.78rem;color:var(--muted)">Hand-selected luxury agents with active buyer matches</span></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="font-size:1.1rem;flex-shrink:0">🍣</div>
+              <div><strong style="font-size:.85rem;color:var(--primary)">Premium Sushi & Veuve</strong><br><span style="font-size:.78rem;color:var(--muted)">Full production — branded, styled, cinematic atmosphere</span></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="font-size:1.1rem;flex-shrink:0">📱</div>
+              <div><strong style="font-size:.85rem;color:var(--primary)">Media Team On-Site</strong><br><span style="font-size:.78rem;color:var(--muted)">Pro content every agent can send directly to their buyers</span></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="font-size:1.1rem;flex-shrink:0">📞</div>
+              <div><strong style="font-size:.85rem;color:var(--primary)">The Phone Call That Night</strong><br><span style="font-size:.78rem;color:var(--muted)">One conversation at the launch can be worth more than 6 months on MLS</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
