@@ -41,8 +41,8 @@ section.surface{background:var(--surface)}
 
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--white)}
-.hero-content{position:relative;z-index:2;width:100%;max-width:800px;padding:0 24px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.hero-content img{display:block;margin:0 auto}
+.hero-content{position:relative;z-index:2;width:100%;max-width:800px;padding:0 24px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box}
+.hero-content img{display:block;margin:0 auto;max-width:100%}
 .hero-badge{display:inline-block;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border);padding:9px 24px;border-radius:30px;margin-bottom:28px;font-weight:600}
 .hero h1{font-family:var(--serif);font-size:clamp(2.6rem,5.5vw,4.2rem);font-weight:300;line-height:1.08;letter-spacing:-.03em;margin-bottom:20px}
 .hero h1 strong{font-weight:700}
@@ -217,7 +217,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- ═══════════════════════════════════════════ -->
 <section class="hero" id="hero">
   <div class="hero-content fade-in">
-    <img src="listing-presentation-assets/Black Typelogo.png" alt="Realty Ryan & Associates" style="height:140px;opacity:.9;margin-bottom:28px">
+    <img src="listing-presentation-assets/Black Typelogo.png" alt="Realty Ryan & Associates" style="max-width:90%;height:auto;max-height:140px;opacity:.9;margin-bottom:28px;object-fit:contain">
     <p style="font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:14px">8 Years Selling Charlotte Real Estate · Top 1% in NC & SC</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:7px">
       <div style="width:18px;height:1px;background:var(--border)"></div>
