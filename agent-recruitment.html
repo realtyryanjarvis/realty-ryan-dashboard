@@ -400,11 +400,12 @@ section.surface{background:var(--surface)}
   <p style="font-size:.65rem;color:var(--muted);letter-spacing:.1em">© 2026 Realty Ryan & Associates · Corcoran HM Properties · All Rights Reserved</p>
 </footer>
 
+<style>
+@keyframes scrollDot{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(7px)}}
+</style>
 <script>
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
-
-@keyframes scrollDot{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(7px)}}
 </script>
 </body>
 </html>
