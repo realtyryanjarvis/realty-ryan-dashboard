@@ -1,0 +1,208 @@
+{
+  "resale_listing": [
+    {
+      "phase": "PHASE 1: PRE-LISTING / LEAD INTAKE",
+      "steps": [
+        {"id": 1, "text": "Receive listing lead (referral, website, sphere, cold call, Instagram)", "owner": "R"},
+        {"id": 2, "text": "Add lead to Follow Up Boss CRM", "owner": "J"},
+        {"id": 3, "text": "Assign lead source and tags in FUB", "owner": "J"},
+        {"id": 4, "text": "Initial phone/text/email outreach to seller", "owner": "R"},
+        {"id": 5, "text": "Qualify seller: timeline, motivation, price expectations", "owner": "R"},
+        {"id": 6, "text": "Confirm property address and ownership", "owner": "R"},
+        {"id": 7, "text": "Pull tax records (Mecklenburg County CAMA / Realist)", "owner": "J"},
+        {"id": 8, "text": "Pull deed and ownership verification", "owner": "J"},
+        {"id": 9, "text": "Run preliminary CMA", "owner": "R/A+J"},
+        {"id": 10, "text": "Research neighborhood / HOA / deed restrictions", "owner": "J"},
+        {"id": 11, "text": "Check for liens, code violations, permits", "owner": "J"},
+        {"id": 12, "text": "Identify property type", "owner": "J"},
+        {"id": 13, "text": "Note any special circumstances (estate, divorce, relocation, short sale, trust)", "owner": "R"},
+        {"id": 14, "text": "Schedule listing appointment + add to Google Calendar", "owner": "R+J"}
+      ]
+    },
+    {
+      "phase": "PHASE 2: LISTING APPOINTMENT PREP",
+      "steps": [
+        {"id": 15, "text": "Generate full CMA report with comps", "owner": "R/A+J"},
+        {"id": 16, "text": "Pull active competing listings in area", "owner": "R/A/J"},
+        {"id": 17, "text": "Pull recently sold comps (90 days)", "owner": "J"},
+        {"id": 18, "text": "Pull expired/withdrawn listings for pricing context", "owner": "J"},
+        {"id": 19, "text": "Research days on market trends for the area", "owner": "J"},
+        {"id": 20, "text": "Prepare listing presentation (iPad + printed leave-behind)", "owner": "J"},
+        {"id": 21, "text": "Customize presentation for specific property", "owner": "J"},
+        {"id": 22, "text": "Prepare listing agreement (Form 101)", "owner": "J"},
+        {"id": 23, "text": "Prepare WWREA disclosure", "owner": "J"},
+        {"id": 24, "text": "Prepare Mineral, Oil & Gas Rights Disclosure", "owner": "J"},
+        {"id": 25, "text": "Prepare Professional Services Disclosure", "owner": "J"},
+        {"id": 26, "text": "Prepare Residential Property Disclosure (if applicable)", "owner": "J"},
+        {"id": 27, "text": "Prepare Lead-Based Paint Addendum (if pre-1978)", "owner": "J"},
+        {"id": 28, "text": "Prepare seller net sheet with estimated proceeds", "owner": "J"},
+        {"id": 29, "text": "Prepare marketing plan overview for seller", "owner": "J"},
+        {"id": 30, "text": "Prepare comparable pricing strategy document", "owner": "J"},
+        {"id": 31, "text": "Pack listing appointment kit (forms, presentation, gift)", "owner": "A"},
+        {"id": 32, "text": "Research pet names / personal details for rapport", "owner": "J"}
+      ]
+    },
+    {
+      "phase": "PHASE 3: LISTING APPOINTMENT",
+      "steps": [
+        {"id": 33, "text": "Deliver listing presentation", "owner": "R"},
+        {"id": 34, "text": "Walk the property — take notes via AI audio device", "owner": "J"},
+        {"id": 35, "text": "Discuss pricing strategy with seller", "owner": "R"},
+        {"id": 36, "text": "Discuss timeline and seller's needs", "owner": "R"},
+        {"id": 37, "text": "Discuss showing instructions and availability", "owner": "R"},
+        {"id": 38, "text": "Discuss any repairs or prep work needed before listing", "owner": "R"},
+        {"id": 39, "text": "Sign listing agreement (Exclusive Right to Sell)", "owner": "J"},
+        {"id": 40, "text": "Sign WWREA disclosure", "owner": "J"},
+        {"id": 41, "text": "Sign Mineral, Oil & Gas Rights Disclosure", "owner": "J"},
+        {"id": 42, "text": "Sign Professional Services Disclosure", "owner": "J"},
+        {"id": 43, "text": "Sign Residential Property Disclosure (via Seller Shield / SkySlope)", "owner": "J"},
+        {"id": 44, "text": "Sign Lead-Based Paint Addendum (if pre-1978)", "owner": "J"},
+        {"id": 45, "text": "Collect HOA documents and contacts (if applicable)", "owner": "J"},
+        {"id": 46, "text": "Collect keys, garage codes, alarm codes, gate codes", "owner": "J"},
+        {"id": 47, "text": "Discuss Coming Soon vs. immediate MLS entry", "owner": "R"},
+        {"id": 48, "text": "Set list price", "owner": "R"},
+        {"id": 49, "text": "Set target go-live date", "owner": "R"}
+      ]
+    },
+    {
+      "phase": "PHASE 4: POST-SIGNING / PRE-MARKET PREP",
+      "steps": [
+        {"id": 50, "text": "Upload all signed documents to Google Drive", "owner": "J"},
+        {"id": 51, "text": "Create deal in FUB with correct pipeline stage (WIP/Pre-List)", "owner": "J"},
+        {"id": 52, "text": "Update dashboard with new listing", "owner": "J"},
+        {"id": 53, "text": "Upload docs to SkySlope + create new SkySlope listing (from MLS)", "owner": "J"},
+        {"id": 54, "text": "Send signed documents to Corcoran compliance via SkySlope", "owner": "J"},
+        {"id": 55, "text": "Ask Ally if staging is needed for this listing", "owner": "J→A"},
+        {"id": 56, "text": "Order photography + floor plan (group text: Ally + Mike Hellinger)", "owner": "J"},
+        {"id": 57, "text": "Ask Ryan if virtual tour / Matterport should be ordered", "owner": "J→R"},
+        {"id": 58, "text": "Email Cameron Glenn's team to schedule video walkthrough", "owner": "J"},
+        {"id": 59, "text": "Send calendar invite for photo shoot to clients, Ryan, and Ally", "owner": "J"},
+        {"id": 60, "text": "Send property prep email to listing clients + Ally walkthrough if needed", "owner": "J+A"},
+        {"id": 61, "text": "Stage property (if applicable)", "owner": "A"},
+        {"id": 62, "text": "Verify square footage against tax records", "owner": "J"},
+        {"id": 63, "text": "Pull GIS info / property tax card", "owner": "J"},
+        {"id": 64, "text": "Pull Realist report", "owner": "J"},
+        {"id": 65, "text": "Pull current property tax bill", "owner": "J"},
+        {"id": 66, "text": "Pull plat map (if applicable)", "owner": "J"},
+        {"id": 67, "text": "Pull survey (if applicable)", "owner": "J"},
+        {"id": 68, "text": "Pull flood plain map (if applicable)", "owner": "J"},
+        {"id": 69, "text": "Pull stormwater map (if applicable)", "owner": "J"},
+        {"id": 70, "text": "Pull deed restrictions / CCRs / condo declaration (if applicable)", "owner": "J"},
+        {"id": 71, "text": "Pull building permit information (if applicable)", "owner": "J"},
+        {"id": 72, "text": "Pull septic tank permit (if applicable)", "owner": "J"},
+        {"id": 73, "text": "Obtain HOA disclosure and resale certificate (if applicable)", "owner": "J"},
+        {"id": 74, "text": "Obtain condo resale statement (if applicable)", "owner": "J"},
+        {"id": 75, "text": "Confirm legal description matches deed", "owner": "J"},
+        {"id": 76, "text": "Confirm ownership matches listing agreement signers", "owner": "J"},
+        {"id": 77, "text": "If trust/estate/POA — obtain operating agreement / trust docs", "owner": "J"},
+        {"id": 78, "text": "Request seller to complete Residential Property Disclosure", "owner": "J"},
+        {"id": 79, "text": "Review completed disclosure for accuracy", "owner": "R"},
+        {"id": 80, "text": "Prepare CMLS Incomplete Agent Full MLS Sheet", "owner": "J"},
+        {"id": 81, "text": "Draft MLS listing description / remarks", "owner": "J"},
+        {"id": 82, "text": "Review MLS description (Ryan reviews → Jarvis emails seller to sign off)", "owner": "R+J"},
+        {"id": 83, "text": "Research area and property details for key marketing features", "owner": "J"},
+        {"id": 84, "text": "Set up lockbox / Supra", "owner": "A"},
+        {"id": 85, "text": "Install yard sign", "owner": "A"},
+        {"id": 86, "text": "Create property-specific email for inquiries", "owner": "J"},
+        {"id": 87, "text": "Create agent prospecting text + email for MLS reverse prospecting", "owner": "J"},
+        {"id": 88, "text": "Create single-property website (homes.realtyryan.com/address)", "owner": "J"},
+        {"id": 89, "text": "Create printed materials (Jarvis creates → Ally approves → Jarvis sends to printer)", "owner": "J+A"}
+      ]
+    },
+    {
+      "phase": "PHASE 5: COMING SOON (IF APPLICABLE)",
+      "steps": [
+        {"id": 90, "text": "Complete CMLS Coming Soon Authorization Form", "owner": "J"},
+        {"id": 91, "text": "Enter listing as Coming Soon in MLS", "owner": "J"},
+        {"id": 92, "text": "Share Coming Soon on social media", "owner": "R"},
+        {"id": 93, "text": "Send Coming Soon email blast to agent network", "owner": "J"},
+        {"id": 94, "text": "Begin pre-marketing to buyer agents", "owner": "J"},
+        {"id": 95, "text": "Share in agent Facebook groups / MLS groups", "owner": "J"},
+        {"id": 96, "text": "Track Coming Soon inquiries in FUB", "owner": "J"}
+      ]
+    },
+    {
+      "phase": "PHASE 6: GO LIVE ON MLS",
+      "steps": [
+        {"id": 97, "text": "Enter full listing in Canopy MLS (Matrix)", "owner": "J"},
+        {"id": 98, "text": "Upload all photos in correct order", "owner": "J"},
+        {"id": 99, "text": "Upload virtual tour link", "owner": "J"},
+        {"id": 100, "text": "Upload floor plan", "owner": "J"},
+        {"id": 101, "text": "Verify all MLS fields are accurate", "owner": "A"},
+        {"id": 102, "text": "Double-check price, square footage, room counts, lot size", "owner": "A"},
+        {"id": 103, "text": "Verify showing instructions are correct", "owner": "A"},
+        {"id": 104, "text": "Set up ShowingTime showing instructions", "owner": "J"},
+        {"id": 105, "text": "Verify listing appears on realtyryan.com / IDX feed", "owner": "J"},
+        {"id": 106, "text": "Send 'Just Listed' email blast to database", "owner": "J"},
+        {"id": 107, "text": "Post listing on LinkedIn (Jarvis) + Instagram (Ryan)", "owner": "J+R"},
+        {"id": 108, "text": "Send direct outreach to top buyer agents in area", "owner": "J"},
+        {"id": 109, "text": "Notify seller that listing is live — send MLS link", "owner": "A"},
+        {"id": 110, "text": "Add listing to Realty Ryan featured properties", "owner": "J"}
+      ]
+    },
+    {
+      "phase": "PHASE 7: ACTIVE LISTING MANAGEMENT",
+      "steps": [
+        {"id": 111, "text": "Monitor showing activity + text showing agents with property details", "owner": "J"},
+        {"id": 112, "text": "Collect and relay showing feedback to seller", "owner": "J"},
+        {"id": 113, "text": "Send weekly seller update emails (Mondays)", "owner": "J"},
+        {"id": 114, "text": "Monitor competing listings — new, price changes, under contract, sold", "owner": "J"},
+        {"id": 115, "text": "Review pricing strategy bi-weekly based on activity", "owner": "J"},
+        {"id": 116, "text": "Recommend price adjustment if needed (with data)", "owner": "J"},
+        {"id": 117, "text": "Coordinate open houses (if applicable)", "owner": "J"},
+        {"id": 118, "text": "Refresh social media marketing monthly (reminder to Ally/Ryan)", "owner": "J"},
+        {"id": 119, "text": "Track DOM and advise on strategy", "owner": "J"},
+        {"id": 120, "text": "Monitor market conditions (Jarvis drafts → Ryan reviews before sending to sellers)", "owner": "J+R"},
+        {"id": 121, "text": "Field and present all offers (monitor HM email → create email template to seller)", "owner": "J"}
+      ]
+    },
+    {
+      "phase": "PHASE 8: OFFER RECEIVED / UNDER CONTRACT",
+      "steps": [
+        {"id": 122, "text": "Receive and review offer (Form 2-T)", "owner": "R"},
+        {"id": 123, "text": "Present offer to seller with analysis (Jarvis creates → Ryan reviews)", "owner": "J+R"},
+        {"id": 124, "text": "Execute accepted offer — all parties sign", "owner": "J"},
+        {"id": 125, "text": "Send executed contract to all parties", "owner": "J"},
+        {"id": 126, "text": "Update SkySlope file for compliance review", "owner": "J"},
+        {"id": 127, "text": "Update FUB deal stage to Under Contract", "owner": "J"},
+        {"id": 128, "text": "Update dashboard status", "owner": "J"},
+        {"id": 129, "text": "Calculate and track all contract deadlines + create calendar invites", "owner": "J", "sub": ["Due diligence period end date", "Due diligence fee delivery deadline", "Earnest money delivery deadline", "Inspection dates", "Appraisal date", "Repair negotiation deadlines", "Settlement date"]},
+        {"id": 130, "text": "Confirm receipt of DD fee (Ally notifies → Jarvis uploads DD receipt to SkySlope)", "owner": "A+J"},
+        {"id": 131, "text": "Confirm receipt of earnest money", "owner": "A"},
+        {"id": 132, "text": "Coordinate with buyer's agent on inspections", "owner": "J"},
+        {"id": 133, "text": "Coordinate seller's response to repair requests", "owner": "R"},
+        {"id": 134, "text": "Negotiate repair requests / credits", "owner": "R"},
+        {"id": 135, "text": "Monitor appraisal scheduling and results", "owner": "J"},
+        {"id": 136, "text": "Handle appraisal issues (if applicable)", "owner": "R"},
+        {"id": 137, "text": "Coordinate with closing attorney / title company", "owner": "J"},
+        {"id": 138, "text": "Review closing disclosure / settlement statement", "owner": "R"},
+        {"id": 139, "text": "Schedule final walkthrough (contact buyer's agent → add to calendar)", "owner": "J"},
+        {"id": 140, "text": "Coordinate utility transfers", "owner": "J"},
+        {"id": 141, "text": "Confirm seller has moved out / property is ready", "owner": "J"},
+        {"id": 142, "text": "Attend closing (or arrange remote closing)", "owner": "R"},
+        {"id": 143, "text": "Confirm funds disbursed", "owner": "J"},
+        {"id": 144, "text": "Collect keys / lockbox / sign from property", "owner": "A"}
+      ]
+    },
+    {
+      "phase": "PHASE 9: POST-CLOSING",
+      "steps": [
+        {"id": 145, "text": "Bring closing gift to closing", "owner": "A"},
+        {"id": 146, "text": "Request Google review / testimonial", "owner": "J"},
+        {"id": 147, "text": "Send 'Just Sold' marketing (Jarvis creates → Ryan approves)", "owner": "J+R"},
+        {"id": 148, "text": "Update MLS status to Sold", "owner": "J"},
+        {"id": 149, "text": "Update FUB deal stage to Closed", "owner": "J"},
+        {"id": 150, "text": "Update dashboard status", "owner": "J"},
+        {"id": 151, "text": "Archive transaction file in Google Drive", "owner": "J"},
+        {"id": 152, "text": "Send final documents to seller", "owner": "J"},
+        {"id": 153, "text": "Add to past client drip / sphere nurture campaign", "owner": "J"},
+        {"id": 154, "text": "Schedule 30-day check-in", "owner": "J"},
+        {"id": 155, "text": "Schedule 6-month check-in", "owner": "J"},
+        {"id": 156, "text": "Schedule 1-year anniversary check-in", "owner": "J"},
+        {"id": 157, "text": "Add seller's new address to database (if they bought elsewhere)", "owner": "J"},
+        {"id": 158, "text": "Send annual home anniversary card", "owner": "J"},
+        {"id": 159, "text": "Request referrals", "owner": "J"}
+      ]
+    }
+  ]
+}
