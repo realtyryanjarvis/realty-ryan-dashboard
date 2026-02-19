@@ -204,8 +204,9 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
   .cta-phone a{font-size:1.2rem}
 
   /* Editorial / media — bigger */
-  .ed-img{height:min(42vh,380px)}
-  .editorial-scroll{margin-top:24px}
+  .ed-img{height:min(55vh,500px)}
+  .editorial-scroll{margin-top:28px;padding:0 24px!important}
+  .editorial-bleed{width:100vw!important;left:50%!important;transform:translateX(-50%)!important}
   .reel-wrap{max-width:280px}
 
   /* Hero logo */
@@ -370,9 +371,9 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <div class="section-sub" style="margin:0 auto">Editorial photography. Cinematic walkthroughs. Aerial drone. 3D virtual tours. Every listing gets the full production — included, not extra.</div>
     </div>
 
-    <!-- Editorial Photo Scroll -->
-    <div class="fade-in" style="position:relative">
-      <div class="editorial-scroll" id="editorialScroll">
+    <!-- Editorial Photo Scroll — full bleed -->
+    <div class="fade-in editorial-bleed" style="position:relative;width:100vw;left:50%;transform:translateX(-50%)">
+      <div class="editorial-scroll" id="editorialScroll" style="padding:0 24px">
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6457.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6439.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6527.jpg" alt="" loading="lazy"></div>
