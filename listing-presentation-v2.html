@@ -442,27 +442,12 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <div class="section-sub" style="margin:0 auto">Reels, Stories, targeted ads with income-based targeting. Your home reaches real Charlotte buyers the day we sign — not the day it hits the MLS.</div>
     </div>
 
-    <!-- Vimeo Video — autoplay on scroll, no audio, no Vimeo branding -->
+    <!-- Vimeo Video — autoplay immediately, background mode (no controls, muted, looping) -->
     <div class="fade-in" style="max-width:800px;margin:24px auto 0">
-      <div style="position:relative;aspect-ratio:16/9;overflow:hidden">
-        <iframe id="social-video" src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=0&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div style="position:relative;aspect-ratio:16/9;overflow:hidden;background:#000">
+        <iframe id="social-video" src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0&quality=1080p" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen loading="eager"></iframe>
       </div>
     </div>
-    <script>
-    (function(){
-      var played=false;
-      var observer=new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting&&!played){
-            played=true;
-            var iframe=document.getElementById('social-video');
-            iframe.src=iframe.src.replace('autoplay=0','autoplay=1');
-          }
-        });
-      },{threshold:0.4});
-      observer.observe(document.getElementById('social-video'));
-    })();
-    </script>
   </div>
 </section>
 
