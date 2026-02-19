@@ -1352,6 +1352,39 @@ function edScroll(dir){
   el.addEventListener('mouseup', ()=>{ down=false; el.style.cursor='grab'; });
   el.addEventListener('mousemove', e=>{ if(!down) return; e.preventDefault(); el.scrollLeft=scrollL-(e.pageX-el.offsetLeft-startX)*1.5; });
   el.style.cursor='grab';
+})();
+
+// Auto-scroll editorial gallery
+(function(){
+  var el=document.getElementById('editorialScroll');
+  if(!el) return;
+  var speed=1;
+  var paused=false;
+  var autoId;
+  function tick(){
+    if(!paused){
+      el.scrollLeft+=speed;
+      if(el.scrollLeft>=el.scrollWidth-el.clientWidth){
+        el.scrollLeft=0;
+      }
+    }
+    autoId=requestAnimationFrame(tick);
+  }
+  // Pause on touch/hover
+  el.addEventListener('touchstart',function(){paused=true});
+  el.addEventListener('touchend',function(){setTimeout(function(){paused=false},2000)});
+  el.addEventListener('mousedown',function(){paused=true});
+  el.addEventListener('mouseup',function(){setTimeout(function(){paused=false},2000)});
+  el.addEventListener('mouseenter',function(){paused=true});
+  el.addEventListener('mouseleave',function(){setTimeout(function(){paused=false},500)});
+  // Start when section is visible
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){autoId=requestAnimationFrame(tick)}
+      else{cancelAnimationFrame(autoId);paused=false}
+    });
+  },{threshold:0.2});
+  obs.observe(el);
 })()
 </script>
 
