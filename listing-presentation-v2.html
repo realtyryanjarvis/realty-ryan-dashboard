@@ -1361,33 +1361,20 @@ function edScroll(dir){
   var el=document.getElementById('editorialScroll');
   if(!el) return;
   var speed=0.75;
-  var paused=false;
-  var autoId;
+  var touching=false;
   function tick(){
-    if(!paused){
+    if(!touching){
       el.scrollLeft+=speed;
-      if(el.scrollLeft>=el.scrollWidth-el.clientWidth){
+      if(el.scrollLeft>=el.scrollWidth-el.clientWidth-1){
         el.scrollLeft=0;
       }
     }
-    autoId=requestAnimationFrame(tick);
+    requestAnimationFrame(tick);
   }
-  // Pause on touch/hover
-  el.addEventListener('touchstart',function(){paused=true});
-  el.addEventListener('touchend',function(){setTimeout(function(){paused=false},2000)});
-  el.addEventListener('mousedown',function(){paused=true});
-  el.addEventListener('mouseup',function(){setTimeout(function(){paused=false},2000)});
-  el.addEventListener('mouseenter',function(){paused=true});
-  el.addEventListener('mouseleave',function(){setTimeout(function(){paused=false},500)});
-  // Start immediately + restart when section is visible
-  autoId=requestAnimationFrame(tick);
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){paused=false;autoId=requestAnimationFrame(tick)}
-      else{paused=true}
-    });
-  },{threshold:0.1});
-  obs.observe(el.parentElement);
+  // Only pause while actively touching
+  el.addEventListener('touchstart',function(){touching=true},{passive:true});
+  el.addEventListener('touchend',function(){setTimeout(function(){touching=false},1500)});
+  requestAnimationFrame(tick);
 })()
 </script>
 
