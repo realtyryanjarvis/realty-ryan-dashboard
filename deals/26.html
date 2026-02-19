@@ -7,64 +7,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
-a { color: #7A3B14; text-decoration: none; }
+body { background: #fafaf8; font-family: 'Work Sans', sans-serif; color: #1a1a1a; min-height: 100vh; }
+a { color: #793315; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 #login-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
 #page-content { display: none; }
-.login-box { background: #261A05; padding: 48px; border-radius: 12px; border: 1px solid #5C3D14; width: 100%; max-width: 380px; text-align: center; }
-.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
-.login-box .sub { font-size: 13px; color: #857D52; margin-bottom: 32px; }
-.login-box input { width: 100%; padding: 14px 16px; background: #1a1408; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
-.login-box input:focus { border-color: #7A3B14; }
-.login-box button { width: 100%; padding: 14px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+.login-box { background: #fff; padding: 48px; border-radius: 12px; border: 1px solid #e5e5e5; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; color: #1a1a1a; }
+.login-box .sub { font-size: 13px; color: #999; margin-bottom: 32px; }
+.login-box input { width: 100%; padding: 14px 16px; background: #fafaf8; border: 1px solid #ddd; border-radius: 6px; color: #1a1a1a; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
+.login-box input:focus { border-color: #793315; }
+.login-box button { width: 100%; padding: 14px; background: #793315; color: #fff; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
 .login-box button:hover { background: #9A4B1A; }
-.login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
+.login-error { color: #ff4444; font-size: 12px; margin-bottom: 12px; display: none; }
 
 .back { padding: 16px 24px; font-size: 13px; }
-.back a { color: #857D52; }
+.back a { color: #999; }
 
-.deal-header { background: #261A05; padding: 24px; border-bottom: 3px solid #7A3B14; }
-.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
-.deal-client { font-size: 14px; color: #857D52; margin-top: 4px; }
-.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #7A3B14; margin-top: 8px; }
+.deal-header { background: #fff; padding: 24px; border-bottom: 3px solid #793315; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1a1a; }
+.deal-client { font-size: 14px; color: #999; margin-top: 4px; }
+.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #793315; margin-top: 8px; }
 .deal-stage { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; }
-.stage-listed { background: #46d67a; color: #1a1408; }
-.stage-pending { background: #fbd75b; color: #1a1408; }
-.stage-closed { background: #5C3D14; color: #857D52; }
-.stage-offer { background: #819cff; color: #1a1408; }
-.stage-buyer { background: #ffb878; color: #1a1408; }
-.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #a4bdfc; color: #1a1408; margin-left: 8px; margin-top: 12px; }
+.stage-listed { background: #e8f5e9; color: #2e7d32; }
+.stage-pending { background: #fff8e1; color: #f57f17; }
+.stage-closed { background: #f5f5f5; color: #999; }
+.stage-offer { background: #e3f2fd; color: #1565c0; }
+.stage-buyer { background: #fff3e0; color: #e65100; }
+.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #e3f2fd; color: #1565c0; margin-left: 8px; margin-top: 12px; }
 
 .content { display: flex; gap: 32px; padding: 24px; flex-wrap: wrap; }
 .col-main { flex: 1; min-width: 300px; }
 .col-side { flex: 0 0 320px; }
 
-.progress-wrap { margin-bottom: 24px; }
-.progress-label { font-size: 13px; color: #857D52; margin-bottom: 6px; display: flex; justify-content: space-between; }
-.progress-bar { height: 10px; background: #261A05; border-radius: 5px; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #7A3B14, #46d67a); transition: width 0.4s ease; }
+.progress-wrap { margin-bottom: 24px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee; }
+.progress-label { font-size: 13px; color: #999; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #793315, #6bcb77); transition: width 0.4s ease; }
 
-.checklist-section { margin-bottom: 20px; }
-.section-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.08em; padding-bottom: 6px; border-bottom: 1px solid #5C3D14; margin-bottom: 6px; }
-.check-item { display: flex; align-items: center; gap: 10px; padding: 8px 8px; font-size: 13px; cursor: pointer; border-radius: 4px; transition: background 0.15s; user-select: none; }
-.check-item:hover { background: rgba(255,255,255,0.04); }
-.check-item.done { color: #51b749; }
-.check-item.pending { color: #857D52; }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover, .filter-btn.active { background: #793315; color: #fff; border-color: #793315; }
+
+.checklist-section { margin-bottom: 20px; background: #fff; border-radius: 8px; border: 1px solid #eee; overflow: hidden; }
+.phase-title { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; color: #1a1a1a; letter-spacing: 0.06em; padding: 12px 16px; background: #fafaf8; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.phase-title::before { content: '▼'; font-size: 10px; color: #999; transition: transform 0.2s; }
+.phase-title.collapsed::before { transform: rotate(-90deg); }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f5f5f5; transition: background 0.15s; user-select: none; }
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: #fafaf8; }
+.check-item.done { color: #2e7d32; }
+.check-item.pending { color: #666; }
 .check-icon { font-size: 18px; width: 24px; height: 24px; text-align: center; line-height: 24px; flex-shrink: 0; border-radius: 4px; }
-.check-item.done .check-icon { background: rgba(81,183,73,0.15); color: #51b749; }
-.check-item.pending .check-icon { background: rgba(255,255,255,0.05); color: #5C3D14; }
+.check-item.done .check-icon { background: #e8f5e9; color: #2e7d32; }
+.check-item.pending .check-icon { background: #f5f5f5; color: #ccc; }
+.check-item.done .check-text { text-decoration: line-through; opacity: 0.7; }
 
-.detail-card { background: #261A05; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #FAFAFA; }
-.detail-line { font-size: 12px; color: #857D52; padding: 3px 0; }
-.note { border-bottom: 1px solid #3a3020; padding: 12px 0; }
+.sync-status { font-size: 11px; color: #999; text-align: right; padding: 4px 0; }
+.sync-status.synced { color: #2e7d32; }
+.sync-status.error { color: #ff4444; }
+
+.detail-card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #eee; }
+.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #1a1a1a; }
+.detail-line { font-size: 12px; color: #999; padding: 3px 0; }
+.note { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
 .note:last-child { border-bottom: none; }
-.note-date { font-size: 10px; color: #5C3D14; margin-bottom: 4px; }
-.note-body { font-size: 12px; color: #857D52; white-space: pre-wrap; line-height: 1.5; }
+.note-date { font-size: 10px; color: #999; margin-bottom: 4px; }
+.note-body { font-size: 12px; color: #666; white-space: pre-wrap; line-height: 1.5; }
 
-.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #5C3D14; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #999; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #ccc; }
 
 @media (max-width: 768px) {
   .deal-header { padding: 16px; }
@@ -72,8 +88,7 @@ a:hover { text-decoration: underline; }
   .deal-price { font-size: 22px; }
   .content { flex-direction: column; padding: 16px; gap: 20px; }
   .col-side { flex: 1; }
-  .check-item { padding: 10px 8px; font-size: 14px; }
-  .check-icon { font-size: 20px; width: 28px; height: 28px; line-height: 28px; }
+  .check-item { padding: 12px 16px; font-size: 14px; }
   .back { padding: 12px 16px; }
 }
 </style>
@@ -106,235 +121,850 @@ a:hover { text-decoration: underline; }
   <div class="col-main">
     <div class="progress-wrap">
       <div class="progress-label">
-        <span>Resale Listing Checklist</span>
-        <span id="progress-text">0 / 52 (0%)</span>
+        <span>Listing Process — 159 Steps</span>
+        <span id="progress-text">0 / 159 (0%)</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width:0%"></div>
       </div>
+      <div class="sync-status" id="sync-status">Loading...</div>
     </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Ryan</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffd93d"></div> Ally</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6bcb77"></div> Jarvis</div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterOwner('all',this)">All</button>
+      <button class="filter-btn" onclick="filterOwner('R',this)">Ryan</button>
+      <button class="filter-btn" onclick="filterOwner('A',this)">Ally</button>
+      <button class="filter-btn" onclick="filterOwner('J',this)">Jarvis</button>
+      <button class="filter-btn" onclick="filterOwner('pending',this)">⏳ Pending</button>
+    </div>
+
     
     <div class="checklist-section">
-      <div class="section-title">PRE-LISTING</div>
-      <div class="check-item done" data-idx="0" data-default="1" onclick="toggle(this)">
-        <span class="check-icon">✓</span>
-        <span class="check-text">Signed Listing Agreement</span>
-      </div>
-      <div class="check-item pending" data-idx="1" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">PHASE 1: PRE-LISTING / LEAD INTAKE</div>
+      <div class="check-item pending" data-idx="0" data-step="1" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Send Residential Property Disclosure, MOG, and LBP Disclosure to Sign</span>
+        <span class="check-text">Receive listing lead (referral, website, sphere, cold call, Instagram)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="2" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="1" data-step="2" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Create Incomplete MLS Listing</span>
+        <span class="check-text">Add lead to Follow Up Boss CRM</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="3" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="2" data-step="3" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Pull SkySlope Documents for Listing</span>
+        <span class="check-text">Assign lead source and tags in FUB</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="4" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="3" data-step="4" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Send Client Showtime data on listing in area to set expectations</span>
+        <span class="check-text">Initial phone/text/email outreach to seller</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="5" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="4" data-step="5" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Market Analysis &amp; Comps (have seller initial)</span>
+        <span class="check-text">Qualify seller: timeline, motivation, price expectations</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="5" data-step="6" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm property address and ownership</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="6" data-step="7" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull tax records (Mecklenburg County CAMA / Realist)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="7" data-step="8" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull deed and ownership verification</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="8" data-step="9" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Run preliminary CMA</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffb34722;color:#ffb347;margin-left:auto;flex-shrink:0">R/A+J</span>
+      </div>
+      <div class="check-item pending" data-idx="9" data-step="10" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Research neighborhood / HOA / deed restrictions</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="10" data-step="11" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Check for liens, code violations, permits</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="11" data-step="12" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Identify property type</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="12" data-step="13" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Note any special circumstances (estate, divorce, relocation, short sale, trust)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="13" data-step="14" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule listing appointment + add to Google Calendar</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">R+J</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">MARKETING &amp; PREP</div>
-      <div class="check-item pending" data-idx="6" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">PHASE 2: LISTING APPOINTMENT PREP</div>
+      <div class="check-item pending" data-idx="14" data-step="15" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Complete MLS Listing With All Details</span>
+        <span class="check-text">Generate full CMA report with comps</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffb34722;color:#ffb347;margin-left:auto;flex-shrink:0">R/A+J</span>
       </div>
-      <div class="check-item pending" data-idx="7" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="15" data-step="16" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Arrange Staging</span>
+        <span class="check-text">Pull active competing listings in area</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffb34722;color:#ffb347;margin-left:auto;flex-shrink:0">R/A/J</span>
       </div>
-      <div class="check-item done" data-idx="8" data-default="1" onclick="toggle(this)">
-        <span class="check-icon">✓</span>
-        <span class="check-text">Arrange Photos</span>
-      </div>
-      <div class="check-item pending" data-idx="9" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="16" data-step="17" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Arrange Videos</span>
+        <span class="check-text">Pull recently sold comps (90 days)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="10" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="17" data-step="18" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Arrange Matterport Photos</span>
+        <span class="check-text">Pull expired/withdrawn listings for pricing context</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="11" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="18" data-step="19" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Received Photos</span>
+        <span class="check-text">Research days on market trends for the area</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="12" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="19" data-step="20" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Upload Photos into MLS</span>
+        <span class="check-text">Prepare listing presentation (iPad + printed leave-behind)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item done" data-idx="13" data-default="1" onclick="toggle(this)">
-        <span class="check-icon">✓</span>
-        <span class="check-text">Send Email Invites for staging, photos, etc. and invite for Go Live Date</span>
-      </div>
-      <div class="check-item pending" data-idx="14" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="20" data-step="21" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Finalize All SkySlope Documents</span>
+        <span class="check-text">Customize presentation for specific property</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="15" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="21" data-step="22" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Text Ryan MLS Sheet and get sign off</span>
+        <span class="check-text">Prepare listing agreement (Form 101)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="16" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="22" data-step="23" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Send MLS Sheet to client to sign off on</span>
+        <span class="check-text">Prepare WWREA disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="17" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="23" data-step="24" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Create Cribflyer Website</span>
+        <span class="check-text">Prepare Mineral, Oil &amp; Gas Rights Disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="18" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="24" data-step="25" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Verify Permits on Property</span>
+        <span class="check-text">Prepare Professional Services Disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="19" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="25" data-step="26" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Ask Seller for recent upgrade documents, surveys, etc.</span>
+        <span class="check-text">Prepare Residential Property Disclosure (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="20" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="26" data-step="27" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Create Upgrades Sheet</span>
+        <span class="check-text">Prepare Lead-Based Paint Addendum (if pre-1978)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="27" data-step="28" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Prepare seller net sheet with estimated proceeds</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="28" data-step="29" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Prepare marketing plan overview for seller</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="29" data-step="30" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Prepare comparable pricing strategy document</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="30" data-step="31" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pack listing appointment kit (forms, presentation, gift)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="31" data-step="32" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Research pet names / personal details for rapport</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">GO LIVE</div>
-      <div class="check-item pending" data-idx="21" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">PHASE 3: LISTING APPOINTMENT</div>
+      <div class="check-item pending" data-idx="32" data-step="33" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Confirm Access to Home for Showings</span>
+        <span class="check-text">Deliver listing presentation</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="22" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="33" data-step="34" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Set Up Showingtime</span>
+        <span class="check-text">Walk the property — take notes via AI audio device</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="23" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="34" data-step="35" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Email/Text Client How Showingtime Works</span>
+        <span class="check-text">Discuss pricing strategy with seller</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="24" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="35" data-step="36" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Complete MLS</span>
+        <span class="check-text">Discuss timeline and seller's needs</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="25" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="36" data-step="37" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Put Listing Live</span>
+        <span class="check-text">Discuss showing instructions and availability</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="26" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="37" data-step="38" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Set Up ListTrac</span>
+        <span class="check-text">Discuss any repairs or prep work needed before listing</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="27" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="38" data-step="39" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Send Photos and Order Brochures from HM Support</span>
+        <span class="check-text">Sign listing agreement (Exclusive Right to Sell)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="28" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="39" data-step="40" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Print Disclosures, Upgrades, and floor plans in folders</span>
+        <span class="check-text">Sign WWREA disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="29" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="40" data-step="41" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Put Out For Sale Sign</span>
+        <span class="check-text">Sign Mineral, Oil &amp; Gas Rights Disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="30" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="41" data-step="42" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Coordinate Event for Property (Broker Event/Public)</span>
+        <span class="check-text">Sign Professional Services Disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="31" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="42" data-step="43" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Post Instagram Reel</span>
+        <span class="check-text">Sign Residential Property Disclosure (via Seller Shield / SkySlope)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="32" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="43" data-step="44" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Schedule Open House for First Weekend on Market</span>
+        <span class="check-text">Sign Lead-Based Paint Addendum (if pre-1978)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="33" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="44" data-step="45" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Add Website to LinkTree</span>
+        <span class="check-text">Collect HOA documents and contacts (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="34" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="45" data-step="46" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Coordinate On-Going Open Houses</span>
+        <span class="check-text">Collect keys, garage codes, alarm codes, gate codes</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-    </div>
-    <div class="checklist-section">
-      <div class="section-title">UNDER CONTRACT</div>
-      <div class="check-item pending" data-idx="35" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="46" data-step="47" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Received Executed Contract from Buyers Agent</span>
+        <span class="check-text">Discuss Coming Soon vs. immediate MLS entry</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="36" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="47" data-step="48" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Send email (template) to seller and attorneys</span>
+        <span class="check-text">Set list price</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="37" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="48" data-step="49" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Coordinate DD</span>
-      </div>
-      <div class="check-item pending" data-idx="38" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Send DD Acknowledgment to Buyers Agent</span>
-      </div>
-      <div class="check-item pending" data-idx="39" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Intro to Buyers Agent</span>
-      </div>
-      <div class="check-item pending" data-idx="40" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Under Contract Rider on For Sale Sign</span>
-      </div>
-      <div class="check-item pending" data-idx="41" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Create Calendar Invites for DD and Closing</span>
-      </div>
-      <div class="check-item pending" data-idx="42" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Create Calendar Reminder to Email Buyers Agent 5 days prior</span>
-      </div>
-      <div class="check-item pending" data-idx="43" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Email Buyers Agent that we are Closing</span>
-      </div>
-      <div class="check-item pending" data-idx="44" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Utilities Request &amp; Reminder to Turn Off</span>
+        <span class="check-text">Set target go-live date</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">CLOSING</div>
-      <div class="check-item pending" data-idx="45" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">PHASE 4: POST-SIGNING / PRE-MARKET PREP</div>
+      <div class="check-item pending" data-idx="49" data-step="50" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Final CD Sign Off from Ryan</span>
+        <span class="check-text">Upload all signed documents to Google Drive</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="46" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="50" data-step="51" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Close out MLS on Closing Day</span>
+        <span class="check-text">Create deal in FUB with correct pipeline stage (WIP/Pre-List)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="47" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="51" data-step="52" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Pick Up Lock Box at Property</span>
+        <span class="check-text">Update dashboard with new listing</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="48" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="52" data-step="53" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Turn off Showingtime</span>
+        <span class="check-text">Upload docs to SkySlope + create new SkySlope listing (from MLS)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="49" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="53" data-step="54" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Upload ALTA into Skyslope</span>
+        <span class="check-text">Send signed documents to Corcoran compliance via SkySlope</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="50" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="54" data-step="55" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Request Review and Referral Via Email</span>
+        <span class="check-text">Ask Ally if staging is needed for this listing</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#a8e6cf22;color:#a8e6cf;margin-left:auto;flex-shrink:0">J→A</span>
       </div>
-      <div class="check-item pending" data-idx="51" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="55" data-step="56" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Post-Closing Follow-Up (1 month check-in)</span>
+        <span class="check-text">Order photography + floor plan (group text: Ally + Mike Hellinger)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="56" data-step="57" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Ask Ryan if virtual tour / Matterport should be ordered</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#a8e6cf22;color:#a8e6cf;margin-left:auto;flex-shrink:0">J→R</span>
+      </div>
+      <div class="check-item pending" data-idx="57" data-step="58" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Email Cameron Glenn's team to schedule video walkthrough</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="58" data-step="59" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send calendar invite for photo shoot to clients, Ryan, and Ally</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="59" data-step="60" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send property prep email to listing clients + Ally walkthrough if needed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#d4e6a822;color:#d4e6a8;margin-left:auto;flex-shrink:0">J+A</span>
+      </div>
+      <div class="check-item pending" data-idx="60" data-step="61" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Stage property (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="61" data-step="62" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Verify square footage against tax records</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="62" data-step="63" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull GIS info / property tax card</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="63" data-step="64" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull Realist report</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="64" data-step="65" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull current property tax bill</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="65" data-step="66" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull plat map (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="66" data-step="67" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull survey (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="67" data-step="68" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull flood plain map (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="68" data-step="69" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull stormwater map (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="69" data-step="70" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull deed restrictions / CCRs / condo declaration (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="70" data-step="71" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull building permit information (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="71" data-step="72" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Pull septic tank permit (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="72" data-step="73" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Obtain HOA disclosure and resale certificate (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="73" data-step="74" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Obtain condo resale statement (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="74" data-step="75" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm legal description matches deed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="75" data-step="76" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm ownership matches listing agreement signers</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="76" data-step="77" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">If trust/estate/POA — obtain operating agreement / trust docs</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="77" data-step="78" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Request seller to complete Residential Property Disclosure</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="78" data-step="79" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Review completed disclosure for accuracy</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="79" data-step="80" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Prepare CMLS Incomplete Agent Full MLS Sheet</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="80" data-step="81" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Draft MLS listing description / remarks</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="81" data-step="82" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Review MLS description (Ryan reviews → Jarvis emails seller to sign off)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">R+J</span>
+      </div>
+      <div class="check-item pending" data-idx="82" data-step="83" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Research area and property details for key marketing features</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="83" data-step="84" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Set up lockbox / Supra</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="84" data-step="85" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Install yard sign</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="85" data-step="86" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create property-specific email for inquiries</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="86" data-step="87" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create agent prospecting text + email for MLS reverse prospecting</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="87" data-step="88" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create single-property website (homes.realtyryan.com/address)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="88" data-step="89" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Create printed materials (Jarvis creates → Ally approves → Jarvis sends to printer)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#d4e6a822;color:#d4e6a8;margin-left:auto;flex-shrink:0">J+A</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="phase-title">PHASE 5: COMING SOON (IF APPLICABLE)</div>
+      <div class="check-item pending" data-idx="89" data-step="90" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Complete CMLS Coming Soon Authorization Form</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="90" data-step="91" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Enter listing as Coming Soon in MLS</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="91" data-step="92" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Share Coming Soon on social media</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="92" data-step="93" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send Coming Soon email blast to agent network</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="93" data-step="94" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Begin pre-marketing to buyer agents</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="94" data-step="95" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Share in agent Facebook groups / MLS groups</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="95" data-step="96" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Track Coming Soon inquiries in FUB</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="phase-title">PHASE 6: GO LIVE ON MLS</div>
+      <div class="check-item pending" data-idx="96" data-step="97" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Enter full listing in Canopy MLS (Matrix)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="97" data-step="98" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Upload all photos in correct order</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="98" data-step="99" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Upload virtual tour link</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="99" data-step="100" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Upload floor plan</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="100" data-step="101" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Verify all MLS fields are accurate</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="101" data-step="102" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Double-check price, square footage, room counts, lot size</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="102" data-step="103" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Verify showing instructions are correct</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="103" data-step="104" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Set up ShowingTime showing instructions</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="104" data-step="105" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Verify listing appears on realtyryan.com / IDX feed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="105" data-step="106" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send 'Just Listed' email blast to database</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="106" data-step="107" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Post listing on LinkedIn (Jarvis) + Instagram (Ryan)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">J+R</span>
+      </div>
+      <div class="check-item pending" data-idx="107" data-step="108" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send direct outreach to top buyer agents in area</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="108" data-step="109" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Notify seller that listing is live — send MLS link</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="109" data-step="110" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Add listing to Realty Ryan featured properties</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="phase-title">PHASE 7: ACTIVE LISTING MANAGEMENT</div>
+      <div class="check-item pending" data-idx="110" data-step="111" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Monitor showing activity + text showing agents with property details</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="111" data-step="112" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Collect and relay showing feedback to seller</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="112" data-step="113" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send weekly seller update emails (Mondays)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="113" data-step="114" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Monitor competing listings — new, price changes, under contract, sold</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="114" data-step="115" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Review pricing strategy bi-weekly based on activity</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="115" data-step="116" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Recommend price adjustment if needed (with data)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="116" data-step="117" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate open houses (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="117" data-step="118" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Refresh social media marketing monthly (reminder to Ally/Ryan)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="118" data-step="119" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Track DOM and advise on strategy</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="119" data-step="120" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Monitor market conditions (Jarvis drafts → Ryan reviews before sending to sellers)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">J+R</span>
+      </div>
+      <div class="check-item pending" data-idx="120" data-step="121" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Field and present all offers (monitor HM email → create email template to seller)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="phase-title">PHASE 8: OFFER RECEIVED / UNDER CONTRACT</div>
+      <div class="check-item pending" data-idx="121" data-step="122" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Receive and review offer (Form 2-T)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="122" data-step="123" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Present offer to seller with analysis (Jarvis creates → Ryan reviews)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">J+R</span>
+      </div>
+      <div class="check-item pending" data-idx="123" data-step="124" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Execute accepted offer — all parties sign</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="124" data-step="125" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send executed contract to all parties</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="125" data-step="126" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Update SkySlope file for compliance review</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="126" data-step="127" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Update FUB deal stage to Under Contract</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="127" data-step="128" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Update dashboard status</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="128" data-step="129" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Calculate and track all contract deadlines + create calendar invites</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="129" data-step="130" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm receipt of DD fee (Ally notifies → Jarvis uploads DD receipt to SkySlope)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#d4e6a822;color:#d4e6a8;margin-left:auto;flex-shrink:0">A+J</span>
+      </div>
+      <div class="check-item pending" data-idx="130" data-step="131" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm receipt of earnest money</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="131" data-step="132" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate with buyer's agent on inspections</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="132" data-step="133" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate seller's response to repair requests</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="133" data-step="134" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Negotiate repair requests / credits</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="134" data-step="135" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Monitor appraisal scheduling and results</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="135" data-step="136" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Handle appraisal issues (if applicable)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="136" data-step="137" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate with closing attorney / title company</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="137" data-step="138" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Review closing disclosure / settlement statement</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="138" data-step="139" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule final walkthrough (contact buyer's agent → add to calendar)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="139" data-step="140" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Coordinate utility transfers</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="140" data-step="141" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm seller has moved out / property is ready</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="141" data-step="142" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Attend closing (or arrange remote closing)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
+      </div>
+      <div class="check-item pending" data-idx="142" data-step="143" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Confirm funds disbursed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="143" data-step="144" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Collect keys / lockbox / sign from property</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+    </div>
+    <div class="checklist-section">
+      <div class="phase-title">PHASE 9: POST-CLOSING</div>
+      <div class="check-item pending" data-idx="144" data-step="145" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Bring closing gift to closing</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
+      </div>
+      <div class="check-item pending" data-idx="145" data-step="146" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Request Google review / testimonial</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="146" data-step="147" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send 'Just Sold' marketing (Jarvis creates → Ryan approves)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">J+R</span>
+      </div>
+      <div class="check-item pending" data-idx="147" data-step="148" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Update MLS status to Sold</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="148" data-step="149" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Update FUB deal stage to Closed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="149" data-step="150" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Update dashboard status</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="150" data-step="151" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Archive transaction file in Google Drive</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="151" data-step="152" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send final documents to seller</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="152" data-step="153" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Add to past client drip / sphere nurture campaign</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="153" data-step="154" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule 30-day check-in</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="154" data-step="155" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule 6-month check-in</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="155" data-step="156" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule 1-year anniversary check-in</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="156" data-step="157" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Add seller's new address to database (if they bought elsewhere)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="157" data-step="158" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Send annual home anniversary card</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="158" data-step="159" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Request referrals</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
     </div>
   </div>
@@ -379,8 +1009,9 @@ Brett &amp; Sonia on vacation that weekend — perfect for showings/OH.</div>
 
 <script>
 const DEAL_ID = 26;
-const TOTAL = 52;
+const TOTAL = 159;
 const H="5ae67553136b2ba571f41239f4646eb489bb393b7d25717bf28bbbcdb24f1c04";
+const FB = "https://realtyryan-dashboard-default-rtdb.firebaseio.com";
 
 // Auth
 function sha256(m){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(m)).then(b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join(""))}
@@ -389,14 +1020,46 @@ function show(){document.getElementById("login-gate").style.display="none";docum
 document.getElementById("pw-input").addEventListener("keydown",e=>{if(e.key==="Enter")checkPw()});
 if(localStorage.getItem("rr_dash_auth")==="1")show();
 
-// Checklist state
-function getKey(){ return "rr_deal_" + DEAL_ID; }
+// Collapsible sections
+document.querySelectorAll(".phase-title").forEach(el => {
+  el.addEventListener("click", () => {
+    el.classList.toggle("collapsed");
+    let next = el.nextElementSibling;
+    while(next && !next.classList.contains("phase-title")) {
+      next.style.display = el.classList.contains("collapsed") ? "none" : "flex";
+      next = next.nextElementSibling;
+    }
+  });
+});
 
-function loadState() {
-  const saved = JSON.parse(localStorage.getItem(getKey()) || "{}");
+// Firebase sync — load state from Firebase, fall back to localStorage
+async function loadState() {
+  const ss = document.getElementById("sync-status");
+  try {
+    const res = await fetch(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json");
+    const data = await res.json();
+    if (data) {
+      applyState(data);
+      ss.textContent = "✓ Synced with Jarvis";
+      ss.className = "sync-status synced";
+      return;
+    }
+  } catch(e) {}
+  // Fallback to localStorage
+  const saved = JSON.parse(localStorage.getItem("rr_deal_" + DEAL_ID) || "{}");
+  if (Object.keys(saved).length) {
+    applyState(saved);
+    ss.textContent = "Local only (Firebase unavailable)";
+  } else {
+    ss.textContent = "No progress yet";
+  }
+  updateProgress();
+}
+
+function applyState(state) {
   document.querySelectorAll(".check-item").forEach(el => {
-    const idx = el.dataset.idx;
-    const isDone = saved.hasOwnProperty(idx) ? saved[idx] : el.dataset.default === "1";
+    const stepId = el.dataset.step;
+    const isDone = state[stepId] === true;
     setItemState(el, isDone);
   });
   updateProgress();
@@ -421,12 +1084,27 @@ function setItemState(el, done) {
   }
 }
 
-function saveState() {
+async function saveState() {
   const state = {};
   document.querySelectorAll(".check-item").forEach(el => {
-    state[el.dataset.idx] = el.classList.contains("done");
+    if (el.classList.contains("done")) state[el.dataset.step] = true;
   });
-  localStorage.setItem(getKey(), JSON.stringify(state));
+  // Save to localStorage
+  localStorage.setItem("rr_deal_" + DEAL_ID, JSON.stringify(state));
+  // Sync to Firebase
+  const ss = document.getElementById("sync-status");
+  try {
+    await fetch(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json", {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(state)
+    });
+    ss.textContent = "✓ Saved & synced";
+    ss.className = "sync-status synced";
+  } catch(e) {
+    ss.textContent = "Saved locally (sync failed)";
+    ss.className = "sync-status error";
+  }
 }
 
 function updateProgress() {
@@ -435,6 +1113,34 @@ function updateProgress() {
   document.getElementById("progress-text").textContent = done + " / " + TOTAL + " (" + pct + "%)";
   document.getElementById("progress-fill").style.width = pct + "%";
 }
+
+// Filter by owner
+function filterOwner(owner, btn) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".check-item").forEach(el => {
+    if (owner === "all") {
+      el.style.display = "flex";
+    } else if (owner === "pending") {
+      el.style.display = el.classList.contains("pending") ? "flex" : "none";
+    } else {
+      // Check if the owner badge contains the filter
+      const badge = el.querySelector("span:last-child").textContent;
+      el.style.display = badge.includes(owner) ? "flex" : "none";
+    }
+  });
+}
+
+// Listen for real-time Firebase updates (Jarvis live updates)
+const evtSource = new EventSource(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json?orderBy=%22$key%22");
+// Note: Firebase REST doesn't support SSE easily, so we poll every 30s for Jarvis updates
+setInterval(async () => {
+  try {
+    const res = await fetch(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json");
+    const data = await res.json();
+    if (data) applyState(data);
+  } catch(e) {}
+}, 30000);
 </script>
 
 </body>

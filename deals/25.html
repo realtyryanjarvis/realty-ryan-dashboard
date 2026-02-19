@@ -7,64 +7,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #1a1408; font-family: 'Work Sans', sans-serif; color: #FAFAFA; min-height: 100vh; }
-a { color: #7A3B14; text-decoration: none; }
+body { background: #fafaf8; font-family: 'Work Sans', sans-serif; color: #1a1a1a; min-height: 100vh; }
+a { color: #793315; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 #login-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
 #page-content { display: none; }
-.login-box { background: #261A05; padding: 48px; border-radius: 12px; border: 1px solid #5C3D14; width: 100%; max-width: 380px; text-align: center; }
-.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
-.login-box .sub { font-size: 13px; color: #857D52; margin-bottom: 32px; }
-.login-box input { width: 100%; padding: 14px 16px; background: #1a1408; border: 1px solid #5C3D14; border-radius: 6px; color: #FAFAFA; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
-.login-box input:focus { border-color: #7A3B14; }
-.login-box button { width: 100%; padding: 14px; background: #7A3B14; color: #FAFAFA; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+.login-box { background: #fff; padding: 48px; border-radius: 12px; border: 1px solid #e5e5e5; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; color: #1a1a1a; }
+.login-box .sub { font-size: 13px; color: #999; margin-bottom: 32px; }
+.login-box input { width: 100%; padding: 14px 16px; background: #fafaf8; border: 1px solid #ddd; border-radius: 6px; color: #1a1a1a; font-family: 'Work Sans', sans-serif; font-size: 14px; margin-bottom: 16px; outline: none; }
+.login-box input:focus { border-color: #793315; }
+.login-box button { width: 100%; padding: 14px; background: #793315; color: #fff; border: none; border-radius: 6px; font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
 .login-box button:hover { background: #9A4B1A; }
-.login-error { color: #ff887c; font-size: 12px; margin-bottom: 12px; display: none; }
+.login-error { color: #ff4444; font-size: 12px; margin-bottom: 12px; display: none; }
 
 .back { padding: 16px 24px; font-size: 13px; }
-.back a { color: #857D52; }
+.back a { color: #999; }
 
-.deal-header { background: #261A05; padding: 24px; border-bottom: 3px solid #7A3B14; }
-.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
-.deal-client { font-size: 14px; color: #857D52; margin-top: 4px; }
-.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #7A3B14; margin-top: 8px; }
+.deal-header { background: #fff; padding: 24px; border-bottom: 3px solid #793315; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+.deal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1a1a; }
+.deal-client { font-size: 14px; color: #999; margin-top: 4px; }
+.deal-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #793315; margin-top: 8px; }
 .deal-stage { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; }
-.stage-listed { background: #46d67a; color: #1a1408; }
-.stage-pending { background: #fbd75b; color: #1a1408; }
-.stage-closed { background: #5C3D14; color: #857D52; }
-.stage-offer { background: #819cff; color: #1a1408; }
-.stage-buyer { background: #ffb878; color: #1a1408; }
-.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #a4bdfc; color: #1a1408; margin-left: 8px; margin-top: 12px; }
+.stage-listed { background: #e8f5e9; color: #2e7d32; }
+.stage-pending { background: #fff8e1; color: #f57f17; }
+.stage-closed { background: #f5f5f5; color: #999; }
+.stage-offer { background: #e3f2fd; color: #1565c0; }
+.stage-buyer { background: #fff3e0; color: #e65100; }
+.closing-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #e3f2fd; color: #1565c0; margin-left: 8px; margin-top: 12px; }
 
 .content { display: flex; gap: 32px; padding: 24px; flex-wrap: wrap; }
 .col-main { flex: 1; min-width: 300px; }
 .col-side { flex: 0 0 320px; }
 
-.progress-wrap { margin-bottom: 24px; }
-.progress-label { font-size: 13px; color: #857D52; margin-bottom: 6px; display: flex; justify-content: space-between; }
-.progress-bar { height: 10px; background: #261A05; border-radius: 5px; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #7A3B14, #46d67a); transition: width 0.4s ease; }
+.progress-wrap { margin-bottom: 24px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee; }
+.progress-label { font-size: 13px; color: #999; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #793315, #6bcb77); transition: width 0.4s ease; }
 
-.checklist-section { margin-bottom: 20px; }
-.section-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.08em; padding-bottom: 6px; border-bottom: 1px solid #5C3D14; margin-bottom: 6px; }
-.check-item { display: flex; align-items: center; gap: 10px; padding: 8px 8px; font-size: 13px; cursor: pointer; border-radius: 4px; transition: background 0.15s; user-select: none; }
-.check-item:hover { background: rgba(255,255,255,0.04); }
-.check-item.done { color: #51b749; }
-.check-item.pending { color: #857D52; }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover, .filter-btn.active { background: #793315; color: #fff; border-color: #793315; }
+
+.checklist-section { margin-bottom: 20px; background: #fff; border-radius: 8px; border: 1px solid #eee; overflow: hidden; }
+.phase-title { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; color: #1a1a1a; letter-spacing: 0.06em; padding: 12px 16px; background: #fafaf8; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.phase-title::before { content: '▼'; font-size: 10px; color: #999; transition: transform 0.2s; }
+.phase-title.collapsed::before { transform: rotate(-90deg); }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f5f5f5; transition: background 0.15s; user-select: none; }
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: #fafaf8; }
+.check-item.done { color: #2e7d32; }
+.check-item.pending { color: #666; }
 .check-icon { font-size: 18px; width: 24px; height: 24px; text-align: center; line-height: 24px; flex-shrink: 0; border-radius: 4px; }
-.check-item.done .check-icon { background: rgba(81,183,73,0.15); color: #51b749; }
-.check-item.pending .check-icon { background: rgba(255,255,255,0.05); color: #5C3D14; }
+.check-item.done .check-icon { background: #e8f5e9; color: #2e7d32; }
+.check-item.pending .check-icon { background: #f5f5f5; color: #ccc; }
+.check-item.done .check-text { text-decoration: line-through; opacity: 0.7; }
 
-.detail-card { background: #261A05; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #FAFAFA; }
-.detail-line { font-size: 12px; color: #857D52; padding: 3px 0; }
-.note { border-bottom: 1px solid #3a3020; padding: 12px 0; }
+.sync-status { font-size: 11px; color: #999; text-align: right; padding: 4px 0; }
+.sync-status.synced { color: #2e7d32; }
+.sync-status.error { color: #ff4444; }
+
+.detail-card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #eee; }
+.detail-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #1a1a1a; }
+.detail-line { font-size: 12px; color: #999; padding: 3px 0; }
+.note { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
 .note:last-child { border-bottom: none; }
-.note-date { font-size: 10px; color: #5C3D14; margin-bottom: 4px; }
-.note-body { font-size: 12px; color: #857D52; white-space: pre-wrap; line-height: 1.5; }
+.note-date { font-size: 10px; color: #999; margin-bottom: 4px; }
+.note-body { font-size: 12px; color: #666; white-space: pre-wrap; line-height: 1.5; }
 
-.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #5C3D14; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #999; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.footer { padding: 16px 24px; text-align: center; font-size: 11px; color: #ccc; }
 
 @media (max-width: 768px) {
   .deal-header { padding: 16px; }
@@ -72,8 +88,7 @@ a:hover { text-decoration: underline; }
   .deal-price { font-size: 22px; }
   .content { flex-direction: column; padding: 16px; gap: 20px; }
   .col-side { flex: 1; }
-  .check-item { padding: 10px 8px; font-size: 14px; }
-  .check-icon { font-size: 20px; width: 28px; height: 28px; line-height: 28px; }
+  .check-item { padding: 12px 16px; font-size: 14px; }
   .back { padding: 12px 16px; }
 }
 </style>
@@ -106,163 +121,208 @@ a:hover { text-decoration: underline; }
   <div class="col-main">
     <div class="progress-wrap">
       <div class="progress-label">
-        <span>Buyer Checklist</span>
-        <span id="progress-text">0 / 34 (0%)</span>
+        <span>Buyer Process — 159 Steps</span>
+        <span id="progress-text">0 / 33 (0%)</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width:0%"></div>
       </div>
+      <div class="sync-status" id="sync-status">Loading...</div>
     </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Ryan</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffd93d"></div> Ally</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6bcb77"></div> Jarvis</div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterOwner('all',this)">All</button>
+      <button class="filter-btn" onclick="filterOwner('R',this)">Ryan</button>
+      <button class="filter-btn" onclick="filterOwner('A',this)">Ally</button>
+      <button class="filter-btn" onclick="filterOwner('J',this)">Jarvis</button>
+      <button class="filter-btn" onclick="filterOwner('pending',this)">⏳ Pending</button>
+    </div>
+
     
     <div class="checklist-section">
-      <div class="section-title">GETTING STARTED</div>
-      <div class="check-item pending" data-idx="0" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">GETTING STARTED</div>
+      <div class="check-item pending" data-idx="0" data-step="b1" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Signed Buyer Representation Agreement</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="1" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="1" data-step="b2" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Pre-Approval Letter Received</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item done" data-idx="2" data-default="1" onclick="toggle(this)">
-        <span class="check-icon">✓</span>
+      <div class="check-item pending" data-idx="2" data-step="b3" onclick="toggle(this)">
+        <span class="check-icon">○</span>
         <span class="check-text">Buyer Consultation Complete</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="3" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="3" data-step="b4" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Set Up Property Search Alerts</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item done" data-idx="4" data-default="1" onclick="toggle(this)">
-        <span class="check-icon">✓</span>
+      <div class="check-item pending" data-idx="4" data-step="b5" onclick="toggle(this)">
+        <span class="check-icon">○</span>
         <span class="check-text">Identify Target Neighborhoods</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff8f6b22;color:#ff8f6b;margin-left:auto;flex-shrink:0">R+J</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">ACTIVELY SHOPPING</div>
-      <div class="check-item pending" data-idx="5" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">ACTIVELY SHOPPING</div>
+      <div class="check-item pending" data-idx="5" data-step="b6" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Showings Scheduled</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="6" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="6" data-step="b7" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Properties Toured</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="7" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="7" data-step="b8" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Offer Strategy Discussion</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">OFFER &amp; NEGOTIATION</div>
-      <div class="check-item pending" data-idx="8" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">OFFER &amp; NEGOTIATION</div>
+      <div class="check-item pending" data-idx="8" data-step="b9" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Offer Submitted</span>
+        <span class="check-text">Offer Submitted (Form 2-T)</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="9" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="9" data-step="b10" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Counter-Offer / Negotiation</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="10" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="10" data-step="b11" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Offer Accepted / Under Contract</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">DUE DILIGENCE</div>
-      <div class="check-item pending" data-idx="11" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">DUE DILIGENCE</div>
+      <div class="check-item pending" data-idx="11" data-step="b12" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Earnest Money Deposited</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
       </div>
-      <div class="check-item pending" data-idx="12" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="12" data-step="b13" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Home Inspection Scheduled</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="13" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="13" data-step="b14" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Home Inspection Complete</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="14" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="14" data-step="b15" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Inspection Negotiations / Repairs</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="15" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="15" data-step="b16" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Appraisal Ordered</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="16" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="16" data-step="b17" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Appraisal Complete</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="17" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="17" data-step="b18" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Survey Ordered</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="18" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="18" data-step="b19" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Survey Complete</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="19" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="19" data-step="b20" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Title Search Initiated</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="20" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="20" data-step="b21" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">HOA Documents Reviewed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="21" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="21" data-step="b22" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Homeowners Insurance Bound</span>
-      </div>
-      <div class="check-item pending" data-idx="22" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Wire Fraud Warning Sent</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
     </div>
     <div class="checklist-section">
-      <div class="section-title">CLOSING</div>
-      <div class="check-item pending" data-idx="23" data-default="0" onclick="toggle(this)">
+      <div class="phase-title">CLOSING</div>
+      <div class="check-item pending" data-idx="22" data-step="b23" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Clear to Close from Lender</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="24" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="23" data-step="b24" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Closing Disclosure Reviewed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="25" data-default="0" onclick="toggle(this)">
-        <span class="check-icon">○</span>
-        <span class="check-text">Final CD Sign Off from Ryan</span>
-      </div>
-      <div class="check-item pending" data-idx="26" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="24" data-step="b25" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Final Walk-Through Scheduled</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="27" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="25" data-step="b26" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Final Walk-Through Complete</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="28" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="26" data-step="b27" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Closing Day</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ff6b6b22;color:#ff6b6b;margin-left:auto;flex-shrink:0">R</span>
       </div>
-      <div class="check-item pending" data-idx="29" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="27" data-step="b28" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">Keys Handed Off</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#ffd93d22;color:#ffd93d;margin-left:auto;flex-shrink:0">A</span>
       </div>
-      <div class="check-item pending" data-idx="30" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="28" data-step="b29" onclick="toggle(this)">
         <span class="check-icon">○</span>
         <span class="check-text">MLS Updated to Closed</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="31" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="29" data-step="b30" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Commission Confirmed</span>
+        <span class="check-text">Request Review and Referral</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="32" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="30" data-step="b31" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">Request Review and Referral Via Email</span>
+        <span class="check-text">Schedule 30-day check-in</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
-      <div class="check-item pending" data-idx="33" data-default="0" onclick="toggle(this)">
+      <div class="check-item pending" data-idx="31" data-step="b32" onclick="toggle(this)">
         <span class="check-icon">○</span>
-        <span class="check-text">90-Day Post-Close Follow-Up</span>
+        <span class="check-text">Schedule 6-month check-in</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
+      </div>
+      <div class="check-item pending" data-idx="32" data-step="b33" onclick="toggle(this)">
+        <span class="check-icon">○</span>
+        <span class="check-text">Schedule 1-year anniversary check-in</span>
+        <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#6bcb7722;color:#6bcb77;margin-left:auto;flex-shrink:0">J</span>
       </div>
     </div>
   </div>
@@ -336,8 +396,9 @@ First meeting: Jan 12, 2026 — toured their home. Sent Listing Agreement and Bu
 
 <script>
 const DEAL_ID = 25;
-const TOTAL = 34;
+const TOTAL = 33;
 const H="5ae67553136b2ba571f41239f4646eb489bb393b7d25717bf28bbbcdb24f1c04";
+const FB = "https://realtyryan-dashboard-default-rtdb.firebaseio.com";
 
 // Auth
 function sha256(m){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(m)).then(b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join(""))}
@@ -346,14 +407,46 @@ function show(){document.getElementById("login-gate").style.display="none";docum
 document.getElementById("pw-input").addEventListener("keydown",e=>{if(e.key==="Enter")checkPw()});
 if(localStorage.getItem("rr_dash_auth")==="1")show();
 
-// Checklist state
-function getKey(){ return "rr_deal_" + DEAL_ID; }
+// Collapsible sections
+document.querySelectorAll(".phase-title").forEach(el => {
+  el.addEventListener("click", () => {
+    el.classList.toggle("collapsed");
+    let next = el.nextElementSibling;
+    while(next && !next.classList.contains("phase-title")) {
+      next.style.display = el.classList.contains("collapsed") ? "none" : "flex";
+      next = next.nextElementSibling;
+    }
+  });
+});
 
-function loadState() {
-  const saved = JSON.parse(localStorage.getItem(getKey()) || "{}");
+// Firebase sync — load state from Firebase, fall back to localStorage
+async function loadState() {
+  const ss = document.getElementById("sync-status");
+  try {
+    const res = await fetch(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json");
+    const data = await res.json();
+    if (data) {
+      applyState(data);
+      ss.textContent = "✓ Synced with Jarvis";
+      ss.className = "sync-status synced";
+      return;
+    }
+  } catch(e) {}
+  // Fallback to localStorage
+  const saved = JSON.parse(localStorage.getItem("rr_deal_" + DEAL_ID) || "{}");
+  if (Object.keys(saved).length) {
+    applyState(saved);
+    ss.textContent = "Local only (Firebase unavailable)";
+  } else {
+    ss.textContent = "No progress yet";
+  }
+  updateProgress();
+}
+
+function applyState(state) {
   document.querySelectorAll(".check-item").forEach(el => {
-    const idx = el.dataset.idx;
-    const isDone = saved.hasOwnProperty(idx) ? saved[idx] : el.dataset.default === "1";
+    const stepId = el.dataset.step;
+    const isDone = state[stepId] === true;
     setItemState(el, isDone);
   });
   updateProgress();
@@ -378,12 +471,27 @@ function setItemState(el, done) {
   }
 }
 
-function saveState() {
+async function saveState() {
   const state = {};
   document.querySelectorAll(".check-item").forEach(el => {
-    state[el.dataset.idx] = el.classList.contains("done");
+    if (el.classList.contains("done")) state[el.dataset.step] = true;
   });
-  localStorage.setItem(getKey(), JSON.stringify(state));
+  // Save to localStorage
+  localStorage.setItem("rr_deal_" + DEAL_ID, JSON.stringify(state));
+  // Sync to Firebase
+  const ss = document.getElementById("sync-status");
+  try {
+    await fetch(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json", {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(state)
+    });
+    ss.textContent = "✓ Saved & synced";
+    ss.className = "sync-status synced";
+  } catch(e) {
+    ss.textContent = "Saved locally (sync failed)";
+    ss.className = "sync-status error";
+  }
 }
 
 function updateProgress() {
@@ -392,6 +500,34 @@ function updateProgress() {
   document.getElementById("progress-text").textContent = done + " / " + TOTAL + " (" + pct + "%)";
   document.getElementById("progress-fill").style.width = pct + "%";
 }
+
+// Filter by owner
+function filterOwner(owner, btn) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".check-item").forEach(el => {
+    if (owner === "all") {
+      el.style.display = "flex";
+    } else if (owner === "pending") {
+      el.style.display = el.classList.contains("pending") ? "flex" : "none";
+    } else {
+      // Check if the owner badge contains the filter
+      const badge = el.querySelector("span:last-child").textContent;
+      el.style.display = badge.includes(owner) ? "flex" : "none";
+    }
+  });
+}
+
+// Listen for real-time Firebase updates (Jarvis live updates)
+const evtSource = new EventSource(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json?orderBy=%22$key%22");
+// Note: Firebase REST doesn't support SSE easily, so we poll every 30s for Jarvis updates
+setInterval(async () => {
+  try {
+    const res = await fetch(FB + "/realty-ryan/checklist/" + DEAL_ID + ".json");
+    const data = await res.json();
+    if (data) applyState(data);
+  } catch(e) {}
+}, 30000);
 </script>
 
 </body>
