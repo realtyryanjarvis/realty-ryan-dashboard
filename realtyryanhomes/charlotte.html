@@ -7,7 +7,6 @@
 <meta name="description" content="Explore Charlotte's best neighborhoods — Myers Park, Dilworth, South End, Eastover, and more. Your guide to living in Charlotte, NC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style id="gate-style">.site-hidden{display:none!important}</style>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f8f7f6;--primary:#201408;--accent:#793315;--border:#ded9d3;--muted:#7b7269;--white:#fff;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,sans-serif}
@@ -17,17 +16,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--primary);-webkit-f
 .section-pad{padding:clamp(80px,10vw,140px) 0}
 h1,h2,h3,h4{font-family:var(--serif);font-weight:400}
 a{color:inherit;text-decoration:none}
-
-/* PASSWORD GATE */
-#password-gate{position:fixed;inset:0;z-index:9999;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-direction:column}
-#password-gate .gate-box{text-align:center;max-width:360px;padding:24px}
-#password-gate h2{font-family:var(--serif);color:var(--white);font-size:28px;margin-bottom:8px;font-weight:400}
-#password-gate p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:32px}
-#password-gate input{width:100%;padding:14px 20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-family:var(--sans);border-radius:2px;outline:none;margin-bottom:16px;text-align:center;letter-spacing:.08em}
-#password-gate input::placeholder{color:rgba(255,255,255,.3)}
-#password-gate button{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:600;cursor:pointer;font-family:var(--sans)}
-#password-gate .gate-error{color:#c0392b;font-size:12px;margin-top:12px;opacity:0;transition:opacity .3s}
-#password-gate .gate-error.show{opacity:1}
 
 /* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;transition:background .4s,padding .4s,backdrop-filter .4s}
@@ -118,32 +106,23 @@ a{color:inherit;text-decoration:none}
 </head>
 <body>
 
-<!-- PASSWORD GATE -->
-<div id="password-gate">
-  <div class="gate-box">
-    <h2>Realty Ryan & Associates</h2>
-    <p>Enter the access code to continue</p>
-    <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
-    <button id="gate-submit">Enter</button>
-    <div class="gate-error" id="gate-error">Incorrect password. Try again.</div>
-  </div>
-</div>
-
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="/realtyryanhomes/" class="nav-logo">Realty Ryan <span>& Associates</span></a>
+    <a href="./" class="nav-logo">Realty Ryan <span>& Associates</span></a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="/realtyryanhomes/">Home</a></li>
-      <li><a href="/realtyryanhomes/listings.html">Listings</a></li>
-      <li><a href="/realtyryanhomes/builders.html">Builders</a></li>
-      <li><a href="/realtyryanhomes/charlotte.html">Charlotte</a></li>
-      <li><a href="/realtyryanhomes/lake-norman.html">Lake Norman</a></li>
-      <li><a href="/realtyryanhomes/belmont.html">Belmont</a></li>
-      <li><a href="/realtyryanhomes/south-carolina.html">South Carolina</a></li>
+      <li><a href="./">Home</a></li>
+      <li><a href="listings.html">Listings</a>
+<a href="search.html">Search</a></li>
+<li><a href="search.html">Search</a></li>
+      <li><a href="builders.html">Builders</a></li>
+      <li><a href="charlotte.html">Charlotte</a></li>
+      <li><a href="lakenorman.html">Lake Norman</a></li>
+      <li><a href="belmont.html">Belmont</a></li>
+      <li><a href="southcarolina.html">South Carolina</a></li>
     </ul>
   </div>
 </nav>
@@ -360,7 +339,7 @@ a{color:inherit;text-decoration:none}
     <a href="sms:5089542159" class="cta-btn">Text Us</a>
     <div class="cta-links">
       <a href="tel:5089542159">Call 508-954-2159</a>
-      <a href="mailto:ryanpalmer@hmproperties.com">Email Ryan</a>
+      <a href="mailto:ryan@realtyryan.com">Email Ryan</a>
       <a href="https://search.realtyryan.com" target="_blank">Search Listings</a>
     </div>
   </div>
@@ -380,27 +359,6 @@ a{color:inherit;text-decoration:none}
 </a>
 
 <script>
-// Password gate
-(function(){
-  const k='rra_auth';
-  if(sessionStorage.getItem(k)==='1'){document.getElementById('password-gate').remove();return}
-  document.querySelectorAll('body > *:not(#password-gate):not(script):not(style)').forEach(el=>el.classList.add('site-hidden'));
-  document.getElementById('gate-submit').addEventListener('click',tryLogin);
-  document.getElementById('gate-pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin()});
-  function tryLogin(){
-    const pw=document.getElementById('gate-pw').value;
-    if(pw==='Swim5life50!'){
-      sessionStorage.setItem(k,'1');
-      document.getElementById('password-gate').remove();
-      document.querySelectorAll('.site-hidden').forEach(el=>el.classList.remove('site-hidden'));
-      document.getElementById('gate-style')?.remove();
-    }else{
-      document.getElementById('gate-error').classList.add('show');
-      document.getElementById('gate-pw').value='';
-    }
-  }
-})();
-
 // Nav scroll
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)});

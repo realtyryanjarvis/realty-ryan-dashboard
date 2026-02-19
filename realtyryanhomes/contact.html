@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Realty Ryan &amp; Associates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#f8f7f6;--text:#201408;--copper:#793315;--border:#ded9d3;--muted:#7b7269;--dark:#1a1612;--card-bg:#ffffff;--copper-light:rgba(121,51,21,.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:500}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s}
+nav.scrolled{background:rgba(248,247,246,.97);box-shadow:0 1px 0 var(--border)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:.04em;color:var(--cream);transition:color .4s;white-space:nowrap}
+nav.scrolled .nav-logo{color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(248,247,246,.7);transition:color .4s;position:relative}
+nav.scrolled .nav-links a{color:var(--muted)}
+.nav-links a:hover,.nav-links a.active{color:var(--cream)}
+nav.scrolled .nav-links a:hover,nav.scrolled .nav-links a.active{color:var(--copper)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1.5px;background:currentColor}
+.areas-wrap{position:relative}
+.areas-wrap .areas-drop{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 0;min-width:180px;opacity:0;visibility:hidden;transition:.25s;box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.areas-wrap:hover .areas-drop{opacity:1;visibility:visible}
+.areas-drop a{display:block;padding:8px 20px;font-size:12px;color:var(--text)!important;text-transform:uppercase;letter-spacing:.06em}
+.areas-drop a:hover{background:var(--copper-light);color:var(--copper)!important}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1002;padding:8px}
+.hamburger span{width:24px;height:1.5px;background:var(--cream);transition:.3s}
+nav.scrolled .hamburger span{background:var(--text)}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-5px)}
+.mobile-menu{position:fixed;inset:0;background:var(--dark);z-index:1001;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;visibility:hidden;transition:.4s}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{font-family:'Playfair Display',serif;font-size:24px;color:var(--cream);letter-spacing:.02em;transition:color .3s}
+.mobile-menu a:hover,.mobile-menu a.active{color:var(--copper)}
+.mobile-menu .mm-sub{font-family:'Inter',sans-serif;font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* HERO */
+.hero{position:relative;height:70vh;min-height:480px;display:flex;align-items:center;justify-content:center;background:var(--dark);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#1a1612 0%,#2a1f17 40%,#1a1612 100%)}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(121,51,21,.12) 0%,transparent 70%)}
+.hero-content{position:relative;text-align:center;z-index:2}
+.hero h1{font-size:clamp(3rem,7vw,5.5rem);color:var(--cream);font-weight:400;letter-spacing:-.01em;line-height:1.1;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--copper);opacity:.85}
+.hero p{font-size:clamp(14px,1.4vw,17px);color:rgba(248,247,246,.5);letter-spacing:.08em;text-transform:uppercase;max-width:480px;margin:0 auto}
+.hero-line{width:48px;height:1.5px;background:var(--copper);margin:28px auto 0;opacity:.6}
+
+/* SECTIONS */
+section{padding:100px 48px}
+.section-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--copper);margin-bottom:12px}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;margin-bottom:16px;line-height:1.2}
+.section-sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.7}
+
+/* CONTACT METHODS */
+.methods{background:#fff}
+.methods-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px}
+.method-card{border:1px solid var(--border);border-radius:12px;padding:40px 28px;text-align:center;transition:all .4s;cursor:pointer;position:relative;overflow:hidden}
+.method-card::before{content:'';position:absolute;inset:0;background:var(--copper-light);opacity:0;transition:.4s}
+.method-card:hover::before{opacity:1}
+.method-card:hover{border-color:var(--copper);transform:translateY(-4px);box-shadow:0 16px 40px rgba(121,51,21,.08)}
+.method-icon{width:48px;height:48px;border-radius:50%;background:var(--copper-light);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:1}
+.method-icon svg{width:20px;height:20px;stroke:var(--copper);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.method-card h3{font-size:18px;margin-bottom:8px;position:relative;z-index:1}
+.method-card p{font-size:13px;color:var(--muted);line-height:1.6;position:relative;z-index:1}
+.method-card .method-link{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);position:relative;z-index:1;transition:letter-spacing .3s}
+.method-card:hover .method-link{letter-spacing:.14em}
+
+/* TEAM */
+.team{background:var(--cream)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px}
+.team-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .4s}
+.team-card:hover{box-shadow:0 20px 48px rgba(0,0,0,.06);transform:translateY(-4px)}
+.team-photo{height:280px;background:var(--dark);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.team-photo img{width:100%;height:100%;object-fit:cover}
+.team-initials{font-family:'Playfair Display',serif;font-size:48px;color:rgba(248,247,246,.25);letter-spacing:.04em}
+.team-info{padding:28px}
+.team-info h3{font-size:20px;margin-bottom:2px}
+.team-info .role{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper);margin-bottom:16px}
+.team-contact-line{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:8px}
+.team-contact-line svg{width:14px;height:14px;stroke:var(--copper);fill:none;stroke-width:1.8;flex-shrink:0}
+.team-contact-line a{color:var(--muted);transition:color .3s}
+.team-contact-line a:hover{color:var(--copper)}
+
+/* FORM */
+.form-section{background:#fff}
+.form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:56px;align-items:start}
+.form-left .section-sub{margin-bottom:32px}
+.form-quote{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;line-height:1.5;color:var(--text);opacity:.8;border-left:2px solid var(--copper);padding-left:24px;margin-top:24px}
+.form-quote cite{display:block;font-style:normal;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+form{display:flex;flex-direction:column;gap:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+input,select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border);background:var(--cream);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);border-radius:6px;outline:none;transition:border .3s}
+input:focus,select:focus,textarea:focus{border-color:var(--copper)}
+textarea{resize:vertical;min-height:120px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237b7269' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer}
+.submit-btn{padding:16px 40px;background:var(--copper);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .4s;align-self:flex-start}
+.submit-btn:hover{background:#8f3d1c;box-shadow:0 8px 24px rgba(121,51,21,.25)}
+.form-success{display:none;text-align:center;padding:48px;font-family:'Playfair Display',serif;font-size:22px;color:var(--copper)}
+
+/* MAP */
+.map-section{background:var(--cream);padding-bottom:0}
+.map-wrap{margin-top:56px;border-radius:12px 12px 0 0;overflow:hidden;height:400px;border:1px solid var(--border);border-bottom:none}
+.map-wrap iframe{width:100%;height:100%;border:0;filter:saturate(.3) contrast(1.05) brightness(1.02)}
+
+/* FAQ */
+.faq{background:#fff}
+.faq-grid{max-width:800px;margin:56px auto 0}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{padding:24px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:24px;transition:color .3s}
+.faq-q:hover{color:var(--copper)}
+.faq-q h3{font-size:17px;font-weight:400;flex:1}
+.faq-q .plus{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:18px;font-family:'Inter',sans-serif;color:var(--muted);font-weight:300}
+.faq-item.open .plus{transform:rotate(45deg);border-color:var(--copper);color:var(--copper)}
+.faq-a{max-height:0;transition:max-height .4s ease,padding .4s;padding:0 0 0 0;overflow:hidden}
+.faq-item.open .faq-a{max-height:300px;padding:0 0 24px 0}
+.faq-a p{font-size:14px;color:var(--muted);line-height:1.8;max-width:640px}
+
+/* PROMISE */
+.promise{background:var(--dark);text-align:center;padding:100px 48px}
+.promise .section-label{color:rgba(248,247,246,.35)}
+.promise h2{font-size:clamp(2rem,4vw,3.2rem);color:var(--cream);font-weight:400;margin-bottom:16px}
+.promise h2 em{font-style:italic;color:var(--copper)}
+.promise p{color:rgba(248,247,246,.5);font-size:15px;max-width:500px;margin:0 auto;line-height:1.7}
+.promise-line{width:48px;height:1.5px;background:var(--copper);margin:32px auto 0;opacity:.5}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid rgba(248,247,246,.06);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+footer p{font-size:12px;color:rgba(248,247,246,.3);letter-spacing:.04em}
+footer a{color:rgba(248,247,246,.3);transition:color .3s}
+footer a:hover{color:var(--copper)}
+
+/* TEXT US PILL */
+.text-pill{position:fixed;bottom:32px;right:32px;z-index:900;background:var(--copper);color:#fff;padding:14px 28px;border-radius:50px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-family:'Inter',sans-serif;box-shadow:0 8px 32px rgba(121,51,21,.35);transition:all .3s;display:flex;align-items:center;gap:10px}
+.text-pill:hover{background:#8f3d1c;transform:translateY(-2px);box-shadow:0 12px 40px rgba(121,51,21,.45)}
+.text-pill svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .methods-grid{grid-template-columns:repeat(2,1fr)}
+  .form-wrap{grid-template-columns:1fr;gap:48px}
+}
+@media(max-width:768px){
+  section{padding:72px 24px}
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .methods-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .hero{height:60vh;min-height:400px}
+  .map-wrap{height:300px}
+  footer{padding:32px 24px;flex-direction:column;text-align:center}
+  .text-pill{bottom:20px;right:20px;padding:12px 22px;font-size:12px}
+  .promise{padding:72px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="./" class="nav-logo">Realty Ryan &amp; Associates</a>
+  <ul class="nav-links">
+    <li><a href="./">Home</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="why-realty-ryan.html">Why RRA</a></li>
+    <li><a href="builders.html">Builders</a></li>
+    <li><a href="exposure.html">Exposure</a></li>
+    <li><a href="social.html">Social</a></li>
+    <li><a href="technology.html">Technology</a></li>
+    <li class="areas-wrap">
+      <a href="#">Areas</a>
+      <div class="areas-drop">
+        <a href="charlotte.html">Charlotte</a>
+        <a href="lakenorman.html">Lake Norman</a>
+        <a href="belmont.html">Belmont</a>
+        <a href="southcarolina.html">South Carolina</a>
+      </div>
+    </li>
+    <li><a href="listings.html">Listings</a>
+<a href="search.html">Search</a></li>
+<li><a href="search.html">Search</a></li>
+    <li><a href="results.html">Results</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="./">Home</a>
+  <a href="team.html">Team</a>
+  <a href="why-realty-ryan.html">Why RRA</a>
+  <a href="builders.html">Builders</a>
+  <a href="exposure.html">Exposure</a>
+  <a href="social.html">Social</a>
+  <a href="technology.html">Technology</a>
+  <span class="mm-sub">Areas</span>
+  <a href="charlotte.html">Charlotte</a>
+  <a href="lakenorman.html">Lake Norman</a>
+  <a href="belmont.html">Belmont</a>
+  <a href="southcarolina.html">South Carolina</a>
+  <a href="listings.html">Listings</a>
+<a href="search.html">Search</a>
+  <a href="results.html">Results</a>
+  <a href="contact.html" class="active">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Let's <em>Talk.</em></h1>
+    <p>Every great move starts with a conversation</p>
+    <div class="hero-line"></div>
+  </div>
+</section>
+
+<!-- CONTACT METHODS -->
+<section class="methods">
+  <div class="reveal">
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-title">How Can We Help?</h2>
+    <p class="section-sub">Whether you're buying, selling, or just exploring — we're here. Reach out however feels right.</p>
+  </div>
+  <div class="methods-grid">
+    <a href="tel:5089542159" class="method-card reveal reveal-delay-1">
+      <div class="method-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <h3>Call or Text</h3>
+      <p>(508) 954-2159<br>Available 7 days a week</p>
+      <span class="method-link">Call Now →</span>
+    </a>
+    <a href="mailto:ryan@realtyryan.com" class="method-card reveal reveal-delay-1">
+      <div class="method-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+      </div>
+      <h3>Email Us</h3>
+      <p>ryan@realtyryan.com<br>We reply within 2 hours</p>
+      <span class="method-link">Send Email →</span>
+    </a>
+    <a href="https://calendly.com" target="_blank" class="method-card reveal reveal-delay-2">
+      <div class="method-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <h3>Schedule a Consultation</h3>
+      <p>Book a time that works for you — no pressure, no obligation</p>
+      <span class="method-link">Book Now →</span>
+    </a>
+    <div class="method-card reveal reveal-delay-3">
+      <div class="method-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <h3>Visit Us</h3>
+      <p>Charlotte, North Carolina<br>By appointment</p>
+      <span class="method-link">Get Directions →</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team">
+  <div class="reveal">
+    <div class="section-label">The Team</div>
+    <h2 class="section-title">People Behind the Brand</h2>
+    <p class="section-sub">Every inquiry is handled personally — never outsourced, never automated.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo">
+        <img src="images/ryan-palmer.avif" alt="Ryan Palmer">
+      </div>
+      <div class="team-info">
+        <h3>Ryan Palmer</h3>
+        <div class="role">Broker / CEO</div>
+        <div class="team-contact-line">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+          <a href="mailto:ryan@realtyryan.com">ryan@realtyryan.com</a>
+        </div>
+        <div class="team-contact-line">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <a href="tel:5089542159">(508) 954-2159</a>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo">
+        <span class="team-initials">AD</span>
+      </div>
+      <div class="team-info">
+        <h3>Ally Doerr</h3>
+        <div class="role">Operations &amp; Marketing</div>
+        <div class="team-contact-line">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+          <a href="mailto:ally@realtyryan.com">ally@realtyryan.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal reveal-delay-3">
+      <div class="team-photo">
+        <span class="team-initials">AOC</span>
+      </div>
+      <div class="team-info">
+        <h3>Alexis Olan Cartagena</h3>
+        <div class="role">Transaction Coordinator</div>
+        <div class="team-contact-line">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+          <a href="mailto:alexis@realtyryan.com">alexis@realtyryan.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="form-section">
+  <div class="reveal">
+    <div class="section-label">Send a Message</div>
+    <h2 class="section-title">Tell Us What You're Looking For</h2>
+  </div>
+  <div class="form-wrap">
+    <div class="form-left reveal">
+      <p class="section-sub">Fill out the form and we'll get back to you within two hours. No spam, no pressure — just a real conversation about your real estate goals.</p>
+      <blockquote class="form-quote">
+        "Real estate isn't about houses. It's about what happens inside them — and the people who help you get there."
+        <cite>Ryan Palmer, Broker/CEO</cite>
+      </blockquote>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div>
+            <label for="fname">Full Name</label>
+            <input type="text" id="fname" name="name" required placeholder="Your name">
+          </div>
+          <div>
+            <label for="fphone">Phone</label>
+            <input type="tel" id="fphone" name="phone" placeholder="(xxx) xxx-xxxx">
+          </div>
+        </div>
+        <div>
+          <label for="femail">Email</label>
+          <input type="email" id="femail" name="email" required placeholder="your@email.com">
+        </div>
+        <div>
+          <label for="finterest">I'm Interested In</label>
+          <select id="finterest" name="interest" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="selling">Selling</option>
+            <option value="buying">Buying</option>
+            <option value="builder">Builder Partnership</option>
+            <option value="agent">Agent Inquiry</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="fmessage">Message</label>
+          <textarea id="fmessage" name="message" placeholder="Tell us a little about what you're looking for..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        Thank you. We'll be in touch shortly.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="reveal">
+    <div class="section-label">Our Market</div>
+    <h2 class="section-title">Proudly Serving Greater Charlotte</h2>
+    <p class="section-sub">Charlotte, Lake Norman, Belmont, and beyond — including South Carolina.</p>
+  </div>
+  <div class="map-wrap reveal">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d209599.28352845!2d-81.0352!3d35.2271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88541fc4fc381a81%3A0x884650e6bf43d164!2sCharlotte%2C%20NC!5e0!3m2!1sen!2sus!4v1700000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="reveal" style="text-align:center">
+    <div class="section-label">Common Questions</div>
+    <h2 class="section-title">Frequently Asked</h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <h3>What areas do you serve?</h3>
+        <span class="plus">+</span>
+      </div>
+      <div class="faq-a"><p>We serve the greater Charlotte metro area including Charlotte, Lake Norman, Belmont, Mooresville, Cornelius, Huntersville, Davidson, and parts of South Carolina. Our deep market expertise allows us to guide clients across the entire region.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-1">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <h3>Do you work with both buyers and sellers?</h3>
+        <span class="plus">+</span>
+      </div>
+      <div class="faq-a"><p>Absolutely. Whether you're selling your home and want maximum exposure and top dollar, or buying and need an advocate who knows the market inside out — we're equipped to handle both sides of the transaction at the highest level.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-1">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <h3>How is your brokerage different?</h3>
+        <span class="plus">+</span>
+      </div>
+      <div class="faq-a"><p>We combine boutique, white-glove service with cutting-edge technology and marketing. Every listing gets a custom strategy — professional media, targeted digital campaigns, and a level of exposure most brokerages simply can't match. We treat every client like our only client.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-2">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <h3>What's the process to get started?</h3>
+        <span class="plus">+</span>
+      </div>
+      <div class="faq-a"><p>It starts with a conversation. Reach out via phone, email, or the form above and we'll schedule a no-obligation consultation to understand your goals. From there, we'll build a tailored strategy and walk you through every step.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-2">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <h3>Do you work with builders?</h3>
+        <span class="plus">+</span>
+      </div>
+      <div class="faq-a"><p>Yes — builder partnerships are a core part of our business. We work with builders on new construction sales, marketing, and buyer acquisition. If you're a builder looking for a strategic partner, we'd love to talk.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-3">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <h3>How quickly will I hear back?</h3>
+        <span class="plus">+</span>
+      </div>
+      <div class="faq-a"><p>We respond to every inquiry within 2 hours during business hours. After hours, you'll hear from us first thing the next morning. We believe responsiveness is the foundation of great service.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="promise">
+  <div class="reveal">
+    <div class="section-label">Our Commitment</div>
+    <h2>Every inquiry answered<br>within <em>2 hours.</em></h2>
+    <p>Real people. Real responses. No call centers, no auto-replies — just a team that genuinely cares about helping you make your next move.</p>
+    <div class="promise-line"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</p>
+  <p><a href="mailto:ryan@realtyryan.com">ryan@realtyryan.com</a> &nbsp;·&nbsp; <a href="tel:5089542159">(508) 954-2159</a></p>
+</footer>
+
+<!-- TEXT US PILL -->
+<a href="sms:5089542159" class="text-pill">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  Text Us
+</a>
+
+<script>
+// NAV SCROLL
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+
+// MOBILE MENU
+function toggleMobile(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mobileMenu').classList.contains('open')?'hidden':'';
+}
+
+// FAQ
+function toggleFaq(el){el.parentElement.classList.toggle('open')}
+
+// FORM
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('contactForm').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+}
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

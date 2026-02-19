@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Portfolio — Realty Ryan &amp; Associates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#f8f7f6;--text:#201408;--copper:#793315;--border:#ded9d3;--muted:#7b7269;--dark:#1a1610;--card-bg:#fff}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--cream);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;font-weight:500}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 clamp(24px,4vw,60px);height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s}
+nav.scrolled{background:rgba(248,247,246,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.15rem;color:#fff;letter-spacing:.04em;text-decoration:none;white-space:nowrap;transition:color .4s}
+nav.scrolled .nav-logo{color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;transition:color .4s}
+nav.scrolled .nav-links a{color:var(--text)}
+.nav-links a:hover{color:var(--copper)}
+.nav-links a.active{color:var(--copper);font-weight:600}
+.areas-dropdown{position:relative}
+.areas-dropdown .dd-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--border);padding:12px 0;min-width:180px;opacity:0;pointer-events:none;transition:all .25s}
+.areas-dropdown:hover .dd-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.dd-menu a{display:block;padding:8px 24px;font-size:.78rem;color:var(--text)!important;letter-spacing:.08em;text-transform:uppercase}
+.dd-menu a:hover{background:var(--cream)}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:24px;height:1.5px;background:#fff;transition:all .3s}
+nav.scrolled .hamburger span{background:var(--text)}
+.mobile-menu{position:fixed;inset:0;background:var(--dark);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:opacity .4s}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{color:#fff;text-decoration:none;font-family:'Playfair Display',serif;font-size:1.6rem;letter-spacing:.04em}
+.mobile-menu a:hover{color:var(--copper)}
+
+@media(max-width:960px){
+.nav-links{display:none}
+.hamburger{display:flex}
+}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--dark);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#1a1610 0%,#2a1f14 30%,#3a2a1a 60%,#1a1610 100%);opacity:.9}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(121,51,21,.15) 0%,transparent 60%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--copper);margin-bottom:20px;opacity:0;transform:translateY(20px);animation:fadeUp .8s .3s forwards}
+.hero h1{font-size:clamp(2.8rem,6vw,5.5rem);color:#fff;font-weight:400;line-height:1.05;margin-bottom:20px;opacity:0;transform:translateY(30px);animation:fadeUp .8s .5s forwards}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero-sub{font-size:clamp(.9rem,1.2vw,1.1rem);color:rgba(255,255,255,.5);letter-spacing:.08em;max-width:500px;margin:0 auto;opacity:0;transform:translateY(20px);animation:fadeUp .8s .7s forwards}
+.hero-stat{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;opacity:0;animation:fadeUp .8s 1s forwards}
+.hero-stat .num{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--copper);font-weight:400}
+.hero-stat .lbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px}
+.scroll-indicator{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;opacity:0;animation:fadeUp .8s 1.2s forwards}
+.scroll-indicator span{display:block;width:1px;height:40px;background:linear-gradient(to bottom,var(--copper),transparent);margin:0 auto;animation:scrollPulse 2s infinite}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* FEATURED SPOTLIGHT */
+.featured{padding:clamp(80px,10vw,140px) clamp(24px,5vw,80px);background:var(--cream)}
+.featured-inner{max-width:1300px;margin:0 auto}
+.featured-eyebrow{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--copper);margin-bottom:12px}
+.featured-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:32px}
+.featured-img{aspect-ratio:4/3;background:linear-gradient(145deg,#2a1f14,#3a2a1a,#4a3520);border-radius:2px;position:relative;overflow:hidden}
+.featured-img::after{content:'626 SHELTON ST';position:absolute;bottom:24px;left:24px;font-size:.65rem;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase}
+.featured-img .shimmer{position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.03) 50%,transparent 70%);animation:shimmer 3s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.featured-details{padding:20px 0}
+.featured-details .neighborhood{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.featured-details h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:400;line-height:1.1;margin-bottom:8px}
+.featured-details .price{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,2.5vw,2rem);color:var(--copper);margin-bottom:20px;font-weight:400}
+.featured-details .specs{display:flex;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.featured-details .spec{text-align:center}
+.featured-details .spec .val{font-family:'Playfair Display',serif;font-size:1.3rem;display:block;margin-bottom:2px}
+.featured-details .spec .lbl{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.featured-details .desc{font-size:.92rem;color:var(--muted);line-height:1.7;margin-bottom:28px;max-width:440px}
+.btn-view{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);text-decoration:none;border:1px solid var(--copper);padding:14px 32px;transition:all .3s}
+.btn-view:hover{background:var(--copper);color:#fff}
+.btn-view svg{width:16px;height:16px;transition:transform .3s}
+.btn-view:hover svg{transform:translateX(4px)}
+
+@media(max-width:768px){
+.featured-grid{grid-template-columns:1fr;gap:28px}
+}
+
+/* FILTERS */
+.filters-section{padding:0 clamp(24px,5vw,80px);background:var(--cream)}
+.filters-bar{max-width:1300px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;padding-bottom:48px;border-bottom:1px solid var(--border)}
+.filter-btn{padding:10px 24px;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all .3s}
+.filter-btn.active,.filter-btn:hover{border-color:var(--copper);color:var(--copper);background:rgba(121,51,21,.04)}
+
+/* LISTINGS GRID */
+.listings{padding:clamp(60px,8vw,100px) clamp(24px,5vw,80px);background:var(--cream)}
+.listings-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(24px,3vw,48px)}
+.listing-card{opacity:0;transform:translateY(40px);transition:opacity .6s,transform .6s}
+.listing-card.visible{opacity:1;transform:translateY(0)}
+.card-img{aspect-ratio:16/10;background:linear-gradient(145deg,#2a1f14,#3a2a1a);border-radius:2px;position:relative;overflow:hidden;margin-bottom:20px}
+.card-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.card-img .tag{position:absolute;top:16px;left:16px;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;background:rgba(26,22,16,.7);backdrop-filter:blur(8px);color:#fff;padding:6px 14px;z-index:2}
+.card-img .tag.tag-pending{background:rgba(121,51,21,.85)}
+.card-img .tag.tag-under-contract{background:rgba(80,80,40,.85)}
+.card-img .shimmer{position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.03) 50%,transparent 70%);animation:shimmer 4s infinite}
+.card-neighborhood{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.card-address{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,1.8vw,1.6rem);font-weight:400;margin-bottom:4px}
+.card-price{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--copper);margin-bottom:14px;font-weight:400}
+.card-specs{display:flex;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.card-specs span{font-size:.75rem;color:var(--muted);letter-spacing:.04em}
+.card-specs span::after{content:'·';margin-left:16px;color:var(--border)}
+.card-specs span:last-child::after{display:none}
+.card-link{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding-bottom:2px;border-bottom:1px solid transparent;transition:border .3s}
+.card-link:hover{border-bottom-color:var(--copper)}
+.card-link svg{width:14px;height:14px;transition:transform .3s}
+.card-link:hover svg{transform:translateX(4px)}
+
+@media(max-width:768px){
+.listings-grid{grid-template-columns:1fr}
+}
+
+/* COMING SOON */
+.coming-soon{padding:clamp(80px,10vw,120px) clamp(24px,5vw,80px);background:var(--dark);text-align:center}
+.coming-soon .eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--copper);margin-bottom:16px}
+.coming-soon h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);color:#fff;font-weight:400;margin-bottom:16px}
+.coming-soon p{color:rgba(255,255,255,.4);font-size:.95rem;max-width:500px;margin:0 auto;line-height:1.7}
+.coming-soon .placeholders{display:flex;gap:24px;justify-content:center;margin-top:48px;flex-wrap:wrap}
+.coming-soon .ph{width:180px;height:120px;border:1px solid rgba(255,255,255,.08);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.15)}
+
+/* CTA */
+.cta-section{padding:clamp(80px,10vw,140px) clamp(24px,5vw,80px);background:var(--cream);text-align:center}
+.cta-section .eyebrow{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--copper);margin-bottom:16px}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:400;margin-bottom:12px}
+.cta-section p{color:var(--muted);font-size:.95rem;max-width:480px;margin:0 auto 32px;line-height:1.7}
+.btn-cta{display:inline-flex;align-items:center;gap:10px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--copper);text-decoration:none;padding:16px 44px;transition:opacity .3s}
+.btn-cta:hover{opacity:.85}
+
+/* FOOTER */
+footer{padding:48px clamp(24px,5vw,80px);background:var(--dark);text-align:center}
+footer p{color:rgba(255,255,255,.3);font-size:.75rem;letter-spacing:.06em}
+footer a{color:rgba(255,255,255,.3);text-decoration:none}
+footer a:hover{color:var(--copper)}
+
+/* TEXT US PILL */
+.text-us{position:fixed;bottom:28px;right:28px;z-index:900;background:var(--copper);color:#fff;text-decoration:none;padding:14px 28px;border-radius:100px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(121,51,21,.3);transition:transform .3s,box-shadow .3s}
+.text-us:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(121,51,21,.4)}
+.text-us svg{width:16px;height:16px}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+<a href="./" class="nav-logo">Realty Ryan &amp; Associates</a>
+<ul class="nav-links">
+<li><a href="./">Home</a></li>
+<li><a href="team.html">Team</a></li>
+<li><a href="why-realty-ryan.html">Why RRA</a></li>
+<li><a href="builders.html">Builders</a></li>
+<li><a href="exposure.html">Exposure</a></li>
+<li><a href="social.html">Social</a></li>
+<li><a href="technology.html">Technology</a></li>
+<li class="areas-dropdown"><a href="#">Areas ▾</a>
+<div class="dd-menu">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+</li>
+<li><a href="listings.html" class="active">Listings</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<div class="hamburger" onclick="toggleMobile()">
+<span></span><span></span><span></span>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="./" onclick="toggleMobile()">Home</a>
+<a href="team.html" onclick="toggleMobile()">Team</a>
+<a href="why-realty-ryan.html" onclick="toggleMobile()">Why RRA</a>
+<a href="builders.html" onclick="toggleMobile()">Builders</a>
+<a href="exposure.html" onclick="toggleMobile()">Exposure</a>
+<a href="social.html" onclick="toggleMobile()">Social</a>
+<a href="technology.html" onclick="toggleMobile()">Technology</a>
+<a href="charlotte.html" onclick="toggleMobile()">Charlotte</a>
+<a href="lakenorman.html" onclick="toggleMobile()">Lake Norman</a>
+<a href="belmont.html" onclick="toggleMobile()">Belmont</a>
+<a href="southcarolina.html" onclick="toggleMobile()">South Carolina</a>
+<a href="listings.html" onclick="toggleMobile()" style="color:#793315">Listings</a>
+<a href="contact.html" onclick="toggleMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-content">
+<div class="hero-eyebrow">Charlotte's Finest</div>
+<h1>Current <em>Offerings</em></h1>
+<p class="hero-sub">A curated collection of Charlotte's finest residences — new construction, modern builds &amp; more</p>
+</div>
+<div class="hero-stat">
+<div class="num">$16M+</div>
+<div class="lbl">Active Inventory</div>
+</div>
+<div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- FEATURED SPOTLIGHT -->
+<section class="featured">
+<div class="featured-inner reveal">
+<div class="featured-eyebrow">Featured Residence</div>
+<div class="featured-grid">
+<div class="featured-img"><div class="shimmer"></div></div>
+<div class="featured-details">
+<div class="neighborhood">Sedgefield · New Construction</div>
+<h2>626 Shelton Street</h2>
+<div class="price">$3,999,000</div>
+<div class="specs">
+<div class="spec"><span class="val">5</span><span class="lbl">Bedrooms</span></div>
+<div class="spec"><span class="val">5.5</span><span class="lbl">Bathrooms</span></div>
+<div class="spec"><span class="val">5,242</span><span class="lbl">Sq Ft</span></div>
+</div>
+<p class="desc">The crown jewel of Sedgefield. A masterwork of modern craftsmanship by Keen Building Company — where every detail has been considered and every finish elevated.</p>
+<a href="https://homes.realtyryan.com/626shelton" class="btn-view" target="_blank">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FILTERS -->
+<section class="filters-section">
+<div class="filters-bar">
+<button class="filter-btn active" data-filter="all">All</button>
+<button class="filter-btn" data-filter="new-construction">New Construction</button>
+<button class="filter-btn" data-filter="active">Active</button>
+<button class="filter-btn" data-filter="pending">Pending</button>
+<button class="filter-btn" data-filter="sedgefield">Sedgefield</button>
+<button class="filter-btn" data-filter="villa-heights">Villa Heights</button>
+<button class="filter-btn" data-filter="madison-park">Madison Park</button>
+<button class="filter-btn" data-filter="oakhurst">Oakhurst</button>
+</div>
+</section>
+
+<!-- LISTINGS -->
+<section class="listings">
+<div class="listings-grid" id="listingsGrid">
+
+<div class="listing-card" data-tags="new-construction active sedgefield">
+<div class="card-img">
+<div class="tag">New Construction</div>
+<div class="shimmer"></div>
+</div>
+<div class="card-neighborhood">Sedgefield</div>
+<div class="card-address">3208 Mayfield Avenue</div>
+<div class="card-price">$3,125,000</div>
+<div class="card-specs">
+<span>5 Bed</span><span>5.5 Bath</span><span>4,995 SF</span>
+</div>
+<a href="https://homes.realtyryan.com/3208mayfield" class="card-link" target="_blank">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="new-construction active sedgefield">
+<div class="card-img">
+<div class="tag">New Construction</div>
+<div class="shimmer"></div>
+</div>
+<div class="card-neighborhood">Sedgefield</div>
+<div class="card-address">3320 Mayfield Avenue</div>
+<div class="card-price">$3,075,000</div>
+<div class="card-specs">
+<span>5 Bed</span><span>4.5 Bath</span><span>4,587 SF</span>
+</div>
+<a href="https://homes.realtyryan.com/3320mayfield" class="card-link" target="_blank">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="new-construction active sedgefield">
+<div class="card-img">
+<div class="tag">New Construction</div>
+<div class="shimmer"></div>
+</div>
+<div class="card-neighborhood">Sedgefield</div>
+<div class="card-address">3321 Auburn Avenue</div>
+<div class="card-price">$2,875,000</div>
+<div class="card-specs">
+<span>5 Bed</span><span>5F + 2H Bath</span><span>4,398 SF</span>
+</div>
+<a href="https://homes.realtyryan.com/3321auburn" class="card-link" target="_blank">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="new-construction active madison-park">
+<div class="card-img">
+<img src="images/listing-1437montford.jpg" alt="1437 Montford Drive">
+<div class="tag tag-under-contract">Active Under Contract</div>
+</div>
+<div class="card-neighborhood">Madison Park · New Construction</div>
+<div class="card-address">1437 Montford Drive</div>
+<div class="card-price">$2,313,500</div>
+<div class="card-specs">
+<span>4 Bed</span><span>3.5 Bath</span><span>4,013 SF</span>
+</div>
+<a href="/1437montford/" class="card-link">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="new-construction active villa-heights">
+<div class="card-img">
+<div class="tag">New Construction</div>
+<div class="shimmer"></div>
+</div>
+<div class="card-neighborhood">Villa Heights</div>
+<div class="card-address">1820 Parson Street</div>
+<div class="card-price">$1,600,000</div>
+<div class="card-specs">
+<span>5 Bed</span><span>3F + 2H Bath</span><span>4,103 SF</span>
+</div>
+<a href="https://homes.realtyryan.com/1820parson" class="card-link" target="_blank">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="active villa-heights">
+<div class="card-img">
+<div class="tag">Complete</div>
+<div class="shimmer"></div>
+</div>
+<div class="card-neighborhood">Villa Heights</div>
+<div class="card-address">1816 Parson Street</div>
+<div class="card-price">$1,449,000</div>
+<div class="card-specs">
+<span>5 Bed</span><span>4 Bath</span><span>4,184 SF</span>
+</div>
+<a href="https://homes.realtyryan.com/1816parson" class="card-link" target="_blank">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="new-construction active oakhurst">
+<div class="card-img">
+<img src="images/listing-4041hiddenbrook.jpg" alt="4041 Hiddenbrook Drive">
+<div class="tag">New Construction</div>
+</div>
+<div class="card-neighborhood">Oakhurst · Sopeli Builders</div>
+<div class="card-address">4041 Hiddenbrook Drive</div>
+<div class="card-price">$1,424,000</div>
+<div class="card-specs">
+<span>4 Bed</span><span>4.5 Bath</span><span>3,710 SF</span>
+</div>
+<a href="/4041hiddenbrook/" class="card-link">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="pending mcclintock-woods">
+<div class="card-img">
+<img src="images/listing-6040coatbridge.jpg" alt="6040 Coatbridge Lane">
+<div class="tag tag-pending">Pending</div>
+</div>
+<div class="card-neighborhood">McClintock Woods</div>
+<div class="card-address">6040 Coatbridge Lane</div>
+<div class="card-price">$629,900</div>
+<div class="card-specs">
+<span>3 Bed</span><span>2 Bath</span><span>1,755 SF</span>
+</div>
+<a href="/6040coatbridge/" class="card-link">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<div class="listing-card" data-tags="pending elizabeth">
+<div class="card-img">
+<img src="images/listing-404nlaurel.jpg" alt="404 N Laurel Avenue #28">
+<div class="tag tag-pending">Pending</div>
+</div>
+<div class="card-neighborhood">Elizabeth Lofts</div>
+<div class="card-address">404 N Laurel Avenue #28</div>
+<div class="card-price">$269,000</div>
+<div class="card-specs">
+<span>1 Bed</span><span>1 Bath</span><span>1,141 SF</span>
+</div>
+<a href="/404nlaurel/" class="card-link">View Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+</div>
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-soon">
+<div class="reveal">
+<div class="eyebrow">On the Horizon</div>
+<h2>Coming Soon</h2>
+<p>New residences are in development. Contact us for early access to off-market and pre-construction opportunities.</p>
+<div class="placeholders">
+<div class="ph">TBA</div>
+<div class="ph">TBA</div>
+<div class="ph">TBA</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+<div class="reveal">
+<div class="eyebrow">Work With Us</div>
+<h2>Thinking of Listing?</h2>
+<p>Our marketing-first approach and builder partnerships deliver results that traditional brokerages simply cannot match.</p>
+<a href="contact.html" class="btn-cta">Start a Conversation</a>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</p>
+</footer>
+
+<!-- TEXT US -->
+<a href="sms:5089542159" class="text-us">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+Text Us
+</a>
+
+<script>
+// Nav scroll
+var nav=document.getElementById('mainNav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)});
+
+// Mobile menu
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// Filters
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+btn.addEventListener('click',function(){
+document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+btn.classList.add('active');
+var f=btn.dataset.filter;
+document.querySelectorAll('.listing-card').forEach(function(card){
+if(f==='all'||card.dataset.tags.includes(f)){card.style.display=''}
+else{card.style.display='none'}
+})
+})
+});
+
+// Scroll reveal
+var obs=new IntersectionObserver(function(entries){
+entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:.15});
+document.querySelectorAll('.listing-card,.reveal').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

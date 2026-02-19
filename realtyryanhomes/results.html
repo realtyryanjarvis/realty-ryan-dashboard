@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results — Realty Ryan &amp; Associates</title>
+<meta name="description" content="Our track record speaks for itself. $50M+ in sales volume, 98% list-to-sale ratio, and hundreds of happy clients across Charlotte and beyond.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#f8f7f6;--bg-white:#ffffff;--primary:#201408;--accent:#793315;--accent-light:#9a4a2a;--border:#ded9d3;--muted:#7b7269;--muted-light:#a39e96;
+--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,-apple-system,sans-serif;
+--max-w:1280px;--section-py:120px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);color:var(--primary);background:var(--bg);line-height:1.6;font-weight:400;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 40px}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.15}
+
+/* ─── NAV ─── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 40px;transition:background .4s,box-shadow .4s}
+.site-nav.scrolled{background:rgba(248,247,246,.97);box-shadow:0 1px 0 var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;white-space:nowrap;transition:color .4s}
+.nav-logo span{font-weight:400;opacity:.6}
+.site-nav.scrolled .nav-logo{color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:.7;transition:opacity .3s,color .4s}
+.nav-links a:hover,.nav-links a.active{opacity:1}
+.site-nav.scrolled .nav-links a{color:var(--primary)}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:-12px;background:var(--bg-white);border:1px solid var(--border);border-radius:6px;padding:8px 0;min-width:180px;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dropdown-menu a{display:block;padding:8px 20px;font-size:12px;opacity:.8;color:var(--primary)!important}
+.nav-dropdown-menu a:hover{opacity:1;background:var(--bg)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:24px;height:1.5px;background:#fff;transition:all .3s}
+.site-nav.scrolled .hamburger span{background:var(--primary)}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;inset:0;top:72px;background:var(--bg);z-index:999;padding:40px;flex-direction:column;gap:24px;overflow-y:auto}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:28px;color:var(--primary)}
+.mobile-menu .mobile-sub{padding-left:24px;display:flex;flex-direction:column;gap:12px}
+.mobile-menu .mobile-sub a{font-family:var(--sans);font-size:15px;font-weight:400}
+
+/* ─── HERO ─── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--primary);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#080604 0%,#1a130d 40%,#0d0a07 100%)}
+.hero-grain{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")}
+.hero-line{position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(121,51,21,.15),transparent)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:160px 40px 120px}
+.hero-tag{font-size:12px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:40px;display:inline-flex;align-items:center;gap:16px}
+.hero-tag::before,.hero-tag::after{content:'';width:40px;height:1px;background:var(--accent)}
+.hero h1{font-size:clamp(52px,8vw,120px);color:#fff;line-height:1;margin-bottom:32px;letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--accent-light)}
+.hero-sub{font-size:clamp(16px,1.6vw,20px);color:rgba(255,255,255,.4);max-width:600px;margin:0 auto 48px;line-height:1.8;font-weight:300}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.2);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scroll-pulse 2s ease-in-out infinite}
+@keyframes scroll-pulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ─── SECTIONS ─── */
+section{padding:var(--section-py) 0}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.section-tag::before{content:'';width:32px;height:1px;background:var(--accent)}
+.section-title{font-size:clamp(32px,4vw,52px);margin-bottom:20px;max-width:700px}
+.section-subtitle{font-size:17px;color:var(--muted);max-width:560px;line-height:1.8;font-weight:300}
+.divider{width:100%;height:1px;background:var(--border)}
+
+/* ─── BY THE NUMBERS ─── */
+.numbers{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:64px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.number-item{background:var(--bg-white);padding:48px 32px;text-align:center}
+.number-item .count{font-family:var(--serif);font-size:clamp(40px,5vw,64px);color:var(--primary);line-height:1}
+.number-item .count .accent{color:var(--accent)}
+.number-item .desc{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* ─── FEATURED SALES ─── */
+.sales-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:64px}
+.sale-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--bg-white);transition:all .4s}
+.sale-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(32,20,8,.06)}
+.sale-img{aspect-ratio:16/10;background:linear-gradient(135deg,#2a1f15,#1a130d);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sale-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(32,20,8,.4),transparent 60%)}
+.sale-img .placeholder-house{font-size:48px;opacity:.15}
+.sold-badge{position:absolute;top:20px;left:20px;z-index:2;background:var(--accent);color:#fff;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:8px 20px;border-radius:3px}
+.sale-details{padding:28px 32px}
+.sale-price{font-family:var(--serif);font-size:32px;margin-bottom:4px}
+.sale-address{font-size:14px;color:var(--muted);margin-bottom:12px}
+.sale-meta{display:flex;gap:24px;font-size:12px;color:var(--muted-light);letter-spacing:.05em}
+.sale-meta span{display:flex;align-items:center;gap:6px}
+.sale-neighborhood{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;padding:4px 12px;border:1px solid rgba(121,51,21,.2);border-radius:3px}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:64px}
+.testimonial-card{padding:40px;border:1px solid var(--border);border-radius:8px;background:var(--bg);position:relative}
+.testimonial-card::before{content:'\201C';position:absolute;top:20px;right:28px;font-family:var(--serif);font-size:80px;color:var(--accent);opacity:.12;line-height:1}
+.testimonial-card .stars{color:var(--accent);font-size:14px;letter-spacing:4px;margin-bottom:16px}
+.testimonial-card blockquote{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.75;color:var(--primary);margin-bottom:24px}
+.testimonial-card .author{font-size:13px;color:var(--muted)}
+.testimonial-card .author strong{color:var(--primary);font-weight:600}
+
+/* ─── PRESS ─── */
+.press-logos{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:48px;padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.press-logo{font-family:var(--serif);font-size:16px;color:var(--primary);opacity:.3;transition:opacity .3s;white-space:nowrap;letter-spacing:.02em}
+.press-logo:hover{opacity:.6}
+.press-logo.sans{font-family:var(--sans);font-weight:600;letter-spacing:.06em;font-size:13px;text-transform:uppercase}
+.cover-feature{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:80px}
+.cover-visual{aspect-ratio:3/4;background:linear-gradient(160deg,#1a130d,#2a1f15);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;position:relative;overflow:hidden;border:1px solid rgba(121,51,21,.2)}
+.cover-visual::before{content:'';position:absolute;inset:8px;border:1px solid rgba(255,255,255,.06);border-radius:4px}
+.cover-mag-title{font-family:var(--serif);font-size:28px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.cover-mag-sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.cover-mag-name{font-family:var(--serif);font-size:36px;color:#fff;text-align:center;margin-top:16px}
+.cover-mag-issue{font-size:12px;color:rgba(255,255,255,.25);letter-spacing:.1em}
+.cover-text h3{font-size:clamp(28px,3.5vw,42px);margin-bottom:20px}
+.cover-text p{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px}
+.cover-text .cover-quote{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--primary);line-height:1.7;padding-left:24px;border-left:3px solid var(--accent);margin:32px 0}
+
+/* ─── AWARDS ─── */
+.awards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+.award-card{padding:40px 32px;border:1px solid var(--border);border-radius:8px;background:var(--bg-white);text-align:center;transition:all .4s}
+.award-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.award-icon{font-size:40px;margin-bottom:20px;opacity:.7}
+.award-card h4{font-size:18px;margin-bottom:8px}
+.award-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.award-year{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-top:12px}
+
+/* ─── CLIENT STORIES ─── */
+.stories{background:var(--primary);color:#fff}
+.stories .section-tag{color:var(--accent-light)}
+.stories .section-tag::before{background:var(--accent-light)}
+.stories .section-title{color:#fff}
+.story-card{margin-top:64px;padding:60px;border:1px solid rgba(255,255,255,.08);border-radius:8px;background:rgba(255,255,255,.03)}
+.story-card+.story-card{margin-top:32px}
+.story-card .story-label{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-light);margin-bottom:20px}
+.story-card blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.5vw,28px);color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:32px}
+.story-card .story-author{display:flex;align-items:center;gap:16px}
+.story-card .story-avatar{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;color:var(--accent-light)}
+.story-card .story-info .name{font-weight:600;font-size:15px;color:#fff}
+.story-card .story-info .detail{font-size:13px;color:rgba(255,255,255,.4)}
+
+/* ─── CTA / CONTACT ─── */
+.cta-section{background:var(--bg-white);border-top:1px solid var(--border)}
+.cta-inner{text-align:center;max-width:640px;margin:0 auto}
+.cta-inner .section-tag{justify-content:center}
+.cta-inner .section-title{margin:0 auto 20px}
+.cta-inner .section-subtitle{margin:0 auto 48px}
+.cta-form{display:flex;flex-direction:column;gap:20px;text-align:left}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.form-field input,.form-field textarea,.form-field select{padding:14px 18px;border:1px solid var(--border);background:var(--bg);font-family:var(--sans);font-size:14px;color:var(--primary);border-radius:4px;outline:none;transition:border .3s;resize:vertical}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--accent)}
+.form-field textarea{min-height:120px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;cursor:pointer;transition:all .3s;border:none}
+.btn-copper{background:var(--accent);color:#fff}
+.btn-copper:hover{background:var(--accent-light);transform:translateY(-1px)}
+
+/* ─── FOOTER ─── */
+.site-footer{background:var(--primary);color:rgba(255,255,255,.6);padding:80px 0 40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{font-family:var(--serif);font-size:20px;color:#fff;letter-spacing:.06em;margin-bottom:16px}
+.footer-desc{font-size:14px;line-height:1.8;max-width:320px;margin-bottom:24px}
+.footer-col h5{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px}
+.footer-col a{display:block;font-size:14px;margin-bottom:10px;transition:color .3s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{margin-top:60px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* ─── TEXT US PILL ─── */
+.text-pill{position:fixed;bottom:32px;right:32px;z-index:900;background:var(--accent);color:#fff;padding:14px 28px;border-radius:50px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 32px rgba(121,51,21,.3);transition:all .3s;display:flex;align-items:center;gap:8px}
+.text-pill:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 12px 40px rgba(121,51,21,.4)}
+.text-pill svg{width:18px;height:18px;fill:currentColor}
+
+/* ─── ANIMATIONS ─── */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up:nth-child(2){transition-delay:.1s}
+.fade-up:nth-child(3){transition-delay:.2s}
+.fade-up:nth-child(4){transition-delay:.3s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+.numbers-grid{grid-template-columns:repeat(2,1fr)}
+.sales-grid{grid-template-columns:1fr}
+.testimonial-grid{grid-template-columns:1fr}
+.cover-feature{grid-template-columns:1fr;gap:40px}
+.awards-grid{grid-template-columns:repeat(2,1fr)}
+.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+:root{--section-py:80px}
+.container{padding:0 24px}
+.site-nav{padding:0 24px}
+.nav-links{display:none}
+.hamburger{display:flex}
+.hero-content{padding:120px 24px 80px}
+.numbers-grid{grid-template-columns:1fr 1fr}
+.sales-grid{grid-template-columns:1fr}
+.cover-feature{grid-template-columns:1fr}
+.awards-grid{grid-template-columns:1fr}
+.form-row{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr}
+.press-logos{gap:32px}
+.story-card{padding:32px}
+.text-pill{bottom:20px;right:20px;padding:12px 20px;font-size:12px}
+}
+@media(max-width:480px){
+.numbers-grid{grid-template-columns:1fr}
+.press-logos{flex-direction:column;gap:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav" id="site-nav">
+<div class="nav-inner">
+  <a href="./" class="nav-logo">Realty Ryan <span>&amp; Associates</span></a>
+  <ul class="nav-links">
+    <li><a href="./">Home</a></li>
+    <li><a href="./team.html">Team</a></li>
+    <li><a href="./why-realty-ryan.html">Why RRA</a></li>
+    <li><a href="./builders.html">Builders</a></li>
+    <li><a href="./exposure.html">Exposure</a></li>
+    <li><a href="./social.html">Social</a></li>
+    <li><a href="./technology.html">Technology</a></li>
+    <li class="nav-dropdown">
+      <a href="#">Areas ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="./charlotte.html">Charlotte</a>
+        <a href="./lakenorman.html">Lake Norman</a>
+        <a href="./belmont.html">Belmont</a>
+        <a href="./southcarolina.html">South Carolina</a>
+      </div>
+    </li>
+    <li><a href="./listings.html">Listings</a></li>
+    <li><a href="./results.html" class="active">Results</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="./">Home</a>
+  <a href="./team.html">Team</a>
+  <a href="./why-realty-ryan.html">Why RRA</a>
+  <a href="./builders.html">Builders</a>
+  <a href="./exposure.html">Exposure</a>
+  <a href="./social.html">Social</a>
+  <a href="./technology.html">Technology</a>
+  <a href="#">Areas</a>
+  <div class="mobile-sub">
+    <a href="./charlotte.html">Charlotte</a>
+    <a href="./lakenorman.html">Lake Norman</a>
+    <a href="./belmont.html">Belmont</a>
+    <a href="./southcarolina.html">South Carolina</a>
+  </div>
+  <a href="./listings.html">Listings</a>
+  <a href="./results.html" style="color:var(--accent)">Results</a>
+  <a href="./contact.html">Contact</a>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Results Speak</div>
+    <h1>Our Track<br><em>Record</em></h1>
+    <p class="hero-sub">We don't just list homes — we sell them. Faster, for more, and with the kind of experience clients remember.</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ═══════════════════ BY THE NUMBERS ═══════════════════ -->
+<section class="numbers">
+  <div class="container">
+    <div class="section-tag">By the Numbers</div>
+    <h2 class="section-title fade-up">Proof Is in the<br>Performance</h2>
+    <div class="numbers-grid">
+      <div class="number-item fade-up">
+        <div class="count"><span class="accent" data-target="50" data-prefix="$" data-suffix="M+">$0</span></div>
+        <div class="desc">Sales Volume</div>
+      </div>
+      <div class="number-item fade-up">
+        <div class="count"><span data-target="98" data-suffix="%">0</span></div>
+        <div class="desc">List-to-Sale Ratio</div>
+      </div>
+      <div class="number-item fade-up">
+        <div class="count"><span class="accent" data-target="175" data-suffix="+">0</span></div>
+        <div class="desc">Homes Sold</div>
+      </div>
+      <div class="number-item fade-up">
+        <div class="count"><span data-target="14">0</span></div>
+        <div class="desc">Avg. Days on Market</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ FEATURED SALES ═══════════════════ -->
+<section>
+  <div class="container">
+    <div class="section-tag">Featured Sales</div>
+    <h2 class="section-title fade-up">Notable Closings</h2>
+    <p class="section-subtitle fade-up">A selection of properties we've had the privilege of representing.</p>
+    <div class="sales-grid">
+
+      <div class="sale-card fade-up">
+        <div class="sale-img">
+          <div class="placeholder-house">⌂</div>
+          <div class="sold-badge">Sold</div>
+        </div>
+        <div class="sale-details">
+          <div class="sale-neighborhood">Ballantyne</div>
+          <div class="sale-price">$1,275,000</div>
+          <div class="sale-address">14208 Ballantyne Lake Road, Charlotte, NC</div>
+          <div class="sale-meta">
+            <span>5 Bed</span>
+            <span>4.5 Bath</span>
+            <span>4,200 sqft</span>
+            <span>8 Days on Market</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sale-card fade-up">
+        <div class="sale-img">
+          <div class="placeholder-house">⌂</div>
+          <div class="sold-badge">Sold</div>
+        </div>
+        <div class="sale-details">
+          <div class="sale-neighborhood">Lake Norman</div>
+          <div class="sale-price">$985,000</div>
+          <div class="sale-address">18442 Peninsula Club Drive, Cornelius, NC</div>
+          <div class="sale-meta">
+            <span>4 Bed</span>
+            <span>3.5 Bath</span>
+            <span>3,600 sqft</span>
+            <span>11 Days on Market</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sale-card fade-up">
+        <div class="sale-img">
+          <div class="placeholder-house">⌂</div>
+          <div class="sold-badge">Sold</div>
+        </div>
+        <div class="sale-details">
+          <div class="sale-neighborhood">South End</div>
+          <div class="sale-price">$625,000</div>
+          <div class="sale-address">2015 Hawkins Street, Unit 412, Charlotte, NC</div>
+          <div class="sale-meta">
+            <span>2 Bed</span>
+            <span>2 Bath</span>
+            <span>1,450 sqft</span>
+            <span>5 Days on Market</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sale-card fade-up">
+        <div class="sale-img">
+          <div class="placeholder-house">⌂</div>
+          <div class="sold-badge">Sold</div>
+        </div>
+        <div class="sale-details">
+          <div class="sale-neighborhood">Belmont</div>
+          <div class="sale-price">$515,000</div>
+          <div class="sale-address">305 Park Street, Belmont, NC</div>
+          <div class="sale-meta">
+            <span>4 Bed</span>
+            <span>3 Bath</span>
+            <span>2,800 sqft</span>
+            <span>3 Days on Market</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-tag">Client Testimonials</div>
+    <h2 class="section-title fade-up">What Our Clients Say</h2>
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Ryan and his team made what felt impossible feel effortless. We were under contract in 6 days — above asking — and the entire process was handled with so much care and professionalism. I've never felt more confident in a major decision."</blockquote>
+        <div class="author"><strong>Sarah &amp; Michael T.</strong> — Ballantyne</div>
+      </div>
+
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"As first-time buyers, we were terrified. Ally walked us through every single step, answered our 2am texts, and found us a home we didn't even know was possible in our budget. This team is family now."</blockquote>
+        <div class="author"><strong>James R.</strong> — South End</div>
+      </div>
+
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The marketing they did for our listing was unreal — professional photos, drone footage, targeted ads. We had 14 showings in the first weekend and multiple offers by Monday. No one else even came close."</blockquote>
+        <div class="author"><strong>The Patterson Family</strong> — Lake Norman</div>
+      </div>
+
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I've bought and sold 4 homes over the years with different agents. Realty Ryan is on a completely different level. The technology, the communication, the results — it's not even comparable. I'll never use anyone else."</blockquote>
+        <div class="author"><strong>David &amp; Christine L.</strong> — Belmont</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ PRESS & RECOGNITION ═══════════════════ -->
+<section>
+  <div class="container">
+    <div class="section-tag">Press &amp; Recognition</div>
+    <h2 class="section-title fade-up">As Seen In</h2>
+    <div class="press-logos fade-up">
+      <div class="press-logo">Luxury Home Magazine</div>
+      <div class="press-logo sans">Wall Street Journal</div>
+      <div class="press-logo sans">Zillow</div>
+      <div class="press-logo sans">Realtor.com</div>
+      <div class="press-logo sans">Homes.com</div>
+      <div class="press-logo sans">Redfin</div>
+      <div class="press-logo" style="font-style:italic">Axios Charlotte</div>
+      <div class="press-logo">Charlotte Magazine</div>
+    </div>
+
+    <!-- COVER FEATURE -->
+    <div class="cover-feature fade-up">
+      <div class="cover-visual">
+        <div class="cover-mag-sub">Featured on the Cover</div>
+        <div class="cover-mag-title">Luxury Home<br>Magazine</div>
+        <div class="cover-mag-name">Ryan Palmer</div>
+        <div class="cover-mag-issue">Charlotte Edition</div>
+      </div>
+      <div class="cover-text">
+        <div class="section-tag">Cover Feature</div>
+        <h3>On the Cover of<br>Luxury Home Magazine</h3>
+        <p>Ryan Palmer was featured on the cover of Luxury Home Magazine's Charlotte edition — a recognition reserved for agents who are redefining how luxury real estate is marketed and sold in the region.</p>
+        <div class="cover-quote">"We treat every home like a luxury listing. The photography, the marketing, the technology — every client deserves that level of care, regardless of price point."</div>
+        <p>The feature highlighted RRA's innovative approach to real estate: AI-powered operations, cinematic property marketing, and a relentless focus on client experience that has earned the team one of the highest list-to-sale ratios in the Charlotte market.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ AWARDS ═══════════════════ -->
+<section>
+  <div class="container">
+    <div class="section-tag">Awards</div>
+    <h2 class="section-title fade-up">Recognition &amp; Honors</h2>
+    <div class="awards-grid">
+      <div class="award-card fade-up">
+        <div class="award-icon">🏆</div>
+        <h4>Top Producer</h4>
+        <p>Recognized as a top-producing agent in the Charlotte metro area for outstanding sales volume and client satisfaction.</p>
+        <div class="award-year">2024</div>
+      </div>
+      <div class="award-card fade-up">
+        <div class="award-icon">⭐</div>
+        <h4>Five Star Professional</h4>
+        <p>Awarded the Five Star Professional designation based on client satisfaction surveys and industry peer evaluation.</p>
+        <div class="award-year">2023 — 2024</div>
+      </div>
+      <div class="award-card fade-up">
+        <div class="award-icon">🏅</div>
+        <h4>Rising Star Award</h4>
+        <p>Recognized for exceptional performance and innovative approach to real estate marketing.</p>
+        <div class="award-year">2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CLIENT STORIES ═══════════════════ -->
+<section class="stories">
+  <div class="container">
+    <div class="section-tag">Client Stories</div>
+    <h2 class="section-title fade-up">Behind Every Sale,<br>There's a Story</h2>
+
+    <div class="story-card fade-up">
+      <div class="story-label">Relocation — Ballantyne</div>
+      <blockquote>"We were relocating from Boston with two kids, two dogs, and zero knowledge of Charlotte. Ryan didn't just find us a house — he found us a neighborhood. He sent us video walkthroughs while we were still packing boxes up north. The school analysis, the commute times, the builder reputation — he had answers before we even thought of the questions. We closed in 28 days and haven't looked back."</blockquote>
+      <div class="story-author">
+        <div class="story-avatar">M</div>
+        <div class="story-info">
+          <div class="name">The Martinez Family</div>
+          <div class="detail">Relocated from Boston → Ballantyne, 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-card fade-up">
+      <div class="story-label">Downsizing — Lake Norman</div>
+      <blockquote>"After 30 years in our family home, selling was emotional. Ally and Ryan understood that from day one. They never rushed us. The staging was magazine-worthy, the photography made our home look like a dream, and when the offers came in — three over asking in one weekend — they walked us through every detail. We found our next chapter on the lake, and we got there with people who genuinely cared."</blockquote>
+      <div class="story-author">
+        <div class="story-avatar">W</div>
+        <div class="story-info">
+          <div class="name">Barbara &amp; Tom W.</div>
+          <div class="detail">Sold in Myers Park → Bought in Cornelius, 2024</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="section-tag">Get Started</div>
+      <h2 class="section-title fade-up" style="text-align:center">Ready to Be Our Next<br>Success Story?</h2>
+      <p class="section-subtitle fade-up" style="text-align:center">Whether you're buying, selling, or just exploring — let's start with a conversation.</p>
+      <form class="cta-form fade-up" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name</label>
+            <input type="text" placeholder="Your first name">
+          </div>
+          <div class="form-field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Your last name">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" placeholder="you@email.com">
+          </div>
+          <div class="form-field">
+            <label>Phone</label>
+            <input type="tel" placeholder="(555) 000-0000">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Tell Us About Your Goals</label>
+          <textarea placeholder="Buying, selling, relocating — what are you looking for?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-copper" style="align-self:center">Let's Talk</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Realty Ryan &amp; Associates</div>
+        <p class="footer-desc">Charlotte's modern real estate team. Every home gets the luxury treatment — powered by technology, driven by relationships.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navigate</h5>
+        <a href="./">Home</a>
+        <a href="./team.html">Team</a>
+        <a href="./results.html">Results</a>
+        <a href="./listings.html">Listings</a>
+        <a href="./contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Areas</h5>
+        <a href="./charlotte.html">Charlotte</a>
+        <a href="./lakenorman.html">Lake Norman</a>
+        <a href="./belmont.html">Belmont</a>
+        <a href="./southcarolina.html">South Carolina</a>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <a href="tel:5089542159">(508) 954-2159</a>
+        <a href="mailto:ryan@realtyryan.com">Email Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</span>
+      <span>Realty Ryan &amp; Associates</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TEXT US PILL -->
+<a href="sms:5089542159" class="text-pill">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+  Text Us
+</a>
+
+<script>
+// NAV SCROLL
+const nav=document.getElementById('site-nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)});
+
+// HAMBURGER
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobile-menu');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open')});
+
+// FADE-UP ANIMATIONS
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// COUNTER ANIMATION
+const counterObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting)return;
+    const counters=entry.target.querySelectorAll('[data-target]');
+    counters.forEach(c=>{
+      const target=parseInt(c.dataset.target);
+      const prefix=c.dataset.prefix||'';
+      const suffix=c.dataset.suffix||'';
+      const duration=2000;
+      const start=performance.now();
+      function update(now){
+        const elapsed=now-start;
+        const progress=Math.min(elapsed/duration,1);
+        const eased=1-Math.pow(1-progress,3);
+        const current=Math.floor(eased*target);
+        c.textContent=prefix+current+suffix;
+        if(progress<1)requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    });
+    counterObserver.unobserve(entry.target);
+  });
+},{threshold:0.3});
+document.querySelectorAll('.numbers-grid').forEach(el=>counterObserver.observe(el));
+</script>
+</body>
+</html>

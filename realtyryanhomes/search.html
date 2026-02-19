@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Homes — Realty Ryan &amp; Associates</title>
+<meta name="description" content="Search homes for sale in Charlotte, Lake Norman, Mooresville, Belmont and surrounding areas. Realty Ryan & Associates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#f8f7f6;--bg-white:#ffffff;--primary:#201408;--accent:#793315;--accent-light:#9a4a2a;--border:#ded9d3;--muted:#7b7269;--muted-light:#a39e96;
+--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,-apple-system,sans-serif;
+--max-w:1280px;--section-py:100px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);color:var(--primary);background:var(--bg);line-height:1.6;font-weight:400;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 40px}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.15}
+
+/* ─── NAV ─── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 40px;background:rgba(248,247,246,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:box-shadow .4s}
+.site-nav.scrolled{box-shadow:0 1px 0 var(--border)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);white-space:nowrap}
+.nav-logo span{font-weight:400;opacity:.5}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);opacity:.55;transition:opacity .3s}
+.nav-links a:hover,.nav-links a.active{opacity:1}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:-12px;background:var(--bg-white);border:1px solid var(--border);border-radius:6px;padding:8px 0;min-width:180px;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dropdown-menu a{display:block;padding:8px 20px;font-size:12px;opacity:.8;color:var(--primary)!important}
+.nav-dropdown-menu a:hover{opacity:1;background:var(--bg)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:24px;height:1.5px;background:var(--primary);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;inset:0;top:72px;background:var(--bg);z-index:999;padding:40px;flex-direction:column;gap:24px;overflow-y:auto}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:28px;color:var(--primary)}
+.mobile-menu .mobile-sub{padding-left:24px;display:flex;flex-direction:column;gap:12px}
+.mobile-menu .mobile-sub a{font-family:var(--sans);font-size:15px;font-weight:400}
+
+/* ─── HERO ─── */
+.search-hero{padding:140px 0 60px;text-align:center;background:var(--bg)}
+.search-hero h1{font-size:clamp(36px,5vw,64px);margin-bottom:12px}
+.search-hero h1 em{font-style:italic;color:var(--accent)}
+.search-hero p{font-size:17px;color:var(--muted);font-weight:300;margin-bottom:36px}
+.search-bar{max-width:640px;margin:0 auto;position:relative}
+.search-bar input{width:100%;padding:18px 56px 18px 24px;font-family:var(--sans);font-size:15px;border:1px solid var(--border);border-radius:6px;background:var(--bg-white);color:var(--primary);outline:none;transition:border-color .3s}
+.search-bar input:focus{border-color:var(--accent)}
+.search-bar button{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--accent);border:none;color:#fff;width:40px;height:40px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s}
+.search-bar button:hover{background:var(--accent-light)}
+
+/* ─── QUICK BUTTONS ─── */
+.quick-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
+.quick-btn{padding:8px 20px;font-size:12px;font-weight:500;letter-spacing:.06em;border:1px solid var(--border);border-radius:50px;background:var(--bg-white);color:var(--primary);cursor:pointer;transition:all .3s;font-family:var(--sans)}
+.quick-btn:hover,.quick-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ─── FILTER BAR ─── */
+.filter-section{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0}
+.filter-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.filter-bar select,.filter-bar input[type="number"]{padding:10px 14px;font-family:var(--sans);font-size:13px;border:1px solid var(--border);border-radius:4px;background:var(--bg-white);color:var(--primary);outline:none;min-width:140px}
+.filter-bar select:focus,.filter-bar input[type="number"]:focus{border-color:var(--accent)}
+.filter-bar input[type="number"]{width:120px}
+.filter-bar .filter-group{display:flex;align-items:center;gap:6px}
+.filter-bar .filter-group label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.filter-reset{padding:10px 20px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--border);border-radius:4px;cursor:pointer;color:var(--muted);transition:all .3s;font-family:var(--sans);margin-left:auto}
+.filter-reset:hover{border-color:var(--primary);color:var(--primary)}
+
+/* ─── RESULTS ─── */
+.results-section{padding:48px 0 var(--section-py)}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+.results-count{font-size:14px;color:var(--muted)}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.listing-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--bg-white);transition:all .4s;text-decoration:none;display:block}
+.listing-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(32,20,8,.06)}
+.listing-img{aspect-ratio:16/10;background:linear-gradient(135deg,var(--border),var(--muted-light));position:relative;overflow:hidden}
+.listing-img img{width:100%;height:100%;object-fit:cover}
+.listing-badge{position:absolute;top:12px;left:12px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:3px;color:#fff}
+.badge-active{background:#2d8a4e}
+.badge-pending{background:#c47a20}
+.badge-auc{background:#2a6cb8}
+.badge-sold{background:var(--primary)}
+.listing-info{padding:20px}
+.listing-info .price{font-family:var(--serif);font-size:22px;margin-bottom:4px}
+.listing-info .address{font-size:13px;color:var(--muted);margin-bottom:2px}
+.listing-info .city{font-size:12px;color:var(--muted-light);margin-bottom:8px}
+.listing-info .details{font-size:12px;color:var(--muted-light);letter-spacing:.04em;margin-bottom:12px}
+.listing-info .view-link{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+
+/* ─── LOADING / EMPTY ─── */
+.loading{text-align:center;padding:80px 0}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:14px;color:var(--muted)}
+.no-results{text-align:center;padding:80px 0}
+.no-results h3{font-size:28px;margin-bottom:12px}
+.no-results p{font-size:15px;color:var(--muted)}
+
+/* ─── FOOTER ─── */
+.site-footer{background:var(--primary);color:rgba(255,255,255,.6);padding:80px 0 40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{font-family:var(--serif);font-size:20px;color:#fff;letter-spacing:.06em;margin-bottom:16px}
+.footer-desc{font-size:14px;line-height:1.8;max-width:320px;margin-bottom:24px}
+.footer-col h5{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px}
+.footer-col a{display:block;font-size:14px;margin-bottom:10px;transition:color .3s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{margin-top:60px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* ─── TEXT US PILL ─── */
+.text-pill{position:fixed;bottom:32px;right:32px;z-index:900;background:var(--accent);color:#fff;padding:14px 28px;border-radius:50px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 32px rgba(121,51,21,.3);transition:all .3s;display:flex;align-items:center;gap:8px}
+.text-pill:hover{background:var(--accent-light);transform:translateY(-2px)}
+.text-pill svg{width:18px;height:18px;fill:currentColor}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+.results-grid{grid-template-columns:repeat(2,1fr)}
+.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+:root{--section-py:72px}
+.container{padding:0 24px}
+.site-nav{padding:0 24px}
+.nav-links{display:none}
+.hamburger{display:flex}
+.filter-bar{flex-direction:column;align-items:stretch}
+.filter-bar select,.filter-bar input[type="number"]{width:100%;min-width:0}
+.filter-bar .filter-group{flex-direction:column;align-items:flex-start}
+.filter-reset{margin-left:0}
+.results-grid{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr}
+.text-pill{bottom:20px;right:20px;padding:12px 20px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav" id="site-nav">
+<div class="nav-inner">
+<a href="./" class="nav-logo">Realty Ryan <span>&amp; Associates</span></a>
+<ul class="nav-links">
+<li><a href="./">Home</a></li>
+<li><a href="team.html">Team</a></li>
+<li><a href="why-realty-ryan.html">Why RRA</a></li>
+<li><a href="builders.html">Builders</a></li>
+<li><a href="exposure.html">Exposure</a></li>
+<li><a href="social.html">Social</a></li>
+<li><a href="technology.html">Technology</a></li>
+<li class="nav-dropdown">
+<a href="#">Areas ▾</a>
+<div class="nav-dropdown-menu">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+</li>
+<li><a href="listings.html">Listings</a></li>
+<li><a href="search.html" class="active">Search</a></li>
+<li><a href="results.html">Results</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+<a href="./">Home</a>
+<a href="team.html">Team</a>
+<a href="why-realty-ryan.html">Why RRA</a>
+<a href="builders.html">Builders</a>
+<a href="exposure.html">Exposure</a>
+<a href="social.html">Social</a>
+<a href="technology.html">Technology</a>
+<div>
+<span style="font-family:var(--serif);font-size:28px;color:var(--primary)">Areas</span>
+<div class="mobile-sub">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+</div>
+<a href="listings.html">Listings</a>
+<a href="search.html">Search</a>
+<a href="results.html">Results</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="search-hero">
+<div class="container">
+<h1>Find Your <em>Home</em></h1>
+<p>Search active listings across Charlotte, Lake Norman, and beyond.</p>
+<div class="search-bar">
+<input type="text" id="searchInput" placeholder="Search by address, city, or neighborhood…">
+<button onclick="applyFilters()" aria-label="Search">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+</button>
+</div>
+<div class="quick-filters">
+<button class="quick-btn" data-city="Charlotte" onclick="quickSearch(this)">Charlotte</button>
+<button class="quick-btn" data-link="539" onclick="quickSearch(this)">Huntersville</button>
+<button class="quick-btn" data-link="1662" onclick="quickSearch(this)">Mooresville</button>
+<button class="quick-btn" data-link="540" onclick="quickSearch(this)">Belmont</button>
+<button class="quick-btn" data-price="0-500000" onclick="quickSearch(this)">Under $500K</button>
+<button class="quick-btn" data-price="500000-1000000" onclick="quickSearch(this)">$500K–$1M</button>
+<button class="quick-btn" data-price="1000000-" onclick="quickSearch(this)">Luxury $1M+</button>
+</div>
+</div>
+</section>
+
+<!-- FILTERS -->
+<section class="filter-section">
+<div class="container">
+<div class="filter-bar">
+<div class="filter-group">
+<label>Area</label>
+<select id="filterArea">
+<option value="">All Areas</option>
+<option value="539">Huntersville</option>
+<option value="540">Belmont</option>
+<option value="1662">Mooresville</option>
+<option value="featured">Featured</option>
+</select>
+</div>
+<div class="filter-group">
+<label>Min Price</label>
+<input type="number" id="filterMinPrice" placeholder="No Min" step="50000">
+</div>
+<div class="filter-group">
+<label>Max Price</label>
+<input type="number" id="filterMaxPrice" placeholder="No Max" step="50000">
+</div>
+<div class="filter-group">
+<label>Beds</label>
+<select id="filterBeds">
+<option value="">Any</option>
+<option value="1">1+</option>
+<option value="2">2+</option>
+<option value="3">3+</option>
+<option value="4">4+</option>
+<option value="5">5+</option>
+</select>
+</div>
+<div class="filter-group">
+<label>Baths</label>
+<select id="filterBaths">
+<option value="">Any</option>
+<option value="1">1+</option>
+<option value="2">2+</option>
+<option value="3">3+</option>
+<option value="4">4+</option>
+<option value="5">5+</option>
+</select>
+</div>
+<div class="filter-group">
+<label>Sort</label>
+<select id="filterSort">
+<option value="price-desc">Price: High to Low</option>
+<option value="price-asc">Price: Low to High</option>
+<option value="sqft-desc">SqFt: Largest</option>
+</select>
+</div>
+<button class="filter-reset" onclick="resetFilters()">Reset</button>
+</div>
+</div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section">
+<div class="container">
+<div class="results-header">
+<div class="results-count" id="resultsCount"></div>
+</div>
+<div id="resultsArea">
+<div class="loading" id="loadingState">
+<div class="spinner"></div>
+<div class="loading-text">Loading listings…</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+<div class="container">
+<div class="footer-grid">
+<div>
+<div class="footer-brand">Realty Ryan &amp; Associates</div>
+<p class="footer-desc">Charlotte real estate, redefined. New construction, resale, builder partnerships. AI-powered operations, white-glove service. Every home gets the luxury treatment.</p>
+</div>
+<div class="footer-col">
+<h5>Company</h5>
+<a href="team.html">Team</a>
+<a href="why-realty-ryan.html">Why RRA</a>
+<a href="technology.html">Technology</a>
+<a href="results.html">Results</a>
+<a href="contact.html">Contact</a>
+</div>
+<div class="footer-col">
+<h5>Marketing</h5>
+<a href="exposure.html">Exposure</a>
+<a href="social.html">Social &amp; Content</a>
+<a href="builders.html">Builder Partnerships</a>
+<a href="listings.html">Listings</a>
+</div>
+<div class="footer-col">
+<h5>Areas</h5>
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</span>
+<span>Ryan Palmer, Broker · License #315654 · Realty Ryan &amp; Associates · Charlotte, NC</span>
+</div>
+</div>
+</footer>
+
+<!-- TEXT US PILL -->
+<a href="sms:5089542159" class="text-pill">
+<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+Text Us
+</a>
+
+<script>
+const API_BASE = 'https://offers.realtyryan.com/api/idx-search';
+// Custom listing sites — address substring → URL
+const CUSTOM_LISTINGS = {
+  '626 shelton': 'https://homes.realtyryan.com/626shelton',
+  '3208 mayfield': 'https://homes.realtyryan.com/3208mayfield',
+  '3320 mayfield': 'https://homes.realtyryan.com/3320mayfield',
+  '3321 auburn': 'https://homes.realtyryan.com/3321auburn',
+  '1820 parson': 'https://homes.realtyryan.com/1820parson',
+  '1437 montford': '/1437montford/',
+};
+
+let allListings = [];
+let currentSource = 'featured';
+
+// Nav scroll
+const nav = document.getElementById('site-nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+
+// Fetch listings
+async function fetchListings(source) {
+  currentSource = source;
+  showLoading();
+  try {
+    const endpoint = source === 'featured'
+      ? '/clients/featured'
+      : `/clients/savedlinks/${source}/results`;
+    const resp = await fetch(`${API_BASE}?endpoint=${encodeURIComponent(endpoint)}`);
+    const data = await resp.json();
+    // Normalize: featured returns object keyed by id, savedlinks returns array or object
+    if (Array.isArray(data)) {
+      allListings = data;
+    } else if (typeof data === 'object') {
+      allListings = Object.values(data).filter(v => typeof v === 'object' && v.listingPrice);
+    } else {
+      allListings = [];
+    }
+    applyFilters();
+  } catch (err) {
+    console.error('Fetch error:', err);
+    allListings = [];
+    applyFilters();
+  }
+}
+
+function showLoading() {
+  document.getElementById('resultsArea').innerHTML = '<div class="loading"><div class="spinner"></div><div class="loading-text">Loading listings…</div></div>';
+  document.getElementById('resultsCount').textContent = '';
+}
+
+function applyFilters() {
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  const minPrice = parseInt(document.getElementById('filterMinPrice').value) || 0;
+  const maxPrice = parseInt(document.getElementById('filterMaxPrice').value) || Infinity;
+  const minBeds = parseInt(document.getElementById('filterBeds').value) || 0;
+  const minBaths = parseInt(document.getElementById('filterBaths').value) || 0;
+  const sort = document.getElementById('filterSort').value;
+
+  let filtered = allListings.filter(l => {
+    const price = parseInt(String(l.listingPrice).replace(/[^0-9]/g, '')) || 0;
+    const beds = parseInt(l.bedrooms) || 0;
+    const baths = parseInt(l.fullBaths || l.totalBaths) || 0;
+    const addr = (l.address || '').toLowerCase();
+    const city = (l.cityName || '').toLowerCase();
+
+    if (price < minPrice || price > maxPrice) return false;
+    if (beds < minBeds) return false;
+    if (baths < minBaths) return false;
+    if (query && !addr.includes(query) && !city.includes(query)) return false;
+    return true;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    const pa = parseInt(String(a.listingPrice).replace(/[^0-9]/g, '')) || 0;
+    const pb = parseInt(String(b.listingPrice).replace(/[^0-9]/g, '')) || 0;
+    const sa = parseInt(a.sqFt) || 0;
+    const sb = parseInt(b.sqFt) || 0;
+    if (sort === 'price-desc') return pb - pa;
+    if (sort === 'price-asc') return pa - pb;
+    if (sort === 'sqft-desc') return sb - sa;
+    return 0;
+  });
+
+  renderResults(filtered);
+}
+
+function renderResults(listings) {
+  const area = document.getElementById('resultsArea');
+  document.getElementById('resultsCount').textContent = `${listings.length} listing${listings.length !== 1 ? 's' : ''} found`;
+
+  if (listings.length === 0) {
+    area.innerHTML = '<div class="no-results"><h3>No Listings Found</h3><p>Try adjusting your filters or searching a different area.</p></div>';
+    return;
+  }
+
+  let html = '<div class="results-grid">';
+  listings.forEach(l => {
+    const price = parseInt(String(l.listingPrice).replace(/[^0-9]/g, '')) || 0;
+    const priceStr = '$' + price.toLocaleString();
+    const addr = l.address || 'Address Unavailable';
+    const city = l.cityName || '';
+    const state = l.state || 'NC';
+    const beds = l.bedrooms || '—';
+    const baths = l.fullBaths || l.totalBaths || '—';
+    const sqft = l.sqFt ? parseInt(l.sqFt).toLocaleString() : '—';
+    const status = (l.propStatus || '').toLowerCase();
+
+    // Image
+    let imgHtml = '';
+    const images = l.image || l.images;
+    if (images && typeof images === 'object') {
+      const imgKeys = Object.keys(images);
+      if (imgKeys.length > 0) {
+        const firstImg = typeof images[imgKeys[0]] === 'string' ? images[imgKeys[0]] : (images[imgKeys[0]]?.url || '');
+        if (firstImg) imgHtml = `<img src="${firstImg}" alt="${addr}" loading="lazy">`;
+      }
+    }
+
+    // Status badge
+    let badgeClass = 'badge-active', badgeText = 'Active';
+    if (status.includes('pending')) { badgeClass = 'badge-pending'; badgeText = 'Pending'; }
+    else if (status.includes('under contract') || status === 'active under contract') { badgeClass = 'badge-auc'; badgeText = 'Under Contract'; }
+    else if (status.includes('sold') || status.includes('closed')) { badgeClass = 'badge-sold'; badgeText = 'Sold'; }
+
+    // Link — check custom listings
+    let link = l.detailsURL || '#';
+    const addrLower = addr.toLowerCase();
+    for (const [key, url] of Object.entries(CUSTOM_LISTINGS)) {
+      if (addrLower.includes(key)) { link = url; break; }
+    }
+    const target = link.startsWith('http') ? ' target="_blank"' : '';
+
+    html += `
+    <a href="${link}"${target} class="listing-card">
+      <div class="listing-img">
+        ${imgHtml}
+        <div class="listing-badge ${badgeClass}">${badgeText}</div>
+      </div>
+      <div class="listing-info">
+        <div class="price">${priceStr}</div>
+        <div class="address">${addr}</div>
+        <div class="city">${city}${city && state ? ', ' : ''}${state}</div>
+        <div class="details">${beds} Bed · ${baths} Bath · ${sqft} SF</div>
+        <div class="view-link">View Details →</div>
+      </div>
+    </a>`;
+  });
+  html += '</div>';
+  area.innerHTML = html;
+}
+
+// Quick search
+function quickSearch(btn) {
+  document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Reset filters
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterMinPrice').value = '';
+  document.getElementById('filterMaxPrice').value = '';
+  document.getElementById('filterBeds').value = '';
+  document.getElementById('filterBaths').value = '';
+
+  const linkId = btn.dataset.link;
+  const city = btn.dataset.city;
+  const priceRange = btn.dataset.price;
+
+  if (linkId) {
+    document.getElementById('filterArea').value = linkId;
+    fetchListings(linkId);
+  } else if (city) {
+    document.getElementById('searchInput').value = city;
+    document.getElementById('filterArea').value = '';
+    fetchListings('featured');
+  } else if (priceRange) {
+    const [min, max] = priceRange.split('-');
+    if (min) document.getElementById('filterMinPrice').value = min;
+    if (max) document.getElementById('filterMaxPrice').value = max;
+    document.getElementById('filterArea').value = '';
+    // Fetch all saved links and merge, or use featured as base
+    fetchListings('featured');
+  }
+}
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterArea').value = '';
+  document.getElementById('filterMinPrice').value = '';
+  document.getElementById('filterMaxPrice').value = '';
+  document.getElementById('filterBeds').value = '';
+  document.getElementById('filterBaths').value = '';
+  document.getElementById('filterSort').value = 'price-desc';
+  document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+  fetchListings('featured');
+}
+
+// Area dropdown change
+document.getElementById('filterArea').addEventListener('change', function() {
+  const val = this.value || 'featured';
+  fetchListings(val);
+});
+
+// Search input enter key
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') applyFilters();
+});
+
+// Filter changes
+['filterMinPrice','filterMaxPrice','filterBeds','filterBaths','filterSort'].forEach(id => {
+  document.getElementById(id).addEventListener('change', applyFilters);
+});
+
+// Init
+fetchListings('featured');
+</script>
+</body>
+</html>

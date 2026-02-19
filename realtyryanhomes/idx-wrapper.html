@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search — Realty Ryan &amp; Associates</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f8f7f6;
+  --primary: #201408;
+  --accent: #793315;
+  --border: #ded9d3;
+  --muted: #7b7269;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--primary);
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+.rr-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(20px, 4vw, 60px);
+}
+.rr-nav-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.rr-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.rr-logo span { color: var(--accent); }
+.rr-nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  align-items: center;
+}
+.rr-nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+  letter-spacing: 0.02em;
+}
+.rr-nav-links a:hover,
+.rr-nav-links a.active {
+  color: var(--accent);
+}
+.rr-nav-links .rr-cta-btn {
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.rr-nav-links .rr-cta-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ── MOBILE NAV ── */
+.rr-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 20px;
+  position: relative;
+}
+.rr-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--primary);
+  position: absolute;
+  left: 0;
+  transition: all .3s;
+}
+.rr-hamburger span:nth-child(1) { top: 0; }
+.rr-hamburger span:nth-child(2) { top: 9px; }
+.rr-hamburger span:nth-child(3) { top: 18px; }
+.rr-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 20px;
+  z-index: 999;
+}
+.rr-mobile-menu.open { display: block; }
+.rr-mobile-menu a {
+  display: block;
+  padding: 12px 0;
+  font-size: 1rem;
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+.rr-mobile-menu a:last-child { border: none; }
+
+@media (max-width: 768px) {
+  .rr-nav-links { display: none; }
+  .rr-hamburger { display: block; }
+}
+
+/* ── IDX CONTENT AREA ── */
+.rr-idx-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 60px) clamp(20px, 4vw, 60px);
+  min-height: 60vh;
+}
+
+/* ── IDX OVERRIDES ── */
+/* Fix oversized icons/images in IDX wrapper */
+.rr-idx-content img,
+.rr-idx-content svg {
+  max-width: 100%;
+  height: auto;
+}
+/* Contact section icon fixes */
+.IDX-wrapper-contact img,
+.IDX-wrapper-contact svg,
+.contact-icon img,
+.contact-icon svg,
+.idx-contact-icon,
+[class*="contact"] img,
+[class*="contact"] svg {
+  max-width: 32px !important;
+  max-height: 32px !important;
+  width: 32px !important;
+  height: auto !important;
+}
+/* General IDX form styling */
+.IDX-main select,
+.IDX-main input[type="text"],
+.IDX-main input[type="number"] {
+  font-family: 'Inter', sans-serif;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--primary);
+  transition: border-color .2s;
+}
+.IDX-main select:focus,
+.IDX-main input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.IDX-main input[type="submit"],
+.IDX-main button,
+.IDX-main .IDX-btn-default {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 10px 24px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: background .2s !important;
+}
+.IDX-main input[type="submit"]:hover,
+.IDX-main button:hover {
+  background: var(--primary) !important;
+}
+/* Search tabs */
+.IDX-searchTabs a,
+.IDX-searchNav a {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: var(--muted) !important;
+  text-decoration: none !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  transition: all .2s !important;
+}
+.IDX-searchTabs a:hover,
+.IDX-searchTabs a.active,
+.IDX-searchNav a:hover,
+.IDX-searchNav a.active {
+  color: var(--accent) !important;
+  background: rgba(121,51,21,.08) !important;
+}
+/* Listing cards */
+.IDX-resultsRow,
+.IDX-resultsCellRow {
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  margin-bottom: 16px !important;
+  transition: box-shadow .2s !important;
+}
+.IDX-resultsRow:hover,
+.IDX-resultsCellRow:hover {
+  box-shadow: 0 4px 20px rgba(32,20,8,.08) !important;
+}
+.IDX-resultsPhotoLink img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 0 !important;
+}
+/* Price styling */
+.IDX-resultsPrice,
+.IDX-listingPrice {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 600 !important;
+  color: var(--primary) !important;
+}
+
+/* ── FOOTER ── */
+.rr-footer {
+  background: var(--primary);
+  color: rgba(255,255,255,.7);
+  padding: clamp(40px, 5vw, 60px) clamp(20px, 4vw, 60px) 24px;
+  margin-top: 60px;
+}
+.rr-footer-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.rr-footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.rr-footer-brand span { color: var(--accent); }
+.rr-footer p { font-size: 0.85rem; line-height: 1.7; }
+.rr-footer a { color: rgba(255,255,255,.7); text-decoration: none; }
+.rr-footer a:hover { color: var(--accent); }
+.rr-footer-col h4 {
+  color: #fff;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.rr-footer-col a {
+  display: block;
+  font-size: 0.85rem;
+  padding: 3px 0;
+}
+.rr-footer-bottom {
+  max-width: 1300px;
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  font-size: 0.8rem;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="rr-nav">
+  <div class="rr-nav-inner">
+    <a href="https://homes.realtyryan.com/realtyryanhomes/" class="rr-logo">Realty Ryan <span>&</span> Associates</a>
+    <ul class="rr-nav-links">
+      <li><a href="https://homes.realtyryan.com/realtyryanhomes/team.html">Team</a></li>
+      <li><a href="https://homes.realtyryan.com/realtyryanhomes/listings.html">Listings</a></li>
+      <li><a href="https://search.realtyryan.com/idx/map/home-search" class="active">Search</a></li>
+      <li><a href="https://homes.realtyryan.com/realtyryanhomes/exposure.html">Marketing</a></li>
+      <li><a href="https://homes.realtyryan.com/realtyryanhomes/builders.html">Builders</a></li>
+      <li><a href="https://homes.realtyryan.com/realtyryanhomes/results.html">Results</a></li>
+      <li><a href="https://homes.realtyryan.com/realtyryanhomes/contact.html" class="rr-cta-btn">Contact</a></li>
+    </ul>
+    <button class="rr-hamburger" onclick="document.querySelector('.rr-mobile-menu').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="rr-mobile-menu">
+  <a href="https://homes.realtyryan.com/realtyryanhomes/">Home</a>
+  <a href="https://homes.realtyryan.com/realtyryanhomes/team.html">Team</a>
+  <a href="https://homes.realtyryan.com/realtyryanhomes/listings.html">Listings</a>
+  <a href="https://search.realtyryan.com/idx/map/home-search">Search</a>
+  <a href="https://homes.realtyryan.com/realtyryanhomes/exposure.html">Marketing</a>
+  <a href="https://homes.realtyryan.com/realtyryanhomes/builders.html">Builders</a>
+  <a href="https://homes.realtyryan.com/realtyryanhomes/results.html">Results</a>
+  <a href="https://homes.realtyryan.com/realtyryanhomes/contact.html">Contact</a>
+</div>
+
+<!-- IDX CONTENT (IDX Broker injects content here) -->
+<div class="rr-idx-content">
+<IDX-dynamic></IDX-dynamic>
+</div>
+
+<!-- FOOTER -->
+<footer class="rr-footer">
+  <div class="rr-footer-inner">
+    <div>
+      <div class="rr-footer-brand">Realty Ryan <span>&</span> Associates</div>
+      <p>Charlotte Real Estate, Redefined.</p>
+      <p style="margin-top:8px">
+        <a href="tel:5089542159">508-954-2159</a><br>
+        <a href="mailto:ryan@realtyryan.com">ryan@realtyryan.com</a>
+      </p>
+    </div>
+    <div class="rr-footer-col">
+      <h4>Company</h4>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/team.html">Our Team</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/why-realty-ryan.html">Why RRA</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/technology.html">Technology</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/results.html">Results</a>
+    </div>
+    <div class="rr-footer-col">
+      <h4>Search</h4>
+      <a href="https://search.realtyryan.com/idx/map/home-search">Map Search</a>
+      <a href="https://search.realtyryan.com/idx/search/advanced">Advanced Search</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/listings.html">Our Listings</a>
+    </div>
+    <div class="rr-footer-col">
+      <h4>Areas</h4>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/charlotte.html">Charlotte</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/lakenorman.html">Lake Norman</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/belmont.html">Belmont</a>
+      <a href="https://homes.realtyryan.com/realtyryanhomes/southcarolina.html">South Carolina</a>
+    </div>
+  </div>
+  <div class="rr-footer-bottom">
+    &copy; 2026 Realty Ryan &amp; Associates. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

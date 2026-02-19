@@ -11,15 +11,6 @@
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--primary);line-height:1.7;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.2}
 
-/* AUTH GATE */
-#auth-gate{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px}
-#auth-gate h1{font-family:'Playfair Display',serif;color:#fff;font-size:2rem;letter-spacing:.02em}
-#auth-gate input{padding:14px 20px;font-size:1rem;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;border-radius:6px;width:280px;text-align:center;font-family:'Inter',sans-serif}
-#auth-gate input::placeholder{color:rgba(255,255,255,.35)}
-#auth-gate button{padding:12px 32px;background:var(--copper);color:#fff;border:none;border-radius:6px;font-size:.95rem;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;letter-spacing:.03em}
-#auth-gate .error{color:#c0392b;font-size:.85rem;min-height:20px}
-#main-content{display:none}
-
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,box-shadow .3s}
 nav.scrolled{background:rgba(248,247,246,.95);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--border)}
@@ -153,30 +144,20 @@ footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);fo
 </head>
 <body>
 
-<!-- AUTH GATE -->
-<div id="auth-gate">
-  <h1>Realty Ryan &amp; Associates</h1>
-  <input type="password" id="auth-input" placeholder="Enter password" autocomplete="off">
-  <button onclick="checkAuth()">Enter</button>
-  <div class="error" id="auth-error"></div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div id="main-content">
-
 <!-- NAV -->
 <nav id="nav">
-  <a href="/realtyryanhomes/" class="nav-logo">Realty Ryan &amp; Associates</a>
+  <a href="./" class="nav-logo">Realty Ryan &amp; Associates</a>
   <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links">
-    <a href="/realtyryanhomes/">Home</a>
-    <a href="/realtyryanhomes/why-realty-ryan.html" class="active">Why RRA</a>
-    <a href="/realtyryanhomes/team.html">Team</a>
-    <a href="/realtyryanhomes/builders.html">Builders</a>
+    <a href="./">Home</a>
+    <a href="why-realty-ryan.html" class="active">Why RRA</a>
+    <a href="team.html">Team</a>
+    <a href="builders.html">Builders</a>
     <a href="/realtyryanhomes/areas.html">Areas</a>
-    <a href="/realtyryanhomes/listings.html">Listings</a>
+    <a href="listings.html">Listings</a>
+<a href="search.html">Search</a>
   </div>
 </nav>
 
@@ -319,35 +300,14 @@ footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);fo
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <p>&copy; 2025 Realty Ryan &amp; Associates. All rights reserved.</p>
+    <p>&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</p>
   </div>
 </footer>
 
 <!-- TEXT RYAN -->
 <a href="sms:5089542159" class="text-ryan">💬 Text Us</a>
 
-</div><!-- /main-content -->
-
 <script>
-// Auth
-(function(){
-  if(sessionStorage.getItem('rra_auth')==='true'){
-    document.getElementById('auth-gate').style.display='none';
-    document.getElementById('main-content').style.display='block';
-  }
-})();
-function checkAuth(){
-  const v=document.getElementById('auth-input').value;
-  if(v==='Swim5life50!'){
-    sessionStorage.setItem('rra_auth','true');
-    document.getElementById('auth-gate').style.display='none';
-    document.getElementById('main-content').style.display='block';
-  } else {
-    document.getElementById('auth-error').textContent='Incorrect password.';
-  }
-}
-document.getElementById('auth-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkAuth()});
-
 // Nav scroll
 window.addEventListener('scroll',function(){
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>80);

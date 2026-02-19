@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Media &amp; Content Marketing — Realty Ryan &amp; Associates</title>
+<meta name="description" content="While other agents post 'Just Listed!' with an iPhone photo, Realty Ryan & Associates runs a full content engine — cinematic video, AI-powered marketing, data-driven social strategy, and 50+ channel syndication.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#f8f7f6;--bg-white:#ffffff;--primary:#201408;--accent:#793315;--accent-light:#9a4a2a;--border:#ded9d3;--muted:#7b7269;--muted-light:#a39e96;
+--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,-apple-system,sans-serif;
+--max-w:1280px;--section-py:120px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);color:var(--primary);background:var(--bg);line-height:1.6;font-weight:400;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 40px}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.15}
+
+/* ── NAV ── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 40px;transition:background .4s,box-shadow .4s}
+.site-nav.scrolled{background:rgba(248,247,246,.97);box-shadow:0 1px 0 var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);white-space:nowrap}
+.nav-logo span{font-weight:400;opacity:.6}
+.site-nav:not(.scrolled) .nav-logo{color:#fff}
+.site-nav:not(.scrolled) .nav-links a{color:#fff}
+.site-nav:not(.scrolled) .hamburger span{background:#fff}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);opacity:.7;transition:opacity .3s}
+.nav-links a:hover{opacity:1}
+.nav-links a.active{opacity:1;color:var(--accent)}
+.site-nav:not(.scrolled) .nav-links a.active{color:var(--accent-light)}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:-12px;background:var(--bg-white);border:1px solid var(--border);border-radius:6px;padding:8px 0;min-width:180px;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dropdown-menu a{display:block;padding:8px 20px;font-size:12px;opacity:.8;color:var(--primary)!important}
+.nav-dropdown-menu a:hover{opacity:1;background:var(--bg)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:24px;height:1.5px;background:var(--primary);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;inset:0;top:72px;background:var(--bg);z-index:999;padding:40px;flex-direction:column;gap:24px;overflow-y:auto}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:28px;color:var(--primary)}
+.mobile-menu .mobile-sub{padding-left:24px;display:flex;flex-direction:column;gap:12px}
+.mobile-menu .mobile-sub a{font-family:var(--sans);font-size:15px;font-weight:400}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--primary);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#0a0704 0%,#1a0f08 25%,#2d1810 50%,#1a0f08 75%,#0a0704 100%)}
+.hero-grain{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")}
+/* Animated gradient orbs */
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.15;animation:orbFloat 12s ease-in-out infinite}
+.hero-orb-1{width:600px;height:600px;background:#793315;top:-200px;right:-100px;animation-delay:0s}
+.hero-orb-2{width:400px;height:400px;background:#5a2510;bottom:-150px;left:-100px;animation-delay:-4s}
+.hero-orb-3{width:300px;height:300px;background:#793315;top:50%;left:50%;animation-delay:-8s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+.hero-content{position:relative;z-index:2;text-align:center;padding:160px 40px 120px;max-width:900px}
+.hero-tag{font-size:12px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--accent-light);margin-bottom:48px;display:inline-flex;align-items:center;gap:20px}
+.hero-tag::before,.hero-tag::after{content:'';width:48px;height:1px;background:var(--accent)}
+.hero h1{font-size:clamp(42px,7vw,96px);color:#fff;line-height:1;margin-bottom:36px;letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--accent-light)}
+.hero-sub{font-size:clamp(16px,1.8vw,21px);color:rgba(255,255,255,.4);max-width:620px;line-height:1.85;margin:0 auto 64px;font-weight:300}
+.hero-cta-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:80px}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;transition:all .3s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(121,51,21,.3)}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;background:transparent;color:#fff;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);border-radius:4px;transition:all .3s;cursor:pointer}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
+.hero-scroll{display:inline-flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.2);font-size:11px;letter-spacing:.15em;text-transform:uppercase;animation:float 3s ease-in-out infinite}
+.hero-scroll span{width:1px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,.2),transparent)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ── SECTION DEFAULTS ── */
+section{padding:var(--section-py) 0}
+.section-tag{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-tag::before{content:'';width:32px;height:1px;background:var(--accent)}
+.section-title{font-size:clamp(32px,4vw,56px);margin-bottom:20px;max-width:750px}
+.section-subtitle{font-size:17px;color:var(--muted);line-height:1.85;max-width:640px;margin-bottom:60px}
+.section-center{text-align:center}
+.section-center .section-tag{justify-content:center}
+.section-center .section-tag::after{content:'';width:32px;height:1px;background:var(--accent)}
+.section-center .section-title,.section-center .section-subtitle{margin-left:auto;margin-right:auto}
+.bg-white{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.bg-dark{background:linear-gradient(160deg,#1a0f08 0%,#2d1810 50%,#1a0f08 100%);color:#fff;position:relative;overflow:hidden}
+.bg-dark::before{content:'';position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")}
+.bg-dark .section-tag{color:rgba(255,255,255,.5)}
+.bg-dark .section-tag::before,.bg-dark .section-tag::after{background:rgba(255,255,255,.2)}
+.bg-dark .section-title{color:#fff}
+.bg-dark .section-subtitle{color:rgba(255,255,255,.45)}
+
+/* ── FADE-UP ANIMATION ── */
+.fade-up{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up-delay-1{transition-delay:.1s}
+.fade-up-delay-2{transition-delay:.2s}
+.fade-up-delay-3{transition-delay:.3s}
+.fade-up-delay-4{transition-delay:.4s}
+
+/* ── THE PROBLEM SECTION ── */
+.problem-grid{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:stretch;margin-top:60px}
+.problem-side{border-radius:16px;padding:48px 40px}
+.problem-boring{background:#e8e5e1;border:2px dashed #ccc8c1}
+.problem-boring h3{font-family:var(--sans);font-size:18px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:32px}
+.boring-step{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px dashed #d5d0ca;font-size:15px;color:#999;font-weight:400}
+.boring-step .boring-num{width:28px;height:28px;border-radius:50%;background:#d5d0ca;color:#999;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.boring-step:last-child{border-bottom:none}
+.boring-result{margin-top:32px;padding:20px;background:#ddd8d2;border-radius:8px;text-align:center;font-size:14px;color:#999;font-style:italic}
+.problem-vs{display:flex;align-items:center;justify-content:center}
+.problem-vs span{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:.05em;box-shadow:0 4px 20px rgba(121,51,21,.3)}
+.problem-rra{background:var(--primary);border:1px solid rgba(121,51,21,.3)}
+.problem-rra h3{font-size:18px;font-weight:600;color:var(--accent-light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:32px}
+.rra-step{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:15px;color:rgba(255,255,255,.7);font-weight:400}
+.rra-step:last-child{border-bottom:none}
+.rra-step .rra-icon{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.rra-result{margin-top:32px;padding:20px;background:rgba(121,51,21,.15);border:1px solid rgba(121,51,21,.3);border-radius:8px;text-align:center;font-size:14px;color:var(--accent-light);font-weight:600;letter-spacing:.05em}
+
+/* ── CONTENT ENGINE ── */
+.engine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.engine-card{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;padding:40px 32px;transition:all .5s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.engine-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.engine-card:hover::before{transform:scaleX(1)}
+.engine-card:hover{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.06)}
+.engine-num{font-family:var(--serif);font-size:48px;font-weight:400;color:var(--border);line-height:1;margin-bottom:20px;transition:color .5s}
+.engine-card:hover .engine-num{color:var(--accent)}
+.engine-card h4{font-size:20px;margin-bottom:12px}
+.engine-card p{font-size:14px;color:var(--muted);line-height:1.8}
+
+/* ── PLATFORM STRATEGY ── */
+.platform-section{position:relative}
+.platform-block{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:120px}
+.platform-block:last-child{margin-bottom:0}
+.platform-block.reversed{direction:rtl}
+.platform-block.reversed > *{direction:ltr}
+.platform-info .platform-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px}
+.badge-linkedin{background:rgba(10,102,194,.08);color:#0a66c2}
+.badge-instagram{background:rgba(225,48,108,.08);color:#e1306c}
+.badge-video{background:rgba(255,0,0,.06);color:#c00}
+.badge-ai{background:rgba(121,51,21,.08);color:var(--accent)}
+.platform-info h3{font-size:clamp(28px,3.5vw,44px);margin-bottom:16px}
+.platform-info .platform-desc{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:32px}
+.platform-info .platform-quote{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--primary);line-height:1.7;padding-left:24px;border-left:2px solid var(--accent);margin-bottom:32px}
+.platform-features{list-style:none;display:flex;flex-direction:column;gap:14px}
+.platform-features li{display:flex;align-items:baseline;gap:12px;font-size:14px;color:var(--primary);font-weight:500}
+.platform-features li::before{content:'→';color:var(--accent);font-weight:700;flex-shrink:0}
+
+/* ── LINKEDIN POST MOCKUP ── */
+.linkedin-mockup{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.06)}
+.li-header{padding:20px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border)}
+.li-avatar{width:48px;height:48px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--serif);font-size:18px;font-weight:600;flex-shrink:0}
+.li-meta h5{font-size:14px;font-weight:600;color:var(--primary);margin-bottom:2px}
+.li-meta p{font-size:12px;color:var(--muted)}
+.li-body{padding:24px}
+.li-body p{font-size:14px;line-height:1.75;color:var(--primary);margin-bottom:12px}
+.li-body p strong{font-weight:700}
+.li-body .li-stat{display:inline-block;background:rgba(121,51,21,.06);border-radius:4px;padding:3px 10px;font-weight:700;color:var(--accent);font-size:13px}
+.li-engagement{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:24px;font-size:12px;color:var(--muted)}
+.li-engagement span{font-weight:600;color:var(--primary)}
+
+/* ── INSTAGRAM GRID MOCKUP ── */
+.ig-mockup{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.ig-phone{background:#111;padding:12px;border-radius:16px}
+.ig-header{display:flex;align-items:center;gap:10px;padding:12px 8px;color:#fff}
+.ig-header-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent)}
+.ig-header-name{font-size:13px;font-weight:600}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ig-cell{aspect-ratio:1;position:relative;overflow:hidden}
+.ig-cell-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:all .3s}
+.ig-cell:hover .ig-cell-inner{transform:scale(1.05)}
+.ig-c1{background:linear-gradient(135deg,#2d1810,#4a2a1a)}
+.ig-c2{background:linear-gradient(135deg,#1a1a2e,#16213e)}
+.ig-c3{background:linear-gradient(135deg,#3a2415,#793315)}
+.ig-c4{background:linear-gradient(135deg,#1e3a2f,#2d5a4a)}
+.ig-c5{background:linear-gradient(135deg,#201408,#3d2a1c)}
+.ig-c6{background:linear-gradient(135deg,#2a1508,#5a3a28)}
+.ig-c7{background:linear-gradient(135deg,#1a0f08,#3a2010)}
+.ig-c8{background:linear-gradient(135deg,#2d2d2d,#4a4a4a)}
+.ig-c9{background:linear-gradient(135deg,#4a2a1a,#793315)}
+.ig-reel-badge{position:absolute;top:6px;right:6px;font-size:8px;background:rgba(0,0,0,.5);color:#fff;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:.05em}
+.ig-cell-label{position:absolute;bottom:0;left:0;right:0;padding:8px 6px;background:linear-gradient(transparent,rgba(0,0,0,.7));font-size:9px;color:rgba(255,255,255,.8);font-weight:500;letter-spacing:.03em}
+
+/* ── TWO WAYS COMPARISON ── */
+.twoways{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:16px;overflow:hidden;margin-top:60px;box-shadow:0 20px 80px rgba(0,0,0,.08)}
+.twoways-col{padding:56px 48px}
+.twoways-standard{background:#e8e5e1}
+.twoways-standard h3{font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#999;margin-bottom:40px}
+.twoways-standard .tw-item{padding:14px 0;border-bottom:1px dashed #d0cbc4;font-size:14px;color:#999;display:flex;align-items:center;gap:12px}
+.twoways-standard .tw-item::before{content:'×';color:#c0b8ae;font-size:16px;font-weight:700}
+.twoways-standard .tw-item:last-child{border-bottom:none}
+.twoways-rra{background:var(--primary)}
+.twoways-rra h3{font-size:14px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent-light);margin-bottom:40px}
+.twoways-rra .tw-item{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:12px;font-weight:500}
+.twoways-rra .tw-item::before{content:'✓';color:var(--accent-light);font-weight:700}
+.twoways-rra .tw-item:last-child{border-bottom:none}
+.tw-footer{padding:24px 48px;text-align:center;font-size:13px;font-weight:600}
+.twoways-standard .tw-footer{background:#dedad4;color:#999;font-style:italic}
+.twoways-rra .tw-footer{background:rgba(121,51,21,.2);color:var(--accent-light);letter-spacing:.05em}
+
+/* ── REACH / SYNDICATION ── */
+.reach-visual{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:48px}
+.reach-node{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:24px 20px;text-align:center;transition:all .4s}
+.reach-node:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);transform:translateY(-4px)}
+.reach-node .reach-icon{font-size:24px;margin-bottom:10px}
+.reach-node h5{font-size:14px;color:#fff;font-family:var(--serif);margin-bottom:4px}
+.reach-node p{font-size:12px;color:rgba(255,255,255,.4)}
+
+/* ── COUNTERS ── */
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:60px}
+.counter-item{text-align:center;padding:40px 20px}
+.counter-num{font-family:var(--serif);font-size:clamp(48px,5vw,72px);font-weight:400;color:var(--accent);line-height:1;margin-bottom:12px}
+.counter-num .counter-suffix{font-size:.6em}
+.counter-label{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+
+/* ── CONTENT CALENDAR PREVIEW ── */
+.calendar-section{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cal-timeline{display:flex;gap:20px;overflow-x:auto;padding:20px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.cal-timeline::-webkit-scrollbar{display:none}
+.cal-day{min-width:220px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px;flex-shrink:0;transition:all .3s}
+.cal-day:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.04)}
+.cal-day-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.cal-post{padding:12px 0;border-bottom:1px solid var(--border)}
+.cal-post:last-child{border-bottom:none}
+.cal-post-platform{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.cal-post-platform.cp-li{color:#0a66c2}
+.cal-post-platform.cp-ig{color:#e1306c}
+.cal-post-platform.cp-yt{color:#c00}
+.cal-post-platform.cp-email{color:var(--accent)}
+.cal-post-title{font-size:13px;font-weight:500;color:var(--primary)}
+
+/* ── TESTIMONIAL / SOCIAL PROOF ── */
+.proof-section{position:relative;overflow:hidden}
+.proof-quote{font-family:var(--serif);font-size:clamp(24px,3vw,40px);font-style:italic;line-height:1.5;color:var(--primary);max-width:800px;margin:0 auto 32px;text-align:center}
+.proof-attr{text-align:center;font-size:14px;color:var(--muted);font-weight:500}
+.proof-attr strong{color:var(--primary)}
+
+/* ── CTA SECTION ── */
+.cta-section{background:var(--primary);padding:var(--section-py) 0;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")}
+.cta-inner{position:relative;z-index:1;text-align:center;max-width:700px;margin:0 auto}
+.cta-inner h2{font-size:clamp(36px,5vw,60px);color:#fff;margin-bottom:20px;line-height:1.1}
+.cta-inner h2 em{font-style:italic;color:var(--accent-light)}
+.cta-inner p{font-size:17px;color:rgba(255,255,255,.4);line-height:1.8;margin-bottom:48px}
+.cta-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:540px;margin:0 auto}
+.cta-form input,.cta-form textarea{width:100%;padding:16px 20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-family:var(--sans);font-size:14px;border-radius:6px;outline:none;transition:border .3s}
+.cta-form input:focus,.cta-form textarea:focus{border-color:var(--accent)}
+.cta-form input::placeholder,.cta-form textarea::placeholder{color:rgba(255,255,255,.25)}
+.cta-form .full{grid-column:1/-1}
+.cta-form button{grid-column:1/-1;padding:18px;background:var(--accent);color:#fff;border:none;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:6px;cursor:pointer;transition:all .3s}
+.cta-form button:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(121,51,21,.3)}
+
+/* ── FOOTER ── */
+.site-footer{padding:60px 0 40px;border-top:1px solid var(--border)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-brand{font-family:var(--serif);font-size:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.footer-brand span{font-weight:400;opacity:.5}
+.footer-legal{font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:12px;color:var(--muted);transition:color .3s}
+.footer-links a:hover{color:var(--accent)}
+
+/* ── TEXT US PILL ── */
+.text-us{position:fixed;bottom:32px;right:32px;z-index:900;display:flex;align-items:center;gap:10px;padding:14px 28px;background:var(--accent);color:#fff;border-radius:50px;font-size:13px;font-weight:600;letter-spacing:.06em;box-shadow:0 8px 32px rgba(121,51,21,.3);transition:all .3s;text-decoration:none}
+.text-us:hover{background:var(--accent-light);transform:translateY(-3px);box-shadow:0 12px 40px rgba(121,51,21,.4)}
+.text-us svg{width:18px;height:18px;fill:currentColor}
+
+/* ── PARALLAX HELPER ── */
+.parallax-wrap{position:relative;overflow:hidden}
+.parallax-bg{position:absolute;inset:-20%;background-size:cover;background-position:center;will-change:transform}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+.problem-grid{grid-template-columns:1fr;gap:24px}
+.problem-vs{padding:10px 0}
+.problem-vs span{width:40px;height:40px}
+.platform-block,.platform-block.reversed{grid-template-columns:1fr;gap:48px;direction:ltr}
+.twoways{grid-template-columns:1fr}
+.engine-grid{grid-template-columns:1fr 1fr}
+.counters{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+.container{padding:0 24px}
+section{padding:80px 0}
+.nav-links{display:none}
+.hamburger{display:flex}
+.hero-content{padding:140px 24px 80px}
+.engine-grid{grid-template-columns:1fr}
+.counters{grid-template-columns:1fr 1fr}
+.twoways-col{padding:40px 28px}
+.cta-form{grid-template-columns:1fr}
+.footer-inner{flex-direction:column;text-align:center}
+.reach-visual{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ PASSWORD GATE ════════════════ -->
+</div>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav class="site-nav" id="site-nav">
+<div class="nav-inner">
+<a href="./" class="nav-logo">Realty Ryan <span>&amp; Associates</span></a>
+<ul class="nav-links">
+<li><a href="./">Home</a></li>
+<li><a href="team.html">Team</a></li>
+<li><a href="why-realty-ryan.html">Why RRA</a></li>
+<li><a href="builders.html">Builders</a></li>
+<li><a href="exposure.html">Exposure</a></li>
+<li><a href="social.html" class="active">Social</a></li>
+<li><a href="technology.html">Technology</a></li>
+<li class="nav-dropdown">
+<a href="#">Areas ▾</a>
+<div class="nav-dropdown-menu">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+</li>
+<li><a href="listings.html">Listings</a>
+<a href="search.html">Search</a></li>
+<li><a href="search.html">Search</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+<a href="./">Home</a>
+<a href="team.html">Team</a>
+<a href="why-realty-ryan.html">Why RRA</a>
+<a href="builders.html">Builders</a>
+<a href="exposure.html">Exposure</a>
+<a href="social.html">Social</a>
+<a href="technology.html">Technology</a>
+<div class="mobile-sub">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+<a href="listings.html">Listings</a>
+<a href="search.html">Search</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-grain"></div>
+<div class="hero-orb hero-orb-1"></div>
+<div class="hero-orb hero-orb-2"></div>
+<div class="hero-orb hero-orb-3"></div>
+<div class="hero-content">
+<div class="hero-tag fade-up">Social &amp; Content Strategy</div>
+<h1 class="fade-up">Your Listing Deserves<br>More Than a<br><em>"Just Listed"</em> Post</h1>
+<p class="hero-sub fade-up">While 99% of agents snap an iPhone photo and call it marketing, we run a full-scale content engine — cinematic media, AI-powered campaigns, and data-driven strategy across every platform that matters.</p>
+<div class="hero-cta-row fade-up">
+<a href="#content-engine" class="btn-primary">See the Engine</a>
+<a href="#two-ways" class="btn-ghost">Compare the Difference</a>
+</div>
+<div class="hero-scroll fade-up">
+<span></span>
+Scroll
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 1. THE PROBLEM ════════════════ -->
+<section>
+<div class="container">
+<div class="section-center">
+<div class="section-tag fade-up">The Problem</div>
+<h2 class="section-title fade-up">This Is What "Marketing"<br>Looks Like at 99% of Brokerages</h2>
+<p class="section-subtitle fade-up">It's not marketing. It's checking a box. And it's costing sellers real money.</p>
+</div>
+<div class="problem-grid fade-up">
+<div class="problem-side problem-boring">
+<h3>🥱 The Typical Agent</h3>
+<div class="boring-step"><span class="boring-num">1</span> Take 12 photos on iPhone</div>
+<div class="boring-step"><span class="boring-num">2</span> Upload to MLS</div>
+<div class="boring-step"><span class="boring-num">3</span> Auto-syndicate to Zillow</div>
+<div class="boring-step"><span class="boring-num">4</span> Post "Just Listed! 🏠🔑" on Facebook</div>
+<div class="boring-step"><span class="boring-num">5</span> Print a flyer from Canva</div>
+<div class="boring-step"><span class="boring-num">6</span> Wait.</div>
+<div class="boring-result">"We marketed your home." — No, you didn't.</div>
+</div>
+<div class="problem-vs"><span>VS</span></div>
+<div class="problem-side problem-rra">
+<h3>The RRA Content Engine</h3>
+<div class="rra-step"><span class="rra-icon">◆</span> Cinematic photography &amp; video production</div>
+<div class="rra-step"><span class="rra-icon">◆</span> AI-generated marketing brochures</div>
+<div class="rra-step"><span class="rra-icon">◆</span> Editorial property storytelling</div>
+<div class="rra-step"><span class="rra-icon">◆</span> Data-driven social campaigns</div>
+<div class="rra-step"><span class="rra-icon">◆</span> LinkedIn market intelligence</div>
+<div class="rra-step"><span class="rra-icon">◆</span> Instagram cinematic content</div>
+<div class="rra-step"><span class="rra-icon">◆</span> Video across YouTube, Reels, TikTok</div>
+<div class="rra-step"><span class="rra-icon">◆</span> 50+ channel syndication</div>
+<div class="rra-step"><span class="rra-icon">◆</span> Targeted buyer campaigns</div>
+<div class="rra-step"><span class="rra-icon">◆</span> 24/7 AI-powered follow-up</div>
+<div class="rra-result">This is what actually selling a home looks like.</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 2. THE CONTENT ENGINE ════════════════ -->
+<section class="bg-white" id="content-engine">
+<div class="container">
+<div class="section-center">
+<div class="section-tag fade-up">The Content Engine</div>
+<h2 class="section-title fade-up">Not a Social Media Plan.<br>A <em style="font-style:italic;color:var(--accent)">Content Machine.</em></h2>
+<p class="section-subtitle fade-up">Every piece of content is part of a system — designed, scheduled, distributed, and measured. Nothing is random. Nothing is an afterthought.</p>
+</div>
+<div class="engine-grid">
+<div class="engine-card fade-up">
+<div class="engine-num">01</div>
+<h4>Cinematic Media</h4>
+<p>Professional photography and videography that makes your property look like it belongs in Architectural Digest, not a Craigslist listing. Every angle, every frame, intentional.</p>
+</div>
+<div class="engine-card fade-up fade-up-delay-1">
+<div class="engine-num">02</div>
+<h4>AI-Powered Brochures</h4>
+<p>Custom marketing brochures generated by our AI system — tailored to each property's unique story, designed to luxury magazine standards, delivered in hours, not weeks.</p>
+</div>
+<div class="engine-card fade-up fade-up-delay-2">
+<div class="engine-num">03</div>
+<h4>Editorial Descriptions</h4>
+<p>No more "Welcome home to this beautiful 4BR/3BA." We write property descriptions that read like magazine features — because they should.</p>
+</div>
+<div class="engine-card fade-up fade-up-delay-3">
+<div class="engine-num">04</div>
+<h4>Market Intelligence</h4>
+<p>Data-driven market reports with real numbers, real analysis, real insight. Not regurgitated NAR talking points — original research that buyers and sellers actually read.</p>
+</div>
+<div class="engine-card fade-up fade-up-delay-4">
+<div class="engine-num">05</div>
+<h4>Neighborhood Storytelling</h4>
+<p>Every neighborhood has a story. We tell it — schools, restaurants, parks, commute times, vibe. Content that sells the lifestyle, not just the square footage.</p>
+</div>
+<div class="engine-card fade-up">
+<div class="engine-num">06</div>
+<h4>Multi-Platform Distribution</h4>
+<p>Content created once, optimized for every platform — LinkedIn articles, Instagram carousels, YouTube videos, email campaigns, property websites. Everywhere, simultaneously.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 3. LINKEDIN STRATEGY ════════════════ -->
+<section class="platform-section">
+<div class="container">
+<div class="platform-block fade-up">
+<div class="platform-info">
+<div class="platform-badge badge-linkedin">⬡ LinkedIn Strategy</div>
+<h3>Market Intelligence,<br>Not "Excited to Announce"</h3>
+<p class="platform-desc">While other agents post "Excited to announce another closing! 🎉🔑" ... we're publishing data-driven insights that buyers, sellers, and industry professionals actually read. And share. And come back for.</p>
+<p class="platform-quote">"Charlotte median home prices rose 4.2% in Q4 while inventory dropped 18% — here's what that means for sellers sitting on the fence in Myers Park."</p>
+<ul class="platform-features">
+<li>2–3x per week publishing cadence</li>
+<li>First-person voice — confident, direct, not corporate</li>
+<li>Original market data analysis with real numbers</li>
+<li>Builder partnership updates &amp; construction insights</li>
+<li>Neighborhood deep-dives with buyer-relevant data</li>
+<li>Thought leadership that positions RRA as the authority</li>
+</ul>
+</div>
+<div class="linkedin-mockup">
+<div class="li-header">
+<div class="li-avatar">RP</div>
+<div class="li-meta">
+<h5>Ryan Palmer</h5>
+<p>Broker/Owner, Realty Ryan &amp; Associates · Charlotte, NC</p>
+</div>
+</div>
+<div class="li-body">
+<p><strong>Charlotte's luxury market just did something it hasn't done in 3 years.</strong></p>
+<p>Homes priced $750K+ in South Charlotte saw a <span class="li-stat">23% increase</span> in days-on-market last month — while absorption rate dropped to 2.1 months.</p>
+<p>Translation: buyers in the luxury segment are getting pickier. And sellers who aren't pricing strategically are sitting.</p>
+<p>Here's what I'm telling my clients right now...</p>
+<p style="color:var(--accent);font-weight:600;font-size:13px">↓ Read more</p>
+</div>
+<div class="li-engagement">
+<span>847</span> impressions · <span>64</span> reactions · <span>23</span> comments
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 4. INSTAGRAM STRATEGY ════════════════ -->
+<section class="bg-white">
+<div class="container">
+<div class="platform-block reversed fade-up">
+<div class="platform-info">
+<div class="platform-badge badge-instagram">◉ Instagram Strategy</div>
+<h3>Cinematic Content,<br>Not iPhone Filters</h3>
+<p class="platform-desc">Our Instagram isn't a collection of listing photos with the Valencia filter. It's a curated visual portfolio — cinematic property content, builder partnership stories, market data visualizations, and neighborhood spotlights that make Charlotte's real estate scene look like it deserves.</p>
+<ul class="platform-features">
+<li>Cinematic property photography — magazine-quality, every post</li>
+<li>Behind-the-scenes builder partnership content</li>
+<li>Market data cards with real Charlotte numbers</li>
+<li>Neighborhood spotlight series with local stories</li>
+<li>Story strategy: polls, Q&amp;A, behind-the-scenes, market updates</li>
+<li>Reels: property walkthroughs, area tours, market takes</li>
+<li>Consistent visual identity — every post feels RRA</li>
+</ul>
+</div>
+<div class="ig-mockup">
+<div class="ig-phone">
+<div class="ig-header">
+<div class="ig-header-avatar">RR</div>
+<div class="ig-header-name">realtyryan</div>
+</div>
+<div class="ig-grid">
+<div class="ig-cell"><div class="ig-cell-inner ig-c1">Property</div><div class="ig-cell-label">Modern Farmhouse · Belmont</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c2">Market Data</div><div class="ig-cell-label">Q4 Charlotte Report</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c3">Builder</div><div class="ig-reel-badge">REEL</div><div class="ig-cell-label">Construction Update</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c4">Neighborhood</div><div class="ig-cell-label">NoDa Spotlight</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c5">Interior</div><div class="ig-cell-label">Chef's Kitchen Tour</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c6">Lifestyle</div><div class="ig-reel-badge">REEL</div><div class="ig-cell-label">Lake Norman Living</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c7">Property</div><div class="ig-cell-label">Myers Park Estate</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c8">Data Viz</div><div class="ig-cell-label">Inventory Tracker</div></div>
+<div class="ig-cell"><div class="ig-cell-inner ig-c9">Sold</div><div class="ig-cell-label">Under Contract · 4 Days</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 5. VIDEO CONTENT ════════════════ -->
+<section>
+<div class="container">
+<div class="platform-block fade-up">
+<div class="platform-info">
+<div class="platform-badge badge-video">▶ Video Strategy</div>
+<h3>Cinematic Walkthroughs.<br>Not Shaky iPhone Tours.</h3>
+<p class="platform-desc">Video is the #1 driver of real estate engagement. But there's a canyon between a handheld iPhone walkthrough with "so here's the kitchen..." and a cinematic property film that makes buyers feel something. We produce the latter.</p>
+<ul class="platform-features">
+<li>Cinematic property walkthroughs with professional production</li>
+<li>Market update videos — Ryan's weekly Charlotte analysis</li>
+<li>Neighborhood tour series — showcasing lifestyle, not just homes</li>
+<li>Builder partnership spotlights — construction to completion</li>
+<li>Drone footage for properties, neighborhoods, and lake life</li>
+<li>YouTube long-form + Reels/TikTok short-form distribution</li>
+<li>Every video optimized for search, discovery, and engagement</li>
+</ul>
+</div>
+<div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08);background:var(--primary);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center">
+<div style="text-align:center;color:#fff;padding:40px">
+<div style="width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;cursor:pointer;transition:all .3s" onmouseenter="this.style.borderColor='rgba(255,255,255,.5)';this.style.background='rgba(255,255,255,.05)'" onmouseleave="this.style.borderColor='rgba(255,255,255,.2)';this.style.background='transparent'">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="8,5 19,12 8,19"/></svg>
+</div>
+<div style="font-family:var(--serif);font-size:20px;margin-bottom:8px">Property Walkthrough</div>
+<div style="font-size:13px;color:rgba(255,255,255,.4)">Cinematic · 4K · Professional Production</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 6. AI-POWERED CONTENT ════════════════ -->
+<section class="bg-dark">
+<div class="container" style="position:relative;z-index:1">
+<div class="section-center">
+<div class="section-tag fade-up">AI-Powered Content</div>
+<h2 class="section-title fade-up">Meet Jarvis.<br>Our 24/7 Content Engine.</h2>
+<p class="section-subtitle fade-up">While other agents sleep, our AI system is generating market reports, crafting listing descriptions, building email campaigns, and creating marketing materials. Around the clock. Every single day.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px">
+<div class="reach-node fade-up">
+<div class="reach-icon">🧠</div>
+<h5>Automated Market Reports</h5>
+<p>Real MLS data, analyzed and formatted into insights sellers and buyers actually understand</p>
+</div>
+<div class="reach-node fade-up fade-up-delay-1">
+<div class="reach-icon">✉️</div>
+<h5>Personalized Campaigns</h5>
+<p>Email sequences tailored to buyer behavior, search history, and engagement patterns</p>
+</div>
+<div class="reach-node fade-up fade-up-delay-2">
+<div class="reach-icon">📄</div>
+<h5>AI Brochure Generation</h5>
+<p>Luxury marketing brochures designed and written in hours, not weeks — unique to every property</p>
+</div>
+<div class="reach-node fade-up fade-up-delay-3">
+<div class="reach-icon">✍️</div>
+<h5>Editorial Descriptions</h5>
+<p>Property copy that reads like a magazine feature — storytelling that makes buyers feel the home</p>
+</div>
+<div class="reach-node fade-up fade-up-delay-4">
+<div class="reach-icon">📊</div>
+<h5>Data Visualizations</h5>
+<p>Market charts, neighborhood comparisons, price trends — visual content that gets shared</p>
+</div>
+<div class="reach-node fade-up">
+<div class="reach-icon">🔄</div>
+<h5>24/7 Creation</h5>
+<p>Content doesn't stop at 5pm. Jarvis generates, schedules, and optimizes while the competition sleeps</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 7. YOUR LISTING, TWO WAYS ════════════════ -->
+<section id="two-ways">
+<div class="container">
+<div class="section-center">
+<div class="section-tag fade-up">The Comparison</div>
+<h2 class="section-title fade-up">Your Listing, Two Ways</h2>
+<p class="section-subtitle fade-up">Same house. Same market. Two completely different outcomes.</p>
+</div>
+<div class="twoways fade-up">
+<div class="twoways-col twoways-standard">
+<h3>The Industry Standard</h3>
+<div class="tw-item">iPhone photos, slightly overexposed</div>
+<div class="tw-item">MLS upload with auto-syndication</div>
+<div class="tw-item">"Just Listed! 🏠🔑" post on Facebook</div>
+<div class="tw-item">Generic Canva flyer</div>
+<div class="tw-item">Open house sign in the yard</div>
+<div class="tw-item">Wait and hope for the best</div>
+<div class="tw-item">Weekly "any interest?" calls</div>
+<div class="tw-item">Price reduction after 30 days</div>
+<div class="tw-footer">"We did everything we could."</div>
+</div>
+<div class="twoways-col twoways-rra">
+<h3>The Realty Ryan Standard</h3>
+<div class="tw-item">Cinematic photography &amp; video production</div>
+<div class="tw-item">Dedicated property website with gated leads</div>
+<div class="tw-item">AI-generated luxury marketing brochures</div>
+<div class="tw-item">Editorial property description</div>
+<div class="tw-item">50+ platform syndication</div>
+<div class="tw-item">LinkedIn market intelligence campaign</div>
+<div class="tw-item">Instagram cinematic content series</div>
+<div class="tw-item">Targeted buyer demographic campaigns</div>
+<div class="tw-item">Email campaigns to qualified buyer pool</div>
+<div class="tw-item">Retargeting ads across platforms</div>
+<div class="tw-item">Smart home staging consultation</div>
+<div class="tw-item">24/7 AI-powered lead follow-up</div>
+<div class="tw-item">Weekly seller analytics dashboard</div>
+<div class="tw-footer">This is what selling a home looks like.</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 8. THE REACH ════════════════ -->
+<section class="bg-dark">
+<div class="container" style="position:relative;z-index:1">
+<div class="section-center">
+<div class="section-tag fade-up">The Reach</div>
+<h2 class="section-title fade-up">Posted and Forgotten?<br>Not Here.</h2>
+<p class="section-subtitle fade-up">Every piece of content we create is syndicated, targeted, retargeted, and tracked. We don't just post — we distribute.</p>
+</div>
+<div class="reach-visual fade-up">
+<div class="reach-node">
+<div class="reach-icon">🌐</div>
+<h5>50+ Portals</h5>
+<p>Global syndication</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">🎯</div>
+<h5>Targeted Ads</h5>
+<p>Buyer demographics</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">🔄</div>
+<h5>Retargeting</h5>
+<p>Cross-platform follow</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">✉️</div>
+<h5>Email Integration</h5>
+<p>Qualified buyer lists</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">📱</div>
+<h5>Social Distribution</h5>
+<p>LinkedIn · IG · YouTube</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">📊</div>
+<h5>Analytics</h5>
+<p>Track every impression</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">🏠</div>
+<h5>Property Websites</h5>
+<p>Gated lead capture</p>
+</div>
+<div class="reach-node">
+<div class="reach-icon">🤖</div>
+<h5>AI Follow-up</h5>
+<p>24/7 lead nurturing</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 9. CONTENT CALENDAR PREVIEW ════════════════ -->
+<section class="calendar-section">
+<div class="container">
+<div class="section-center">
+<div class="section-tag fade-up">Content Calendar</div>
+<h2 class="section-title fade-up">A Week Inside<br>the Content Engine</h2>
+<p class="section-subtitle fade-up">This isn't a random posting schedule. Every piece is planned, produced, and purposeful.</p>
+</div>
+<div class="cal-timeline fade-up">
+<div class="cal-day">
+<div class="cal-day-label">Monday</div>
+<div class="cal-post"><div class="cal-post-platform cp-li">LinkedIn</div><div class="cal-post-title">Weekly Market Intelligence Report</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Instagram</div><div class="cal-post-title">Cinematic Property Feature</div></div>
+</div>
+<div class="cal-day">
+<div class="cal-day-label">Tuesday</div>
+<div class="cal-post"><div class="cal-post-platform cp-email">Email</div><div class="cal-post-title">New Listings Alert — Buyer Segments</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Instagram Story</div><div class="cal-post-title">Behind-the-Scenes: Builder Walk</div></div>
+</div>
+<div class="cal-day">
+<div class="cal-day-label">Wednesday</div>
+<div class="cal-post"><div class="cal-post-platform cp-li">LinkedIn</div><div class="cal-post-title">Charlotte Neighborhood Deep-Dive</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-yt">YouTube</div><div class="cal-post-title">Property Walkthrough Video</div></div>
+</div>
+<div class="cal-day">
+<div class="cal-day-label">Thursday</div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Instagram</div><div class="cal-post-title">Market Data Visualization</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Reels</div><div class="cal-post-title">60-sec Neighborhood Tour</div></div>
+</div>
+<div class="cal-day">
+<div class="cal-day-label">Friday</div>
+<div class="cal-post"><div class="cal-post-platform cp-li">LinkedIn</div><div class="cal-post-title">Industry Insight / Hot Take</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-email">Email</div><div class="cal-post-title">Weekend Open House Campaign</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Instagram</div><div class="cal-post-title">Sold Story / Client Win</div></div>
+</div>
+<div class="cal-day">
+<div class="cal-day-label">Weekend</div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Instagram Story</div><div class="cal-post-title">Open House Coverage</div></div>
+<div class="cal-post"><div class="cal-post-platform cp-ig">Reels</div><div class="cal-post-title">Property Highlight Reel</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 10. BY THE NUMBERS ════════════════ -->
+<section>
+<div class="container">
+<div class="section-center">
+<div class="section-tag fade-up">By the Numbers</div>
+<h2 class="section-title fade-up">The Output Speaks<br>for Itself</h2>
+</div>
+<div class="counters fade-up" id="counters">
+<div class="counter-item">
+<div class="counter-num"><span class="counter" data-target="50">0</span><span class="counter-suffix">+</span></div>
+<div class="counter-label">Syndication<br>Channels</div>
+</div>
+<div class="counter-item">
+<div class="counter-num"><span class="counter" data-target="150">0</span><span class="counter-suffix">+</span></div>
+<div class="counter-label">Content Pieces<br>Per Month</div>
+</div>
+<div class="counter-item">
+<div class="counter-num"><span class="counter" data-target="24">0</span><span class="counter-suffix">/7</span></div>
+<div class="counter-label">AI Content<br>Engine Uptime</div>
+</div>
+<div class="counter-item">
+<div class="counter-num"><span class="counter" data-target="3">0</span><span class="counter-suffix">x</span></div>
+<div class="counter-label">More Exposure Than<br>Industry Average</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ 11. SOCIAL PROOF QUOTE ════════════════ -->
+<section class="bg-white proof-section" style="padding:100px 0">
+<div class="container fade-up">
+<p class="proof-quote">"I've never had an agent who treated marketing my home like a product launch. The content, the strategy, the reach — it was on a completely different level."</p>
+<p class="proof-attr"><strong>Charlotte Seller</strong> · South Charlotte</p>
+</div>
+</section>
+
+<!-- ════════════════ 12. CTA ════════════════ -->
+<section class="cta-section">
+<div class="container">
+<div class="cta-inner fade-up">
+<h2>Ready for Marketing<br>That Actually <em>Works?</em></h2>
+<p>Stop watching your listing sit on the market with a Canva flyer and an iPhone photo. Let's talk about what real content strategy looks like.</p>
+<form class="cta-form" onsubmit="return handleCTA(event)">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="tel" name="phone" placeholder="Phone Number" required>
+<input type="email" name="email" placeholder="Email" class="full" required>
+<textarea name="message" placeholder="Tell us about your property..." rows="3" class="full"></textarea>
+<button type="submit">Let's Talk Strategy</button>
+</form>
+</div>
+</div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="site-footer">
+<div class="container">
+<div class="footer-inner">
+<div class="footer-brand">Realty Ryan <span>&amp; Associates</span></div>
+<div class="footer-links">
+<a href="exposure.html">Exposure</a>
+<a href="technology.html">Technology</a>
+<a href="contact.html">Contact</a>
+</div>
+<div class="footer-legal">&copy; 2026 Realty Ryan &amp; Associates. All rights reserved.</div>
+</div>
+</div>
+</footer>
+
+<!-- ════════════════ TEXT US PILL ════════════════ -->
+<a href="sms:5089542159" class="text-us">
+<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+Text Us
+</a>
+
+<!-- ════════════════ SCRIPTS ════════════════ -->
+<script>
+/* Nav scroll */
+const nav=document.getElementById('site-nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>80);
+},{passive:true});
+
+/* Hamburger */
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobile-menu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+
+/* Fade-up on scroll */
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+/* Animated counters */
+let countersDone=false;
+const counterObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!countersDone){
+      countersDone=true;
+      document.querySelectorAll('.counter').forEach(c=>{
+        const target=+c.dataset.target;
+        const duration=2000;
+        const start=performance.now();
+        function tick(now){
+          const progress=Math.min((now-start)/duration,1);
+          const eased=1-Math.pow(1-progress,3);
+          c.textContent=Math.round(eased*target);
+          if(progress<1)requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+  });
+},{threshold:0.3});
+const countersEl=document.getElementById('counters');
+if(countersEl)counterObserver.observe(countersEl);
+
+/* CTA form */
+function handleCTA(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('button');
+  btn.textContent='Message Sent ✓';
+  btn.style.background='#2d6a4f';
+  setTimeout(()=>{btn.textContent="Let's Talk Strategy";btn.style.background=''},3000);
+  return false;
+}
+
+/* Smooth scroll for anchor links */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>

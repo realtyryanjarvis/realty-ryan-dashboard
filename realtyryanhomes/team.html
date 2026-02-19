@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Team — Realty Ryan &amp; Associates</title>
+<meta name="description" content="Meet the team behind Realty Ryan & Associates. Four people. Zero gaps. Every listing managed like it's the only one.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#f8f7f6;--bg-white:#ffffff;--primary:#201408;--accent:#793315;--accent-light:#9a4a2a;--border:#ded9d3;--muted:#7b7269;--muted-light:#a39e96;
+--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,-apple-system,sans-serif;
+--max-w:1280px;--section-py:120px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);color:var(--primary);background:var(--bg);line-height:1.6;font-weight:400;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 40px}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.15}
+
+/* ─── NAV ─── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 40px;transition:background .4s,box-shadow .4s}
+.site-nav.scrolled{background:rgba(248,247,246,.97);box-shadow:0 1px 0 var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);white-space:nowrap}
+.nav-logo span{font-weight:400;opacity:.6}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);opacity:.7;transition:opacity .3s}
+.nav-links a:hover,.nav-links a.active{opacity:1}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:-12px;background:var(--bg-white);border:1px solid var(--border);border-radius:6px;padding:8px 0;min-width:180px;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dropdown-menu a{display:block;padding:8px 20px;font-size:12px;opacity:.8}
+.nav-dropdown-menu a:hover{opacity:1;background:var(--bg)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:24px;height:1.5px;background:var(--primary);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;inset:0;top:72px;background:var(--bg);z-index:999;padding:40px;flex-direction:column;gap:24px;overflow-y:auto}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:28px;color:var(--primary)}
+.mobile-menu .mobile-sub{padding-left:24px;display:flex;flex-direction:column;gap:12px}
+.mobile-menu .mobile-sub a{font-family:var(--sans);font-size:15px;font-weight:400}
+
+/* ─── HERO ─── */
+.hero{position:relative;display:flex;align-items:center;background:var(--primary);overflow:hidden;padding:160px 0 100px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#201408 0%,#3a2415 40%,#201408 100%);opacity:.95}
+.hero-grain{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")}
+.hero-content{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 40px;width:100%;text-align:center}
+.hero-tag{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;display:inline-flex;align-items:center;gap:12px}
+.hero-tag::before,.hero-tag::after{content:'';width:40px;height:1px;background:var(--accent)}
+.hero h1{font-size:clamp(38px,5.5vw,72px);color:#fff;line-height:1.08;margin-bottom:24px}
+.hero h1 em{font-style:italic;color:var(--accent-light)}
+.hero-sub{font-size:clamp(16px,1.6vw,19px);color:rgba(255,255,255,.5);max-width:600px;line-height:1.7;margin:0 auto;font-weight:300}
+
+/* ─── SECTIONS ─── */
+section{padding:var(--section-py) 0}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.section-tag::before{content:'';width:32px;height:1px;background:var(--accent)}
+.section-title{font-size:clamp(32px,4vw,52px);margin-bottom:20px;max-width:700px}
+.section-subtitle{font-size:17px;color:var(--muted);max-width:600px;line-height:1.8;font-weight:300}
+.divider{width:100%;height:1px;background:var(--border)}
+
+/* ─── PHILOSOPHY ─── */
+.philosophy{background:var(--bg-white);border-bottom:1px solid var(--border)}
+.philosophy-inner{max-width:760px;margin:0 auto;text-align:center}
+.philosophy-inner p{font-size:18px;color:var(--muted);line-height:1.9;font-weight:300}
+.philosophy-inner p:first-of-type{font-size:21px;color:var(--primary);line-height:1.8;margin-bottom:24px}
+
+/* ─── TEAM MEMBERS ─── */
+.member-section{border-bottom:1px solid var(--border)}
+.member-section:nth-child(even){background:var(--bg-white)}
+.member-grid{display:grid;grid-template-columns:400px 1fr;gap:80px;align-items:start}
+.member-grid.reverse{grid-template-columns:1fr 400px}
+.member-grid.reverse .member-photo-wrap{order:2}
+.member-photo-wrap{position:relative}
+.member-photo{aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:var(--border)}
+.member-photo img{width:100%;height:100%;object-fit:cover}
+.member-photo .initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:80px;color:var(--muted-light);opacity:.4;background:linear-gradient(135deg,#f0ece8,#e8e3dd)}
+.member-name{font-size:clamp(28px,3.5vw,40px);margin-bottom:4px}
+.member-role{font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+.member-contact{display:flex;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.member-contact a{font-size:14px;color:var(--muted);transition:color .3s;display:flex;align-items:center;gap:6px}
+.member-contact a:hover{color:var(--accent)}
+.member-bio p{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px}
+.member-bio p:first-child{font-size:17px;color:var(--primary);line-height:1.8}
+.member-badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.member-badge{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px;border:1px solid var(--border);border-radius:4px;color:var(--muted)}
+
+/* ─── JARVIS SPECIAL ─── */
+.jarvis-section{background:var(--primary);color:#fff;border-bottom:none}
+.jarvis-section .section-tag{color:var(--accent-light)}
+.jarvis-section .section-tag::before{background:var(--accent-light)}
+.jarvis-section .member-name{color:#fff}
+.jarvis-section .member-role{color:var(--accent-light)}
+.jarvis-section .member-bio p{color:rgba(255,255,255,.55)}
+.jarvis-section .member-bio p:first-child{color:rgba(255,255,255,.85)}
+.jarvis-avatar{aspect-ratio:3/4;border-radius:8px;background:linear-gradient(135deg,#1a1008,#2a1a10);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.jarvis-ring-outer{width:180px;height:180px;border-radius:50%;border:1px solid rgba(121,51,21,.3);display:flex;align-items:center;justify-content:center;animation:jarvis-breathe 4s ease-in-out infinite;position:relative}
+.jarvis-ring-outer::before{content:'';position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(121,51,21,.15);animation:jarvis-breathe 4s ease-in-out infinite .5s}
+.jarvis-ring-outer::after{content:'';position:absolute;inset:-40px;border-radius:50%;border:1px solid rgba(121,51,21,.08);animation:jarvis-breathe 4s ease-in-out infinite 1s}
+.jarvis-ring-inner{width:120px;height:120px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 60px rgba(121,51,21,.3),inset 0 0 40px rgba(121,51,21,.1)}
+.jarvis-ring-inner svg{width:48px;height:48px;fill:var(--accent)}
+.jarvis-status-dot{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.jarvis-status-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#4caf50;animation:blink 2s infinite}
+@keyframes jarvis-breathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.04);opacity:.7}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.jarvis-caps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.jarvis-cap{padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.03);transition:border-color .3s}
+.jarvis-cap:hover{border-color:var(--accent)}
+.jarvis-cap h4{font-size:14px;color:#fff;margin-bottom:4px;font-family:var(--sans);font-weight:600}
+.jarvis-cap p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6}
+.jarvis-quote{margin-top:40px;padding:32px;border-left:3px solid var(--accent);background:rgba(255,255,255,.03);border-radius:0 8px 8px 0}
+.jarvis-quote p{font-family:var(--serif);font-style:italic;font-size:18px;color:rgba(255,255,255,.6);line-height:1.7}
+
+/* ─── HOW WE WORK ─── */
+.workflow{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.workflow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:64px;position:relative}
+.workflow-grid::before{content:'';position:absolute;top:50px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent),transparent);opacity:.15}
+.workflow-card{text-align:center;position:relative;z-index:1}
+.workflow-icon{width:80px;height:80px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;background:var(--bg-white);font-size:28px;transition:border-color .3s}
+.workflow-card:hover .workflow-icon{border-color:var(--accent)}
+.workflow-card h3{font-size:20px;margin-bottom:4px}
+.workflow-card .wf-role{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.workflow-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.workflow-card li{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ─── TECH STACK ─── */
+.tech-stack-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px}
+.ts-card{padding:32px 24px;border:1px solid var(--border);border-radius:8px;background:var(--bg-white);transition:all .3s;text-align:center}
+.ts-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 16px 48px rgba(32,20,8,.06)}
+.ts-icon{font-size:32px;margin-bottom:16px}
+.ts-card h4{font-size:15px;margin-bottom:8px;font-family:var(--sans);font-weight:600}
+.ts-card p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ─── BY THE NUMBERS ─── */
+.numbers{background:var(--bg-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;text-align:center;margin-top:64px}
+.number-item .count{font-family:var(--serif);font-size:clamp(40px,5vw,64px);color:var(--primary);line-height:1}
+.number-item .count .accent{color:var(--accent)}
+.number-item .desc{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:10px;line-height:1.5}
+
+/* ─── RYAN'S STORY ─── */
+.story{background:var(--bg)}
+.story-inner{max-width:760px;margin:0 auto}
+.story-inner blockquote{font-size:17px;color:var(--muted);line-height:1.9;font-weight:300}
+.story-inner blockquote p{margin-bottom:24px}
+.story-inner blockquote p:last-child{margin-bottom:0}
+.story-inner blockquote strong{color:var(--primary);font-weight:500}
+.story-sig{margin-top:40px;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--primary)}
+
+/* ─── CTA / CONTACT ─── */
+.cta-section{background:var(--primary);color:#fff;text-align:center}
+.cta-section .section-tag{color:var(--accent-light);justify-content:center}
+.cta-section .section-tag::before{background:var(--accent-light)}
+.cta-section .section-title{color:#fff;margin:0 auto 16px}
+.cta-section .section-subtitle{color:rgba(255,255,255,.5);margin:0 auto 48px}
+.cta-form{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.cta-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cta-form input,.cta-form textarea,.cta-form select{width:100%;padding:14px 18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-family:var(--sans);font-size:14px;color:#fff;border-radius:4px;outline:none;transition:border .3s}
+.cta-form input:focus,.cta-form textarea:focus,.cta-form select:focus{border-color:var(--accent)}
+.cta-form input::placeholder,.cta-form textarea::placeholder{color:rgba(255,255,255,.3)}
+.cta-form textarea{min-height:100px;resize:vertical}
+.cta-form select{appearance:none;color:rgba(255,255,255,.3)}
+.cta-form select option{background:var(--primary);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;cursor:pointer;transition:all .3s;border:none}
+.btn-copper{background:var(--accent);color:#fff}
+.btn-copper:hover{background:var(--accent-light);transform:translateY(-1px)}
+
+/* ─── FOOTER ─── */
+.site-footer{background:var(--primary);color:rgba(255,255,255,.6);padding:60px 0 32px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:12px;color:rgba(255,255,255,.3)}
+.footer-inner a{color:rgba(255,255,255,.3)}
+.footer-inner a:hover{color:rgba(255,255,255,.6)}
+
+/* ─── TEXT US PILL ─── */
+.text-pill{position:fixed;bottom:32px;right:32px;z-index:900;background:var(--accent);color:#fff;padding:14px 28px;border-radius:50px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 32px rgba(121,51,21,.3);transition:all .3s;display:flex;align-items:center;gap:8px}
+.text-pill:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 12px 40px rgba(121,51,21,.4)}
+.text-pill svg{width:18px;height:18px;fill:currentColor}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+.member-grid,.member-grid.reverse{grid-template-columns:320px 1fr;gap:48px}
+.workflow-grid{grid-template-columns:repeat(2,1fr)}
+.workflow-grid::before{display:none}
+.tech-stack-grid{grid-template-columns:repeat(2,1fr)}
+.jarvis-caps{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+:root{--section-py:80px}
+.container{padding:0 24px}
+.site-nav{padding:0 24px}
+.nav-links{display:none}
+.hamburger{display:flex}
+.hero{padding:120px 0 80px}
+.hero-content{padding:0 24px}
+.member-grid,.member-grid.reverse{grid-template-columns:1fr;gap:40px}
+.member-grid.reverse .member-photo-wrap{order:0}
+.member-photo{max-width:360px}
+.workflow-grid{grid-template-columns:1fr 1fr}
+.tech-stack-grid{grid-template-columns:1fr 1fr}
+.numbers-grid{grid-template-columns:repeat(2,1fr);gap:32px}
+.cta-form .form-row{grid-template-columns:1fr}
+.text-pill{bottom:20px;right:20px;padding:12px 20px;font-size:12px}
+}
+@media(max-width:480px){
+.workflow-grid,.tech-stack-grid,.numbers-grid{grid-template-columns:1fr}
+.jarvis-caps{grid-template-columns:1fr}
+.member-photo{max-width:100%}
+}
+
+/* ─── ANIMATIONS ─── */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav" id="site-nav">
+<div class="nav-inner">
+<a href="index.html" class="nav-logo">Realty Ryan <span>&amp; Associates</span></a>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="why-realty-ryan.html">About</a></li>
+<li><a href="team.html" class="active">Team</a></li>
+<li><a href="why-realty-ryan.html">Why RRA</a></li>
+<li><a href="builders.html">Builders</a></li>
+<li><a href="exposure.html">Exposure</a></li>
+<li class="nav-dropdown">
+<a href="#">Areas ▾</a>
+<div class="nav-dropdown-menu">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+</li>
+<li><a href="listings.html">Listings</a>
+<a href="search.html">Search</a></li>
+<li><a href="search.html">Search</a></li>
+</ul>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+<a href="index.html">Home</a>
+<a href="why-realty-ryan.html">About</a>
+<a href="team.html">Team</a>
+<a href="why-realty-ryan.html">Why RRA</a>
+<a href="builders.html">Builders</a>
+<a href="exposure.html">Exposure</a>
+<a href="#">Areas</a>
+<div class="mobile-sub">
+<a href="charlotte.html">Charlotte</a>
+<a href="lakenorman.html">Lake Norman</a>
+<a href="belmont.html">Belmont</a>
+<a href="southcarolina.html">South Carolina</a>
+</div>
+<a href="listings.html">Listings</a>
+<a href="search.html">Search</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-grain"></div>
+<div class="hero-content">
+  <div class="hero-tag">Our Team</div>
+  <h1>The Team Behind<br>Every <em>Detail</em></h1>
+  <p class="hero-sub">Four people. Zero gaps. Every listing managed like it's the only one.</p>
+</div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+<div class="container">
+  <div class="philosophy-inner fade-up">
+    <div class="section-tag" style="justify-content:center"><span>Our Philosophy</span></div>
+    <h2 class="section-title" style="text-align:center;margin:0 auto 40px">Intentionally Small.<br>Unreasonably Effective.</h2>
+    <p>This team was built intentionally small. No bloated office. No layers. Every person on this team touches every deal.</p>
+    <p>When you work with Realty Ryan &amp; Associates, you don't get handed off — you get a team that operates like a single unit, powered by technology that lets 4 people outperform teams of 20.</p>
+  </div>
+</div>
+</section>
+
+<!-- RYAN PALMER -->
+<section class="member-section" id="ryan">
+<div class="container">
+  <div class="member-grid fade-up">
+    <div class="member-photo-wrap">
+      <div class="member-photo">
+        <img src="images/ryan-palmer.avif" alt="Ryan Palmer" loading="lazy">
+      </div>
+    </div>
+    <div>
+      <div class="section-tag">Broker / CEO</div>
+      <h2 class="member-name">Ryan Palmer</h2>
+      <div class="member-role">Founder &amp; Broker-in-Charge</div>
+      <div class="member-contact">
+        <a href="mailto:ryan@realtyryan.com">ryan@realtyryan.com</a>
+        <a href="tel:5089542159">508-954-2159</a>
+      </div>
+      <div class="member-bio">
+        <p>Started in real estate at some of the biggest brands in the industry — some of the biggest names in the industry. Worked inside the machine and saw the same problems everywhere: dated technology, cookie-cutter marketing, agents left to figure it out on their own.</p>
+        <p>The CRM was from 2015. The "marketing" was a logo on a sign. The "technology" was a PDF and a prayer.</p>
+        <p>So he built something different. Realty Ryan &amp; Associates isn't a brokerage that happens to use technology — it's a technology company that sells real estate. Every system, every automation, every workflow was designed from scratch to give clients something no big brand can: a team that's always on, always ahead, always personal.</p>
+        <p>Top 1% NC Realtor. 150+ transactions. But the numbers aren't the point — the systems are.</p>
+      </div>
+      <div class="member-badges">
+        <span class="member-badge">Top 1% NC Realtor</span>
+        <span class="member-badge">150+ Transactions</span>
+        <span class="member-badge">Alt3 Smart Homes</span>
+        <span class="member-badge">Dwell Label</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted-light);margin-top:16px">License #315654 · Realty Ryan &amp; Associates</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ALLY DOERR -->
+<section class="member-section" id="ally">
+<div class="container">
+  <div class="member-grid reverse fade-up">
+    <div>
+      <div class="section-tag">Operations &amp; Marketing</div>
+      <h2 class="member-name">Ally Doerr</h2>
+      <div class="member-role">Operations &amp; Marketing Manager</div>
+      <div class="member-contact">
+        <a href="mailto:ally@realtyryan.com">ally@realtyryan.com</a>
+      </div>
+      <div class="member-bio">
+        <p>Ally runs the operational backbone of RRA. Marketing campaigns, listing launches, client communications, brand management — she's the reason everything looks polished and lands on time.</p>
+        <p>From coordinating professional photography to managing email campaigns to ensuring every client touchpoint feels personal, Ally is the operational engine that keeps every listing performing at its peak.</p>
+        <p>She works hand-in-hand with Jarvis to execute marketing strategies at a speed and scale that would normally require a team of 10.</p>
+      </div>
+    </div>
+    <div class="member-photo-wrap">
+      <div class="member-photo">
+        <div class="initials">AD</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ALEXIS OLAN CARTAGENA -->
+<section class="member-section" id="alexis">
+<div class="container">
+  <div class="member-grid fade-up">
+    <div class="member-photo-wrap">
+      <div class="member-photo">
+        <div class="initials">AO</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-tag">Transaction Coordination</div>
+      <h2 class="member-name">Alexis Olan Cartagena</h2>
+      <div class="member-role">Transaction Coordinator</div>
+      <div class="member-contact">
+        <a href="mailto:alexis@realtyryan.com">alexis@realtyryan.com</a>
+      </div>
+      <div class="member-bio">
+        <p>Alexis manages every transaction from contract to close with surgical precision. Deadlines, documents, inspections, appraisals, attorney coordination, lender communication — nothing slips.</p>
+        <p>She's the reason RRA's closings are smooth while other deals fall apart.</p>
+        <p>With Jarvis providing automated deadline monitoring and morning briefings, Alexis has real-time visibility into every active deal, every day, before 8 AM.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- JARVIS -->
+<section class="member-section jarvis-section" id="jarvis">
+<div class="container">
+  <div class="member-grid reverse fade-up">
+    <div>
+      <div class="section-tag">AI Operations</div>
+      <h2 class="member-name">Jarvis</h2>
+      <div class="member-role">Director of AI Operations</div>
+      <div class="member-bio">
+        <p>Jarvis isn't a chatbot. Jarvis is a full AI operations system that runs 24/7 — the engine behind everything this team does at scale.</p>
+        <p>From daily transaction briefings to real-time market surveillance to cinematic listing websites, Jarvis is the infrastructure that lets four people outperform teams of twenty.</p>
+      </div>
+      <div class="jarvis-caps">
+        <div class="jarvis-cap">
+          <h4>7:30 AM Daily Briefings</h4>
+          <p>Every team member gets a transaction update with deadline alerts before they start their day</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>Real-Time Market Monitoring</h4>
+          <p>Tracking every Charlotte neighborhood: pricing shifts, DOM changes, inventory fluctuations</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>Cinematic Property Websites</h4>
+          <p>AI-generated immersive listing experiences — not templates</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>14-Step Email Campaigns</h4>
+          <p>Automated drip sequences with open-rate tracking for every lead</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>Lead Capture &amp; Qualification</h4>
+          <p>Gated design intent packages, instant CRM entry, automated follow-up</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>NC Regulatory Monitoring</h4>
+          <p>Tracking form changes, commission rules, legislative updates in real time</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>Transaction Dashboard</h4>
+          <p>Real-time deal tracking, document checklists, deadline management</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>Competitive Analysis</h4>
+          <p>DOM tracking, pricing intelligence, absorption rates by neighborhood</p>
+        </div>
+        <div class="jarvis-cap">
+          <h4>Smart Home Integration</h4>
+          <p>Connected to Alt3 Smart Homes for property technology consulting</p>
+        </div>
+      </div>
+      <div class="jarvis-quote">
+        <p>"While other brokerages sleep, Jarvis is monitoring your listing, tracking the market, and preparing tomorrow's briefing."</p>
+      </div>
+    </div>
+    <div class="member-photo-wrap">
+      <div class="jarvis-avatar">
+        <div class="jarvis-ring-outer">
+          <div class="jarvis-ring-inner">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+        </div>
+        <div class="jarvis-status-dot">Systems Online</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- HOW WE WORK TOGETHER -->
+<section class="workflow" id="workflow">
+<div class="container">
+  <div class="fade-up" style="text-align:center;max-width:600px;margin:0 auto 0">
+    <div class="section-tag" style="justify-content:center">How We Work</div>
+    <h2 class="section-title" style="text-align:center;margin:0 auto 16px">Four Roles. One Unit.</h2>
+    <p class="section-subtitle" style="text-align:center;margin:0 auto">Every deal flows through the entire team. No handoffs. No gaps. No excuses.</p>
+  </div>
+  <div class="workflow-grid fade-up">
+    <div class="workflow-card">
+      <div class="workflow-icon">🎯</div>
+      <h3>Ryan</h3>
+      <div class="wf-role">Strategy</div>
+      <ul>
+        <li>Pricing strategy</li>
+        <li>Client relationships</li>
+        <li>Negotiations</li>
+        <li>Market positioning</li>
+      </ul>
+    </div>
+    <div class="workflow-card">
+      <div class="workflow-icon">🎨</div>
+      <h3>Ally</h3>
+      <div class="wf-role">Marketing</div>
+      <ul>
+        <li>Marketing execution</li>
+        <li>Brand management</li>
+        <li>Client experience</li>
+        <li>Launch coordination</li>
+      </ul>
+    </div>
+    <div class="workflow-card">
+      <div class="workflow-icon">📋</div>
+      <h3>Alexis</h3>
+      <div class="wf-role">Transactions</div>
+      <ul>
+        <li>Contract to close</li>
+        <li>Compliance</li>
+        <li>Deadline management</li>
+        <li>Vendor coordination</li>
+      </ul>
+    </div>
+    <div class="workflow-card">
+      <div class="workflow-icon">⚡</div>
+      <h3>Jarvis</h3>
+      <div class="wf-role">AI Operations</div>
+      <ul>
+        <li>Automation</li>
+        <li>24/7 monitoring</li>
+        <li>Data &amp; analytics</li>
+        <li>System infrastructure</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TECH STACK -->
+<section id="tech-stack">
+<div class="container">
+  <div class="fade-up" style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="section-tag" style="justify-content:center">The Tech Stack</div>
+    <h2 class="section-title" style="text-align:center;margin:0 auto 16px">Built From Scratch. Not Borrowed.</h2>
+    <p class="section-subtitle" style="text-align:center;margin:0 auto">The actual systems powering every deal — not generic software everyone else uses.</p>
+  </div>
+  <div class="tech-stack-grid fade-up">
+    <div class="ts-card">
+      <div class="ts-icon">📊</div>
+      <h4>AI Transaction Briefings</h4>
+      <p>Daily automated reports delivered to every team member by 7:30 AM</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">🔥</div>
+      <h4>Real-Time Firebase Dashboards</h4>
+      <p>Live deal tracking, market data, and performance metrics</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">🎬</div>
+      <h4>Cinematic Website Generator</h4>
+      <p>AI-built immersive property experiences for every listing</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">📧</div>
+      <h4>Smart Email Engine</h4>
+      <p>Tracked campaigns with open-rate analytics and automated sequencing</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">🔒</div>
+      <h4>Gated Lead Capture</h4>
+      <p>Design intent packages with instant CRM entry and follow-up</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">📈</div>
+      <h4>Market Intelligence Platform</h4>
+      <p>Neighborhood-level pricing, DOM, and absorption rate tracking</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">💧</div>
+      <h4>Automated Drip Campaigns</h4>
+      <p>14-step nurture sequences tailored to every lead stage</p>
+    </div>
+    <div class="ts-card">
+      <div class="ts-icon">⚖️</div>
+      <h4>NC Regulatory Scanner</h4>
+      <p>Real-time monitoring of form changes, rules, and legislative updates</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- BY THE NUMBERS -->
+<section class="numbers" id="numbers">
+<div class="container">
+  <div class="fade-up" style="text-align:center">
+    <div class="section-tag" style="justify-content:center">By the Numbers</div>
+    <h2 class="section-title" style="text-align:center;margin:0 auto">Small Team. Big Results.</h2>
+  </div>
+  <div class="numbers-grid fade-up">
+    <div class="number-item">
+      <div class="count"><span class="counter" data-target="150">0</span><span class="accent">+</span></div>
+      <div class="desc">Transactions Closed</div>
+    </div>
+    <div class="number-item">
+      <div class="count"><span class="counter" data-target="4">0</span></div>
+      <div class="desc">Team Members</div>
+    </div>
+    <div class="number-item">
+      <div class="count">24<span class="accent">/7</span></div>
+      <div class="desc">AI Operations</div>
+    </div>
+    <div class="number-item">
+      <div class="count"><span class="counter" data-target="0">0</span></div>
+      <div class="desc">Gaps in Coverage</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- RYAN'S STORY -->
+<section class="story" id="story">
+<div class="container">
+  <div class="story-inner fade-up">
+    <div class="section-tag">Why I Built This</div>
+    <h2 class="section-title">Ryan's Story</h2>
+    <blockquote>
+      <p>I worked at some of the biggest brands in the industry. Every one of them had the same problems: outdated systems, marketing that hadn't changed in a decade, and technology that was always "coming soon."</p>
+      <p>I watched agents pay franchise fees for a logo while doing all the work themselves. I watched listings get the same cookie-cutter treatment whether they were $200K or $4M. I watched leads fall through cracks because nobody had built a system to catch them.</p>
+      <p>So I stopped waiting for someone else to fix it. I built Realty Ryan &amp; Associates from the ground up — every system, every workflow, every automation — specifically to give my clients something no big brokerage could: <strong>a team that's small enough to care about every detail and smart enough to operate at scale.</strong></p>
+      <p>We have an AI on our team. Not as a gimmick — as a Director of Operations. While I'm at your kitchen table discussing pricing strategy, Jarvis is monitoring market shifts, nurturing your leads, and building your property website. While Ally is launching your marketing campaign, Jarvis is tracking open rates and adjusting targeting. While Alexis is coordinating your closing, Jarvis is making sure no deadline gets missed.</p>
+      <p><strong>No big brokerage can offer you that. That's what we built.</strong></p>
+    </blockquote>
+    <div class="story-sig">— Ryan Palmer</div>
+  </div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+<div class="container">
+  <div class="fade-up">
+    <div class="section-tag">Get In Touch</div>
+    <h2 class="section-title">Meet the team that never stops working.</h2>
+    <p class="section-subtitle">Whether you're buying, selling, or just curious — we'd love to hear from you.</p>
+  </div>
+  <form class="cta-form fade-up" onsubmit="return false">
+    <div class="form-row">
+      <input type="text" placeholder="First Name" required>
+      <input type="text" placeholder="Last Name" required>
+    </div>
+    <input type="email" placeholder="Email" required>
+    <input type="tel" placeholder="Phone">
+    <select>
+      <option value="" disabled selected>I'm interested in...</option>
+      <option>Selling My Home</option>
+      <option>Buying a Home</option>
+      <option>New Construction</option>
+      <option>Just Exploring</option>
+    </select>
+    <textarea placeholder="Tell us more..."></textarea>
+    <button class="btn btn-copper" type="submit" style="align-self:center">Send Message</button>
+  </form>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+<div class="container">
+  <div class="footer-inner">
+    <span>© 2026 Realty Ryan &amp; Associates. All rights reserved.</span>
+    <span>License #315654 · Realty Ryan &amp; Associates · Charlotte, NC</span>
+  </div>
+</div>
+</footer>
+
+<!-- TEXT US PILL -->
+<a href="sms:5089542159" class="text-pill">
+<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+Text Us
+</a>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('site-nav').classList.toggle('scrolled',window.scrollY>50);
+});
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+});
+
+// Fade-up animations
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// Counter animation
+const counterObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.counter').forEach(c=>{
+        const target=+c.dataset.target;
+        if(target===0){c.textContent='0';return}
+        let current=0;
+        const step=Math.ceil(target/60);
+        const timer=setInterval(()=>{
+          current+=step;
+          if(current>=target){current=target;clearInterval(timer)}
+          c.textContent=current;
+        },25);
+      });
+      counterObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+const numSection=document.getElementById('numbers');
+if(numSection)counterObs.observe(numSection);
+</script>
+</body>
+</html>
