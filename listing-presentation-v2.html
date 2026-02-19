@@ -366,41 +366,6 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
-<!-- SOCIAL PRESENCE                             -->
-<!-- ═══════════════════════════════════════════ -->
-<section id="social">
-  <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:560px;margin:0 auto">
-      <div class="section-label">Social-First Marketing</div>
-      <div class="section-title">12,000 Real Buyers. <strong>Before MLS.</strong></div>
-      <div class="section-sub" style="margin:0 auto">Reels, Stories, targeted ads with income-based targeting. Your home reaches real Charlotte buyers the day we sign — not the day it hits the MLS.</div>
-    </div>
-
-    <!-- Vimeo Video — autoplay on scroll, no audio, no Vimeo branding -->
-    <div class="fade-in" style="max-width:800px;margin:24px auto 0">
-      <div style="position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid var(--border)">
-        <iframe id="social-video" src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=0&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </div>
-    </div>
-    <script>
-    (function(){
-      var played=false;
-      var observer=new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting&&!played){
-            played=true;
-            var iframe=document.getElementById('social-video');
-            iframe.src=iframe.src.replace('autoplay=0','autoplay=1');
-          }
-        });
-      },{threshold:0.4});
-      observer.observe(document.getElementById('social-video'));
-    })();
-    </script>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ -->
 <!-- SHORT-FORM CONTENT / REEL                   -->
 <!-- ═══════════════════════════════════════════ -->
 <section>
@@ -434,6 +399,41 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       })();
       </script>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SOCIAL PRESENCE                             -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="social">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:560px;margin:0 auto">
+      <div class="section-label">Social-First Marketing</div>
+      <div class="section-title">12,000 Real Buyers. <strong>Before MLS.</strong></div>
+      <div class="section-sub" style="margin:0 auto">Reels, Stories, targeted ads with income-based targeting. Your home reaches real Charlotte buyers the day we sign — not the day it hits the MLS.</div>
+    </div>
+
+    <!-- Vimeo Video — autoplay on scroll, no audio, no Vimeo branding -->
+    <div class="fade-in" style="max-width:800px;margin:24px auto 0">
+      <div style="position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid var(--border)">
+        <iframe id="social-video" src="https://player.vimeo.com/video/1099936205?h=a68b826cbb&background=1&autoplay=0&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var played=false;
+      var observer=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting&&!played){
+            played=true;
+            var iframe=document.getElementById('social-video');
+            iframe.src=iframe.src.replace('autoplay=0','autoplay=1');
+          }
+        });
+      },{threshold:0.4});
+      observer.observe(document.getElementById('social-video'));
+    })();
+    </script>
   </div>
 </section>
 
