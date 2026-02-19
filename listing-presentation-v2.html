@@ -79,7 +79,7 @@ section.cream .card{background:var(--white)}
 .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 
 /* Editorial Photo Scroll */
-.editorial-scroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 4px;margin-top:32px}
+.editorial-scroll{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0;margin-top:32px}
 .editorial-scroll::-webkit-scrollbar{display:none}
 .ed-img{flex:0 0 auto;height:min(50vh,400px);border-radius:14px;overflow:hidden;scroll-snap-align:center;position:relative}
 .ed-img img{height:100%;width:auto;object-fit:contain;display:block;transition:transform .6s var(--ease)}
@@ -204,8 +204,8 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
   .cta-phone a{font-size:1.2rem}
 
   /* Editorial / media — bigger */
-  .ed-img{height:min(55vh,500px)}
-  .editorial-scroll{margin-top:28px;padding:0 24px!important}
+  .ed-img{height:min(45vh,400px)}
+  .editorial-scroll{margin-top:28px;padding:0 0!important;gap:10px!important}
   .editorial-bleed{width:100vw!important;left:50%!important;transform:translateX(-50%)!important}
   .reel-wrap{max-width:280px}
 
@@ -373,7 +373,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 
     <!-- Editorial Photo Scroll — full bleed -->
     <div class="fade-in editorial-bleed" style="position:relative;width:100vw;left:50%;transform:translateX(-50%)">
-      <div class="editorial-scroll" id="editorialScroll" style="padding:0 24px">
+      <div class="editorial-scroll" id="editorialScroll" style="padding:0">
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6457.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6439.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6527.jpg" alt="" loading="lazy"></div>
@@ -384,17 +384,6 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_8792.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6497.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_3316.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_3366.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_8830.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6457.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/DSC_2718-HDR.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_8794.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6527.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_8783.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_3316.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6439.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_8792.jpg" alt="" loading="lazy"></div>
-        <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_6497.jpg" alt="" loading="lazy"></div>
         <div class="ed-img"><img src="listing-presentation-assets/editorial/Z72_3366.jpg" alt="" loading="lazy"></div>
       </div>
       <button class="ed-arrow ed-arrow-l" onclick="edScroll(-1)">‹</button>
