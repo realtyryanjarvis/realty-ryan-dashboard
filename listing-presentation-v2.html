@@ -1377,14 +1377,15 @@ function edScroll(dir){
   el.addEventListener('mouseup',function(){setTimeout(function(){paused=false},2000)});
   el.addEventListener('mouseenter',function(){paused=true});
   el.addEventListener('mouseleave',function(){setTimeout(function(){paused=false},500)});
-  // Start when section is visible
+  // Start immediately + restart when section is visible
+  autoId=requestAnimationFrame(tick);
   var obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting){autoId=requestAnimationFrame(tick)}
-      else{cancelAnimationFrame(autoId);paused=false}
+      if(e.isIntersecting){paused=false;autoId=requestAnimationFrame(tick)}
+      else{paused=true}
     });
-  },{threshold:0.2});
-  obs.observe(el);
+  },{threshold:0.1});
+  obs.observe(el.parentElement);
 })()
 </script>
 
