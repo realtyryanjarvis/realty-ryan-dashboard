@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMA — 1800 Chestnut Ln, Matthews NC</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page { size: letter; margin: 0; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: #1a1a1a;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.6in 0.7in;
+    page-break-after: always;
+    position: relative;
+  }
+
+  .page:last-child { page-break-after: avoid; }
+
+  /* Header bar */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #793315;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+  .header-left h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #793315;
+    line-height: 1.1;
+  }
+  .header-left p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 2px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 11px;
+    color: #666;
+  }
+  .header-right strong {
+    color: #793315;
+    font-size: 13px;
+  }
+
+  /* Cover page */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 11in;
+    padding: 1in;
+  }
+  .cover h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #793315;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 18px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .cover .address {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+  .cover .city {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 50px;
+  }
+  .cover .specs {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+  .cover .spec {
+    text-align: center;
+  }
+  .cover .spec-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #793315;
+  }
+  .cover .spec-label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .cover .divider {
+    width: 80px;
+    height: 3px;
+    background: #793315;
+    margin: 0 auto 40px;
+  }
+  .cover .prepared {
+    font-size: 13px;
+    color: #999;
+  }
+  .cover .prepared strong {
+    color: #1a1a1a;
+  }
+  .cover .date {
+    font-size: 12px;
+    color: #bbb;
+    margin-top: 6px;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #793315;
+    margin-bottom: 16px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e0d5cc;
+  }
+
+  .subsection {
+    font-size: 14px;
+    font-weight: 600;
+    color: #793315;
+    margin: 18px 0 8px;
+  }
+
+  /* Subject details */
+  .subject-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 30px;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .subject-grid .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #f0ebe6;
+  }
+  .subject-grid .label { color: #888; }
+  .subject-grid .value { font-weight: 600; color: #1a1a1a; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  th {
+    background: #793315;
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #ede8e3;
+  }
+  tr:nth-child(even) td { background: #faf8f6; }
+  .right { text-align: right; }
+  .center { text-align: center; }
+  .highlight { background: #fef3ec !important; font-weight: 600; }
+  .red { color: #c0392b; }
+  .green { color: #27ae60; }
+
+  /* Callout boxes */
+  .callout {
+    background: #faf8f6;
+    border-left: 4px solid #793315;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .callout strong { color: #793315; }
+
+  .callout-warn {
+    background: #fef3ec;
+    border-left: 4px solid #e67e22;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Price recommendation */
+  .price-box {
+    background: #793315;
+    color: #fff;
+    padding: 24px 30px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .price-box .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    margin-bottom: 6px;
+  }
+  .price-box .price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 700;
+  }
+  .price-box .note {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  .range-bar {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    gap: 0;
+  }
+  .range-segment {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .range-conservative { background: #27ae60; flex: 3; border-radius: 4px 0 0 4px; }
+  .range-recommended { background: #793315; flex: 2; }
+  .range-aggressive { background: #e67e22; flex: 1.5; border-radius: 0 4px 4px 0; }
+
+  .range-labels {
+    display: flex;
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+  }
+  .range-labels span { flex: 1; }
+  .range-labels .r { text-align: right; }
+
+  /* Footer */
+  .footer {
+    position: absolute;
+    bottom: 0.4in;
+    left: 0.7in;
+    right: 0.7in;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #bbb;
+    border-top: 1px solid #e8e0d8;
+    padding-top: 8px;
+  }
+
+  p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; color: #444; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .metric-card {
+    background: #faf8f6;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #ede8e3;
+  }
+  .metric-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #793315;
+  }
+  .metric-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <h1>Comparative Market Analysis</h1>
+  <div class="subtitle">Pricing Strategy Report</div>
+  <div class="divider"></div>
+  <div class="address">1800 Chestnut Ln</div>
+  <div class="city">Matthews, NC 28104</div>
+  <div class="specs">
+    <div class="spec">
+      <div class="spec-val">2,168</div>
+      <div class="spec-label">SF Above Grade</div>
+    </div>
+    <div class="spec">
+      <div class="spec-val">7.39</div>
+      <div class="spec-label">Acres</div>
+    </div>
+    <div class="spec">
+      <div class="spec-val">4 BD</div>
+      <div class="spec-label">Bedrooms</div>
+    </div>
+    <div class="spec">
+      <div class="spec-val">1984</div>
+      <div class="spec-label">Year Built</div>
+    </div>
+  </div>
+  <div class="prepared">
+    Prepared by <strong>Ryan Palmer</strong><br>
+    Realty Ryan & Associates | Corcoran HM Properties
+  </div>
+  <div class="date">February 20, 2026</div>
+</div>
+
+<!-- PAGE 2: SUBJECT PROPERTY -->
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <h1>Subject Property</h1>
+      <p>1800 Chestnut Ln, Matthews, NC 28104</p>
+    </div>
+    <div class="header-right">
+      <strong>Ryan Palmer</strong><br>
+      Realty Ryan & Associates
+    </div>
+  </div>
+
+  <div class="section-title">Property Details</div>
+  <div class="subject-grid">
+    <div class="item"><span class="label">Address</span><span class="value">1800 Chestnut Ln, Matthews NC 28104</span></div>
+    <div class="item"><span class="label">County</span><span class="value">Union</span></div>
+    <div class="item"><span class="label">GLA (Above Grade)</span><span class="value">2,168 SF</span></div>
+    <div class="item"><span class="label">Finished Basement</span><span class="value">1,940 SF</span></div>
+    <div class="item"><span class="label">Total Finished</span><span class="value">~4,108 SF</span></div>
+    <div class="item"><span class="label">Lot Size</span><span class="value">7.39 Acres</span></div>
+    <div class="item"><span class="label">Above Grade</span><span class="value">4 Rooms, 1 BD, 1.1 BA</span></div>
+    <div class="item"><span class="label">Below Grade</span><span class="value">Rec Room, 3 BD, 2 BA, Sun Room, Wet Bar, Office</span></div>
+    <div class="item"><span class="label">Year Built</span><span class="value">1984 (Age 41)</span></div>
+    <div class="item"><span class="label">Condition</span><span class="value">Average Plus</span></div>
+    <div class="item"><span class="label">Style</span><span class="value">Traditional</span></div>
+    <div class="item"><span class="label">Foundation</span><span class="value">Walkout Basement</span></div>
+    <div class="item"><span class="label">Garage</span><span class="value">2-Car Attached</span></div>
+    <div class="item"><span class="label">Heating/Cooling</span><span class="value">FWA / Central AC</span></div>
+    <div class="item"><span class="label">Features</span><span class="value">2 Fireplaces, 3 Porches, Outbuilding</span></div>
+    <div class="item"><span class="label">Views</span><span class="value">Wooded / Residential</span></div>
+    <div class="item"><span class="label">Prior Sale</span><span class="value">$715,000 (04/2023)</span></div>
+    <div class="item"><span class="label">Zoning</span><span class="value">SF-1 (Single Family)</span></div>
+  </div>
+
+  <div class="callout">
+    <strong>Key Value Drivers:</strong> The 7.39-acre lot is a significant premium in this market ($75K/acre adjustment rate). The 1,940 SF finished walkout basement with 3 bedrooms, 2 full baths, sun room, and wet bar adds substantial livable space — though below-grade square footage is valued at approximately 50% of above-grade rates.
+  </div>
+
+  <div class="section-title">Recent Appraisal</div>
+  <div class="two-col">
+    <div class="metric-card">
+      <div class="metric-val">$1,159,000</div>
+      <div class="metric-label">Appraised Value (03/2025)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$534.59</div>
+      <div class="metric-label">$/SF (Above Grade)</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
+    <span>Page 2</span>
+  </div>
+</div>
+
+<!-- PAGE 3: APPRAISAL COMPS -->
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <h1>Appraisal Comparables</h1>
+      <p>6 comps used in March 2025 appraisal — all adjusted</p>
+    </div>
+    <div class="header-right">
+      <strong>Ryan Palmer</strong><br>
+      Realty Ryan & Associates
+    </div>
+  </div>
+
+  <div class="section-title">Comparable Sales — Adjusted Values</div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Address</th>
+        <th class="right">Sale Price</th>
+        <th class="center">GLA</th>
+        <th class="center">Acres</th>
+        <th class="center">Age</th>
+        <th class="right">Adj. Value</th>
+        <th class="center">Weight</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td>1</td>
+        <td>1641 Chestnut Ln</td>
+        <td class="right">$820,000</td>
+        <td class="center">2,872</td>
+        <td class="center">4.50</td>
+        <td class="center">38</td>
+        <td class="right">$1,157,550</td>
+        <td class="center">50%</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>3701 Antioch Church Rd</td>
+        <td class="right">$2,010,000</td>
+        <td class="center">2,365</td>
+        <td class="center">9.78</td>
+        <td class="center">59</td>
+        <td class="right">$1,145,350</td>
+        <td class="center">20%</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>300 Red Barn Trl</td>
+        <td class="right">$1,900,000</td>
+        <td class="center">3,002</td>
+        <td class="center">7.20</td>
+        <td class="center">48</td>
+        <td class="right">$1,160,450</td>
+        <td class="center">15%</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>202 Walden Ln</td>
+        <td class="right">$1,350,000</td>
+        <td class="center">3,020</td>
+        <td class="center">5.00</td>
+        <td class="center">48</td>
+        <td class="right">$1,187,350</td>
+        <td class="center">10%</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>2618 Forest Lawn Dr</td>
+        <td class="right">$950,000</td>
+        <td class="center">2,412</td>
+        <td class="center">2.50</td>
+        <td class="center">19</td>
+        <td class="right">$1,161,450</td>
+        <td class="center">5%</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>401 Red Barn Trl</td>
+        <td class="right">$950,000</td>
+        <td class="center">1,412</td>
+        <td class="center">6.80</td>
+        <td class="center">39</td>
+        <td class="right">$1,183,050</td>
+        <td class="center">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Appraisal Adjustment Notes:</strong><br>
+    • GLA adjusted at <strong>$120/SF</strong> | Land adjusted at <strong>$75,000/acre</strong><br>
+    • Comp 1 (1641 Chestnut) received 50% weight — closest proximity (0.20 mi), same street<br>
+    • Comp 3 (300 Red Barn) adjusted down $160K for in-ground pool/spa, $150K for barn, $135K for fencing<br>
+    • All 6 adjusted values cluster tightly: <strong>$1,145,350 – $1,187,350</strong> (only $42K spread)
+  </div>
+
+  <div class="section-title">Active Market — MLS (4+ Acres, 4-Mile Radius)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Address</th>
+        <th class="right">Price</th>
+        <th class="center">BD/BA</th>
+        <th class="center">SF</th>
+        <th class="center">Acres</th>
+        <th class="center">CDOM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="color:#3498db;font-weight:600;">Coming Soon</span></td>
+        <td>803 Elizabeth Ln</td>
+        <td class="right">$2,500,000</td>
+        <td class="center">4/4</td>
+        <td class="center">3,600</td>
+        <td class="center">5.00</td>
+        <td class="center">5</td>
+      </tr>
+      <tr>
+        <td><span style="color:#e67e22;font-weight:600;">Under Contract</span></td>
+        <td>5610 Golden Pond Dr</td>
+        <td class="right">$2,500,000</td>
+        <td class="center">5/4</td>
+        <td class="center">4,453</td>
+        <td class="center">26.50</td>
+        <td class="center red">105</td>
+      </tr>
+      <tr>
+        <td><span style="color:#e67e22;font-weight:600;">Under Contract</span></td>
+        <td>2108 Stallings Rd</td>
+        <td class="right">$1,300,000</td>
+        <td class="center">3/3</td>
+        <td class="center">1,465</td>
+        <td class="center">4.30</td>
+        <td class="center red">104</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Closed Sales</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th class="right">List $</th>
+        <th class="right">Close $</th>
+        <th class="center">CP/LP</th>
+        <th class="center">SF</th>
+        <th class="center">Acres</th>
+        <th class="center">CDOM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>4909 Hudson Church Rd</td>
+        <td class="right">$625,000</td>
+        <td class="right">$605,000</td>
+        <td class="center">97%</td>
+        <td class="center">1,625</td>
+        <td class="center">5.00</td>
+        <td class="center">52</td>
+      </tr>
+      <tr>
+        <td>5945 Lindenwood Dr</td>
+        <td class="right">$600,000</td>
+        <td class="right">$600,000</td>
+        <td class="center">100%</td>
+        <td class="center">1,902</td>
+        <td class="center">4.50</td>
+        <td class="center">9</td>
+      </tr>
+      <tr>
+        <td>5200 Winding Ln</td>
+        <td class="right">$1,175,000</td>
+        <td class="right">$980,000</td>
+        <td class="center red">83%</td>
+        <td class="center">1,922</td>
+        <td class="center">15.00</td>
+        <td class="center">50</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
+    <span>Page 3</span>
+  </div>
+</div>
+
+<!-- PAGE 4: PRICING STRATEGY -->
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <h1>Pricing Strategy</h1>
+      <p>Data-driven recommendation</p>
+    </div>
+    <div class="header-right">
+      <strong>Ryan Palmer</strong><br>
+      Realty Ryan & Associates
+    </div>
+  </div>
+
+  <div class="section-title">Market Context</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div class="metric-card">
+      <div class="metric-val">$1,159K</div>
+      <div class="metric-label">Appraised Value</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">+0.3%</div>
+      <div class="metric-label">Monthly Appreciation</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">4.0 mo</div>
+      <div class="metric-label">Supply</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">14</div>
+      <div class="metric-label">Median DOM</div>
+    </div>
+  </div>
+
+  <div class="section-title">Pricing Analysis</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Factor</th>
+        <th>Analysis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Appraisal (03/2025)</strong></td>
+        <td>$1,159,000 — 6 comps, tight $42K adjusted range. Strong data.</td>
+      </tr>
+      <tr>
+        <td><strong>Appreciation Since</strong></td>
+        <td>+0.3%/mo × 11 months ≈ +3.3% → <strong>~$1,197,000</strong> current adjusted value</td>
+      </tr>
+      <tr>
+        <td><strong>Basement Premium</strong></td>
+        <td>1,940 SF finished walkout w/ 3 BD, 2 BA — significant but valued at ~50% of above-grade rate</td>
+      </tr>
+      <tr>
+        <td><strong>Land Premium</strong></td>
+        <td>7.39 acres in Matthews — already factored in appraisal at $75K/acre</td>
+      </tr>
+      <tr>
+        <td><strong>Stallings Rd UC</strong></td>
+        <td>UC at $1.3M with only 1,465 SF / 4.3 ac — supports higher pricing, but <span class="red">104 DOM</span></td>
+      </tr>
+      <tr>
+        <td><strong>5200 Winding Ln</strong></td>
+        <td>Listed $1.175M → closed at $980K (<span class="red">83% CP/LP</span>) — overpricing risk is real</td>
+      </tr>
+      <tr>
+        <td><strong>Sale-to-List Ratio</strong></td>
+        <td>Median 93–97% in this segment — expect negotiation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Recommended Pricing Range</div>
+
+  <div class="range-bar">
+    <div class="range-segment range-conservative">$1,197K</div>
+    <div class="range-segment range-recommended">$1,250K</div>
+    <div class="range-segment range-aggressive">$1,300K</div>
+  </div>
+  <div class="range-labels">
+    <span>Conservative<br>Quick sale, multiple offers</span>
+    <span style="text-align:center;">Recommended<br>Best balance of price & speed</span>
+    <span class="r">Aggressive<br>Longer DOM, appraisal risk</span>
+  </div>
+
+  <div class="price-box" style="margin-top:30px;">
+    <div class="label">Recommended List Price</div>
+    <div class="price">$1,250,000</div>
+    <div class="note">Positions above appraisal reflecting 11 months appreciation + basement value</div>
+  </div>
+
+  <div class="callout-warn" style="margin-top:20px;">
+    <strong>⚠️ At $1,300,000:</strong> You're $141K above the March 2025 appraisal. A buyer's lender will likely appraise in the $1.15–$1.2M range. This means either a cash buyer, or the buyer covers the appraisal gap. The 2108 Stallings Rd UC at $1.3M supports the argument — but it took 104 days to get there. Expect 60-90+ DOM and a likely price reduction.
+  </div>
+
+  <div class="callout" style="margin-top:12px;">
+    <strong>💡 Strategy if listing at $1,300,000:</strong> Build in a 30-day price review. If no offers by day 30, recommend a reduction to $1,249,000. The first 2 weeks on market generate 80% of buyer interest — pricing right from day one maximizes exposure.
+  </div>
+
+  <div class="footer">
+    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
+    <span>Page 4</span>
+  </div>
+</div>
+
+<!-- PAGE 5: SUMMARY -->
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <h1>Executive Summary</h1>
+      <p>Key takeaways</p>
+    </div>
+    <div class="header-right">
+      <strong>Ryan Palmer</strong><br>
+      Realty Ryan & Associates
+    </div>
+  </div>
+
+  <div class="section-title">At a Glance</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+    <div class="metric-card">
+      <div class="metric-val">$1,159,000</div>
+      <div class="metric-label">Appraised Value (03/2025)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$1,197,000</div>
+      <div class="metric-label">Appreciation-Adjusted (02/2026)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:#27ae60;">$1,250,000</div>
+      <div class="metric-label">Recommended List Price</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$1,300,000</div>
+      <div class="metric-label">Seller's Target</div>
+    </div>
+  </div>
+
+  <div class="section-title">Strengths</div>
+  <div style="font-size:13px;line-height:1.8;margin-bottom:20px;">
+    ✅ 7.39 acres — premium acreage in high-demand Matthews area<br>
+    ✅ 1,940 SF finished walkout basement — massive additional living space<br>
+    ✅ Recent improvements — Average Plus condition throughout<br>
+    ✅ Private, wooded setting with no HOA restrictions<br>
+    ✅ Strong buyer demand — 4.0 month supply, median 14 DOM<br>
+    ✅ 2108 Stallings Rd UC at $1.3M validates upper pricing (smaller home, less acreage)
+  </div>
+
+  <div class="section-title">Risks</div>
+  <div style="font-size:13px;line-height:1.8;margin-bottom:20px;">
+    ⚠️ Appraisal gap — $141K above most recent appraisal at $1.3M<br>
+    ⚠️ Age factor — 41 years old, built 1984<br>
+    ⚠️ Only 2,168 SF above grade — below-grade SF discounted by buyers/appraisers<br>
+    ⚠️ 5200 Winding Ln overpriced at $1.175M → sold for $980K (83% CP/LP)<br>
+    ⚠️ Sale-to-list ratio in area: 93–97% median
+  </div>
+
+  <div class="section-title">Next Steps</div>
+  <div style="font-size:13px;line-height:1.8;margin-bottom:20px;">
+    1. Agree on list price strategy<br>
+    2. Professional photography + drone (7.39 acres demands aerial)<br>
+    3. Staging consultation for main living areas<br>
+    4. Pre-listing inspection to eliminate surprises<br>
+    5. Targeted marketing to land/acreage buyers and equestrian community<br>
+    6. MLS launch with maximum exposure first 14 days
+  </div>
+
+  <div style="background:#faf8f6;padding:24px;text-align:center;margin-top:30px;border:1px solid #ede8e3;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#793315;font-weight:700;margin-bottom:8px;">Ryan Palmer</div>
+    <div style="font-size:13px;color:#666;">Realty Ryan & Associates | Corcoran HM Properties</div>
+    <div style="font-size:13px;color:#666;">508-954-2159 | ryan@realtyryan.com</div>
+  </div>
+
+  <div class="footer">
+    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
+    <span>Page 5</span>
+  </div>
+</div>
+
+</body>
+</html>
