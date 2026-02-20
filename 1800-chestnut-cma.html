@@ -15,9 +15,11 @@
   }
   .page {
     width: 8.5in;
-    min-height: 11in;
+    height: 11in;
     padding: 0.5in 0.6in 0.9in;
     page-break-after: always;
+    page-break-inside: avoid;
+    overflow: hidden;
     position: relative;
   }
   .page:last-child { page-break-after: avoid; }
@@ -107,18 +109,18 @@
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 16px 0;
+    gap: 10px;
+    margin: 10px 0;
   }
   .stat-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 16px 0;
+    gap: 10px;
+    margin: 10px 0;
   }
   .stat-box {
     text-align: center;
-    padding: 16px 10px;
+    padding: 12px 8px;
     background: #faf9f7;
     border: 2px solid #793315;
     border-radius: 10px;
@@ -141,11 +143,11 @@
     margin-top: 2px;
   }
   .insight-box {
-    padding: 14px 18px;
+    padding: 10px 14px;
     background: #faf9f7;
     border-left: 3px solid #793315;
     border-radius: 6px;
-    margin: 12px 0;
+    margin: 8px 0;
   }
   .insight-box p {
     font-size: 11px;
@@ -348,10 +350,6 @@
     </tr>
   </table>
 
-  <div class="insight-box">
-    <p><strong>Key takeaway:</strong> Even with the ~0.88-acre reduction, the property at <strong>~6.5 acres</strong> remains one of the largest residential parcels in the immediate area. Most comparable sales had 4.5–7.2 acres. The subdivision does not materially change the property's competitive position — <strong>6.5 acres is still a significant estate lot</strong> that commands a premium.</p>
-  </div>
-
   <div class="footer">
     <div class="footer-brand">Realty <span>Ryan</span> & Associates</div>
     <div class="footer-sub">Prepared by Ryan Palmer · Corcoran HM Properties</div>
@@ -369,7 +367,7 @@
   <div class="divider"></div>
 
   <div style="text-align:center; margin-bottom:16px;">
-    <img src="fema-flood-map.jpg" style="width:100%; max-height:3.2in; object-fit:cover; border:1px solid #e0dcd8; border-radius:6px;" />
+    <img src="fema-flood-map.jpg" style="width:100%; max-height:2.6in; object-fit:cover; border:1px solid #e0dcd8; border-radius:6px;" />
     <p style="font-size:9px; color:#888; margin-top:4px;">FEMA NFHL Viewer — 1800 Chestnut Ln, Matthews, NC 28104</p>
   </div>
 
@@ -709,9 +707,9 @@
     ✦ <strong>Partial flood zone:</strong> ~30–40% of the lot is in FEMA Zone AE along the creek corridor, but the home sits on higher ground (Zone X). Flood insurance ($1,500–$5K+/yr) may be required for financed buyers. This narrows the buyer pool and can suppress appraised values by 3–7%. See page 3 for full flood zone analysis.</p>
   </div>
 
-  <div style="margin-top:16px; padding:18px 24px; border:2px solid #793315; border-radius:10px; text-align:center;">
-    <h3 style="margin-bottom:6px;">Recommended List Price: $1,250,000</h3>
-    <p style="font-size:11px; color:#333; line-height:1.6;">This positions the property at the <strong>sweet spot</strong> — above appraised value to capture appreciation, yet accessible to financed buyers. It accounts for the lot reduction while leveraging the home's significant size advantage over the comp set.</p>
+  <div style="margin-top:12px; padding:14px 20px; border:2px solid #793315; border-radius:10px; text-align:center;">
+    <h3 style="margin-bottom:4px;">Recommended List Price: $1,250,000</h3>
+    <p style="font-size:10.5px; color:#333; line-height:1.5;">Above appraised value to capture appreciation, yet accessible to financed buyers. Accounts for lot reduction while leveraging the home's size advantage over the comp set.</p>
   </div>
 
   <div class="footer">
