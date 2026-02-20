@@ -3,779 +3,497 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMA — 1800 Chestnut Ln, Matthews NC</title>
+<title>CMA — 1800 Chestnut Ln, Matthews, NC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+@page { size: letter; margin: 0; }
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page-break { page-break-before: always; }
+  .no-print { display: none; }
+}
+:root {
+  --cream: #f8f7f6;
+  --primary: #201408;
+  --accent: #793315;
+  --accent-light: rgba(121,51,21,.08);
+  --border: #ded9d3;
+  --muted: #7b7269;
+  --white: #fff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: var(--cream); color: var(--primary); line-height: 1.6; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; background: var(--white); position: relative; }
+.cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--accent); }
+.cover-tag { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 24px; }
+.cover h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; line-height: 1.15; margin-bottom: 12px; letter-spacing: -0.02em; }
+.cover-address { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); color: var(--muted); font-weight: 400; margin-bottom: 40px; }
+.cover-line { width: 60px; height: 2px; background: var(--accent); margin: 0 auto 40px; }
+.cover-details { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; }
+.cover-detail { text-align: center; }
+.cover-detail-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600; color: var(--primary); }
+.cover-detail-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.cover-footer { position: absolute; bottom: 40px; text-align: center; }
+.cover-agent { font-size: 0.85rem; color: var(--muted); }
+.cover-agent strong { color: var(--primary); font-weight: 600; }
+.cover-date { font-size: 0.75rem; color: var(--muted); margin-top: 8px; }
 
-  @page { size: letter; margin: 0; }
+.section { padding: clamp(40px, 6vw, 80px) clamp(30px, 5vw, 80px); max-width: 1000px; margin: 0 auto; }
+.section-alt { background: var(--white); }
+.section-tag { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+.section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; margin-bottom: 24px; letter-spacing: -0.02em; }
+.section h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 500; margin-bottom: 16px; color: var(--primary); }
 
-  body {
-    font-family: 'Work Sans', sans-serif;
-    color: #1a1a1a;
-    background: #fff;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px; }
+.prop-item { padding: 20px; background: var(--cream); border-radius: 10px; border: 1px solid var(--border); }
+.prop-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.prop-value { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; }
 
-  .page {
-    width: 8.5in;
-    min-height: 11in;
-    padding: 0.6in 0.7in;
-    page-break-after: always;
-    position: relative;
-  }
+.features-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.feature-pill { background: var(--accent-light); color: var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
 
-  .page:last-child { page-break-after: avoid; }
+.comps-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 0.85rem; }
+.comps-table thead { background: var(--primary); color: var(--white); }
+.comps-table th { padding: 14px 16px; text-align: left; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.comps-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.comps-table tbody tr:hover { background: var(--accent-light); }
+.comps-table .price { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 0.95rem; }
+.status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.status-active { background: #e8f5e9; color: #2e7d32; }
+.status-closed { background: #e3f2fd; color: #1565c0; }
+.status-uc { background: #fff3e0; color: #e65100; }
+.status-coming { background: #f3e5f5; color: #7b1fa2; }
+.subject-row { background: var(--accent-light) !important; font-weight: 600; }
+.subject-row td { border-bottom: 2px solid var(--accent); }
 
-  /* Header bar */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid #793315;
-    padding-bottom: 12px;
-    margin-bottom: 24px;
-  }
-  .header-left h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #793315;
-    line-height: 1.1;
-  }
-  .header-left p {
-    font-size: 13px;
-    color: #666;
-    margin-top: 2px;
-  }
-  .header-right {
-    text-align: right;
-    font-size: 11px;
-    color: #666;
-  }
-  .header-right strong {
-    color: #793315;
-    font-size: 13px;
-  }
+.price-range { display: flex; align-items: center; gap: 24px; margin: 32px 0; padding: 32px; background: var(--white); border: 2px solid var(--accent); border-radius: 12px; }
+.price-range-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.price-range-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--accent); }
+.price-range-divider { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--border); }
 
-  /* Cover page */
-  .cover {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 11in;
-    padding: 1in;
-  }
-  .cover h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 700;
-    color: #793315;
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-  .cover .subtitle {
-    font-size: 18px;
-    color: #666;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-  }
-  .cover .address {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 6px;
-  }
-  .cover .city {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 50px;
-  }
-  .cover .specs {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    margin-bottom: 50px;
-  }
-  .cover .spec {
-    text-align: center;
-  }
-  .cover .spec-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #793315;
-  }
-  .cover .spec-label {
-    font-size: 11px;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .cover .divider {
-    width: 80px;
-    height: 3px;
-    background: #793315;
-    margin: 0 auto 40px;
-  }
-  .cover .prepared {
-    font-size: 13px;
-    color: #999;
-  }
-  .cover .prepared strong {
-    color: #1a1a1a;
-  }
-  .cover .date {
-    font-size: 12px;
-    color: #bbb;
-    margin-top: 6px;
-  }
+.price-bar-container { margin: 32px 0; }
+.price-bar { height: 8px; background: var(--border); border-radius: 4px; position: relative; margin: 40px 0 20px; }
+.price-bar-fill { position: absolute; height: 100%; background: linear-gradient(90deg, var(--accent), #a0522d); border-radius: 4px; }
+.price-bar-marker { position: absolute; top: -28px; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; color: var(--primary); white-space: nowrap; }
+.price-bar-marker::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 2px; height: 20px; background: var(--primary); }
 
-  /* Section titles */
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #793315;
-    margin-bottom: 16px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e0d5cc;
-  }
+.rationale { padding: 24px; background: var(--cream); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; margin: 24px 0; font-size: 0.9rem; line-height: 1.8; color: var(--primary); }
 
-  .subsection {
-    font-size: 14px;
-    font-weight: 600;
-    color: #793315;
-    margin: 18px 0 8px;
-  }
+.agent-footer { padding: 60px 40px; background: var(--primary); color: var(--white); text-align: center; }
+.agent-footer h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); margin-bottom: 8px; }
+.agent-footer .role { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 24px; }
+.agent-footer .contact-row { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.agent-footer .contact-item { font-size: 0.9rem; color: rgba(255,255,255,.8); }
+.agent-footer .contact-item a { color: var(--white); text-decoration: none; }
+.agent-footer .brand { margin-top: 32px; font-family: 'Playfair Display', serif; font-size: 0.9rem; color: rgba(255,255,255,.4); }
 
-  /* Subject details */
-  .subject-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 30px;
-    font-size: 13px;
-    margin-bottom: 20px;
-  }
-  .subject-grid .item {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    border-bottom: 1px solid #f0ebe6;
-  }
-  .subject-grid .label { color: #888; }
-  .subject-grid .value { font-weight: 600; color: #1a1a1a; }
-
-  /* Tables */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    margin-bottom: 16px;
-  }
-  th {
-    background: #793315;
-    color: #fff;
-    padding: 8px 10px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  td {
-    padding: 7px 10px;
-    border-bottom: 1px solid #ede8e3;
-  }
-  tr:nth-child(even) td { background: #faf8f6; }
-  .right { text-align: right; }
-  .center { text-align: center; }
-  .highlight { background: #fef3ec !important; font-weight: 600; }
-  .red { color: #c0392b; }
-  .green { color: #27ae60; }
-
-  /* Callout boxes */
-  .callout {
-    background: #faf8f6;
-    border-left: 4px solid #793315;
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .callout strong { color: #793315; }
-
-  .callout-warn {
-    background: #fef3ec;
-    border-left: 4px solid #e67e22;
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  /* Price recommendation */
-  .price-box {
-    background: #793315;
-    color: #fff;
-    padding: 24px 30px;
-    text-align: center;
-    margin: 20px 0;
-  }
-  .price-box .label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.8;
-    margin-bottom: 6px;
-  }
-  .price-box .price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
-    font-weight: 700;
-  }
-  .price-box .note {
-    font-size: 12px;
-    opacity: 0.7;
-    margin-top: 4px;
-  }
-
-  .range-bar {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-    gap: 0;
-  }
-  .range-segment {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-  }
-  .range-conservative { background: #27ae60; flex: 3; border-radius: 4px 0 0 4px; }
-  .range-recommended { background: #793315; flex: 2; }
-  .range-aggressive { background: #e67e22; flex: 1.5; border-radius: 0 4px 4px 0; }
-
-  .range-labels {
-    display: flex;
-    font-size: 11px;
-    color: #888;
-    margin-top: 4px;
-  }
-  .range-labels span { flex: 1; }
-  .range-labels .r { text-align: right; }
-
-  /* Footer */
-  .footer {
-    position: absolute;
-    bottom: 0.4in;
-    left: 0.7in;
-    right: 0.7in;
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #bbb;
-    border-top: 1px solid #e8e0d8;
-    padding-top: 8px;
-  }
-
-  p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; color: #444; }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-  .metric-card {
-    background: #faf8f6;
-    padding: 16px;
-    text-align: center;
-    border: 1px solid #ede8e3;
-  }
-  .metric-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #793315;
-  }
-  .metric-label {
-    font-size: 11px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+.print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--accent); color: var(--white); border: none; padding: 14px 28px; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 20px rgba(121,51,21,.3); z-index: 100; }
+.print-btn:hover { background: var(--primary); }
+@media (max-width: 768px) {
+  .cover-details { gap: 24px; }
+  .price-range { flex-direction: column; text-align: center; gap: 16px; }
+  .comps-table { font-size: 0.75rem; }
+  .comps-table th, .comps-table td { padding: 10px 8px; }
+}
 </style>
 </head>
 <body>
 
-<!-- PAGE 1: COVER -->
-<div class="page cover">
-  <h1>Comparative Market Analysis</h1>
-  <div class="subtitle">Pricing Strategy Report</div>
-  <div class="divider"></div>
-  <div class="address">1800 Chestnut Ln</div>
-  <div class="city">Matthews, NC 28104</div>
-  <div class="specs">
-    <div class="spec">
-      <div class="spec-val">2,168</div>
-      <div class="spec-label">SF Above Grade</div>
-    </div>
-    <div class="spec">
-      <div class="spec-val">7.39</div>
-      <div class="spec-label">Acres</div>
-    </div>
-    <div class="spec">
-      <div class="spec-val">4 BD</div>
-      <div class="spec-label">Bedrooms</div>
-    </div>
-    <div class="spec">
-      <div class="spec-val">1984</div>
-      <div class="spec-label">Year Built</div>
-    </div>
-  </div>
-  <div class="prepared">
-    Prepared by <strong>Ryan Palmer</strong><br>
-    Realty Ryan & Associates | Corcoran HM Properties
-  </div>
-  <div class="date">February 20, 2026</div>
-</div>
+<button class="print-btn no-print" onclick="window.print()">📄 Print / Save PDF</button>
 
-<!-- PAGE 2: SUBJECT PROPERTY -->
-<div class="page">
-  <div class="header">
-    <div class="header-left">
-      <h1>Subject Property</h1>
-      <p>1800 Chestnut Ln, Matthews, NC 28104</p>
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-tag">Comparative Market Analysis</div>
+  <h1>1800 Chestnut Lane</h1>
+  <div class="cover-address">Matthews, NC 28104 · Union County</div>
+  <div class="cover-line"></div>
+  <div class="cover-details">
+    <div class="cover-detail">
+      <div class="cover-detail-value">4</div>
+      <div class="cover-detail-label">Bedrooms</div>
     </div>
-    <div class="header-right">
-      <strong>Ryan Palmer</strong><br>
-      Realty Ryan & Associates
+    <div class="cover-detail">
+      <div class="cover-detail-value">1 Full / 1 Half</div>
+      <div class="cover-detail-label">Baths (Above Grade)</div>
     </div>
-  </div>
-
-  <div class="section-title">Property Details</div>
-  <div class="subject-grid">
-    <div class="item"><span class="label">Address</span><span class="value">1800 Chestnut Ln, Matthews NC 28104</span></div>
-    <div class="item"><span class="label">County</span><span class="value">Union</span></div>
-    <div class="item"><span class="label">GLA (Above Grade)</span><span class="value">2,168 SF</span></div>
-    <div class="item"><span class="label">Finished Basement</span><span class="value">1,940 SF</span></div>
-    <div class="item"><span class="label">Total Finished</span><span class="value">~4,108 SF</span></div>
-    <div class="item"><span class="label">Lot Size</span><span class="value">7.39 Acres</span></div>
-    <div class="item"><span class="label">Above Grade</span><span class="value">4 Rooms, 1 BD, 1.1 BA</span></div>
-    <div class="item"><span class="label">Below Grade</span><span class="value">Rec Room, 3 BD, 2 BA, Sun Room, Wet Bar, Office</span></div>
-    <div class="item"><span class="label">Year Built</span><span class="value">1984 (Age 41)</span></div>
-    <div class="item"><span class="label">Condition</span><span class="value">Average Plus</span></div>
-    <div class="item"><span class="label">Style</span><span class="value">Traditional</span></div>
-    <div class="item"><span class="label">Foundation</span><span class="value">Walkout Basement</span></div>
-    <div class="item"><span class="label">Garage</span><span class="value">2-Car Attached</span></div>
-    <div class="item"><span class="label">Heating/Cooling</span><span class="value">FWA / Central AC</span></div>
-    <div class="item"><span class="label">Features</span><span class="value">2 Fireplaces, 3 Porches, Outbuilding</span></div>
-    <div class="item"><span class="label">Views</span><span class="value">Wooded / Residential</span></div>
-    <div class="item"><span class="label">Prior Sale</span><span class="value">$715,000 (04/2023)</span></div>
-    <div class="item"><span class="label">Zoning</span><span class="value">SF-1 (Single Family)</span></div>
-  </div>
-
-  <div class="callout">
-    <strong>Key Value Drivers:</strong> The 7.39-acre lot is a significant premium in this market ($75K/acre adjustment rate). The 1,940 SF finished walkout basement with 3 bedrooms, 2 full baths, sun room, and wet bar adds substantial livable space — though below-grade square footage is valued at approximately 50% of above-grade rates.
-  </div>
-
-  <div class="section-title">Recent Appraisal</div>
-  <div class="two-col">
-    <div class="metric-card">
-      <div class="metric-val">$1,159,000</div>
-      <div class="metric-label">Appraised Value (03/2025)</div>
+    <div class="cover-detail">
+      <div class="cover-detail-value">2,168</div>
+      <div class="cover-detail-label">SF Above Grade</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-val">$534.59</div>
-      <div class="metric-label">$/SF (Above Grade)</div>
+    <div class="cover-detail">
+      <div class="cover-detail-value">7.39</div>
+      <div class="cover-detail-label">Acres</div>
+    </div>
+    <div class="cover-detail">
+      <div class="cover-detail-value">1984</div>
+      <div class="cover-detail-label">Year Built</div>
     </div>
   </div>
-
-  <div class="footer">
-    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
-    <span>Page 2</span>
+  <div class="cover-footer">
+    <div class="cover-agent">Prepared by <strong>Ryan Palmer</strong> · Realty Ryan &amp; Associates</div>
+    <div class="cover-date">February 20, 2026</div>
   </div>
 </div>
 
-<!-- PAGE 3: APPRAISAL COMPS -->
-<div class="page">
-  <div class="header">
-    <div class="header-left">
-      <h1>Appraisal Comparables</h1>
-      <p>6 comps used in March 2025 appraisal — all adjusted</p>
+<!-- SUBJECT PROPERTY -->
+<div class="section section-alt page-break">
+  <div class="section-tag">Subject Property</div>
+  <h2>Property Overview</h2>
+  
+  <div class="prop-grid">
+    <div class="prop-item">
+      <div class="prop-label">Above Grade</div>
+      <div class="prop-value">2,168 SF</div>
     </div>
-    <div class="header-right">
-      <strong>Ryan Palmer</strong><br>
-      Realty Ryan & Associates
+    <div class="prop-item">
+      <div class="prop-label">Finished Basement</div>
+      <div class="prop-value">1,940 SF</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Total Finished</div>
+      <div class="prop-value">~4,108 SF</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Lot Size</div>
+      <div class="prop-value">7.39 Acres</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Above Grade</div>
+      <div class="prop-value">4 Rm / 1 BD / 1.1 BA</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Below Grade</div>
+      <div class="prop-value">3 BD / 2 BA</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Year Built</div>
+      <div class="prop-value">1984 <span style="font-family:Inter;font-size:.7rem;color:var(--muted)">(Age 41)</span></div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Condition</div>
+      <div class="prop-value">Average Plus</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Style</div>
+      <div class="prop-value">Traditional</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Foundation</div>
+      <div class="prop-value">Walkout Basement</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Garage</div>
+      <div class="prop-value">2-Car Attached</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Prior Sale</div>
+      <div class="prop-value">$715,000 <span style="font-family:Inter;font-size:.7rem;color:var(--muted)">(04/2023)</span></div>
     </div>
   </div>
 
-  <div class="section-title">Comparable Sales — Adjusted Values</div>
-  <table>
+  <h3>Key Features</h3>
+  <div class="features-row">
+    <span class="feature-pill">7.39 Acres</span>
+    <span class="feature-pill">Walkout Basement</span>
+    <span class="feature-pill">2 Fireplaces</span>
+    <span class="feature-pill">3 Porches</span>
+    <span class="feature-pill">Outbuilding</span>
+    <span class="feature-pill">Wooded Views</span>
+    <span class="feature-pill">No HOA</span>
+    <span class="feature-pill">Well / Septic</span>
+  </div>
+
+  <h3 style="margin-top:32px">Basement Details</h3>
+  <p style="font-size:.85rem;color:var(--muted);line-height:1.8">
+    1,940 SF finished walkout with recreation room, 3 bedrooms, 2 full bathrooms, sun room, wet bar area, and office nook. Separate outside entry. This effectively doubles the livable space — though below-grade square footage is typically valued at 45–55% of above-grade rates by appraisers.
+  </p>
+
+  <h3 style="margin-top:32px">Recent Appraisal</h3>
+  <p style="font-size:.85rem;color:var(--muted);line-height:1.8">
+    <strong style="color:var(--primary)">$1,159,000</strong> — appraised March 20, 2025 by Matthew McNinch (Charlotte Home Appraisal). Based on 6 comparable sales with a tight adjusted range of $1,145,350 – $1,187,350. GLA adjusted at $120/SF. Land adjusted at $75,000/acre.
+  </p>
+</div>
+
+<!-- APPRAISAL COMPS -->
+<div class="section page-break">
+  <div class="section-tag">Appraisal Comparables</div>
+  <h2>Comparable Sales — Adjusted Values</h2>
+  <p style="font-size:.9rem;color:var(--muted);margin-bottom:8px">
+    6 comps used in the March 2025 appraisal, all within 2 miles. Adjusted values cluster in a remarkably tight $42K range.
+  </p>
+
+  <table class="comps-table">
     <thead>
       <tr>
-        <th>#</th>
         <th>Address</th>
-        <th class="right">Sale Price</th>
-        <th class="center">GLA</th>
-        <th class="center">Acres</th>
-        <th class="center">Age</th>
-        <th class="right">Adj. Value</th>
-        <th class="center">Weight</th>
+        <th>Sale Price</th>
+        <th>GLA</th>
+        <th>Acres</th>
+        <th>Age</th>
+        <th>Adj. Value</th>
+        <th>Weight</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="highlight">
-        <td>1</td>
-        <td>1641 Chestnut Ln</td>
-        <td class="right">$820,000</td>
-        <td class="center">2,872</td>
-        <td class="center">4.50</td>
-        <td class="center">38</td>
-        <td class="right">$1,157,550</td>
-        <td class="center">50%</td>
+      <tr class="subject-row">
+        <td><strong>1800 Chestnut Ln</strong><br><span style="font-size:.7rem;color:var(--accent)">SUBJECT PROPERTY</span></td>
+        <td class="price">—</td>
+        <td>2,168</td>
+        <td>7.39</td>
+        <td>41</td>
+        <td class="price">—</td>
+        <td>—</td>
       </tr>
       <tr>
-        <td>2</td>
-        <td>3701 Antioch Church Rd</td>
-        <td class="right">$2,010,000</td>
-        <td class="center">2,365</td>
-        <td class="center">9.78</td>
-        <td class="center">59</td>
-        <td class="right">$1,145,350</td>
-        <td class="center">20%</td>
+        <td>1641 Chestnut Ln<br><span style="font-size:.7rem;color:var(--muted)">0.20 mi E · Same street</span></td>
+        <td class="price">$820,000</td>
+        <td>2,872</td>
+        <td>4.50</td>
+        <td>38</td>
+        <td class="price">$1,157,550</td>
+        <td><strong>50%</strong></td>
       </tr>
       <tr>
-        <td>3</td>
-        <td>300 Red Barn Trl</td>
-        <td class="right">$1,900,000</td>
-        <td class="center">3,002</td>
-        <td class="center">7.20</td>
-        <td class="center">48</td>
-        <td class="right">$1,160,450</td>
-        <td class="center">15%</td>
+        <td>3701 Antioch Church Rd<br><span style="font-size:.7rem;color:var(--muted)">1.84 mi SW · Weddington</span></td>
+        <td class="price">$2,010,000</td>
+        <td>2,365</td>
+        <td>9.78</td>
+        <td>59</td>
+        <td class="price">$1,145,350</td>
+        <td>20%</td>
       </tr>
       <tr>
-        <td>4</td>
-        <td>202 Walden Ln</td>
-        <td class="right">$1,350,000</td>
-        <td class="center">3,020</td>
-        <td class="center">5.00</td>
-        <td class="center">48</td>
-        <td class="right">$1,187,350</td>
-        <td class="center">10%</td>
+        <td>300 Red Barn Trl<br><span style="font-size:.7rem;color:var(--muted)">0.78 mi SW · Pool, barn, fencing</span></td>
+        <td class="price">$1,900,000</td>
+        <td>3,002</td>
+        <td>7.20</td>
+        <td>48</td>
+        <td class="price">$1,160,450</td>
+        <td>15%</td>
       </tr>
       <tr>
-        <td>5</td>
-        <td>2618 Forest Lawn Dr</td>
-        <td class="right">$950,000</td>
-        <td class="center">2,412</td>
-        <td class="center">2.50</td>
-        <td class="center">19</td>
-        <td class="right">$1,161,450</td>
-        <td class="center">5%</td>
+        <td>202 Walden Ln<br><span style="font-size:.7rem;color:var(--muted)">1.51 mi S · Weddington</span></td>
+        <td class="price">$1,350,000</td>
+        <td>3,020</td>
+        <td>5.00</td>
+        <td>48</td>
+        <td class="price">$1,187,350</td>
+        <td>10%</td>
       </tr>
       <tr>
-        <td>6</td>
-        <td>401 Red Barn Trl</td>
-        <td class="right">$950,000</td>
-        <td class="center">1,412</td>
-        <td class="center">6.80</td>
-        <td class="center">39</td>
-        <td class="right">$1,183,050</td>
-        <td class="center">—</td>
+        <td>2618 Forest Lawn Dr<br><span style="font-size:.7rem;color:var(--muted)">1.33 mi SW · Newer build (2006)</span></td>
+        <td class="price">$950,000</td>
+        <td>2,412</td>
+        <td>2.50</td>
+        <td>19</td>
+        <td class="price">$1,161,450</td>
+        <td>5%</td>
+      </tr>
+      <tr>
+        <td>401 Red Barn Trl<br><span style="font-size:.7rem;color:var(--muted)">0.69 mi S · Pond views</span></td>
+        <td class="price">$950,000</td>
+        <td>1,412</td>
+        <td>6.80</td>
+        <td>39</td>
+        <td class="price">$1,183,050</td>
+        <td>—</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="callout">
-    <strong>Appraisal Adjustment Notes:</strong><br>
-    • GLA adjusted at <strong>$120/SF</strong> | Land adjusted at <strong>$75,000/acre</strong><br>
-    • Comp 1 (1641 Chestnut) received 50% weight — closest proximity (0.20 mi), same street<br>
-    • Comp 3 (300 Red Barn) adjusted down $160K for in-ground pool/spa, $150K for barn, $135K for fencing<br>
-    • All 6 adjusted values cluster tightly: <strong>$1,145,350 – $1,187,350</strong> (only $42K spread)
+  <div class="rationale" style="margin-top:24px">
+    <strong>Adjustment Notes:</strong> Comp 1 (1641 Chestnut) received 50% weight — closest proximity at 0.20 mi on the same street. Comp 3 (300 Red Barn) required significant downward adjustments: -$160K pool/spa, -$150K barn, -$135K fencing, -$55K extra garage bays. All 6 adjusted values cluster between $1,145,350 – $1,187,350 — a $42K spread indicating strong consensus.
   </div>
+</div>
 
-  <div class="section-title">Active Market — MLS (4+ Acres, 4-Mile Radius)</div>
-  <table>
+<!-- ACTIVE MARKET -->
+<div class="section section-alt page-break">
+  <div class="section-tag">Active Market</div>
+  <h2>Current MLS Activity</h2>
+  <p style="font-size:.9rem;color:var(--muted);margin-bottom:8px">
+    Properties on 4+ acres within 4 miles of the subject. Limited inventory in this segment.
+  </p>
+
+  <h3>Active & Under Contract</h3>
+  <table class="comps-table">
     <thead>
       <tr>
+        <th>Address</th>
+        <th>Price</th>
         <th>Status</th>
-        <th>Address</th>
-        <th class="right">Price</th>
-        <th class="center">BD/BA</th>
-        <th class="center">SF</th>
-        <th class="center">Acres</th>
-        <th class="center">CDOM</th>
+        <th>BD/BA</th>
+        <th>SqFt</th>
+        <th>Acres</th>
+        <th>CDOM</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><span style="color:#3498db;font-weight:600;">Coming Soon</span></td>
-        <td>803 Elizabeth Ln</td>
-        <td class="right">$2,500,000</td>
-        <td class="center">4/4</td>
-        <td class="center">3,600</td>
-        <td class="center">5.00</td>
-        <td class="center">5</td>
+      <tr class="subject-row">
+        <td><strong>1800 Chestnut Ln</strong><br><span style="font-size:.7rem;color:var(--accent)">SUBJECT</span></td>
+        <td class="price">—</td>
+        <td><span class="status-badge" style="background:var(--accent-light);color:var(--accent)">Subject</span></td>
+        <td>4 / 1.1</td>
+        <td>2,168</td>
+        <td>7.39</td>
+        <td>—</td>
       </tr>
       <tr>
-        <td><span style="color:#e67e22;font-weight:600;">Under Contract</span></td>
-        <td>5610 Golden Pond Dr</td>
-        <td class="right">$2,500,000</td>
-        <td class="center">5/4</td>
-        <td class="center">4,453</td>
-        <td class="center">26.50</td>
-        <td class="center red">105</td>
+        <td>803 Elizabeth Ln<br><span style="font-size:.7rem;color:var(--muted)">Matthews · Split Level</span></td>
+        <td class="price">$2,500,000</td>
+        <td><span class="status-badge status-coming">Coming Soon</span></td>
+        <td>4 / 4</td>
+        <td>3,600</td>
+        <td>5.00</td>
+        <td>5</td>
       </tr>
       <tr>
-        <td><span style="color:#e67e22;font-weight:600;">Under Contract</span></td>
-        <td>2108 Stallings Rd</td>
-        <td class="right">$1,300,000</td>
-        <td class="center">3/3</td>
-        <td class="center">1,465</td>
-        <td class="center">4.30</td>
-        <td class="center red">104</td>
+        <td>5610 Golden Pond Dr<br><span style="font-size:.7rem;color:var(--muted)">26.5 acres · Premium lot</span></td>
+        <td class="price">$2,500,000</td>
+        <td><span class="status-badge status-uc">Under Contract</span></td>
+        <td>5 / 4</td>
+        <td>4,453</td>
+        <td>26.50</td>
+        <td style="color:#c0392b;font-weight:600">105</td>
+      </tr>
+      <tr>
+        <td>2108 Stallings Rd<br><span style="font-size:.7rem;color:var(--muted)">4.3 acres · Smaller home</span></td>
+        <td class="price">$1,300,000</td>
+        <td><span class="status-badge status-uc">Under Contract</span></td>
+        <td>3 / 3</td>
+        <td>1,465</td>
+        <td>4.30</td>
+        <td style="color:#c0392b;font-weight:600">104</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="section-title">Closed Sales</div>
-  <table>
+  <h3 style="margin-top:32px">Recent Closed Sales</h3>
+  <table class="comps-table">
     <thead>
       <tr>
         <th>Address</th>
-        <th class="right">List $</th>
-        <th class="right">Close $</th>
-        <th class="center">CP/LP</th>
-        <th class="center">SF</th>
-        <th class="center">Acres</th>
-        <th class="center">CDOM</th>
+        <th>List Price</th>
+        <th>Close Price</th>
+        <th>CP/LP</th>
+        <th>SqFt</th>
+        <th>Acres</th>
+        <th>CDOM</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>4909 Hudson Church Rd</td>
-        <td class="right">$625,000</td>
-        <td class="right">$605,000</td>
-        <td class="center">97%</td>
-        <td class="center">1,625</td>
-        <td class="center">5.00</td>
-        <td class="center">52</td>
+        <td>4909 Hudson Church Rd<br><span style="font-size:.7rem;color:var(--muted)">5 acres · 1979</span></td>
+        <td class="price">$625,000</td>
+        <td class="price">$605,000</td>
+        <td>97%</td>
+        <td>1,625</td>
+        <td>5.00</td>
+        <td>52</td>
       </tr>
       <tr>
-        <td>5945 Lindenwood Dr</td>
-        <td class="right">$600,000</td>
-        <td class="right">$600,000</td>
-        <td class="center">100%</td>
-        <td class="center">1,902</td>
-        <td class="center">4.50</td>
-        <td class="center">9</td>
+        <td>5945 Lindenwood Dr<br><span style="font-size:.7rem;color:var(--muted)">Indian Brook · 1985</span></td>
+        <td class="price">$600,000</td>
+        <td class="price">$600,000</td>
+        <td>100%</td>
+        <td>1,902</td>
+        <td>4.50</td>
+        <td>9</td>
       </tr>
       <tr>
-        <td>5200 Winding Ln</td>
-        <td class="right">$1,175,000</td>
-        <td class="right">$980,000</td>
-        <td class="center red">83%</td>
-        <td class="center">1,922</td>
-        <td class="center">15.00</td>
-        <td class="center">50</td>
+        <td>5200 Winding Ln<br><span style="font-size:.7rem;color:var(--muted)">15 acres · 1979</span></td>
+        <td class="price">$1,175,000</td>
+        <td class="price">$980,000</td>
+        <td style="color:#c0392b;font-weight:600">83%</td>
+        <td>1,922</td>
+        <td>15.00</td>
+        <td>50</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="footer">
-    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
-    <span>Page 3</span>
+  <div class="rationale" style="margin-top:24px">
+    <strong>Market Insight:</strong> The closed sales are all significantly smaller homes ($600K–$980K range). The most relevant active market data point is <strong>2108 Stallings Rd — under contract at $1,300,000</strong> with only 1,465 SF on 4.3 acres. This supports pricing the subject above $1.2M given its superior size, finished basement, and larger lot. However, Stallings took 104 days to get there. Note: 5200 Winding Ln listed at $1.175M but only closed at $980K (83% CP/LP) — a cautionary tale about overpricing.
   </div>
 </div>
 
-<!-- PAGE 4: PRICING STRATEGY -->
-<div class="page">
-  <div class="header">
-    <div class="header-left">
-      <h1>Pricing Strategy</h1>
-      <p>Data-driven recommendation</p>
-    </div>
-    <div class="header-right">
-      <strong>Ryan Palmer</strong><br>
-      Realty Ryan & Associates
-    </div>
-  </div>
+<!-- PRICING STRATEGY -->
+<div class="section page-break">
+  <div class="section-tag">Valuation</div>
+  <h2>Recommended Price Range</h2>
 
-  <div class="section-title">Market Context</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
-    <div class="metric-card">
-      <div class="metric-val">$1,159K</div>
-      <div class="metric-label">Appraised Value</div>
+  <div class="price-range">
+    <div>
+      <div class="price-range-label">Conservative</div>
+      <div class="price-range-value">$1,197,000</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-val">+0.3%</div>
-      <div class="metric-label">Monthly Appreciation</div>
+    <div class="price-range-divider">—</div>
+    <div>
+      <div class="price-range-label">Recommended</div>
+      <div class="price-range-value" style="font-size:2.4rem">$1,250,000</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-val">4.0 mo</div>
-      <div class="metric-label">Supply</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-val">14</div>
-      <div class="metric-label">Median DOM</div>
+    <div class="price-range-divider">—</div>
+    <div>
+      <div class="price-range-label">Aggressive</div>
+      <div class="price-range-value">$1,300,000</div>
     </div>
   </div>
 
-  <div class="section-title">Pricing Analysis</div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Factor</th>
-        <th>Analysis</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Appraisal (03/2025)</strong></td>
-        <td>$1,159,000 — 6 comps, tight $42K adjusted range. Strong data.</td>
-      </tr>
-      <tr>
-        <td><strong>Appreciation Since</strong></td>
-        <td>+0.3%/mo × 11 months ≈ +3.3% → <strong>~$1,197,000</strong> current adjusted value</td>
-      </tr>
-      <tr>
-        <td><strong>Basement Premium</strong></td>
-        <td>1,940 SF finished walkout w/ 3 BD, 2 BA — significant but valued at ~50% of above-grade rate</td>
-      </tr>
-      <tr>
-        <td><strong>Land Premium</strong></td>
-        <td>7.39 acres in Matthews — already factored in appraisal at $75K/acre</td>
-      </tr>
-      <tr>
-        <td><strong>Stallings Rd UC</strong></td>
-        <td>UC at $1.3M with only 1,465 SF / 4.3 ac — supports higher pricing, but <span class="red">104 DOM</span></td>
-      </tr>
-      <tr>
-        <td><strong>5200 Winding Ln</strong></td>
-        <td>Listed $1.175M → closed at $980K (<span class="red">83% CP/LP</span>) — overpricing risk is real</td>
-      </tr>
-      <tr>
-        <td><strong>Sale-to-List Ratio</strong></td>
-        <td>Median 93–97% in this segment — expect negotiation</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="section-title">Recommended Pricing Range</div>
-
-  <div class="range-bar">
-    <div class="range-segment range-conservative">$1,197K</div>
-    <div class="range-segment range-recommended">$1,250K</div>
-    <div class="range-segment range-aggressive">$1,300K</div>
-  </div>
-  <div class="range-labels">
-    <span>Conservative<br>Quick sale, multiple offers</span>
-    <span style="text-align:center;">Recommended<br>Best balance of price & speed</span>
-    <span class="r">Aggressive<br>Longer DOM, appraisal risk</span>
+  <div class="price-bar-container">
+    <h3>Price Positioning</h3>
+    <div class="price-bar">
+      <div class="price-bar-fill" style="left:0%;width:100%"></div>
+      <div class="price-bar-marker" style="left:0%">$980K<br><span style="font-size:.6rem;color:var(--muted)">Winding Ln (Closed)</span></div>
+      <div class="price-bar-marker" style="left:28%">$1,159K<br><span style="font-size:.6rem;color:var(--muted)">Appraisal</span></div>
+      <div class="price-bar-marker" style="left:45%">$1,197K<br><span style="font-size:.6rem;color:var(--muted)">Appr. + Appreciation</span></div>
+      <div class="price-bar-marker" style="left:65%;color:var(--accent);font-weight:700">$1,250K<br><span style="font-size:.6rem">RECOMMENDED</span></div>
+      <div class="price-bar-marker" style="left:85%">$1,300K<br><span style="font-size:.6rem;color:var(--muted)">Seller Target</span></div>
+      <div class="price-bar-marker" style="left:100%">$1,350K<br><span style="font-size:.6rem;color:var(--muted)">202 Walden (Adj.)</span></div>
+    </div>
   </div>
 
-  <div class="price-box" style="margin-top:30px;">
-    <div class="label">Recommended List Price</div>
-    <div class="price">$1,250,000</div>
-    <div class="note">Positions above appraisal reflecting 11 months appreciation + basement value</div>
+  <div class="rationale" style="margin-top:80px">
+    <strong>Analysis:</strong> The March 2025 appraisal came in at $1,159,000 based on 6 comparable sales. Applying the appraiser's own market trend data (+0.3%/month appreciation × 11 months) brings the appreciation-adjusted value to approximately <strong>$1,197,000</strong>.<br><br>
+    
+    At a <strong>$1,250,000</strong> list price, the property would be priced at $576/SF above grade — or $304/SF on total finished area (4,108 SF). This positions the home competitively while acknowledging the massive walkout basement, 7.39-acre lot, and 11 months of market appreciation since the appraisal.<br><br>
+    
+    <strong>At $1,300,000 (seller's target):</strong> This is $141K above the March 2025 appraisal. A buyer using conventional financing will likely face an appraisal gap. The 2108 Stallings Rd comp going under contract at $1.3M supports this price point — but Stallings took 104 days and has only 1,465 SF on 4.3 acres. Expect 60–90+ DOM and a potential price reduction at this level.<br><br>
+    
+    <strong>Strategy if listing at $1,300,000:</strong> Build in a 30-day price review. If no offers by day 30, reduce to $1,249,000. The first 14 days generate 80% of buyer interest — pricing right from day one maximizes exposure and negotiating leverage.
+  </p>
   </div>
 
-  <div class="callout-warn" style="margin-top:20px;">
-    <strong>⚠️ At $1,300,000:</strong> You're $141K above the March 2025 appraisal. A buyer's lender will likely appraise in the $1.15–$1.2M range. This means either a cash buyer, or the buyer covers the appraisal gap. The 2108 Stallings Rd UC at $1.3M supports the argument — but it took 104 days to get there. Expect 60-90+ DOM and a likely price reduction.
-  </div>
-
-  <div class="callout" style="margin-top:12px;">
-    <strong>💡 Strategy if listing at $1,300,000:</strong> Build in a 30-day price review. If no offers by day 30, recommend a reduction to $1,249,000. The first 2 weeks on market generate 80% of buyer interest — pricing right from day one maximizes exposure.
-  </div>
-
-  <div class="footer">
-    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
-    <span>Page 4</span>
+  <h3 style="margin-top:32px">Key Market Metrics</h3>
+  <div class="prop-grid">
+    <div class="prop-item">
+      <div class="prop-label">Monthly Appreciation</div>
+      <div class="prop-value">+0.3%</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Housing Supply</div>
+      <div class="prop-value">4.0 Months</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Median DOM</div>
+      <div class="prop-value">14 Days</div>
+    </div>
+    <div class="prop-item">
+      <div class="prop-label">Median Sale/List</div>
+      <div class="prop-value">93–97%</div>
+    </div>
   </div>
 </div>
 
-<!-- PAGE 5: SUMMARY -->
-<div class="page">
-  <div class="header">
-    <div class="header-left">
-      <h1>Executive Summary</h1>
-      <p>Key takeaways</p>
-    </div>
-    <div class="header-right">
-      <strong>Ryan Palmer</strong><br>
-      Realty Ryan & Associates
-    </div>
+<!-- AGENT FOOTER -->
+<div class="agent-footer">
+  <h3>Ryan Palmer</h3>
+  <div class="role">Broker / CEO · Realty Ryan &amp; Associates</div>
+  <div class="contact-row">
+    <div class="contact-item"><a href="tel:5089542159">508-954-2159</a></div>
+    <div class="contact-item"><a href="mailto:ryan@realtyryan.com">ryan@realtyryan.com</a></div>
+    <div class="contact-item"><a href="https://realtyryan.com">realtyryan.com</a></div>
   </div>
-
-  <div class="section-title">At a Glance</div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-    <div class="metric-card">
-      <div class="metric-val">$1,159,000</div>
-      <div class="metric-label">Appraised Value (03/2025)</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-val">$1,197,000</div>
-      <div class="metric-label">Appreciation-Adjusted (02/2026)</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-val" style="color:#27ae60;">$1,250,000</div>
-      <div class="metric-label">Recommended List Price</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-val">$1,300,000</div>
-      <div class="metric-label">Seller's Target</div>
-    </div>
-  </div>
-
-  <div class="section-title">Strengths</div>
-  <div style="font-size:13px;line-height:1.8;margin-bottom:20px;">
-    ✅ 7.39 acres — premium acreage in high-demand Matthews area<br>
-    ✅ 1,940 SF finished walkout basement — massive additional living space<br>
-    ✅ Recent improvements — Average Plus condition throughout<br>
-    ✅ Private, wooded setting with no HOA restrictions<br>
-    ✅ Strong buyer demand — 4.0 month supply, median 14 DOM<br>
-    ✅ 2108 Stallings Rd UC at $1.3M validates upper pricing (smaller home, less acreage)
-  </div>
-
-  <div class="section-title">Risks</div>
-  <div style="font-size:13px;line-height:1.8;margin-bottom:20px;">
-    ⚠️ Appraisal gap — $141K above most recent appraisal at $1.3M<br>
-    ⚠️ Age factor — 41 years old, built 1984<br>
-    ⚠️ Only 2,168 SF above grade — below-grade SF discounted by buyers/appraisers<br>
-    ⚠️ 5200 Winding Ln overpriced at $1.175M → sold for $980K (83% CP/LP)<br>
-    ⚠️ Sale-to-list ratio in area: 93–97% median
-  </div>
-
-  <div class="section-title">Next Steps</div>
-  <div style="font-size:13px;line-height:1.8;margin-bottom:20px;">
-    1. Agree on list price strategy<br>
-    2. Professional photography + drone (7.39 acres demands aerial)<br>
-    3. Staging consultation for main living areas<br>
-    4. Pre-listing inspection to eliminate surprises<br>
-    5. Targeted marketing to land/acreage buyers and equestrian community<br>
-    6. MLS launch with maximum exposure first 14 days
-  </div>
-
-  <div style="background:#faf8f6;padding:24px;text-align:center;margin-top:30px;border:1px solid #ede8e3;">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#793315;font-weight:700;margin-bottom:8px;">Ryan Palmer</div>
-    <div style="font-size:13px;color:#666;">Realty Ryan & Associates | Corcoran HM Properties</div>
-    <div style="font-size:13px;color:#666;">508-954-2159 | ryan@realtyryan.com</div>
-  </div>
-
-  <div class="footer">
-    <span>CMA — 1800 Chestnut Ln, Matthews NC</span>
-    <span>Page 5</span>
-  </div>
+  <div class="brand">Realty Ryan &amp; Associates · Corcoran HM Properties</div>
 </div>
 
 </body>
