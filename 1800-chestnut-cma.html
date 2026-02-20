@@ -1,499 +1,652 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMA — 1800 Chestnut Ln, Matthews, NC</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
 <style>
-@page { size: letter; margin: 0; }
-@media print {
-  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .page-break { page-break-before: always; }
-  .no-print { display: none; }
-}
-:root {
-  --cream: #f8f7f6;
-  --primary: #201408;
-  --accent: #793315;
-  --accent-light: rgba(121,51,21,.08);
-  --border: #ded9d3;
-  --muted: #7b7269;
-  --white: #fff;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', -apple-system, sans-serif; background: var(--cream); color: var(--primary); line-height: 1.6; }
-
-.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; background: var(--white); position: relative; }
-.cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--accent); }
-.cover-tag { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 24px; }
-.cover h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; line-height: 1.15; margin-bottom: 12px; letter-spacing: -0.02em; }
-.cover-address { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); color: var(--muted); font-weight: 400; margin-bottom: 40px; }
-.cover-line { width: 60px; height: 2px; background: var(--accent); margin: 0 auto 40px; }
-.cover-details { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; }
-.cover-detail { text-align: center; }
-.cover-detail-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600; color: var(--primary); }
-.cover-detail-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
-.cover-footer { position: absolute; bottom: 40px; text-align: center; }
-.cover-agent { font-size: 0.85rem; color: var(--muted); }
-.cover-agent strong { color: var(--primary); font-weight: 600; }
-.cover-date { font-size: 0.75rem; color: var(--muted); margin-top: 8px; }
-
-.section { padding: clamp(40px, 6vw, 80px) clamp(30px, 5vw, 80px); max-width: 1000px; margin: 0 auto; }
-.section-alt { background: var(--white); }
-.section-tag { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
-.section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; margin-bottom: 24px; letter-spacing: -0.02em; }
-.section h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 500; margin-bottom: 16px; color: var(--primary); }
-
-.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px; }
-.prop-item { padding: 20px; background: var(--cream); border-radius: 10px; border: 1px solid var(--border); }
-.prop-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.prop-value { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; }
-
-.features-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-.feature-pill { background: var(--accent-light); color: var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
-
-.comps-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 0.85rem; }
-.comps-table thead { background: var(--primary); color: var(--white); }
-.comps-table th { padding: 14px 16px; text-align: left; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
-.comps-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
-.comps-table tbody tr:hover { background: var(--accent-light); }
-.comps-table .price { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 0.95rem; }
-.status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-.status-active { background: #e8f5e9; color: #2e7d32; }
-.status-closed { background: #e3f2fd; color: #1565c0; }
-.status-uc { background: #fff3e0; color: #e65100; }
-.status-coming { background: #f3e5f5; color: #7b1fa2; }
-.subject-row { background: var(--accent-light) !important; font-weight: 600; }
-.subject-row td { border-bottom: 2px solid var(--accent); }
-
-.price-range { display: flex; align-items: center; gap: 24px; margin: 32px 0; padding: 32px; background: var(--white); border: 2px solid var(--accent); border-radius: 12px; }
-.price-range-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.price-range-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--accent); }
-.price-range-divider { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--border); }
-
-.price-bar-container { margin: 32px 0; }
-.price-bar { height: 8px; background: var(--border); border-radius: 4px; position: relative; margin: 40px 0 20px; }
-.price-bar-fill { position: absolute; height: 100%; background: linear-gradient(90deg, var(--accent), #a0522d); border-radius: 4px; }
-.price-bar-marker { position: absolute; top: -28px; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; color: var(--primary); white-space: nowrap; }
-.price-bar-marker::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 2px; height: 20px; background: var(--primary); }
-
-.rationale { padding: 24px; background: var(--cream); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; margin: 24px 0; font-size: 0.9rem; line-height: 1.8; color: var(--primary); }
-
-.agent-footer { padding: 60px 40px; background: var(--primary); color: var(--white); text-align: center; }
-.agent-footer h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); margin-bottom: 8px; }
-.agent-footer .role { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 24px; }
-.agent-footer .contact-row { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
-.agent-footer .contact-item { font-size: 0.9rem; color: rgba(255,255,255,.8); }
-.agent-footer .contact-item a { color: var(--white); text-decoration: none; }
-.agent-footer .brand { margin-top: 32px; font-family: 'Playfair Display', serif; font-size: 0.9rem; color: rgba(255,255,255,.4); }
-
-.print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--accent); color: var(--white); border: none; padding: 14px 28px; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 20px rgba(121,51,21,.3); z-index: 100; }
-.print-btn:hover { background: var(--primary); }
-@media (max-width: 768px) {
-  .cover-details { gap: 24px; }
-  .price-range { flex-direction: column; text-align: center; gap: 16px; }
-  .comps-table { font-size: 0.75rem; }
-  .comps-table th, .comps-table td { padding: 10px 8px; }
-}
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: letter; margin: 0; }
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: #1a1a1a;
+    width: 8.5in;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.5in 0.6in;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-child { page-break-after: avoid; }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #793315;
+    margin-bottom: 12px;
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #793315;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: #793315;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .criteria {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .divider {
+    height: 1px;
+    background: #793315;
+    margin: 16px 0;
+  }
+  .divider-light {
+    height: 1px;
+    background: #e0dcd8;
+    margin: 14px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+    margin-bottom: 14px;
+  }
+  th {
+    background: #793315;
+    color: #fff;
+    padding: 7px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 7px 8px;
+    border-bottom: 1px solid #e8e5e0;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #faf9f7; }
+  .price { font-weight: 700; color: #793315; }
+  .ppsf { font-size: 10px; color: #666; }
+  .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .tag-active { background: #eef4ff; color: #2c5ea0; }
+  .tag-sold { background: #e8f5e9; color: #2d6a4f; }
+  .tag-uc { background: #fff3e0; color: #b86e00; }
+  .tag-cs { background: #f3e5f5; color: #7b1fa2; }
+  .tag-appraisal { background: #793315; color: #fff; }
+  .dom-red { color: #c0392b; font-weight: 700; }
+  .dom-normal { font-weight: 600; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-box {
+    text-align: center;
+    padding: 16px 10px;
+    background: #faf9f7;
+    border: 2px solid #793315;
+    border-radius: 10px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #793315;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-top: 4px;
+  }
+  .stat-sub {
+    font-size: 9px;
+    color: #888;
+    margin-top: 2px;
+  }
+  .insight-box {
+    padding: 14px 18px;
+    background: #faf9f7;
+    border-left: 3px solid #793315;
+    border-radius: 6px;
+    margin: 12px 0;
+  }
+  .insight-box p {
+    font-size: 11px;
+    line-height: 1.65;
+    color: #333;
+  }
+  .insight-box strong { color: #793315; }
+  .footer {
+    position: absolute;
+    bottom: 0.4in;
+    left: 0.6in;
+    right: 0.6in;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #e0dcd8;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .footer-brand span { color: #793315; }
+  .footer-sub { font-size: 8px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; }
+  .footer-page { font-size: 9px; color: #999; }
+  .highlight-row td { background: #f5f0eb !important; font-weight: 600; }
 </style>
 </head>
 <body>
 
-<button class="print-btn no-print" onclick="window.print()">📄 Print / Save PDF</button>
-
-<!-- COVER -->
-<div class="cover">
-  <div class="cover-tag">Comparative Market Analysis</div>
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 1: COVER + SUBJECT PROPERTY       -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+  <div class="subtitle">Comparative Market Analysis</div>
   <h1>1800 Chestnut Lane</h1>
-  <div class="cover-address">Matthews, NC 28104 · Union County</div>
-  <div class="cover-line"></div>
-  <div class="cover-details">
-    <div class="cover-detail">
-      <div class="cover-detail-value">4</div>
-      <div class="cover-detail-label">Bedrooms</div>
-    </div>
-    <div class="cover-detail">
-      <div class="cover-detail-value">1 Full / 1 Half</div>
-      <div class="cover-detail-label">Baths (Above Grade)</div>
-    </div>
-    <div class="cover-detail">
-      <div class="cover-detail-value">2,168</div>
-      <div class="cover-detail-label">SF Above Grade</div>
-    </div>
-    <div class="cover-detail">
-      <div class="cover-detail-value">7.39</div>
-      <div class="cover-detail-label">Acres</div>
-    </div>
-    <div class="cover-detail">
-      <div class="cover-detail-value">1984</div>
-      <div class="cover-detail-label">Year Built</div>
-    </div>
-  </div>
-  <div class="cover-footer">
-    <div class="cover-agent">Prepared by <strong>Ryan Palmer</strong> · Realty Ryan &amp; Associates</div>
-    <div class="cover-date">February 20, 2026</div>
-  </div>
-</div>
+  <div class="criteria">Matthews, NC 28104 · ~6.5 Acres · Acreage Homes · 4-Mile Radius</div>
+  <div class="divider"></div>
 
-<!-- SUBJECT PROPERTY -->
-<div class="section section-alt page-break">
-  <div class="section-tag">Subject Property</div>
-  <h2>Property Overview</h2>
-  
-  <div class="prop-grid">
-    <div class="prop-item">
-      <div class="prop-label">Above Grade</div>
-      <div class="prop-value">2,168 SF</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Finished Basement</div>
-      <div class="prop-value">1,940 SF</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Total Finished</div>
-      <div class="prop-value">~4,108 SF</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Lot Size</div>
-      <div class="prop-value">7.39 Acres</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Above Grade</div>
-      <div class="prop-value">4 Rm / 1 BD / 1.1 BA</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Below Grade</div>
-      <div class="prop-value">3 BD / 2 BA</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Year Built</div>
-      <div class="prop-value">1984 <span style="font-family:Inter;font-size:.7rem;color:var(--muted)">(Age 41)</span></div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Condition</div>
-      <div class="prop-value">Average Plus</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Style</div>
-      <div class="prop-value">Traditional</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Foundation</div>
-      <div class="prop-value">Walkout Basement</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Garage</div>
-      <div class="prop-value">2-Car Attached</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Prior Sale</div>
-      <div class="prop-value">$715,000 <span style="font-family:Inter;font-size:.7rem;color:var(--muted)">(04/2023)</span></div>
-    </div>
-  </div>
-
-  <h3>Key Features</h3>
-  <div class="features-row">
-    <span class="feature-pill">7.39 Acres</span>
-    <span class="feature-pill">Walkout Basement</span>
-    <span class="feature-pill">2 Fireplaces</span>
-    <span class="feature-pill">3 Porches</span>
-    <span class="feature-pill">Outbuilding</span>
-    <span class="feature-pill">Wooded Views</span>
-    <span class="feature-pill">No HOA</span>
-    <span class="feature-pill">Well / Septic</span>
-  </div>
-
-  <h3 style="margin-top:32px">Basement Details</h3>
-  <p style="font-size:.85rem;color:var(--muted);line-height:1.8">
-    1,940 SF finished walkout with recreation room, 3 bedrooms, 2 full bathrooms, sun room, wet bar area, and office nook. Separate outside entry. This effectively doubles the livable space — though below-grade square footage is typically valued at 45–55% of above-grade rates by appraisers.
-  </p>
-
-  <h3 style="margin-top:32px">Recent Appraisal</h3>
-  <p style="font-size:.85rem;color:var(--muted);line-height:1.8">
-    <strong style="color:var(--primary)">$1,159,000</strong> — appraised March 20, 2025 by Matthew McNinch (Charlotte Home Appraisal). Based on 6 comparable sales with a tight adjusted range of $1,145,350 – $1,187,350. GLA adjusted at $120/SF. Land adjusted at $75,000/acre.
-  </p>
-</div>
-
-<!-- APPRAISAL COMPS -->
-<div class="section page-break">
-  <div class="section-tag">Appraisal Comparables</div>
-  <h2>Comparable Sales — Adjusted Values</h2>
-  <p style="font-size:.9rem;color:var(--muted);margin-bottom:8px">
-    6 comps used in the March 2025 appraisal, all within 2 miles. Adjusted values cluster in a remarkably tight $42K range.
-  </p>
-
-  <table class="comps-table">
-    <thead>
-      <tr>
-        <th>Address</th>
-        <th>Sale Price</th>
-        <th>GLA</th>
-        <th>Acres</th>
-        <th>Age</th>
-        <th>Adj. Value</th>
-        <th>Weight</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="subject-row">
-        <td><strong>1800 Chestnut Ln</strong><br><span style="font-size:.7rem;color:var(--accent)">SUBJECT PROPERTY</span></td>
-        <td class="price">—</td>
-        <td>2,168</td>
-        <td>7.39</td>
-        <td>41</td>
-        <td class="price">—</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>1641 Chestnut Ln<br><span style="font-size:.7rem;color:var(--muted)">0.20 mi E · Same street</span></td>
-        <td class="price">$820,000</td>
-        <td>2,872</td>
-        <td>4.50</td>
-        <td>38</td>
-        <td class="price">$1,157,550</td>
-        <td><strong>50%</strong></td>
-      </tr>
-      <tr>
-        <td>3701 Antioch Church Rd<br><span style="font-size:.7rem;color:var(--muted)">1.84 mi SW · Weddington</span></td>
-        <td class="price">$2,010,000</td>
-        <td>2,365</td>
-        <td>9.78</td>
-        <td>59</td>
-        <td class="price">$1,145,350</td>
-        <td>20%</td>
-      </tr>
-      <tr>
-        <td>300 Red Barn Trl<br><span style="font-size:.7rem;color:var(--muted)">0.78 mi SW · Pool, barn, fencing</span></td>
-        <td class="price">$1,900,000</td>
-        <td>3,002</td>
-        <td>7.20</td>
-        <td>48</td>
-        <td class="price">$1,160,450</td>
-        <td>15%</td>
-      </tr>
-      <tr>
-        <td>202 Walden Ln<br><span style="font-size:.7rem;color:var(--muted)">1.51 mi S · Weddington</span></td>
-        <td class="price">$1,350,000</td>
-        <td>3,020</td>
-        <td>5.00</td>
-        <td>48</td>
-        <td class="price">$1,187,350</td>
-        <td>10%</td>
-      </tr>
-      <tr>
-        <td>2618 Forest Lawn Dr<br><span style="font-size:.7rem;color:var(--muted)">1.33 mi SW · Newer build (2006)</span></td>
-        <td class="price">$950,000</td>
-        <td>2,412</td>
-        <td>2.50</td>
-        <td>19</td>
-        <td class="price">$1,161,450</td>
-        <td>5%</td>
-      </tr>
-      <tr>
-        <td>401 Red Barn Trl<br><span style="font-size:.7rem;color:var(--muted)">0.69 mi S · Pond views</span></td>
-        <td class="price">$950,000</td>
-        <td>1,412</td>
-        <td>6.80</td>
-        <td>39</td>
-        <td class="price">$1,183,050</td>
-        <td>—</td>
-      </tr>
-    </tbody>
+  <h3>Subject Property</h3>
+  <table>
+    <tr>
+      <th>Address</th><th>Beds</th><th>Baths</th><th>Finished SF</th><th>Lot</th><th>Year</th><th>Garage</th>
+    </tr>
+    <tr>
+      <td><strong>1800 Chestnut Ln, Matthews</strong></td>
+      <td>3</td><td>4.5</td><td>4,120</td><td>~6.5 ac</td><td>1984</td><td>2-car</td>
+    </tr>
   </table>
 
-  <div class="rationale" style="margin-top:24px">
-    <strong>Adjustment Notes:</strong> Comp 1 (1641 Chestnut) received 50% weight — closest proximity at 0.20 mi on the same street. Comp 3 (300 Red Barn) required significant downward adjustments: -$160K pool/spa, -$150K barn, -$135K fencing, -$55K extra garage bays. All 6 adjusted values cluster between $1,145,350 – $1,187,350 — a $42K spread indicating strong consensus.
+  <div class="divider-light"></div>
+
+  <h3>Property Highlights</h3>
+  <div class="stat-grid-4">
+    <div class="stat-box">
+      <div class="stat-num">4,120</div>
+      <div class="stat-label">Finished SF</div>
+      <div class="stat-sub">Total living space</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">~6.5</div>
+      <div class="stat-label">Acres</div>
+      <div class="stat-sub">Post-subdivision</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">1984</div>
+      <div class="stat-label">Year Built</div>
+      <div class="stat-sub">41 years</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">$715K</div>
+      <div class="stat-label">Prior Sale</div>
+      <div class="stat-sub">April 2023</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Features:</strong> 2 fireplaces · 3 porches · outbuilding · walkout basement · wooded views · 2-car attached garage. The property sits on <strong>~6.5 acres</strong> after a recent lot line revision — originally 7.39 acres, with ~0.88 acres subdivided to a neighbor (recorded October 2025).</p>
+  </div>
+
+  <div class="divider-light"></div>
+
+  <h2>Appraisal Benchmark</h2>
+  <div class="criteria">Independent Appraisal · March 20, 2025</div>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-num" style="font-size:36px;">$1,159,000</div>
+      <div class="stat-label">Appraised Value</div>
+      <div class="stat-sub">Weighted from 6 comps</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">$281</div>
+      <div class="stat-label">Price / SF</div>
+      <div class="stat-sub">Based on 4,120 SF</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">+62%</div>
+      <div class="stat-label">Appreciation</div>
+      <div class="stat-sub">From $715K (Apr 2023)</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <p>The March 2025 appraisal established a value of <strong>$1,159,000</strong> based on six comparable sales with weighted adjustments. This appraisal was completed <strong>before</strong> the lot line revision — based on the full 7.39-acre parcel. The ~0.88-acre reduction may warrant a modest adjustment to this baseline.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Realty <span>Ryan</span> & Associates</div>
+    <div class="footer-sub">Prepared by Ryan Palmer · Corcoran HM Properties</div>
+    <div class="footer-page">1 of 5</div>
   </div>
 </div>
 
-<!-- ACTIVE MARKET -->
-<div class="section section-alt page-break">
-  <div class="section-tag">Active Market</div>
-  <h2>Current MLS Activity</h2>
-  <p style="font-size:.9rem;color:var(--muted);margin-bottom:8px">
-    Properties on 4+ acres within 4 miles of the subject. Limited inventory in this segment.
-  </p>
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 2: LAND SUBDIVISION               -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+  <div class="subtitle">Land Division</div>
+  <h2>Lot Line Revision — October 2025</h2>
+  <div class="criteria">1800 Chestnut Ln · Original Tract: 7.390 Acres · Preliminary Lot Line Revision Recorded 10/13/2025</div>
+  <div class="divider"></div>
 
-  <h3>Active & Under Contract</h3>
-  <table class="comps-table">
-    <thead>
-      <tr>
-        <th>Address</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>BD/BA</th>
-        <th>SqFt</th>
-        <th>Acres</th>
-        <th>CDOM</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="subject-row">
-        <td><strong>1800 Chestnut Ln</strong><br><span style="font-size:.7rem;color:var(--accent)">SUBJECT</span></td>
-        <td class="price">—</td>
-        <td><span class="status-badge" style="background:var(--accent-light);color:var(--accent)">Subject</span></td>
-        <td>4 / 1.1</td>
-        <td>2,168</td>
-        <td>7.39</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>803 Elizabeth Ln<br><span style="font-size:.7rem;color:var(--muted)">Matthews · Split Level</span></td>
-        <td class="price">$2,500,000</td>
-        <td><span class="status-badge status-coming">Coming Soon</span></td>
-        <td>4 / 4</td>
-        <td>3,600</td>
-        <td>5.00</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>5610 Golden Pond Dr<br><span style="font-size:.7rem;color:var(--muted)">26.5 acres · Premium lot</span></td>
-        <td class="price">$2,500,000</td>
-        <td><span class="status-badge status-uc">Under Contract</span></td>
-        <td>5 / 4</td>
-        <td>4,453</td>
-        <td>26.50</td>
-        <td style="color:#c0392b;font-weight:600">105</td>
-      </tr>
-      <tr>
-        <td>2108 Stallings Rd<br><span style="font-size:.7rem;color:var(--muted)">4.3 acres · Smaller home</span></td>
-        <td class="price">$1,300,000</td>
-        <td><span class="status-badge status-uc">Under Contract</span></td>
-        <td>3 / 3</td>
-        <td>1,465</td>
-        <td>4.30</td>
-        <td style="color:#c0392b;font-weight:600">104</td>
-      </tr>
-    </tbody>
+  <h3>Subdivision Summary</h3>
+  <table>
+    <tr>
+      <th>Parcel</th><th>Acreage</th><th>Owner</th><th>Notes</th>
+    </tr>
+    <tr>
+      <td><strong>Original Tract</strong></td>
+      <td>7.390 ac</td>
+      <td>Logan Lopez</td>
+      <td>Per original survey (Carroll L. Rushing, NCPLS L-1513)</td>
+    </tr>
+    <tr>
+      <td><strong>Subdivided to Neighbor</strong></td>
+      <td>~0.88 ac</td>
+      <td>Adjacent owner</td>
+      <td>Lot line revision recorded 10/13/2025</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>Remaining (Subject)</strong></td>
+      <td><strong>~6.5 ac</strong></td>
+      <td><strong>Logan Lopez</strong></td>
+      <td>Current lot — subject of this CMA</td>
+    </tr>
   </table>
 
-  <h3 style="margin-top:32px">Recent Closed Sales</h3>
-  <table class="comps-table">
-    <thead>
-      <tr>
-        <th>Address</th>
-        <th>List Price</th>
-        <th>Close Price</th>
-        <th>CP/LP</th>
-        <th>SqFt</th>
-        <th>Acres</th>
-        <th>CDOM</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>4909 Hudson Church Rd<br><span style="font-size:.7rem;color:var(--muted)">5 acres · 1979</span></td>
-        <td class="price">$625,000</td>
-        <td class="price">$605,000</td>
-        <td>97%</td>
-        <td>1,625</td>
-        <td>5.00</td>
-        <td>52</td>
-      </tr>
-      <tr>
-        <td>5945 Lindenwood Dr<br><span style="font-size:.7rem;color:var(--muted)">Indian Brook · 1985</span></td>
-        <td class="price">$600,000</td>
-        <td class="price">$600,000</td>
-        <td>100%</td>
-        <td>1,902</td>
-        <td>4.50</td>
-        <td>9</td>
-      </tr>
-      <tr>
-        <td>5200 Winding Ln<br><span style="font-size:.7rem;color:var(--muted)">15 acres · 1979</span></td>
-        <td class="price">$1,175,000</td>
-        <td class="price">$980,000</td>
-        <td style="color:#c0392b;font-weight:600">83%</td>
-        <td>1,922</td>
-        <td>15.00</td>
-        <td>50</td>
-      </tr>
-    </tbody>
+  <div class="insight-box">
+    <p><strong>Impact on Value:</strong> The lot reduction from 7.39 to ~6.5 acres represents a loss of approximately <strong>12% of the land area</strong>. In this submarket, acreage contributes to value but at a diminishing rate — the first 2–3 acres carry the most premium, while additional acreage beyond that adds value at a lower rate per acre.</p>
+  </div>
+
+  <h3>Land Value Analysis</h3>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-num">7.39 ac</div>
+      <div class="stat-label">Original Lot</div>
+      <div class="stat-sub">At time of appraisal</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">~6.5 ac</div>
+      <div class="stat-label">Current Lot</div>
+      <div class="stat-sub">After subdivision</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">~0.88 ac</div>
+      <div class="stat-label">Transferred</div>
+      <div class="stat-sub">To adjacent owner</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Estimating the adjustment:</strong> Looking at the appraisal comp set, land value adjustments ranged from <strong>$10,000–$25,000 per acre</strong> for comparable properties in the area. At ~0.88 acres lost, the estimated value reduction is approximately <strong>$9,000–$22,000</strong> — a relatively minor impact on the overall property value. The property's core value drivers (4,120 SF home, walkout basement, wooded setting, 6.5 acres) remain intact.</p>
+  </div>
+
+  <h3>Appraisal Comp Land Adjustments</h3>
+  <table>
+    <tr>
+      <th>Comp</th><th>Address</th><th>Acres</th><th>vs Subject (7.39)</th><th>Adj Applied</th>
+    </tr>
+    <tr>
+      <td>1</td><td>1641 Chestnut Ln</td><td>4.50</td><td>-2.89 ac</td><td>+$75,000</td>
+    </tr>
+    <tr>
+      <td>2</td><td>3701 Antioch Church Rd</td><td>9.78</td><td>+2.39 ac</td><td>-$50,000</td>
+    </tr>
+    <tr>
+      <td>3</td><td>300 Red Barn Trl</td><td>7.20</td><td>-0.19 ac</td><td>$0</td>
+    </tr>
+    <tr>
+      <td>4</td><td>202 Walden Ln</td><td>5.00</td><td>-2.39 ac</td><td>+$50,000</td>
+    </tr>
+    <tr>
+      <td>5</td><td>2618 Forest Lawn Dr</td><td>2.50</td><td>-4.89 ac</td><td>+$100,000</td>
+    </tr>
+    <tr>
+      <td>6</td><td>401 Red Barn Trl</td><td>6.80</td><td>-0.59 ac</td><td>+$25,000</td>
+    </tr>
   </table>
 
-  <div class="rationale" style="margin-top:24px">
-    <strong>Market Insight:</strong> The closed sales are all significantly smaller homes ($600K–$980K range). The most relevant active market data point is <strong>2108 Stallings Rd — under contract at $1,300,000</strong> with only 1,465 SF on 4.3 acres. This supports pricing the subject above $1.2M given its superior size, finished basement, and larger lot. However, Stallings took 104 days to get there. Note: 5200 Winding Ln listed at $1.175M but only closed at $980K (83% CP/LP) — a cautionary tale about overpricing.
+  <div class="insight-box">
+    <p><strong>Key takeaway:</strong> Even with the ~0.88-acre reduction, the property at <strong>~6.5 acres</strong> remains one of the largest residential parcels in the immediate area. Most comparable sales had 4.5–7.2 acres. The subdivision does not materially change the property's competitive position — <strong>6.5 acres is still a significant estate lot</strong> that commands a premium.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Realty <span>Ryan</span> & Associates</div>
+    <div class="footer-sub">Prepared by Ryan Palmer · Corcoran HM Properties</div>
+    <div class="footer-page">2 of 5</div>
   </div>
 </div>
 
-<!-- PRICING STRATEGY -->
-<div class="section page-break">
-  <div class="section-tag">Valuation</div>
-  <h2>Recommended Price Range</h2>
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 3: COMPS — MLS                    -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+  <div class="subtitle">Market Comparables</div>
+  <h2>MLS Comparable Properties</h2>
+  <div class="criteria">4+ Acres · 4-Mile Radius of 1800 Chestnut Ln · All Statuses</div>
+  <div class="divider"></div>
 
-  <div class="price-range">
-    <div>
-      <div class="price-range-label">Conservative</div>
-      <div class="price-range-value">$1,197,000</div>
+  <h3>Coming Soon</h3>
+  <table>
+    <tr>
+      <th>Address</th><th>Price</th><th>BD/BA</th><th>SF</th><th>Acres</th><th>Year</th><th>Status</th>
+    </tr>
+    <tr>
+      <td><strong>803 Elizabeth Ln</strong></td>
+      <td class="price">$2,500,000</td>
+      <td>4/4</td><td>3,600</td><td>5.00</td><td>1960</td>
+      <td><span class="tag tag-cs">Coming Soon</span></td>
+    </tr>
+  </table>
+
+  <h3>Under Contract</h3>
+  <table>
+    <tr>
+      <th>Address</th><th>Price</th><th>BD/BA</th><th>SF</th><th>Acres</th><th>Year</th><th>CDOM</th><th>Status</th>
+    </tr>
+    <tr>
+      <td><strong>5610 Golden Pond Dr</strong></td>
+      <td class="price">$2,500,000</td>
+      <td>5/4</td><td>4,453</td><td>26.50</td><td>1995</td><td class="dom-normal">105</td>
+      <td><span class="tag tag-uc">UC</span></td>
+    </tr>
+    <tr>
+      <td><strong>2108 Stallings Rd</strong></td>
+      <td class="price">$1,300,000</td>
+      <td>3/3</td><td>1,465</td><td>4.30</td><td>1964</td><td class="dom-normal">104</td>
+      <td><span class="tag tag-uc">UC</span></td>
+    </tr>
+  </table>
+
+  <div class="insight-box">
+    <p><strong>Under contract analysis:</strong> Two acreage properties are currently under contract. 5610 Golden Pond Dr ($2.5M, 26.5 acres) shows that large-lot properties can attract buyers — though 26.5 acres carries significant land premium. 2108 Stallings Rd ($1.3M, 4.3 acres, 1,465 SF) is more comparable in lot size but much smaller home. Both took <strong>~105 days</strong> to go under contract — setting a realistic DOM expectation.</p>
+  </div>
+
+  <h3>Recently Closed</h3>
+  <table>
+    <tr>
+      <th>Address</th><th>List $</th><th>Close $</th><th>CP/LP</th><th>BD/BA</th><th>SF</th><th>Acres</th><th>Year</th><th>DOM</th>
+    </tr>
+    <tr>
+      <td><strong>4909 Hudson Church Rd</strong></td>
+      <td>$625,000</td>
+      <td class="price">$605,000</td>
+      <td>97%</td><td>3/—</td><td>1,625</td><td>5.00</td><td>1979</td><td class="dom-normal">52</td>
+    </tr>
+    <tr>
+      <td><strong>5945 Lindenwood Dr</strong></td>
+      <td>$600,000</td>
+      <td class="price">$600,000</td>
+      <td>100%</td><td>3/—</td><td>1,902</td><td>4.50</td><td>1985</td><td class="dom-normal">9</td>
+    </tr>
+    <tr>
+      <td><strong>5200 Winding Ln</strong></td>
+      <td>$1,175,000</td>
+      <td class="price">$980,000</td>
+      <td>83%</td><td>4/—</td><td>1,922</td><td>15.00</td><td>1979</td><td class="dom-normal">50</td>
+    </tr>
+  </table>
+
+  <div class="insight-box">
+    <p><strong>Closed comp takeaways:</strong> The three recent sales show a wide range — $600K to $980K — but all were <strong>smaller homes</strong> (1,465–1,922 SF) compared to the subject's 4,120 SF. 5200 Winding Ln is the most relevant: 15 acres, $980K close, but only 1,922 SF — it sold at <strong>83% of list</strong>, underscoring the risk of overpricing. The close-to-list ratios range from <strong>83% to 100%</strong>, with a median of 97%. Properly priced homes sell near asking; overpriced homes get punished.</p>
+  </div>
+
+  <h3>Closed Market Summary</h3>
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-num">$728K</div>
+      <div class="stat-label">Avg Sold Price</div>
+      <div class="stat-sub">3 closed sales</div>
     </div>
-    <div class="price-range-divider">—</div>
-    <div>
-      <div class="price-range-label">Recommended</div>
-      <div class="price-range-value" style="font-size:2.4rem">$1,250,000</div>
+    <div class="stat-box">
+      <div class="stat-num">93%</div>
+      <div class="stat-label">Avg Close / List</div>
+      <div class="stat-sub">Range: 83%–100%</div>
     </div>
-    <div class="price-range-divider">—</div>
-    <div>
-      <div class="price-range-label">Aggressive</div>
-      <div class="price-range-value">$1,300,000</div>
+    <div class="stat-box">
+      <div class="stat-num">37</div>
+      <div class="stat-label">Median DOM</div>
+      <div class="stat-sub">Range: 9–52 days</div>
     </div>
   </div>
 
-  <div class="price-bar-container">
-    <h3>Price Positioning</h3>
-    <div class="price-bar">
-      <div class="price-bar-fill" style="left:0%;width:100%"></div>
-      <div class="price-bar-marker" style="left:0%">$980K<br><span style="font-size:.6rem;color:var(--muted)">Winding Ln (Closed)</span></div>
-      <div class="price-bar-marker" style="left:28%">$1,159K<br><span style="font-size:.6rem;color:var(--muted)">Appraisal</span></div>
-      <div class="price-bar-marker" style="left:45%">$1,197K<br><span style="font-size:.6rem;color:var(--muted)">Appr. + Appreciation</span></div>
-      <div class="price-bar-marker" style="left:65%;color:var(--accent);font-weight:700">$1,250K<br><span style="font-size:.6rem">RECOMMENDED</span></div>
-      <div class="price-bar-marker" style="left:85%">$1,300K<br><span style="font-size:.6rem;color:var(--muted)">Seller Target</span></div>
-      <div class="price-bar-marker" style="left:100%">$1,350K<br><span style="font-size:.6rem;color:var(--muted)">202 Walden (Adj.)</span></div>
-    </div>
-  </div>
-
-  <div class="rationale" style="margin-top:80px">
-    <strong>Analysis:</strong> The March 2025 appraisal came in at $1,159,000 based on 6 comparable sales. Applying the appraiser's own market trend data (+0.3%/month appreciation × 11 months) brings the appreciation-adjusted value to approximately <strong>$1,197,000</strong>.<br><br>
-    
-    At a <strong>$1,250,000</strong> list price, the property would be priced at $576/SF above grade — or $304/SF on total finished area (4,108 SF). This positions the home competitively while acknowledging the massive walkout basement, 7.39-acre lot, and 11 months of market appreciation since the appraisal.<br><br>
-    
-    <strong>At $1,300,000 (seller's target):</strong> This is $141K above the March 2025 appraisal. A buyer using conventional financing will likely face an appraisal gap. The 2108 Stallings Rd comp going under contract at $1.3M supports this price point — but Stallings took 104 days and has only 1,465 SF on 4.3 acres. Expect 60–90+ DOM and a potential price reduction at this level.<br><br>
-    
-    <strong>Strategy if listing at $1,300,000:</strong> Build in a 30-day price review. If no offers by day 30, reduce to $1,249,000. The first 14 days generate 80% of buyer interest — pricing right from day one maximizes exposure and negotiating leverage.
-  </p>
-  </div>
-
-  <h3 style="margin-top:32px">Key Market Metrics</h3>
-  <div class="prop-grid">
-    <div class="prop-item">
-      <div class="prop-label">Monthly Appreciation</div>
-      <div class="prop-value">+0.3%</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Housing Supply</div>
-      <div class="prop-value">4.0 Months</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Median DOM</div>
-      <div class="prop-value">14 Days</div>
-    </div>
-    <div class="prop-item">
-      <div class="prop-label">Median Sale/List</div>
-      <div class="prop-value">93–97%</div>
-    </div>
+  <div class="footer">
+    <div class="footer-brand">Realty <span>Ryan</span> & Associates</div>
+    <div class="footer-sub">Prepared by Ryan Palmer · Corcoran HM Properties</div>
+    <div class="footer-page">3 of 5</div>
   </div>
 </div>
 
-<!-- AGENT FOOTER -->
-<div class="agent-footer">
-  <h3>Ryan Palmer</h3>
-  <div class="role">Broker / CEO · Realty Ryan &amp; Associates</div>
-  <div class="contact-row">
-    <div class="contact-item"><a href="tel:5089542159">508-954-2159</a></div>
-    <div class="contact-item"><a href="mailto:ryan@realtyryan.com">ryan@realtyryan.com</a></div>
-    <div class="contact-item"><a href="https://realtyryan.com">realtyryan.com</a></div>
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 4: APPRAISAL COMPS                -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+  <div class="subtitle">Appraisal Data</div>
+  <h2>Appraisal Comparable Sales — Adjusted</h2>
+  <div class="criteria">From Independent Appraisal · March 20, 2025 · Based on 7.39-Acre Parcel</div>
+  <div class="divider"></div>
+
+  <table>
+    <tr>
+      <th>#</th><th>Address</th><th>Sale Price</th><th>GLA</th><th>Acres</th><th>Adjusted Value</th><th>Weight</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><strong>1641 Chestnut Ln</strong></td>
+      <td class="price">$820,000</td>
+      <td>2,872</td><td>4.50</td>
+      <td class="price">$1,157,550</td>
+      <td>50%</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>3701 Antioch Church Rd</strong></td>
+      <td class="price">$2,010,000</td>
+      <td>2,365</td><td>9.78</td>
+      <td class="price">$1,145,350</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>300 Red Barn Trl</strong></td>
+      <td class="price">$1,900,000</td>
+      <td>3,002</td><td>7.20</td>
+      <td class="price">$1,160,450</td>
+      <td>15%</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>202 Walden Ln</strong></td>
+      <td class="price">$1,350,000</td>
+      <td>3,020</td><td>5.00</td>
+      <td class="price">$1,187,350</td>
+      <td>10%</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>2618 Forest Lawn Dr</strong></td>
+      <td class="price">$950,000</td>
+      <td>2,412</td><td>2.50</td>
+      <td class="price">$1,161,450</td>
+      <td>5%</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>401 Red Barn Trl</strong></td>
+      <td class="price">$950,000</td>
+      <td>1,412</td><td>6.80</td>
+      <td class="price">$1,183,050</td>
+      <td>—</td>
+    </tr>
+  </table>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-num" style="font-size:34px;">$1,159,000</div>
+      <div class="stat-label">Weighted Appraised Value</div>
+      <div class="stat-sub">Based on 7.39-acre parcel</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Comps Used</div>
+      <div class="stat-sub">2.5–9.78 acre range</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">$281</div>
+      <div class="stat-label">Appraised $/SF</div>
+      <div class="stat-sub">At 4,120 SF</div>
+    </div>
   </div>
-  <div class="brand">Realty Ryan &amp; Associates · Corcoran HM Properties</div>
+
+  <div class="insight-box">
+    <p><strong>Appraisal methodology:</strong> The appraiser used a weighted approach, giving <strong>50% weight</strong> to 1641 Chestnut Ln — the closest comparable (same street, same neighborhood character). All six comps converged to a tight adjusted range of <strong>$1,145,350–$1,187,350</strong>, showing strong consensus. Sale prices ranged from $820K to $2.01M, but after adjustments for size, acreage, condition, and features, all comps pointed to the same conclusion.</p>
+  </div>
+
+  <h3>Key Appraisal Adjustments (Comp 3 — 300 Red Barn Trl)</h3>
+  <div class="insight-box">
+    <p>The most telling comp is <strong>300 Red Barn Trl</strong>, which sold for $1.9M (cash, 2 DOM). After subtracting for its pool/spa (-$160K), barn (-$150K), fencing (-$135K), and extra garage (-$55K), the adjusted value came to <strong>$1,160,450</strong> — almost exactly the final appraised value. This confirms the subject's core value is driven by the <strong>home and land</strong>, not amenity premiums.</p>
+  </div>
+
+  <h3>Lot Line Adjustment</h3>
+  <div class="insight-box">
+    <p><strong>Important note:</strong> The appraisal was based on the <strong>original 7.39-acre parcel</strong>. Since then, ~0.88 acres were subdivided to a neighbor (Oct 2025 lot line revision). Based on the appraiser's land adjustment rates ($10K–$25K/acre in this area), the estimated impact is approximately <strong>-$9,000 to -$22,000</strong>, bringing the adjusted appraised baseline to approximately <strong>$1,137,000–$1,150,000</strong>.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Realty <span>Ryan</span> & Associates</div>
+    <div class="footer-sub">Prepared by Ryan Palmer · Corcoran HM Properties</div>
+    <div class="footer-page">4 of 5</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 5: PRICING STRATEGY               -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+  <div class="subtitle">Strategic Summary</div>
+  <h2>Pricing Analysis & Recommendation</h2>
+  <div class="criteria">1800 Chestnut Ln · 3 BD / 4.5 BA · 4,120 SF · ~6.5 Acres</div>
+  <div class="divider"></div>
+
+  <h3>Pricing Framework</h3>
+  <table>
+    <tr>
+      <th>Approach</th><th>Value</th><th>Basis</th>
+    </tr>
+    <tr>
+      <td><strong>Appraised Value (Mar 2025)</strong></td>
+      <td class="price">$1,159,000</td>
+      <td>6-comp weighted; based on 7.39 ac</td>
+    </tr>
+    <tr>
+      <td><strong>Adjusted for Lot Reduction</strong></td>
+      <td class="price">$1,137,000–$1,150,000</td>
+      <td>-$9K to -$22K for ~0.88 ac lost</td>
+    </tr>
+    <tr>
+      <td><strong>Market Appreciation (+0.3%/mo)</strong></td>
+      <td class="price">+$38,000–$42,000</td>
+      <td>11 months since appraisal (Mar 2025 → Feb 2026)</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>Current Estimated Value</strong></td>
+      <td class="price"><strong>$1,175,000–$1,192,000</strong></td>
+      <td>Appraisal + appreciation − lot reduction</td>
+    </tr>
+  </table>
+
+  <h3>Pricing Scenarios</h3>
+  <table>
+    <tr>
+      <th>List Price</th><th>$/SF</th><th>Strategy</th><th>Expected DOM</th><th>Risk</th>
+    </tr>
+    <tr>
+      <td class="price">$1,175,000</td>
+      <td>$285</td>
+      <td>Conservative — at market value</td>
+      <td>30–45 days</td>
+      <td style="color:#2d6a4f;">Low</td>
+    </tr>
+    <tr>
+      <td class="price">$1,250,000</td>
+      <td>$303</td>
+      <td>Sweet spot — tests upside</td>
+      <td>45–75 days</td>
+      <td style="color:#b86e00;">Moderate</td>
+    </tr>
+    <tr>
+      <td class="price">$1,300,000</td>
+      <td>$316</td>
+      <td>Aggressive — needs cash or gap coverage</td>
+      <td>60–90+ days</td>
+      <td style="color:#c0392b;">High</td>
+    </tr>
+  </table>
+
+  <div class="insight-box">
+    <p><strong>Market context:</strong> Current absorption shows ~4 months of supply in the acreage submarket. Appreciation is running at <strong>+0.3%/month</strong>. The average close-to-list ratio for comparable properties is <strong>93%</strong> — meaning a $1,300,000 list could realistically close around $1,209,000. Pricing at <strong>$1,250,000</strong> positions the property to attract financed buyers while still capturing upside from the strong appreciation trend since the 2023 purchase.</p>
+  </div>
+
+  <h3>Key Considerations</h3>
+  <div class="insight-box">
+    <p>✦ <strong>Prior sale: $715,000 (Apr 2023)</strong> — buyers and agents will see this. A $1.3M list is an 82% increase in under 3 years, which can create sticker shock unless justified by improvements.<br><br>
+    ✦ <strong>Appraisal ceiling:</strong> At $1,159,000, financed buyers will face appraisal risk above ~$1.2M unless comparable sales continue to climb. Cash buyers or gap coverage become important above this threshold.<br><br>
+    ✦ <strong>Lot line revision:</strong> The subdivision from 7.39 to ~6.5 acres is a minor value reduction (~$9K–$22K) but should be disclosed upfront and addressed in marketing — framing the ~6.5 acres as still a substantial estate lot.<br><br>
+    ✦ <strong>Competitive advantage:</strong> At 4,120 SF on ~6.5 acres, this home is <strong>significantly larger</strong> than every recent comp (all under 2,000 SF). The size premium alone supports pricing above the comp set.</p>
+  </div>
+
+  <div style="margin-top:16px; padding:18px 24px; border:2px solid #793315; border-radius:10px; text-align:center;">
+    <h3 style="margin-bottom:6px;">Recommended List Price: $1,250,000</h3>
+    <p style="font-size:11px; color:#333; line-height:1.6;">This positions the property at the <strong>sweet spot</strong> — above appraised value to capture appreciation, yet accessible to financed buyers. It accounts for the lot reduction while leveraging the home's significant size advantage over the comp set.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Realty <span>Ryan</span> & Associates</div>
+    <div class="footer-sub">Prepared by Ryan Palmer · Corcoran HM Properties · February 2026</div>
+    <div class="footer-page">5 of 5</div>
+  </div>
 </div>
 
 </body>
