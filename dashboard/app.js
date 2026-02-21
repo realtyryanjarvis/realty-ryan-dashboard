@@ -172,6 +172,7 @@ function showApp() {
   document.getElementById('topbar-avatar').textContent = currentUser.initials;
   setDashboardDate();
   initFirebaseListeners();
+  initNotifications();
   // Default view based on role
   if (currentUser.role === 'partner') navigateTo('tasks');
   else navigateTo('dashboard');
@@ -443,8 +444,9 @@ function createPipelineAccordion(stage, items, type, openState) {
     db.ref(`transactions/${dragId}/${pipeline}/stageHistory`).push({
       stage: stage.id, timestamp: Date.now(), changedBy: currentUser.uid
     });
-    // Log activity
+    // Log activity + notify
     logActivity('stage-change', `Moved to ${stage.label}`, txnCache[dragId]?.property?.address || '', currentUser.uid);
+    notifyStageChange(dragId, stage.label, txnCache[dragId]?.property?.address || '');
     toast(`Moved to ${stage.label}`);
     runAutomations(dragId, stage.id, type);
     createCalendarEventsForStage(dragId, stage.id, type);
@@ -762,6 +764,12 @@ function setDocStatus(txnId, docId, status) {
     action: status, timestamp: Date.now(), userId: currentUser.uid, userName: currentUser.name,
     details: `Status changed to ${status}`
   });
+  // Notify doc status change
+  const docName = txnCache[txnId]?.documents?.[docId]?.name || 'Document';
+  const addr = txnCache[txnId]?.property?.address || '';
+  if (status === 'uploaded' || status === 'signed' || status === 'verified') {
+    notifyDocUploaded(txnId, `${docName} (${status})`, addr);
+  }
   toast(`Document marked as ${status}`);
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -798,13 +806,15 @@ function showAddTaskForm(txnId) {
 function addTask(txnId) {
   const title = document.getElementById(`new-task-title-${txnId}`).value.trim();
   if (!title) return;
+  const assignee = document.getElementById(`new-task-assignee-${txnId}`).value;
   db.ref(`transactions/${txnId}/tasks`).push({
     title,
-    assignedTo: document.getElementById(`new-task-assignee-${txnId}`).value,
+    assignedTo: assignee,
     dueDate: document.getElementById(`new-task-due-${txnId}`).value,
     priority: document.getElementById(`new-task-priority-${txnId}`).value,
     status: 'pending', category: 'general', createdAt: Date.now(), createdBy: currentUser.uid
   });
+  notifyTaskAssigned(txnId, title, assignee);
   toast('Task added');
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -1070,7 +1080,8 @@ function showNewContactForm(prefill) {
       data.assignedTo = 'ryan-001';
       data.tags = [];
       data.portalEnabled = false;
-      db.ref('contacts').push(data);
+      const newContactRef = db.ref('contacts').push(data);
+      notifyContactAdded(newContactRef.key, `${data.firstName} ${data.lastName}`);
       toast('Contact created');
     }
     closeModal();
@@ -1470,6 +1481,8 @@ function showAddShowingForm() {
       },
       source: 'manual', createdAt: Date.now(), createdBy: currentUser.uid
     });
+    const showAddr = txnCache[txnId]?.property?.address || 'Unknown';
+    notifyShowingEvent(txnId, showAddr, 'recorded');
     toast('Showing added');
     closeModal();
     renderShowings();
@@ -2318,6 +2331,433 @@ document.addEventListener('click', e => {
 });
 
 // ══════════════════════════════════════
+// NOTIFICATION CENTER
+// ══════════════════════════════════════
+let notifCache = {};
+let notifListener = null;
+let notifPrefs = null;
+let notifInitialLoad = true;
+
+function getNotifPrefs() {
+  if (notifPrefs) return notifPrefs;
+  const saved = localStorage.getItem('rra_notif_prefs');
+  notifPrefs = saved ? JSON.parse(saved) : {
+    'stage-change': true, 'doc-uploaded': true, 'deadline-approaching': true,
+    'task-assigned': true, 'contact-added': true, 'showing': true, 'sound': true
+  };
+  return notifPrefs;
+}
+
+function saveNotifPrefs() {
+  localStorage.setItem('rra_notif_prefs', JSON.stringify(notifPrefs));
+}
+
+function initNotifications() {
+  if (!currentUser) return;
+  notifInitialLoad = true;
+  const prefs = getNotifPrefs();
+
+  // Restore checkbox states
+  document.querySelectorAll('[data-notif-type]').forEach(cb => {
+    const type = cb.dataset.notifType;
+    cb.checked = prefs[type] !== false;
+    cb.addEventListener('change', () => {
+      notifPrefs[type] = cb.checked;
+      saveNotifPrefs();
+    });
+  });
+
+  // Ryan sees all notifications; agents see only their own
+  const isLead = currentUser.role === 'agent-lead' || currentUser.role === 'partner';
+
+  if (notifListener) {
+    // Clean up previous listener
+    db.ref('notifications').off('value', notifListener);
+  }
+
+  if (isLead) {
+    // Listen to ALL notifications
+    notifListener = db.ref('notifications').orderByChild('createdAt').limitToLast(50).on('value', snap => {
+      const allNotifs = {};
+      snap.forEach(userSnap => {
+        // Each child could be userId node or direct notif
+        const val = userSnap.val();
+        if (val && typeof val === 'object' && val.type) {
+          // Direct notification
+          allNotifs[userSnap.key] = val;
+        } else if (val && typeof val === 'object') {
+          // userId node containing notifications
+          Object.entries(val).forEach(([nid, n]) => {
+            if (n && typeof n === 'object' && n.type) allNotifs[nid] = n;
+          });
+        }
+      });
+      processNotifications(allNotifs);
+    });
+  } else {
+    // Agent: listen to own notifications
+    notifListener = db.ref(`notifications/${currentUser.uid}`).orderByChild('createdAt').limitToLast(50).on('value', snap => {
+      processNotifications(snap.val() || {});
+    });
+  }
+
+  // Setup bell click
+  document.getElementById('notif-bell').addEventListener('click', e => {
+    e.stopPropagation();
+    const panel = document.getElementById('notif-panel');
+    panel.classList.toggle('hidden');
+  });
+
+  // Close panel on outside click
+  document.addEventListener('click', e => {
+    const panel = document.getElementById('notif-panel');
+    if (!panel.classList.contains('hidden') && !panel.contains(e.target) && e.target.id !== 'notif-bell') {
+      panel.classList.add('hidden');
+    }
+  });
+
+  // Mark all read
+  document.getElementById('notif-mark-all-read').addEventListener('click', () => {
+    markAllNotifsRead();
+  });
+
+  // Run deadline check
+  setTimeout(() => checkDeadlinesAndCreateNotifs(), 3000);
+}
+
+function processNotifications(notifs) {
+  const oldKeys = Object.keys(notifCache);
+  notifCache = notifs;
+  const prefs = getNotifPrefs();
+
+  // Filter by prefs
+  const filtered = {};
+  Object.entries(notifs).forEach(([id, n]) => {
+    if (prefs[n.type] !== false) filtered[id] = n;
+  });
+
+  // Read state from localStorage
+  const readSet = getReadNotifs();
+
+  // Count unread
+  const unread = Object.entries(filtered).filter(([id, n]) => !n.read && !readSet.has(id)).length;
+  const countEl = document.getElementById('notif-count');
+  countEl.textContent = unread > 99 ? '99+' : unread;
+  countEl.classList.toggle('hidden', unread === 0);
+
+  // Flash + sound for new notifications
+  if (!notifInitialLoad && Object.keys(filtered).length > oldKeys.length) {
+    const bell = document.getElementById('notif-bell');
+    bell.classList.add('flash');
+    setTimeout(() => bell.classList.remove('flash'), 600);
+    if (prefs.sound !== false) {
+      try { document.getElementById('notif-sound').play().catch(() => {}); } catch(e) {}
+    }
+  }
+  notifInitialLoad = false;
+
+  // Render panel
+  renderNotifPanel(filtered, readSet);
+}
+
+function getReadNotifs() {
+  const stored = localStorage.getItem('rra_read_notifs');
+  return new Set(stored ? JSON.parse(stored) : []);
+}
+
+function markNotifRead(notifId) {
+  const readSet = getReadNotifs();
+  readSet.add(notifId);
+  localStorage.setItem('rra_read_notifs', JSON.stringify([...readSet]));
+  processNotifications(notifCache);
+}
+
+function markAllNotifsRead() {
+  const readSet = getReadNotifs();
+  Object.keys(notifCache).forEach(id => readSet.add(id));
+  localStorage.setItem('rra_read_notifs', JSON.stringify([...readSet]));
+  processNotifications(notifCache);
+}
+
+function renderNotifPanel(notifs, readSet) {
+  const list = document.getElementById('notif-panel-list');
+  const entries = Object.entries(notifs).sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+  if (entries.length === 0) {
+    list.innerHTML = '<p class="empty-msg" style="padding:24px;text-align:center">No notifications</p>';
+    return;
+  }
+
+  const iconMap = {
+    'stage-change': '🔄', 'doc-uploaded': '📄', 'deadline-approaching': '⏰',
+    'task-assigned': '☐', 'contact-added': '👤', 'showing': '🏠'
+  };
+
+  list.innerHTML = entries.slice(0, 30).map(([id, n]) => {
+    const isUnread = !n.read && !readSet.has(id);
+    return `
+      <div class="notif-item${isUnread ? ' unread' : ''}" data-notif-id="${id}" data-link-type="${n.linkType || ''}" data-link-id="${n.linkId || ''}">
+        <div class="notif-item-icon">${iconMap[n.type] || '🔔'}</div>
+        <div class="notif-item-body">
+          <div class="notif-item-title">${n.message || n.title || ''}</div>
+          <div class="notif-item-time">${timeAgo(n.createdAt)}</div>
+        </div>
+        <div class="notif-item-mark"></div>
+      </div>
+    `;
+  }).join('');
+
+  // Click handlers
+  list.querySelectorAll('.notif-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const nid = el.dataset.notifId;
+      markNotifRead(nid);
+      // Navigate
+      const linkType = el.dataset.linkType;
+      const linkId = el.dataset.linkId;
+      if (linkType === 'transaction' && linkId) {
+        document.getElementById('notif-panel').classList.add('hidden');
+        openTransactionDetail(linkId);
+      } else if (linkType === 'contact' && linkId) {
+        document.getElementById('notif-panel').classList.add('hidden');
+        navigateTo('contacts');
+        setTimeout(() => openContactDetail(linkId), 200);
+      } else if (linkType === 'task' && linkId) {
+        document.getElementById('notif-panel').classList.add('hidden');
+        navigateTo('tasks');
+      }
+    });
+  });
+}
+
+// ── Create notification helper ──
+function createNotification(opts) {
+  // opts: { type, message, userId (target), linkType, linkId }
+  const userId = opts.userId || 'all';
+  const data = {
+    type: opts.type,
+    message: opts.message,
+    linkType: opts.linkType || '',
+    linkId: opts.linkId || '',
+    createdAt: Date.now(),
+    createdBy: currentUser ? currentUser.uid : 'system',
+    read: false
+  };
+  db.ref(`notifications/${userId}`).push(data);
+}
+
+// ── Hook into existing actions to auto-generate notifications ──
+
+// Wrap stage change drops (already in pipeline drop handler) — we hook via logActivity override
+const _origLogActivity = typeof logActivity === 'function' ? logActivity : null;
+
+function hookNotificationsIntoActions() {
+  // We'll monkey-patch key functions to emit notifications
+
+  // 1. Stage changes — patch the drop handler's logActivity call
+  //    (already calls logActivity('stage-change', ...))
+  //    We override logActivity to also create notifications
+  const origLog = window._origLogActivity || logActivity;
+  window._origLogActivity = origLog;
+
+  // We can't easily override logActivity since it's used everywhere,
+  // so instead we intercept at the Firebase write level.
+  // Better approach: override specific action functions.
+}
+
+// Override logActivity to also create notifications
+const __originalLogActivity = logActivity;
+window.logActivity = logActivity; // ensure it's accessible
+
+function logActivityWithNotif(type, title, detail, userId) {
+  // Call original
+  __originalLogActivity(type, title, detail, userId);
+
+  // Map activity types to notification types
+  const typeMap = {
+    'stage-change': 'stage-change',
+    'doc-upload': 'doc-uploaded',
+    'note-added': null,
+    'contact-created': 'contact-added',
+    'task-completed': 'task-assigned',
+    'deal-created': 'stage-change',
+    'showing-added': 'showing'
+  };
+
+  const notifType = typeMap[type];
+  if (!notifType) return;
+
+  // Create notification for relevant users
+  // Ryan always gets notified; specific agent gets notified
+  const targetUsers = ['ryan-001'];
+  if (userId && userId !== 'ryan-001') targetUsers.push(userId);
+
+  targetUsers.forEach(uid => {
+    createNotification({
+      type: notifType,
+      message: `${title}${detail ? ' — ' + detail : ''}`,
+      userId: uid,
+      linkType: detail ? 'transaction' : '',
+      linkId: ''
+    });
+  });
+}
+
+// Replace logActivity globally
+function logActivity(type, title, detail, userId) {
+  logActivityWithNotif(type, title, detail, userId);
+}
+
+// ── Enhanced notification creators for specific actions ──
+
+function notifyStageChange(txnId, stageName, address) {
+  ['ryan-001', 'ally-001'].forEach(uid => {
+    createNotification({
+      type: 'stage-change',
+      message: `Deal moved to ${stageName} — ${address}`,
+      userId: uid,
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  });
+}
+
+function notifyDocUploaded(txnId, docName, address) {
+  ['ryan-001', 'ally-001'].forEach(uid => {
+    createNotification({
+      type: 'doc-uploaded',
+      message: `${docName} uploaded — ${address}`,
+      userId: uid,
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  });
+}
+
+function notifyTaskAssigned(txnId, taskTitle, assigneeId) {
+  createNotification({
+    type: 'task-assigned',
+    message: `New task: ${taskTitle}`,
+    userId: assigneeId,
+    linkType: 'transaction',
+    linkId: txnId
+  });
+  if (assigneeId !== 'ryan-001') {
+    createNotification({
+      type: 'task-assigned',
+      message: `Task assigned: ${taskTitle}`,
+      userId: 'ryan-001',
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  }
+}
+
+function notifyContactAdded(contactId, contactName) {
+  createNotification({
+    type: 'contact-added',
+    message: `New contact: ${contactName}`,
+    userId: 'ryan-001',
+    linkType: 'contact',
+    linkId: contactId
+  });
+}
+
+function notifyShowingEvent(txnId, address, showType) {
+  ['ryan-001', 'ally-001'].forEach(uid => {
+    createNotification({
+      type: 'showing',
+      message: `Showing ${showType} — ${address}`,
+      userId: uid,
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  });
+}
+
+// ── Deadline checker ──
+function checkDeadlinesAndCreateNotifs() {
+  if (!currentUser) return;
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+
+  // Check if already ran today
+  const lastCheck = localStorage.getItem('rra_deadline_check');
+  if (lastCheck === todayStr) return;
+  localStorage.setItem('rra_deadline_check', todayStr);
+
+  const txns = Object.entries(getVisibleTxns());
+
+  txns.forEach(([txnId, txn]) => {
+    const addr = txn.property?.address || 'Unknown';
+    const pipeline = txn.type === 'listing' ? txn.listingPipeline : txn.buyerPipeline;
+    const stage = pipeline?.stage;
+    if (!pipeline || stage === 'closed') return;
+
+    // DD End Date warnings
+    if (pipeline.ddEndDate) {
+      const ddEnd = new Date(pipeline.ddEndDate + 'T23:59:59');
+      const daysUntil = Math.ceil((ddEnd - today) / 86400000);
+      if (daysUntil === 3 || daysUntil === 1) {
+        ['ryan-001', 'ally-001'].forEach(uid => {
+          createNotification({
+            type: 'deadline-approaching',
+            message: `⚠️ DD deadline in ${daysUntil} day${daysUntil > 1 ? 's' : ''} — ${addr}`,
+            userId: uid,
+            linkType: 'transaction',
+            linkId: txnId
+          });
+        });
+      }
+      if (daysUntil < 0) {
+        createNotification({
+          type: 'deadline-approaching',
+          message: `🚨 DD deadline OVERDUE — ${addr}`,
+          userId: 'ryan-001',
+          linkType: 'transaction',
+          linkId: txnId
+        });
+      }
+    }
+
+    // Closing date warnings
+    if (pipeline.closingDate) {
+      const closing = new Date(pipeline.closingDate + 'T23:59:59');
+      const daysUntil = Math.ceil((closing - today) / 86400000);
+      if (daysUntil === 7 || daysUntil === 3 || daysUntil === 1) {
+        ['ryan-001', 'ally-001'].forEach(uid => {
+          createNotification({
+            type: 'deadline-approaching',
+            message: `📅 Closing in ${daysUntil} day${daysUntil > 1 ? 's' : ''} — ${addr}`,
+            userId: uid,
+            linkType: 'transaction',
+            linkId: txnId
+          });
+        });
+      }
+    }
+
+    // Overdue tasks
+    if (txn.tasks) {
+      Object.entries(txn.tasks).forEach(([taskId, task]) => {
+        if (task.status === 'complete' || task.status === 'skipped' || !task.dueDate) return;
+        const due = new Date(task.dueDate + 'T23:59:59');
+        if (due < today) {
+          const assignee = task.assignedTo || 'ryan-001';
+          createNotification({
+            type: 'deadline-approaching',
+            message: `⚠️ Overdue task: ${task.title} — ${addr}`,
+            userId: assignee,
+            linkType: 'transaction',
+            linkId: txnId
+          });
+        }
+      });
+    }
+  });
+}
+
+// ══════════════════════════════════════
 // MODAL SYSTEM
 // ══════════════════════════════════════
 function openModal(html, cls) {
@@ -2401,6 +2841,27 @@ window.seedVendors = function() {
   vendors.forEach(v => db.ref('vendors').push(v));
   toast('Vendors seeded');
 };
+
+// ══════════════════════════════════════
+// GOOGLE CALENDAR SYNC
+// ══════════════════════════════════════
+// Dashboard ↔ Firebase ↔ Google Calendar (via sync script)
+// Events created in dashboard get flagged for Google Calendar push.
+// The sync script (gcal_sync.sh) reads pending events from Firebase
+// and pushes them to Google Calendar via gog CLI, then marks them synced.
+
+// Patch the calendar event creation to flag for Google sync
+const _originalPushCalEvent = db.ref('calendarEvents').push;
+
+// Watch for new calendar events that need Google Calendar sync
+db.ref('calendarEvents').on('child_added', snap => {
+  const evt = snap.val();
+  // If event was created in dashboard (not from Google) and not yet synced
+  if (evt && !evt.source && !evt.synced && !evt.googleEventId) {
+    // Flag it for sync
+    db.ref(`calendarEvents/${snap.key}/pendingGoogleSync`).set(true);
+  }
+});
 
 // Expose for console
 window.db = db;
