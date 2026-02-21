@@ -78,7 +78,7 @@ const VENDOR_CATS = [
   {id:'photographer',label:'Photographer'},{id:'videographer',label:'Videographer/Drone'},
   {id:'inspector',label:'Home Inspector'},{id:'attorney',label:'Real Estate Attorney'},
   {id:'lender',label:'Lender/Mortgage Broker'},{id:'contractor',label:'General Contractor'},
-  {id:'stager',label:'Stager'},{id:'appraiser',label:'Appraiser'},
+  {id:'painter',label:'Painter'},{id:'stager',label:'Stager'},{id:'appraiser',label:'Appraiser'},
   {id:'title-company',label:'Title Company'},{id:'handyman',label:'Handyman'},
   {id:'cleaner',label:'Cleaning Service'},{id:'other',label:'Other'}
 ];
@@ -123,6 +123,7 @@ let taskCache = {};
 let apptCache = {};
 let calEventCache = {};
 let contactNotesCache = {};
+let vendorReferralCache = {};
 
 // ── Contact CRM state ──
 let crmTypeFilter = '';
@@ -398,7 +399,7 @@ function navigateTo(view, pushState) {
   if (view === 'tasks') renderTasks();
   if (view === 'financials') renderFinancials();
   if (view === 'showings') renderShowings();
-  if (view === 'vendors') { crmCategoryFilter = 'vendor'; crmTypeFilter = ''; navigateTo('contacts'); return; }
+  if (view === 'vendors') renderVendors();
   if (view === 'appointments') renderAppointments();
   if (view === 'calendar') renderCalendar();
   if (view === 'activity') renderActivity();
@@ -488,6 +489,7 @@ function initFirebaseListeners() {
   db.ref('calendarEvents').on('value', snap => {
     calEventCache = snap.val() || {};
     if (document.getElementById('view-calendar').classList.contains('active')) renderCalendar();
+    if (document.getElementById('view-dashboard').classList.contains('active')) renderDashboardCalendarEvents();
   });
   db.ref('contactNotes').on('value', snap => {
     contactNotesCache = snap.val() || {};
@@ -495,6 +497,10 @@ function initFirebaseListeners() {
     if (crmSelectedContactId && !document.getElementById('contact-detail-view').classList.contains('hidden')) {
       renderContactDetailContent(crmSelectedContactId);
     }
+  });
+  db.ref('vendorReferrals').on('value', snap => {
+    vendorReferralCache = snap.val() || {};
+    if (document.getElementById('view-vendors').classList.contains('active')) renderVendors();
   });
 }
 
@@ -1227,21 +1233,10 @@ function renderContacts() {
   const search = (document.getElementById('contacts-search').value || '').toLowerCase();
   const empty = document.getElementById('contacts-empty');
 
-  // Merge vendors into the unified view
-  let entries = Object.entries(contactCache).map(([id, c]) => [id, { ...c, _src: 'contact' }]);
-  // Add vendors from vendorCache as type=vendor
-  Object.entries(vendorCache).forEach(([id, v]) => {
-    entries.push(['vendor-' + id, {
-      firstName: v.name ? v.name.split(' ')[0] : v.name,
-      lastName: v.name ? v.name.split(' ').slice(1).join(' ') : '',
-      email: v.email || '', phone: v.phone || '',
-      type: 'vendor', category: 'vendor',
-      company: v.company || '', vendorCategory: v.category || '',
-      rating: v.rating || 0, specialty: v.specialty || '',
-      notes: v.notes || '', status: 'active',
-      _src: 'vendor', _vendorId: id
-    }]);
-  });
+  // Contacts only — no vendors (vendors have their own module)
+  let entries = Object.entries(contactCache)
+    .filter(([, c]) => c.type !== 'vendor' && c.category !== 'vendor')
+    .map(([id, c]) => [id, { ...c, _src: 'contact' }]);
 
   // Category filter
   if (crmCategoryFilter) {

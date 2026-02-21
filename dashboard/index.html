@@ -205,7 +205,6 @@
             <button class="crm-chip" data-filter="buyer" data-filter-type="type">Buyers</button>
             <button class="crm-chip" data-filter="seller" data-filter-type="type">Sellers</button>
             <button class="crm-chip" data-filter="both" data-filter-type="type">Both</button>
-            <button class="crm-chip" data-filter="vendor" data-filter-type="type">Vendors</button>
             <button class="crm-chip" data-filter="agent" data-filter-type="type">Agents</button>
           </div>
           <div class="crm-filter-chips crm-stage-chips" id="contacts-stage-filters">
@@ -348,19 +347,29 @@
       <section id="view-vendors" class="view">
         <div class="view-header">
           <h2>Vendor Directory</h2>
-          <button class="btn-primary btn-sm" id="btn-new-vendor">+ Add Vendor</button>
+          <div class="view-actions">
+            <button class="btn-outline btn-sm" id="btn-quick-refer">⚡ Quick Refer</button>
+            <button class="btn-primary btn-sm" id="btn-new-vendor">+ Add Vendor</button>
+          </div>
         </div>
+        <!-- Top Referred Vendors -->
+        <div id="vendors-top-referred" class="panel" style="margin-bottom:20px"></div>
         <div class="filter-bar">
           <input type="text" class="filter-search" id="vendors-search" placeholder="Search vendors...">
           <select class="filter-select" id="vendors-cat-filter">
             <option value="">All Categories</option>
             <option value="photographer">Photographer</option>
-            <option value="videographer">Videographer</option>
-            <option value="inspector">Inspector</option>
+            <option value="videographer">Videographer / Drone</option>
+            <option value="inspector">Home Inspector</option>
             <option value="attorney">Attorney</option>
-            <option value="lender">Lender</option>
-            <option value="contractor">Contractor</option>
+            <option value="lender">Lender / Mortgage</option>
+            <option value="contractor">General Contractor</option>
+            <option value="painter">Painter</option>
             <option value="stager">Stager</option>
+            <option value="appraiser">Appraiser</option>
+            <option value="title-company">Title Company</option>
+            <option value="handyman">Handyman</option>
+            <option value="cleaner">Cleaning Service</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -464,7 +473,7 @@
 <div id="toast-container" class="toast-container"></div>
 
 <audio id="notif-sound" preload="auto" src="data:audio/wav;base64,UklGRlQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTAFAAAAAAAtAFoAhACmAL8AzwDWANQAyQC2AJ0AfgBaADMADADo/8P/ov+F/27/Xf9T/1D/Vf9h/3P/jP+q/8z/8P8TADUAVABuAIIAjwCTAI8AhAByAFoAPQAbAPj/0v+s/4j/Z/9L/zb/Kf8k/yf/Mv9F/1//f/+k/8z/9f8dAEMAZACAAJQAoACjAJwAjAByAFAAJwD4/8b/kv9f/zD/CP/o/tH+xP7C/sv+3/7+/ib/Uf+B/7P/5P8TAD4AYgB+AI8AlgCRAIIAaQBGABwA7v+8/4n/WP8r/wT/5v7T/sv+z/7f/vv+JP9T/4j/v//4/y8AZACRAJ4ApgCkAJcAgABfADQAAgDK/5D/Vv8i//b+2f7K/sn+1v7x/hX/Qv92/63/5v8cAFAAewCcALIAuwC5AKoAkABrADwABgDM/5D/V/8k//3+5v7d/uP+9/4Z/0T/d/+u/+j/IQBXAIYArADFANIA0gDIALIAkgBoADUA/P/A/4X/UP8k/wT/8v7v/vr+E/82/2L/lP/I//3/MABgAIkAqAC8AMQAwgC0AJwAegBNABgA4P+m/3D/Qf8a/wD/9P71/gT/Hf8+/2b/k//D//P/IgBNAHIAjgCgAKgAowCTAHgAUwAkAPL/vf+K/1z/NP8W/wX/A/8L/x3/N/9Y/37/pv/R//z/JQBJAGcAfACJAIoAgABuAFIAMAAN/+j/w/+i/4b/cf9i/1z/Xv9n/3j/j/+s/8v/6/8MACoAQwBUAF8AZQBYAEYALQAQ//H/0/+4/6H/kP+G/4L/hv+R/6L/t//R/+z/BwAhADkASgBWAFwAWABKADkAIQAI/+7/1f+//67/o/+e/5//p/+1/8b/3P/0/wwAIwA3AEYAUABUAE4AQgAyAB0ABv/v/9n/xf+2/6z/p/+o/67/uf/I/9n/7P8AABIAIwAyADoAPgA8ADQAKAAZAAYA8v/i/9X/yv/E/8L/xP/L/9T/4P/t//z/CgAXACIAKQAtAC0AKAAhABcACwD+//L/6P/g/9v/2P/Y/9v/4f/p//H/+v8DAAoAEQAVABgAFwATAA0ABgD//w=="></audio>
-<script src="app.js?v=1771693629"></script>
+<script src="app.js?v=1771693795"></script>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
 </body>
 </html>
