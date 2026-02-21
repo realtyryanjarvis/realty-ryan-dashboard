@@ -208,6 +208,8 @@ function navigateTo(view) {
   if (view === 'vendors') renderVendors();
   if (view === 'appointments') renderAppointments();
   if (view === 'calendar') renderCalendar();
+  if (view === 'activity') renderActivity();
+  if (view === 'reports') renderReports();
 }
 
 function setupGlobalSearch() {
@@ -248,6 +250,9 @@ function initFirebaseListeners() {
   db.ref('listingAppointments').on('value', snap => {
     apptCache = snap.val() || {};
     if (document.getElementById('view-appointments').classList.contains('active')) renderAppointments();
+  });
+  db.ref('activityLog').orderByChild('timestamp').limitToLast(100).on('value', snap => {
+    activityCache = snap.val() || {};
   });
   db.ref('calendarEvents').on('value', snap => {
     calEventCache = snap.val() || {};
@@ -369,41 +374,63 @@ function renderDashboardCalendarEvents() {
 // ══════════════════════════════════════
 // PIPELINE
 // ══════════════════════════════════════
+// Pipeline open-stage state
+let listingOpenStages = {};
+let buyerOpenStages = {};
+
 function renderListingPipeline() {
   const board = document.getElementById('listing-pipeline');
-  board.innerHTML = '';
   const listings = Object.entries(getVisibleTxns()).filter(([,t]) => t.type === 'listing');
+  // Default: open stages with cards
+  if (Object.keys(listingOpenStages).length === 0) LISTING_STAGES.forEach(s => { listingOpenStages[s.id] = true; });
+  board.innerHTML = '';
   LISTING_STAGES.forEach(stage => {
     const cards = listings.filter(([,t]) => t.listingPipeline?.stage === stage.id);
-    board.appendChild(createPipelineColumn(stage, cards, 'listing'));
+    board.appendChild(createPipelineAccordion(stage, cards, 'listing', listingOpenStages));
   });
 }
 
 function renderBuyerPipeline() {
   const board = document.getElementById('buyer-pipeline');
-  board.innerHTML = '';
   const buyers = Object.entries(getVisibleTxns()).filter(([,t]) => t.type === 'buyer');
+  if (Object.keys(buyerOpenStages).length === 0) BUYER_STAGES.forEach(s => { buyerOpenStages[s.id] = true; });
+  board.innerHTML = '';
   BUYER_STAGES.forEach(stage => {
     const cards = buyers.filter(([,t]) => t.buyerPipeline?.stage === stage.id);
-    board.appendChild(createPipelineColumn(stage, cards, 'buyer'));
+    board.appendChild(createPipelineAccordion(stage, cards, 'buyer', buyerOpenStages));
   });
 }
 
-function createPipelineColumn(stage, items, type) {
-  const col = document.createElement('div');
-  col.className = 'pipeline-column';
-  col.innerHTML = `
-    <div class="column-header">
-      <span class="column-title">${stage.label}</span>
-      <span class="column-count">${items.length}</span>
+function createPipelineAccordion(stage, items, type, openState) {
+  const section = document.createElement('div');
+  section.className = 'pipeline-stage-section';
+  const isOpen = openState[stage.id] !== false;
+
+  section.innerHTML = `
+    <div class="pipeline-stage-header${isOpen ? ' open' : ''}">
+      <div class="stage-header-left">
+        <span class="stage-color-dot" style="background:${stage.color}"></span>
+        <span class="column-title">${stage.label}</span>
+        <span class="column-count">${items.length}</span>
+      </div>
+      <span class="stage-chevron">›</span>
     </div>
-    <div class="column-cards" data-stage="${stage.id}" data-type="${type}"></div>
+    <div class="column-cards${isOpen ? '' : ' collapsed'}" data-stage="${stage.id}" data-type="${type}"></div>
   `;
-  const container = col.querySelector('.column-cards');
+
+  const header = section.querySelector('.pipeline-stage-header');
+  const container = section.querySelector('.column-cards');
+
+  header.addEventListener('click', () => {
+    openState[stage.id] = container.classList.contains('collapsed');
+    container.classList.toggle('collapsed');
+    header.classList.toggle('open');
+  });
+
   items.forEach(([txnId, txn]) => container.appendChild(createPipelineCard(txnId, txn, type)));
 
   // Drop zone
-  container.addEventListener('dragover', e => { e.preventDefault(); container.classList.add('drag-over'); });
+  container.addEventListener('dragover', e => { e.preventDefault(); container.classList.add('drag-over'); if(container.classList.contains('collapsed')){container.classList.remove('collapsed');header.classList.add('open');openState[stage.id]=true;} });
   container.addEventListener('dragleave', () => container.classList.remove('drag-over'));
   container.addEventListener('drop', e => {
     e.preventDefault(); container.classList.remove('drag-over');
@@ -413,16 +440,16 @@ function createPipelineColumn(stage, items, type) {
     if (dragType !== type) return;
     const pipeline = type === 'listing' ? 'listingPipeline' : 'buyerPipeline';
     db.ref(`transactions/${dragId}/${pipeline}/stage`).set(stage.id);
-    // Stage history
     db.ref(`transactions/${dragId}/${pipeline}/stageHistory`).push({
       stage: stage.id, timestamp: Date.now(), changedBy: currentUser.uid
     });
+    // Log activity
+    logActivity('stage-change', `Moved to ${stage.label}`, txnCache[dragId]?.property?.address || '', currentUser.uid);
     toast(`Moved to ${stage.label}`);
-    // Trigger automations
     runAutomations(dragId, stage.id, type);
     createCalendarEventsForStage(dragId, stage.id, type);
   });
-  return col;
+  return section;
 }
 
 function createPipelineCard(txnId, txn, type) {
@@ -786,6 +813,7 @@ function completeTask(txnId, taskId) {
   db.ref(`transactions/${txnId}/tasks/${taskId}`).update({
     status: 'complete', completedAt: Date.now(), completedBy: currentUser.uid
   });
+  logActivity('task-completed', 'Task completed', txnCache[txnId]?.property?.address || '', currentUser.uid);
   toast('Task completed');
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -840,6 +868,7 @@ function addNote(txnId) {
   db.ref(`transactions/${txnId}/notes`).push({
     text, type: 'note', createdAt: Date.now(), createdBy: currentUser.uid
   });
+  logActivity('note-added', 'Note added', txnCache[txnId]?.property?.address || '', currentUser.uid);
   toast('Note added');
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -1999,6 +2028,294 @@ function createAutoTask(ref, title, assignedTo, dueDaysOffset, priority) {
     automationRule: true, createdAt: Date.now(), createdBy: 'system'
   });
 }
+
+// ══════════════════════════════════════
+// ACTIVITY LOG
+// ══════════════════════════════════════
+let activityCache = {};
+
+function logActivity(type, title, detail, userId) {
+  db.ref('activityLog').push({
+    type, title, detail, userId,
+    userName: currentUser?.name || 'System',
+    timestamp: Date.now()
+  });
+}
+
+function renderActivity() {
+  const dateInput = document.getElementById('activity-date');
+  if (!dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
+  const selectedDate = dateInput.value;
+  const startOfDay = new Date(selectedDate + 'T00:00:00').getTime();
+  const endOfDay = new Date(selectedDate + 'T23:59:59').getTime();
+
+  db.ref('activityLog').orderByChild('timestamp').startAt(startOfDay).endAt(endOfDay).once('value', snap => {
+    const entries = [];
+    snap.forEach(child => {
+      const a = child.val();
+      // Filter: broker sees all, agents see only their own
+      if (currentUser.role !== 'agent-lead' && currentUser.role !== 'partner' && a.userId !== currentUser.uid) return;
+      entries.push(a);
+    });
+    entries.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    const el = document.getElementById('activity-feed-full');
+
+    if (entries.length === 0) {
+      el.innerHTML = '<p class="empty-msg">No activity for this date.</p>';
+      return;
+    }
+
+    const iconMap = {
+      'stage-change': '🔄', 'doc-upload': '📄', 'note-added': '📝',
+      'contact-created': '👤', 'task-completed': '✅', 'deal-created': '🏠',
+      'expense-added': '💰', 'showing-added': '👁️'
+    };
+
+    el.innerHTML = entries.map(a => `
+      <div class="activity-card">
+        <div class="activity-icon">${iconMap[a.type] || '⚡'}</div>
+        <div class="activity-body">
+          <div class="activity-body-title">${a.title}</div>
+          ${a.detail ? `<div class="activity-body-detail">${a.detail}</div>` : ''}
+          <div class="activity-body-time">${new Date(a.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</div>
+        </div>
+        <span class="activity-user-tag">${a.userName || 'System'}</span>
+      </div>
+    `).join('');
+  });
+}
+
+document.addEventListener('change', e => {
+  if (e.target.id === 'activity-date') renderActivity();
+});
+
+// ══════════════════════════════════════
+// REPORTS MODULE
+// ══════════════════════════════════════
+let reportCharts = {};
+
+function renderReports() {
+  const startInput = document.getElementById('report-start');
+  const endInput = document.getElementById('report-end');
+  const now = new Date();
+  if (!startInput.value) {
+    startInput.value = `${now.getFullYear()}-01-01`;
+    endInput.value = now.toISOString().slice(0, 10);
+  }
+  generateReport();
+}
+
+function generateReport() {
+  const startDate = document.getElementById('report-start').value;
+  const endDate = document.getElementById('report-end').value;
+  const txns = Object.values(getVisibleTxns());
+
+  // Closed deals in range
+  const closedDeals = txns.filter(t => {
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    if (stage !== 'closed') return false;
+    const closeDate = t.listingPipeline?.actualCloseDate || t.buyerPipeline?.actualCloseDate || t.listingPipeline?.closingDate || t.buyerPipeline?.closingDate;
+    if (!closeDate) return true;
+    return closeDate >= startDate && closeDate <= endDate;
+  });
+
+  const totalVolume = closedDeals.reduce((s, t) => s + (t.property?.price || t.financials?.commission?.salePrice || 0), 0);
+  const totalGCI = closedDeals.reduce((s, t) => s + (t.financials?.commission?.gci || 0), 0);
+
+  // Conversion rates
+  const allListings = txns.filter(t => t.type === 'listing');
+  const allBuyers = txns.filter(t => t.type === 'buyer');
+  const ucListings = allListings.filter(t => ['under-contract','due-diligence','pending','closed'].includes(t.listingPipeline?.stage));
+  const closedListings = allListings.filter(t => t.listingPipeline?.stage === 'closed');
+
+  // Avg DOM
+  let totalDOM = 0, domCount = 0;
+  allListings.forEach(t => {
+    const lp = t.listingPipeline;
+    if (lp?.listDate && (lp?.contractDate || lp?.closingDate)) {
+      const listed = new Date(lp.listDate);
+      const sold = new Date(lp.contractDate || lp.closingDate);
+      const days = Math.ceil((sold - listed) / 86400000);
+      if (days > 0) { totalDOM += days; domCount++; }
+    }
+  });
+  const avgDOM = domCount > 0 ? Math.round(totalDOM / domCount) : 0;
+
+  // Stats cards
+  document.getElementById('report-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-number">${closedDeals.length}</div><div class="stat-label">Deals Closed</div></div>
+    <div class="stat-card"><div class="stat-number">${formatPriceShort(totalVolume)}</div><div class="stat-label">Volume</div></div>
+    <div class="stat-card"><div class="stat-number">${formatPriceShort(totalGCI)}</div><div class="stat-label">GCI</div></div>
+    <div class="stat-card accent"><div class="stat-number">${avgDOM}d</div><div class="stat-label">Avg DOM</div></div>
+  `;
+
+  // Charts
+  renderProductionChart(txns, startDate, endDate);
+  renderFunnelChart(allListings, allBuyers);
+  renderDOMChart(allListings);
+  renderAgentChart(txns);
+}
+
+function renderProductionChart(txns, startDate, endDate) {
+  const ctx = document.getElementById('chart-production');
+  if (reportCharts.production) reportCharts.production.destroy();
+
+  // Group closed deals by month
+  const months = {};
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  for (let d = new Date(start); d <= end; d.setMonth(d.getMonth() + 1)) {
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    months[key] = { count: 0, volume: 0 };
+  }
+  txns.forEach(t => {
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    if (stage !== 'closed') return;
+    const cd = t.listingPipeline?.actualCloseDate || t.buyerPipeline?.actualCloseDate || t.listingPipeline?.closingDate || t.buyerPipeline?.closingDate;
+    if (!cd) return;
+    const key = cd.slice(0, 7);
+    if (months[key]) {
+      months[key].count++;
+      months[key].volume += (t.property?.price || 0);
+    }
+  });
+
+  const labels = Object.keys(months).map(k => { const [y,m] = k.split('-'); return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m)-1] + ' ' + y.slice(2); });
+
+  reportCharts.production = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Deals Closed',
+        data: Object.values(months).map(m => m.count),
+        backgroundColor: '#7A3B14',
+        borderRadius: 6,
+        yAxisID: 'y'
+      }, {
+        label: 'Volume ($)',
+        data: Object.values(months).map(m => m.volume),
+        type: 'line',
+        borderColor: '#2d6a4f',
+        backgroundColor: 'rgba(45,106,79,0.1)',
+        tension: 0.3,
+        yAxisID: 'y1'
+      }]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Deals' } },
+        y1: { position: 'right', beginAtZero: true, title: { display: true, text: 'Volume' }, ticks: { callback: v => formatPriceShort(v) }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+}
+
+function renderFunnelChart(listings, buyers) {
+  const ctx = document.getElementById('chart-funnel');
+  if (reportCharts.funnel) reportCharts.funnel.destroy();
+
+  const all = [...listings, ...buyers];
+  const leads = all.length;
+  const active = all.filter(t => {
+    const s = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    return !['closed'].includes(s);
+  }).length;
+  const uc = all.filter(t => {
+    const s = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    return ['under-contract','due-diligence','pending','closed'].includes(s);
+  }).length;
+  const closed = all.filter(t => {
+    const s = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    return s === 'closed';
+  }).length;
+
+  reportCharts.funnel = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Total Leads', 'Active', 'Under Contract', 'Closed'],
+      datasets: [{
+        data: [leads, active, uc, closed],
+        backgroundColor: ['#9a9590', '#3a6ea5', '#b8860b', '#2d6a4f'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } }
+    }
+  });
+}
+
+function renderDOMChart(listings) {
+  const ctx = document.getElementById('chart-dom');
+  if (reportCharts.dom) reportCharts.dom.destroy();
+
+  const data = [];
+  listings.forEach(t => {
+    const lp = t.listingPipeline;
+    if (lp?.listDate && (lp?.contractDate || lp?.closingDate)) {
+      const listed = new Date(lp.listDate);
+      const sold = new Date(lp.contractDate || lp.closingDate);
+      const days = Math.ceil((sold - listed) / 86400000);
+      if (days > 0) data.push({ label: (t.property?.address || 'Unknown').split(',')[0], days });
+    }
+  });
+
+  if (data.length === 0) {
+    reportCharts.dom = new Chart(ctx, { type: 'bar', data: { labels: ['No data'], datasets: [{ data: [0] }] }, options: { responsive: true } });
+    return;
+  }
+
+  reportCharts.dom = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.map(d => d.label),
+      datasets: [{ label: 'Days on Market', data: data.map(d => d.days), backgroundColor: '#7A3B14', borderRadius: 6 }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+  });
+}
+
+function renderAgentChart(txns) {
+  const ctx = document.getElementById('chart-agents');
+  if (reportCharts.agents) reportCharts.agents.destroy();
+
+  const agents = {};
+  txns.forEach(t => {
+    const a = t.assignedTo || 'unassigned';
+    if (!agents[a]) agents[a] = { closed: 0, active: 0, volume: 0 };
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    if (stage === 'closed') { agents[a].closed++; agents[a].volume += (t.property?.price || 0); }
+    else agents[a].active++;
+  });
+
+  const nameMap = {};
+  Object.values(USERS).forEach(u => { nameMap[u.uid] = u.name.split(' ')[0]; });
+
+  const labels = Object.keys(agents).map(a => nameMap[a] || a);
+
+  reportCharts.agents = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Closed', data: Object.values(agents).map(a => a.closed), backgroundColor: '#2d6a4f', borderRadius: 6 },
+        { label: 'Active', data: Object.values(agents).map(a => a.active), backgroundColor: '#3a6ea5', borderRadius: 6 }
+      ]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+  });
+}
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'btn-run-report') generateReport();
+});
 
 // ══════════════════════════════════════
 // MODAL SYSTEM

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7A3B14">
+<title>RRA Command Center — Offline</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Work Sans', -apple-system, sans-serif; background: #fff; color: #130f0a; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 24px; }
+  .logo { width: 64px; height: 64px; border-radius: 16px; background: #7A3B14; color: #F8F7F6; font-family: Georgia, serif; font-size: 1.4rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  h1 { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 300; margin-bottom: 12px; }
+  p { color: #9a9590; font-size: 0.95rem; margin-bottom: 24px; }
+  button { padding: 12px 24px; background: #130f0a; color: #F8F7F6; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+  button:hover { background: #7A3B14; }
+</style>
+</head>
+<body>
+<div>
+  <div class="logo">RRA</div>
+  <h1>You're Offline</h1>
+  <p>The Command Center needs an internet connection to sync with Firebase.<br>Check your connection and try again.</p>
+  <button onclick="location.reload()">Retry</button>
+</div>
+</body>
+</html>
