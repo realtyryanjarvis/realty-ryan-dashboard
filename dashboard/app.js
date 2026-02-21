@@ -499,6 +499,11 @@ function initFirebaseListeners() {
       renderContactDetailContent(crmSelectedContactId);
     }
   });
+  db.ref('tasks').on('value', snap => {
+    window.__standaloneTasks = snap.val() || {};
+    if (currentView === 'tasks') renderTasks();
+    if (currentView === 'dashboard') renderDashboard();
+  });
   db.ref('vendorReferrals').on('value', snap => {
     vendorReferralCache = snap.val() || {};
     if (document.getElementById('view-vendors').classList.contains('active')) renderVendors();
@@ -538,7 +543,7 @@ function renderDashboard() {
     <div class="stat-card accent"><div class="stat-number">${formatPriceShort(pendingGCI)}</div><div class="stat-label">Pending GCI</div></div>
   `;
 
-  // Tasks
+  // Tasks (transactions + standalone)
   const tasksEl = document.getElementById('dashboard-tasks');
   const allTasks = [];
   Object.entries(getVisibleTxns()).forEach(([txnId, txn]) => {
@@ -549,6 +554,13 @@ function renderDashboard() {
       });
     }
   });
+  if (window.__standaloneTasks) {
+    Object.entries(window.__standaloneTasks).forEach(([tid, task]) => {
+      if (task.status !== 'complete' && task.status !== 'done')
+        allTasks.push({ ...task, txnId: '__standalone', taskId: tid, address: task.clientName || task.category || 'General',
+          priority: task.priority || 'medium', dueDate: task.dueDate || '' });
+    });
+  }
   allTasks.sort((a, b) => (new Date(a.dueDate || '9999') - new Date(b.dueDate || '9999')));
   const topTasks = allTasks.slice(0, 5);
 
@@ -1068,12 +1080,19 @@ function addTask(txnId) {
 }
 
 function completeTask(txnId, taskId) {
-  db.ref(`transactions/${txnId}/tasks/${taskId}`).update({
-    status: 'complete', completedAt: Date.now(), completedBy: currentUser.uid
-  });
-  logActivity('task-completed', 'Task completed', txnCache[txnId]?.property?.address || '', currentUser.uid);
-  toast('Task completed');
-  setTimeout(() => openTransactionDetail(txnId), 300);
+  if (txnId === '__standalone') {
+    db.ref(`tasks/${taskId}`).update({ status: 'complete', completedAt: Date.now(), completedBy: currentUser.uid });
+    logActivity('task-completed', 'Task completed', window.__standaloneTasks?.[taskId]?.title || '', currentUser.uid);
+    toast('Task completed');
+    setTimeout(() => renderTasks(), 300);
+  } else {
+    db.ref(`transactions/${txnId}/tasks/${taskId}`).update({
+      status: 'complete', completedAt: Date.now(), completedBy: currentUser.uid
+    });
+    logActivity('task-completed', 'Task completed', txnCache[txnId]?.property?.address || '', currentUser.uid);
+    toast('Task completed');
+    setTimeout(() => openTransactionDetail(txnId), 300);
+  }
 }
 
 function setupTaskActions() {}
@@ -2114,6 +2133,7 @@ function renderTasks() {
   const assigneeFilter = document.getElementById('tasks-filter-assignee').value;
   const allTasks = [];
 
+  // Pull tasks from transactions
   Object.entries(getVisibleTxns()).forEach(([txnId, txn]) => {
     if (txn.tasks) {
       Object.entries(txn.tasks).forEach(([tid, task]) => {
@@ -2121,6 +2141,17 @@ function renderTasks() {
       });
     }
   });
+
+  // Pull standalone tasks (from /tasks node — client action items, transcript to-dos, etc.)
+  if (window.__standaloneTasks) {
+    Object.entries(window.__standaloneTasks).forEach(([tid, task]) => {
+      const clientName = task.clientName || '';
+      allTasks.push({ ...task, txnId: '__standalone', taskId: tid, address: clientName || task.category || 'General',
+        assignedTo: task.assignedTo === 'ryan' ? 'ryan-001' : task.assignedTo === 'ally' ? 'ally-001' : (task.assignedTo || 'ryan-001'),
+        status: task.status === 'todo' ? 'pending' : task.status,
+        priority: task.priority || 'medium' });
+    });
+  }
 
   let filtered = allTasks;
   if (assigneeFilter) filtered = filtered.filter(t => t.assignedTo === assigneeFilter);
