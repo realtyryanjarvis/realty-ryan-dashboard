@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RRA Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-mark">RRA</div>
+      <h1>Command Center</h1>
+      <p class="login-subtitle">Realty Ryan & Associates</p>
+    </div>
+    <form id="login-form" autocomplete="off">
+      <div class="input-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="you@realtyryan.com" required>
+      </div>
+      <div class="input-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" required>
+      </div>
+      <div id="login-error" class="login-error"></div>
+      <button type="submit" class="btn-primary btn-full">Sign In</button>
+    </form>
+  </div>
+  <div class="login-footer">Corcoran HM Properties</div>
+</div>
+
+<!-- MAIN APP SHELL -->
+<div id="app-shell" class="app-shell hidden">
+  <!-- SIDEBAR -->
+  <nav id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">RRA</div>
+      <span class="sidebar-title">Command Center</span>
+      <button class="sidebar-close" id="sidebar-close">×</button>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item active" data-view="dashboard"><span class="nav-icon">◎</span> Dashboard</li>
+      <li class="nav-item" data-view="listings"><span class="nav-icon">⌂</span> Listings Pipeline</li>
+      <li class="nav-item" data-view="buyers"><span class="nav-icon">◈</span> Buyers Pipeline</li>
+      <li class="nav-item" data-view="transactions"><span class="nav-icon">⊞</span> Transactions</li>
+      <li class="nav-item" data-view="contacts"><span class="nav-icon">◉</span> Contacts</li>
+      <li class="nav-item" data-view="appointments"><span class="nav-icon">▣</span> Appointments</li>
+      <li class="nav-divider"></li>
+      <li class="nav-item" data-view="financials"><span class="nav-icon">◆</span> Financials</li>
+      <li class="nav-item" data-view="documents"><span class="nav-icon">▤</span> Documents</li>
+      <li class="nav-item" data-view="showings"><span class="nav-icon">◐</span> Showings</li>
+      <li class="nav-item" data-view="vendors"><span class="nav-icon">◧</span> Vendors</li>
+      <li class="nav-item" data-view="tasks"><span class="nav-icon">☐</span> Tasks</li>
+      <li class="nav-divider"></li>
+      <li class="nav-item" data-view="settings"><span class="nav-icon">⚙</span> Settings</li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="user-badge" id="sidebar-user">
+        <div class="user-avatar" id="sidebar-avatar">RP</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebar-name">Ryan Palmer</span>
+          <span class="user-role" id="sidebar-role">Agent Lead</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="search-box">
+          <input type="text" placeholder="Search transactions, contacts..." id="global-search">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="notif-bell" id="notif-bell">
+          <span class="bell-icon">⚡</span>
+          <span class="notif-count" id="notif-count">3</span>
+        </button>
+        <div class="topbar-user" id="topbar-user">
+          <span class="topbar-user-name" id="topbar-name">Ryan Palmer</span>
+          <div class="topbar-avatar" id="topbar-avatar">RP</div>
+        </div>
+        <button class="btn-signout" id="btn-signout" title="Sign Out">↗</button>
+      </div>
+    </header>
+
+    <!-- VIEW CONTAINER -->
+    <div class="view-container" id="view-container">
+
+      <!-- DASHBOARD VIEW -->
+      <section id="view-dashboard" class="view active">
+        <div class="view-header">
+          <h2>Dashboard</h2>
+          <p class="view-subtitle" id="dashboard-date"></p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-number" id="stat-active">7</div><div class="stat-label">Active Listings</div></div>
+          <div class="stat-card"><div class="stat-number" id="stat-buyers">4</div><div class="stat-label">Active Buyers</div></div>
+          <div class="stat-card"><div class="stat-number" id="stat-pending">2</div><div class="stat-label">Pending Close</div></div>
+          <div class="stat-card accent"><div class="stat-number" id="stat-gci">$52.5k</div><div class="stat-label">Pending GCI</div></div>
+        </div>
+        <div class="dashboard-panels">
+          <div class="panel">
+            <h3>Upcoming Tasks</h3>
+            <div class="task-list" id="dashboard-tasks">
+              <div class="task-item urgent"><span class="task-dot"></span><span>Schedule inspection — 456 Oak Ln</span><span class="task-due">Today</span></div>
+              <div class="task-item high"><span class="task-dot"></span><span>Send disclosure — 789 Elm St</span><span class="task-due">Tomorrow</span></div>
+              <div class="task-item"><span class="task-dot"></span><span>Request comps for CMA — Smith</span><span class="task-due">Wed</span></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Recent Activity</h3>
+            <div class="activity-feed" id="dashboard-activity">
+              <div class="activity-item"><span class="activity-time">2h ago</span><span>Showing feedback received — 456 Oak Ln</span></div>
+              <div class="activity-item"><span class="activity-time">4h ago</span><span>Document signed — WWREA (Smith)</span></div>
+              <div class="activity-item"><span class="activity-time">Yesterday</span><span>New lead — Jennifer Walsh (Zillow)</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LISTINGS PIPELINE -->
+      <section id="view-listings" class="view">
+        <div class="view-header">
+          <h2>Listings Pipeline</h2>
+          <button class="btn-primary btn-sm" id="btn-new-listing">+ New Listing</button>
+        </div>
+        <div class="pipeline-board" id="listing-pipeline"></div>
+      </section>
+
+      <!-- BUYERS PIPELINE -->
+      <section id="view-buyers" class="view">
+        <div class="view-header">
+          <h2>Buyers Pipeline</h2>
+          <button class="btn-primary btn-sm" id="btn-new-buyer">+ New Buyer</button>
+        </div>
+        <div class="pipeline-board" id="buyer-pipeline"></div>
+      </section>
+
+      <!-- TRANSACTIONS -->
+      <section id="view-transactions" class="view">
+        <div class="view-header"><h2>Transactions</h2></div>
+        <p class="placeholder-text">All transactions view — coming soon</p>
+      </section>
+
+      <!-- CONTACTS -->
+      <section id="view-contacts" class="view">
+        <div class="view-header"><h2>Contacts</h2></div>
+        <p class="placeholder-text">CRM contacts — coming soon</p>
+      </section>
+
+      <!-- APPOINTMENTS -->
+      <section id="view-appointments" class="view">
+        <div class="view-header">
+          <h2>Listing Appointments</h2>
+          <button class="btn-primary btn-sm" id="btn-new-appt">+ New Appointment</button>
+        </div>
+        <div class="appointments-list" id="appointments-list"></div>
+      </section>
+
+      <!-- FINANCIALS -->
+      <section id="view-financials" class="view">
+        <div class="view-header"><h2>Financials</h2></div>
+        <p class="placeholder-text">Financial dashboard — coming soon</p>
+      </section>
+
+      <!-- DOCUMENTS -->
+      <section id="view-documents" class="view">
+        <div class="view-header"><h2>Documents</h2></div>
+        <p class="placeholder-text">Document management — coming soon</p>
+      </section>
+
+      <!-- SHOWINGS -->
+      <section id="view-showings" class="view">
+        <div class="view-header"><h2>Showings</h2></div>
+        <p class="placeholder-text">Showing dashboard — coming soon</p>
+      </section>
+
+      <!-- VENDORS -->
+      <section id="view-vendors" class="view">
+        <div class="view-header"><h2>Vendors</h2></div>
+        <p class="placeholder-text">Vendor directory — coming soon</p>
+      </section>
+
+      <!-- TASKS -->
+      <section id="view-tasks" class="view">
+        <div class="view-header"><h2>Tasks</h2></div>
+        <p class="placeholder-text">Task manager — coming soon</p>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="view-settings" class="view">
+        <div class="view-header"><h2>Settings</h2></div>
+        <p class="placeholder-text">Settings — coming soon</p>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- TRANSACTION DETAIL MODAL -->
+<div id="txn-modal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">×</button>
+    <div class="modal-header">
+      <h2 id="modal-address">456 Oak Lane, Mooresville, NC</h2>
+      <div class="modal-meta">
+        <span id="modal-price">$425,000</span>
+        <span class="modal-badge" id="modal-stage">Listed</span>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="overview">Overview</button>
+        <button class="modal-tab" data-tab="documents">Documents</button>
+        <button class="modal-tab" data-tab="tasks">Tasks</button>
+        <button class="modal-tab" data-tab="notes">Notes</button>
+      </div>
+      <div class="modal-tab-content" id="modal-tab-content">
+        <div class="tab-pane active" id="tab-overview">
+          <div class="detail-grid">
+            <div class="detail-section">
+              <h4>Key Dates</h4>
+              <div class="detail-row"><span>List Date</span><span id="modal-list-date">—</span></div>
+              <div class="detail-row"><span>Contract Date</span><span id="modal-contract-date">—</span></div>
+              <div class="detail-row"><span>DD End</span><span id="modal-dd-end">—</span></div>
+              <div class="detail-row"><span>Closing</span><span id="modal-closing-date">—</span></div>
+            </div>
+            <div class="detail-section">
+              <h4>Contact</h4>
+              <div class="detail-row"><span>Client</span><span id="modal-client">—</span></div>
+              <div class="detail-row"><span>Phone</span><span id="modal-phone">—</span></div>
+              <div class="detail-row"><span>Email</span><span id="modal-email">—</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-documents"><p class="placeholder-text">Document checklist — coming Day 3</p></div>
+        <div class="tab-pane" id="tab-tasks"><p class="placeholder-text">Transaction tasks — coming Day 3</p></div>
+        <div class="tab-pane" id="tab-notes"><p class="placeholder-text">Notes & activity — coming Day 3</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW APPOINTMENT MODAL -->
+<div id="appt-modal" class="modal-overlay hidden">
+  <div class="modal-content modal-sm">
+    <button class="modal-close appt-modal-close">×</button>
+    <h2>New Listing Appointment</h2>
+    <form id="appt-form">
+      <div class="input-group"><label>Client Name</label><input type="text" id="appt-client" required></div>
+      <div class="input-group"><label>Property Address</label><input type="text" id="appt-address" required></div>
+      <div class="input-group"><label>Date & Time</label><input type="datetime-local" id="appt-datetime" required></div>
+      <div class="input-group"><label>Notes</label><textarea id="appt-notes" rows="3"></textarea></div>
+      <button type="submit" class="btn-primary btn-full">Create Appointment</button>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
