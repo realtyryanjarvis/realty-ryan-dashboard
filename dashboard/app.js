@@ -5,16 +5,26 @@
    ═══════════════════════════════════════════════════════════════ */
 
 // ── Firebase ──
-const firebaseConfig = { databaseURL: "https://realty-ryan-dashboard-default-rtdb.firebaseio.com" };
+const firebaseConfig = { databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// ── Auth (simulated — Firebase Auth requires full project config) ──
-const USERS = {
+// ── Auth (Firebase /users/ with SHA-256 hashed passwords) ──
+// Legacy USERS kept as fallback only for migration; all new auth goes through Firebase /users/
+const LEGACY_USERS = {
   'ryan@realtyryan.com': { password: 'rra2026!', uid: 'ryan-001', name: 'Ryan Palmer', initials: 'RP', role: 'agent-lead', email: 'ryanpalmer@hmproperties.com' },
   'ally@realtyryan.com':  { password: 'rra2026!', uid: 'ally-001', name: 'Ally Doerr', initials: 'AD', role: 'partner', email: 'ally@realtyryan.com' }
 };
 let currentUser = null;
+let usersCache = {};
+
+// SHA-256 hashing via Web Crypto API
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 // ── Constants ──
 const LISTING_STAGES = [
@@ -142,23 +152,151 @@ document.addEventListener('DOMContentLoaded', () => {
 // AUTH
 // ══════════════════════════════════════
 function setupLogin() {
-  document.getElementById('login-form').addEventListener('submit', e => {
+  document.getElementById('login-form').addEventListener('submit', async e => {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim().toLowerCase();
     const pw = document.getElementById('login-password').value;
     const err = document.getElementById('login-error');
-    const u = USERS[email];
-    if (!u || u.password !== pw) { err.textContent = 'Invalid email or password'; return; }
-    currentUser = { ...u }; delete currentUser.password;
-    localStorage.setItem('rra_user', JSON.stringify(currentUser));
-    err.textContent = '';
-    showApp();
+    err.textContent = 'Signing in...';
+
+    // Try Firebase /users/ first
+    const snap = await db.ref('users').orderByChild('email').equalTo(email).once('value');
+    const users = snap.val();
+
+    if (users) {
+      const userId = Object.keys(users)[0];
+      const u = users[userId];
+
+      if (u.status === 'inactive') { err.textContent = 'Account deactivated. Contact admin.'; return; }
+
+      const hashedPw = await sha256(pw);
+      if (u.passwordHash !== hashedPw) { err.textContent = 'Invalid email or password'; return; }
+
+      // Update last login
+      db.ref(`users/${userId}/lastLogin`).set(Date.now());
+
+      const initials = (u.name || '').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      currentUser = {
+        uid: userId, name: u.name, initials, role: u.role, email: u.email,
+        phone: u.phone || '', licenseNumber: u.licenseNumber || '', firm: u.firm || '',
+        profilePhotoUrl: u.profilePhotoUrl || ''
+      };
+      localStorage.setItem('rra_user', JSON.stringify(currentUser));
+      err.textContent = '';
+      showApp();
+      return;
+    }
+
+    // Fallback: legacy hardcoded users (for migration)
+    const legacy = LEGACY_USERS[email];
+    if (legacy && legacy.password === pw) {
+      currentUser = { ...legacy }; delete currentUser.password;
+      localStorage.setItem('rra_user', JSON.stringify(currentUser));
+      err.textContent = '';
+      showApp();
+      // Auto-migrate legacy user to Firebase
+      migrateUserToFirebase(legacy, pw);
+      return;
+    }
+
+    err.textContent = 'Invalid email or password';
   });
+
+  // Forgot password form
+  document.getElementById('forgot-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+    const msg = document.getElementById('forgot-msg');
+    msg.style.color = 'var(--muted-dark)';
+    msg.textContent = 'Checking...';
+
+    const snap = await db.ref('users').orderByChild('email').equalTo(email).once('value');
+    if (!snap.val()) { msg.style.color = 'var(--danger)'; msg.textContent = 'No account found with that email.'; return; }
+
+    const userId = Object.keys(snap.val())[0];
+    const token = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 10);
+    await db.ref(`passwordResets/${token}`).set({ userId, email, createdAt: Date.now(), used: false });
+
+    msg.style.color = 'var(--success)';
+    msg.textContent = `Reset token: ${token}`;
+    // Show reset form
+    document.getElementById('forgot-form').classList.add('hidden');
+    document.getElementById('reset-form').classList.remove('hidden');
+    document.getElementById('reset-token').value = token;
+  });
+
+  // Reset password form
+  document.getElementById('reset-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const token = document.getElementById('reset-token').value.trim();
+    const newPw = document.getElementById('reset-new-pw').value;
+    const confirmPw = document.getElementById('reset-confirm-pw').value;
+    const msg = document.getElementById('reset-msg');
+
+    if (newPw.length < 8) { msg.textContent = 'Password must be at least 8 characters.'; return; }
+    if (newPw !== confirmPw) { msg.textContent = 'Passwords do not match.'; return; }
+
+    const snap = await db.ref(`passwordResets/${token}`).once('value');
+    const reset = snap.val();
+    if (!reset || reset.used) { msg.textContent = 'Invalid or expired reset token.'; return; }
+
+    // Check token age (24h expiry)
+    if (Date.now() - reset.createdAt > 86400000) { msg.textContent = 'Token expired. Please request a new one.'; return; }
+
+    const hashedPw = await sha256(newPw);
+    await db.ref(`users/${reset.userId}/passwordHash`).set(hashedPw);
+    await db.ref(`passwordResets/${token}/used`).set(true);
+
+    msg.style.color = 'var(--success)';
+    msg.textContent = 'Password reset! You can now sign in.';
+    setTimeout(() => hideForgotPassword(), 2000);
+  });
+
   document.getElementById('btn-signout').addEventListener('click', () => {
     currentUser = null;
     localStorage.removeItem('rra_user');
     document.getElementById('app-shell').classList.add('hidden');
     document.getElementById('login-screen').style.display = '';
+    hideForgotPassword();
+  });
+}
+
+// Forgot password UI helpers
+function showForgotPassword() {
+  document.getElementById('login-form').classList.add('hidden');
+  document.getElementById('forgot-password-link').classList.add('hidden');
+  document.getElementById('forgot-form').classList.remove('hidden');
+  document.getElementById('reset-form').classList.add('hidden');
+}
+
+function hideForgotPassword() {
+  document.getElementById('login-form').classList.remove('hidden');
+  document.getElementById('forgot-password-link').classList.remove('hidden');
+  document.getElementById('forgot-form').classList.add('hidden');
+  document.getElementById('reset-form').classList.add('hidden');
+  document.getElementById('forgot-msg').textContent = '';
+  document.getElementById('reset-msg').textContent = '';
+}
+
+// Migrate legacy hardcoded user to Firebase /users/
+async function migrateUserToFirebase(legacyUser, plainPassword) {
+  const snap = await db.ref(`users/${legacyUser.uid}`).once('value');
+  if (snap.val()) return; // Already migrated
+
+  const hashedPw = await sha256(plainPassword);
+  await db.ref(`users/${legacyUser.uid}`).set({
+    name: legacyUser.name,
+    email: legacyUser.email || legacyUser.uid + '@realtyryan.com',
+    phone: '',
+    role: legacyUser.role === 'agent-lead' ? 'admin' : legacyUser.role,
+    status: 'active',
+    passwordHash: hashedPw,
+    licenseNumber: '',
+    firm: 'Corcoran HM Properties',
+    profilePhotoUrl: '',
+    createdAt: Date.now(),
+    lastLogin: Date.now(),
+    createdBy: 'system-migration'
   });
 }
 
@@ -167,9 +305,18 @@ function showApp() {
   document.getElementById('app-shell').classList.remove('hidden');
   document.getElementById('sidebar-name').textContent = currentUser.name;
   document.getElementById('sidebar-avatar').textContent = currentUser.initials;
-  document.getElementById('sidebar-role').textContent = currentUser.role === 'agent-lead' ? 'Agent Lead' : 'Partner';
+  const roleLabel = { admin: 'Admin', 'agent-lead': 'Agent Lead', broker: 'Broker', agent: 'Agent', partner: 'Partner' };
+  document.getElementById('sidebar-role').textContent = roleLabel[currentUser.role] || currentUser.role;
   document.getElementById('topbar-name').textContent = currentUser.name;
   document.getElementById('topbar-avatar').textContent = currentUser.initials;
+
+  // Show/hide admin nav
+  const adminNav = document.querySelector('.nav-admin-only');
+  if (adminNav) {
+    if (isAdmin()) adminNav.classList.remove('hidden');
+    else adminNav.classList.add('hidden');
+  }
+
   setDashboardDate();
   initFirebaseListeners();
   initNotifications();
@@ -178,7 +325,8 @@ function showApp() {
   else navigateTo('dashboard');
 }
 
-function isRyan() { return currentUser && currentUser.role === 'agent-lead'; }
+function isAdmin() { return currentUser && (currentUser.role === 'admin' || currentUser.role === 'agent-lead'); }
+function isRyan() { return currentUser && (currentUser.role === 'agent-lead' || currentUser.role === 'admin'); }
 
 // ══════════════════════════════════════
 // NAVIGATION
@@ -211,6 +359,8 @@ function navigateTo(view) {
   if (view === 'calendar') renderCalendar();
   if (view === 'activity') renderActivity();
   if (view === 'reports') renderReports();
+  if (view === 'admin') renderAdminUsers();
+  if (view === 'profile') renderMyProfile();
 }
 
 function setupGlobalSearch() {
@@ -235,6 +385,10 @@ function setupGlobalSearch() {
 // FIREBASE LISTENERS
 // ══════════════════════════════════════
 function initFirebaseListeners() {
+  db.ref('users').on('value', snap => {
+    usersCache = snap.val() || {};
+    if (document.getElementById('view-admin').classList.contains('active')) renderAdminUsers();
+  });
   db.ref('transactions').on('value', snap => {
     txnCache = snap.val() || {};
     renderListingPipeline();
@@ -2860,6 +3014,335 @@ db.ref('calendarEvents').on('child_added', snap => {
   if (evt && !evt.source && !evt.synced && !evt.googleEventId) {
     // Flag it for sync
     db.ref(`calendarEvents/${snap.key}/pendingGoogleSync`).set(true);
+  }
+});
+
+// ══════════════════════════════════════
+// ADMIN PANEL
+// ══════════════════════════════════════
+
+function renderAdminUsers() {
+  if (!isAdmin()) return;
+  const tbody = document.getElementById('admin-users-tbody');
+  const entries = Object.entries(usersCache);
+
+  if (entries.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">No users yet. Click "+ New User" to create one.</td></tr>';
+    return;
+  }
+
+  entries.sort((a, b) => (a[1].name || '').localeCompare(b[1].name || ''));
+
+  tbody.innerHTML = entries.map(([id, u]) => {
+    const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Never';
+    const statusCls = u.status === 'active' ? 'user-status-active' : 'user-status-inactive';
+    return `
+      <tr>
+        <td><strong>${u.name || '—'}</strong></td>
+        <td>${u.email || '—'}</td>
+        <td><span class="role-badge ${u.role}">${u.role}</span></td>
+        <td><span class="${statusCls}">${u.status || 'active'}</span></td>
+        <td>${lastLogin}</td>
+        <td>
+          <button class="btn-xs" onclick="showEditUserForm('${id}')">✏️</button>
+          <button class="btn-xs" onclick="showResetPasswordForm('${id}')">🔑</button>
+          ${u.status === 'active'
+            ? `<button class="btn-xs btn-danger-outline" onclick="toggleUserStatus('${id}','inactive')">Deactivate</button>`
+            : `<button class="btn-xs btn-success-outline" onclick="toggleUserStatus('${id}','active')">Reactivate</button>`}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'btn-new-user') showNewUserForm();
+});
+
+function showNewUserForm() {
+  if (!isAdmin()) return;
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>New User</h2>
+    <form id="new-user-form" class="form-stack">
+      <div class="form-row">
+        <div class="input-group"><label>Full Name</label><input type="text" id="nu-name" required></div>
+        <div class="input-group"><label>Email</label><input type="email" id="nu-email" required></div>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>Phone</label><input type="tel" id="nu-phone"></div>
+        <div class="input-group"><label>Role</label>
+          <select id="nu-role" class="form-select">
+            <option value="agent">Agent</option>
+            <option value="broker">Broker</option>
+            <option value="partner">Partner</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>License #</label><input type="text" id="nu-license"></div>
+        <div class="input-group"><label>Firm</label><input type="text" id="nu-firm" value="Corcoran HM Properties"></div>
+      </div>
+      <div class="input-group"><label>Password (min 8 chars)</label><input type="password" id="nu-password" required minlength="8"></div>
+      <div class="input-group"><label>Profile Photo URL</label><input type="url" id="nu-photo" placeholder="https://..."></div>
+      <button type="submit" class="btn-primary btn-full">Create User</button>
+    </form>
+  `);
+  document.getElementById('new-user-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = document.getElementById('nu-email').value.trim().toLowerCase();
+    const pw = document.getElementById('nu-password').value;
+    if (pw.length < 8) { toast('Password must be at least 8 characters'); return; }
+
+    // Check if email already exists
+    const snap = await db.ref('users').orderByChild('email').equalTo(email).once('value');
+    if (snap.val()) { toast('A user with that email already exists'); return; }
+
+    const hashedPw = await sha256(pw);
+    const newRef = db.ref('users').push();
+    await newRef.set({
+      name: document.getElementById('nu-name').value.trim(),
+      email,
+      phone: document.getElementById('nu-phone').value.trim(),
+      role: document.getElementById('nu-role').value,
+      status: 'active',
+      passwordHash: hashedPw,
+      licenseNumber: document.getElementById('nu-license').value.trim(),
+      firm: document.getElementById('nu-firm').value.trim(),
+      profilePhotoUrl: document.getElementById('nu-photo').value.trim(),
+      createdAt: Date.now(),
+      lastLogin: null,
+      createdBy: currentUser.uid
+    });
+    toast('User created');
+    closeModal();
+  });
+}
+
+function showEditUserForm(userId) {
+  if (!isAdmin()) return;
+  const u = usersCache[userId];
+  if (!u) return;
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Edit User</h2>
+    <form id="edit-user-form" class="form-stack">
+      <div class="form-row">
+        <div class="input-group"><label>Full Name</label><input type="text" id="eu-name" value="${u.name || ''}" required></div>
+        <div class="input-group"><label>Email</label><input type="email" id="eu-email" value="${u.email || ''}" required></div>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>Phone</label><input type="tel" id="eu-phone" value="${u.phone || ''}"></div>
+        <div class="input-group"><label>Role</label>
+          <select id="eu-role" class="form-select">
+            <option value="agent" ${u.role==='agent'?'selected':''}>Agent</option>
+            <option value="broker" ${u.role==='broker'?'selected':''}>Broker</option>
+            <option value="partner" ${u.role==='partner'?'selected':''}>Partner</option>
+            <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>License #</label><input type="text" id="eu-license" value="${u.licenseNumber || ''}"></div>
+        <div class="input-group"><label>Firm</label><input type="text" id="eu-firm" value="${u.firm || ''}"></div>
+      </div>
+      <div class="input-group"><label>Profile Photo URL</label><input type="url" id="eu-photo" value="${u.profilePhotoUrl || ''}" placeholder="https://..."></div>
+      <button type="submit" class="btn-primary btn-full">Save Changes</button>
+    </form>
+  `);
+  document.getElementById('edit-user-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    await db.ref(`users/${userId}`).update({
+      name: document.getElementById('eu-name').value.trim(),
+      email: document.getElementById('eu-email').value.trim().toLowerCase(),
+      phone: document.getElementById('eu-phone').value.trim(),
+      role: document.getElementById('eu-role').value,
+      licenseNumber: document.getElementById('eu-license').value.trim(),
+      firm: document.getElementById('eu-firm').value.trim(),
+      profilePhotoUrl: document.getElementById('eu-photo').value.trim()
+    });
+    toast('User updated');
+    closeModal();
+  });
+}
+
+function showResetPasswordForm(userId) {
+  if (!isAdmin()) return;
+  const u = usersCache[userId];
+  if (!u) return;
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Reset Password</h2>
+    <p style="margin-bottom:16px;color:var(--muted)">Resetting password for <strong>${u.name}</strong> (${u.email})</p>
+    <form id="admin-reset-pw-form" class="form-stack">
+      <div class="input-group"><label>New Password (min 8 chars)</label><input type="password" id="arp-pw" required minlength="8"></div>
+      <div class="input-group"><label>Confirm Password</label><input type="password" id="arp-pw2" required minlength="8"></div>
+      <button type="submit" class="btn-primary btn-full">Reset Password</button>
+    </form>
+  `, 'modal-sm');
+  document.getElementById('admin-reset-pw-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const pw = document.getElementById('arp-pw').value;
+    const pw2 = document.getElementById('arp-pw2').value;
+    if (pw.length < 8) { toast('Password must be at least 8 characters'); return; }
+    if (pw !== pw2) { toast('Passwords do not match'); return; }
+    const hashedPw = await sha256(pw);
+    await db.ref(`users/${userId}/passwordHash`).set(hashedPw);
+    toast('Password reset successfully');
+    closeModal();
+  });
+}
+
+async function toggleUserStatus(userId, newStatus) {
+  if (!isAdmin()) return;
+  await db.ref(`users/${userId}/status`).set(newStatus);
+  toast(`User ${newStatus === 'active' ? 'reactivated' : 'deactivated'}`);
+}
+
+// ══════════════════════════════════════
+// MY PROFILE
+// ══════════════════════════════════════
+
+function renderMyProfile() {
+  const panel = document.getElementById('profile-panel');
+  if (!currentUser) return;
+
+  // Get full user data from Firebase
+  const fbUser = usersCache[currentUser.uid] || {};
+  const u = { ...currentUser, ...fbUser };
+  const initials = (u.name || '').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const createdDate = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—';
+  const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '—';
+
+  panel.innerHTML = `
+    <div class="profile-header">
+      <div class="profile-avatar-lg">${u.profilePhotoUrl ? `<img src="${u.profilePhotoUrl}" alt="${u.name}">` : initials}</div>
+      <div class="profile-info">
+        <h3>${u.name}</h3>
+        <p>${u.email} · <span class="role-badge ${u.role}">${u.role}</span></p>
+        <p style="font-size:0.78rem;color:var(--muted)">Member since ${createdDate} · Last login ${lastLogin}</p>
+      </div>
+    </div>
+    <form id="profile-form" class="form-stack">
+      <div class="form-row">
+        <div class="input-group"><label>Full Name</label><input type="text" id="pf-name" value="${u.name || ''}" required></div>
+        <div class="input-group"><label>Email</label><input type="email" id="pf-email" value="${u.email || ''}" required></div>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>Phone</label><input type="tel" id="pf-phone" value="${u.phone || ''}"></div>
+        <div class="input-group"><label>Role</label><input type="text" id="pf-role" value="${u.role || ''}" disabled></div>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>License #</label><input type="text" id="pf-license" value="${u.licenseNumber || ''}"></div>
+        <div class="input-group"><label>Firm</label><input type="text" id="pf-firm" value="${u.firm || ''}"></div>
+      </div>
+      <div class="input-group"><label>Profile Photo URL</label><input type="url" id="pf-photo" value="${u.profilePhotoUrl || ''}" placeholder="https://..."></div>
+      <button type="submit" class="btn-primary">Save Profile</button>
+    </form>
+    <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border-light)">
+      <h4 style="margin-bottom:12px">Change Password</h4>
+      <form id="change-pw-form" class="form-stack">
+        <div class="form-row">
+          <div class="input-group"><label>Current Password</label><input type="password" id="cp-current" required></div>
+          <div class="input-group"><label>New Password (min 8)</label><input type="password" id="cp-new" required minlength="8"></div>
+          <div class="input-group"><label>Confirm</label><input type="password" id="cp-confirm" required minlength="8"></div>
+        </div>
+        <button type="submit" class="btn-outline">Update Password</button>
+      </form>
+    </div>
+  `;
+
+  document.getElementById('profile-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!currentUser.uid) { toast('No Firebase user found'); return; }
+    const updates = {
+      name: document.getElementById('pf-name').value.trim(),
+      email: document.getElementById('pf-email').value.trim().toLowerCase(),
+      phone: document.getElementById('pf-phone').value.trim(),
+      licenseNumber: document.getElementById('pf-license').value.trim(),
+      firm: document.getElementById('pf-firm').value.trim(),
+      profilePhotoUrl: document.getElementById('pf-photo').value.trim()
+    };
+    await db.ref(`users/${currentUser.uid}`).update(updates);
+    // Update local session
+    currentUser.name = updates.name;
+    currentUser.email = updates.email;
+    currentUser.initials = updates.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    localStorage.setItem('rra_user', JSON.stringify(currentUser));
+    document.getElementById('sidebar-name').textContent = currentUser.name;
+    document.getElementById('sidebar-avatar').textContent = currentUser.initials;
+    document.getElementById('topbar-name').textContent = currentUser.name;
+    document.getElementById('topbar-avatar').textContent = currentUser.initials;
+    toast('Profile updated');
+  });
+
+  document.getElementById('change-pw-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const currentPw = document.getElementById('cp-current').value;
+    const newPw = document.getElementById('cp-new').value;
+    const confirmPw = document.getElementById('cp-confirm').value;
+
+    if (newPw.length < 8) { toast('Password must be at least 8 characters'); return; }
+    if (newPw !== confirmPw) { toast('Passwords do not match'); return; }
+
+    // Verify current password
+    const fbUser = usersCache[currentUser.uid];
+    if (fbUser) {
+      const currentHash = await sha256(currentPw);
+      if (currentHash !== fbUser.passwordHash) { toast('Current password is incorrect'); return; }
+    }
+
+    const hashedPw = await sha256(newPw);
+    await db.ref(`users/${currentUser.uid}/passwordHash`).set(hashedPw);
+    document.getElementById('cp-current').value = '';
+    document.getElementById('cp-new').value = '';
+    document.getElementById('cp-confirm').value = '';
+    toast('Password updated');
+  });
+}
+
+// ══════════════════════════════════════
+// SEED ADMIN USER (run once to bootstrap)
+// ══════════════════════════════════════
+window.seedAdminUser = async function() {
+  const hashedPw = await sha256('rra2026!');
+  await db.ref('users/ryan-001').set({
+    name: 'Ryan Palmer',
+    email: 'ryan@realtyryan.com',
+    phone: '508-954-2159',
+    role: 'admin',
+    status: 'active',
+    passwordHash: hashedPw,
+    licenseNumber: '315654',
+    firm: 'Corcoran HM Properties',
+    profilePhotoUrl: '',
+    createdAt: Date.now(),
+    lastLogin: null,
+    createdBy: 'system'
+  });
+  await db.ref('users/ally-001').set({
+    name: 'Ally Doerr',
+    email: 'ally@realtyryan.com',
+    phone: '',
+    role: 'partner',
+    status: 'active',
+    passwordHash: hashedPw,
+    licenseNumber: '',
+    firm: 'Corcoran HM Properties',
+    profilePhotoUrl: '',
+    createdAt: Date.now(),
+    lastLogin: null,
+    createdBy: 'system'
+  });
+  toast('Admin users seeded!');
+};
+
+// Auto-seed if no users exist
+db.ref('users').once('value', snap => {
+  if (!snap.val()) {
+    console.log('No users found — auto-seeding admin users...');
+    window.seedAdminUser();
   }
 });
 

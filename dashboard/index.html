@@ -36,6 +36,37 @@
       <div id="login-error" class="login-error"></div>
       <button type="submit" class="btn-primary btn-full">Sign In</button>
     </form>
+    <div id="forgot-password-link" style="text-align:center;margin-top:16px">
+      <button class="btn-link" onclick="showForgotPassword()">Forgot Password?</button>
+    </div>
+    <!-- Forgot Password Form (hidden by default) -->
+    <form id="forgot-form" class="hidden" autocomplete="off" style="margin-top:20px">
+      <div class="input-group">
+        <label for="forgot-email">Email Address</label>
+        <input type="email" id="forgot-email" placeholder="you@realtyryan.com" required>
+      </div>
+      <div id="forgot-msg" class="login-error"></div>
+      <button type="submit" class="btn-primary btn-full">Send Reset Link</button>
+      <div style="text-align:center;margin-top:12px"><button type="button" class="btn-link" onclick="hideForgotPassword()">← Back to Sign In</button></div>
+    </form>
+    <!-- Reset Password Form (hidden by default) -->
+    <form id="reset-form" class="hidden" autocomplete="off" style="margin-top:20px">
+      <div class="input-group">
+        <label for="reset-token">Reset Token</label>
+        <input type="text" id="reset-token" placeholder="Paste your reset token" required>
+      </div>
+      <div class="input-group">
+        <label for="reset-new-pw">New Password</label>
+        <input type="password" id="reset-new-pw" placeholder="Min 8 characters" required minlength="8">
+      </div>
+      <div class="input-group">
+        <label for="reset-confirm-pw">Confirm Password</label>
+        <input type="password" id="reset-confirm-pw" placeholder="Confirm password" required minlength="8">
+      </div>
+      <div id="reset-msg" class="login-error"></div>
+      <button type="submit" class="btn-primary btn-full">Reset Password</button>
+      <div style="text-align:center;margin-top:12px"><button type="button" class="btn-link" onclick="hideForgotPassword()">← Back to Sign In</button></div>
+    </form>
   </div>
   <div class="login-footer">Corcoran HM Properties</div>
 </div>
@@ -65,6 +96,8 @@
       <li class="nav-item" data-view="vendors"><span class="nav-icon">◧</span> Vendors</li>
       <li class="nav-divider"></li>
       <li class="nav-item" data-view="settings"><span class="nav-icon">⚙</span> Settings</li>
+      <li class="nav-item nav-admin-only hidden" data-view="admin"><span class="nav-icon">🛡</span> Admin</li>
+      <li class="nav-item" data-view="profile"><span class="nav-icon">👤</span> My Profile</li>
     </ul>
     <div class="sidebar-footer">
       <div class="user-badge">
@@ -346,6 +379,35 @@
           <div class="panel"><h3>Avg Days on Market</h3><canvas id="chart-dom"></canvas></div>
           <div class="panel"><h3>Agent Performance</h3><canvas id="chart-agents"></canvas></div>
         </div>
+      </section>
+
+      <!-- ADMIN PANEL -->
+      <section id="view-admin" class="view">
+        <div class="view-header">
+          <h2>Admin Panel</h2>
+          <button class="btn-primary btn-sm" id="btn-new-user">+ New User</button>
+        </div>
+        <div class="admin-tabs" id="admin-tabs">
+          <button class="admin-tab active" data-admin-tab="users">Users</button>
+        </div>
+        <div id="admin-tab-content">
+          <div class="data-table-wrap">
+            <table class="data-table" id="admin-users-table">
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="admin-users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- MY PROFILE -->
+      <section id="view-profile" class="view">
+        <div class="view-header">
+          <h2>My Profile</h2>
+        </div>
+        <div class="panel" id="profile-panel"></div>
       </section>
 
       <!-- SETTINGS -->
