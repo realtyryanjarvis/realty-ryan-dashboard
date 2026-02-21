@@ -1625,6 +1625,7 @@ function renderContactDetailContent(contactId) {
       <button class="crm-detail-tab active" data-tab="overview">Overview</button>
       <button class="crm-detail-tab" data-tab="notes">Notes (${notes.length})</button>
       ${cat === 'client' ? `<button class="crm-detail-tab" data-tab="deals">Deals (${linkedDeals.length})</button>` : ''}
+      ${cat === 'client' ? `<button class="crm-detail-tab" data-tab="referrals">Referrals (${getClientReferrals(contactId).length})</button>` : ''}
     </div>
 
     <div class="crm-detail-tab-content" id="crm-detail-tab-content">
@@ -1642,6 +1643,7 @@ function renderContactDetailContent(contactId) {
       if (t === 'overview') tabContent.innerHTML = renderContactOverviewTab(c, cat, linkedDeals);
       else if (t === 'notes') tabContent.innerHTML = renderContactNotesTab(contactId, notes, noteIcons);
       else if (t === 'deals') tabContent.innerHTML = renderContactDealsTab(linkedDeals);
+      else if (t === 'referrals') tabContent.innerHTML = renderContactReferralsTab(contactId);
       setupNoteFormHandlers(contactId);
     });
   });
@@ -1771,6 +1773,34 @@ function renderContactDealsTab(linkedDeals) {
       </div>
     `;
   }).join('');
+}
+
+function renderContactReferralsTab(contactId) {
+  const referrals = getClientReferrals(contactId);
+  if (referrals.length === 0) return '<p class="empty-msg">No vendor referrals yet. Use the Vendors module to refer a vendor to this client.</p>';
+
+  return `
+    <div class="referral-history">
+      ${referrals.sort((a,b) => (b.createdAt||0)-(a.createdAt||0)).map(r => {
+        const vendor = vendorCache[r.vendorId];
+        const vName = vendor ? vendor.name : (r.vendorName || 'Unknown Vendor');
+        const vCompany = vendor?.company || '';
+        const catObj = vendor ? VENDOR_CATS.find(c => c.id === vendor.category) : null;
+        const d = r.date ? new Date(r.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+        return `
+          <div class="referral-item referral-item-full">
+            <div class="referral-vendor-info">
+              <strong>${vName}</strong>${vCompany ? ` — ${vCompany}` : ''}
+              ${catObj ? `<span class="crm-tag tag-vendor">${catObj.label}</span>` : ''}
+            </div>
+            <span class="referral-date">${d}</span>
+            ${r.deal ? `<span class="referral-deal">🏠 ${r.deal}</span>` : ''}
+            ${r.notes ? `<span class="referral-notes">${r.notes}</span>` : ''}
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
 }
 
 function setupNoteFormHandlers(contactId) {
@@ -2263,15 +2293,67 @@ function showAddShowingForm() {
 }
 
 // ══════════════════════════════════════
-// VENDORS
+// VENDORS (Full Module + Referral Tracking)
 // ══════════════════════════════════════
+
+function getVendorReferralCount(vendorId) {
+  return Object.values(vendorReferralCache).filter(r => r.vendorId === vendorId).length;
+}
+
+function getVendorReferrals(vendorId) {
+  return Object.entries(vendorReferralCache).filter(([,r]) => r.vendorId === vendorId).map(([id,r]) => ({id,...r}));
+}
+
+function getClientReferrals(contactId) {
+  return Object.entries(vendorReferralCache).filter(([,r]) => r.clientId === contactId).map(([id,r]) => ({id,...r}));
+}
+
+function getTopReferredVendors(limit) {
+  const counts = {};
+  Object.values(vendorReferralCache).forEach(r => {
+    counts[r.vendorId] = (counts[r.vendorId] || 0) + 1;
+  });
+  return Object.entries(counts)
+    .map(([vid, count]) => ({ vendorId: vid, vendor: vendorCache[vid], count }))
+    .filter(v => v.vendor)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit || 5);
+}
+
 function renderVendors() {
   const grid = document.getElementById('vendors-grid');
+  const topEl = document.getElementById('vendors-top-referred');
   const search = (document.getElementById('vendors-search').value || '').toLowerCase();
   const catFilter = document.getElementById('vendors-cat-filter').value;
 
+  // Top Referred section
+  const topReferred = getTopReferredVendors(5);
+  if (topReferred.length > 0) {
+    topEl.style.display = '';
+    topEl.innerHTML = `
+      <h3>🏆 Top Referred Vendors</h3>
+      <div class="vendor-cards">
+        ${topReferred.map(tr => {
+          const v = tr.vendor;
+          const catObj = VENDOR_CATS.find(c => c.id === v.category);
+          return `
+            <div class="vendor-card vendor-card-top" onclick="openVendorDetail('${tr.vendorId}')">
+              <div class="vendor-referral-badge">${tr.count} referral${tr.count!==1?'s':''}</div>
+              <div class="vendor-name">${v.name}</div>
+              ${v.company ? `<div class="vendor-company">${v.company}</div>` : ''}
+              <div class="vendor-company">${catObj ? catObj.label : v.category || ''}</div>
+              <div class="vendor-rating">${'⭐'.repeat(v.rating || 0)}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } else {
+    topEl.style.display = 'none';
+  }
+
   let entries = Object.entries(vendorCache);
-  if (search) entries = entries.filter(([,v]) => `${v.name} ${v.company} ${v.specialty}`.toLowerCase().includes(search));
+  if (search) entries = entries.filter(([,v]) => `${v.name} ${v.company} ${v.specialty} ${v.email}`.toLowerCase().includes(search));
   if (catFilter) entries = entries.filter(([,v]) => v.category === catFilter);
 
   if (entries.length === 0) {
@@ -2287,23 +2369,43 @@ function renderVendors() {
     grouped[cat].push([id, v]);
   });
 
-  grid.innerHTML = Object.entries(grouped).map(([cat, vendors]) => {
+  // Sort categories by VENDOR_CATS order
+  const catOrder = VENDOR_CATS.map(c => c.id);
+  const sortedCats = Object.keys(grouped).sort((a, b) => {
+    const ia = catOrder.indexOf(a), ib = catOrder.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
+
+  grid.innerHTML = sortedCats.map(cat => {
+    const vendors = grouped[cat];
     const catObj = VENDOR_CATS.find(c => c.id === cat);
     return `
       <div class="vendor-category">
         <h4>${catObj ? catObj.label : cat}</h4>
         <div class="vendor-cards">
-          ${vendors.map(([id, v]) => `
-            <div class="vendor-card" onclick="openVendorDetail('${id}')">
-              <div class="vendor-name">${v.name}</div>
-              ${v.company ? `<div class="vendor-company">${v.company}</div>` : ''}
-              <div class="vendor-meta">
-                ${v.phone ? `<span>📞 ${v.phone}</span>` : ''}
-                ${v.email ? `<span>✉️ ${v.email}</span>` : ''}
+          ${vendors.map(([id, v]) => {
+            const refCount = getVendorReferralCount(id);
+            return `
+              <div class="vendor-card" onclick="openVendorDetail('${id}')">
+                <div class="vendor-card-header">
+                  <div>
+                    <div class="vendor-name">${v.name}</div>
+                    ${v.company ? `<div class="vendor-company">${v.company}</div>` : ''}
+                  </div>
+                  <div class="vendor-rating">${'⭐'.repeat(v.rating || 0)}</div>
+                </div>
+                <div class="vendor-meta">
+                  ${v.phone ? `<span>📞 ${v.phone}</span>` : ''}
+                  ${v.email ? `<span>✉️ ${v.email}</span>` : ''}
+                </div>
+                ${v.specialty ? `<div class="vendor-specialty">${v.specialty}</div>` : ''}
+                <div class="vendor-card-footer">
+                  ${refCount > 0 ? `<span class="vendor-ref-count">🔗 ${refCount} referral${refCount!==1?'s':''}</span>` : '<span></span>'}
+                  <button class="btn-xs" onclick="event.stopPropagation();showQuickReferForm('${id}')">⚡ Refer</button>
+                </div>
               </div>
-              <div class="vendor-rating">${'⭐'.repeat(v.rating || 0)}</div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       </div>
     `;
@@ -2315,6 +2417,7 @@ document.addEventListener('change', e => { if (e.target.id === 'vendors-cat-filt
 
 document.addEventListener('click', e => {
   if (e.target.id === 'btn-new-vendor') showVendorForm();
+  if (e.target.id === 'btn-quick-refer') showQuickReferForm();
 });
 
 function showVendorForm(prefill) {
@@ -2371,7 +2474,49 @@ function showVendorForm(prefill) {
 
 function openVendorDetail(id) {
   const v = vendorCache[id];
-  if (v) showVendorForm({ ...v, id });
+  if (!v) return;
+  const catObj = VENDOR_CATS.find(c => c.id === v.category);
+  const referrals = getVendorReferrals(id);
+
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="vendor-detail-header">
+      <div class="vendor-detail-avatar">${(v.name||'?')[0]}</div>
+      <div>
+        <h2>${v.name}</h2>
+        <div class="modal-meta">
+          ${v.company ? `<span style="font-size:0.9rem;color:var(--muted)">${v.company}</span>` : ''}
+          <span class="modal-badge">${catObj ? catObj.label : v.category}</span>
+          <span>${'⭐'.repeat(v.rating || 0)}</span>
+        </div>
+      </div>
+    </div>
+    <div class="crm-quick-actions" style="margin-top:16px">
+      ${v.phone ? `<a class="crm-quick-btn" href="tel:${v.phone}"><span class="quick-icon">📞</span><span class="quick-label">Call</span></a>` : ''}
+      ${v.email ? `<a class="crm-quick-btn" href="mailto:${v.email}"><span class="quick-icon">✉️</span><span class="quick-label">Email</span></a>` : ''}
+      <div class="crm-quick-btn" onclick="closeModal();showQuickReferForm('${id}')"><span class="quick-icon">⚡</span><span class="quick-label">Refer</span></div>
+      <div class="crm-quick-btn" onclick="closeModal();showVendorForm(Object.assign({},vendorCache['${id}'],{id:'${id}'}))"><span class="quick-icon">✏️</span><span class="quick-label">Edit</span></div>
+    </div>
+    <div class="crm-info-grid" style="margin-top:20px">
+      ${v.phone ? `<div class="crm-info-row"><span class="crm-info-label">Phone</span><span class="crm-info-value"><a href="tel:${v.phone}" style="color:var(--accent)">${v.phone}</a></span></div>` : ''}
+      ${v.email ? `<div class="crm-info-row"><span class="crm-info-label">Email</span><span class="crm-info-value"><a href="mailto:${v.email}" style="color:var(--accent)">${v.email}</a></span></div>` : ''}
+      ${v.specialty ? `<div class="crm-info-row"><span class="crm-info-label">Specialty</span><span class="crm-info-value">${v.specialty}</span></div>` : ''}
+      ${v.notes ? `<div class="crm-info-row"><span class="crm-info-label">Notes</span><span class="crm-info-value">${v.notes}</span></div>` : ''}
+      <div class="crm-info-row"><span class="crm-info-label">Total Referrals</span><span class="crm-info-value"><strong>${referrals.length}</strong></span></div>
+    </div>
+    ${referrals.length > 0 ? `
+      <h4 style="margin-top:24px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px">Referral History</h4>
+      <div class="referral-history">
+        ${referrals.sort((a,b) => (b.date||b.createdAt||0)-(a.date||a.createdAt||0)).map(r => {
+          const client = contactCache[r.clientId];
+          const clientName = client ? `${client.firstName} ${client.lastName}` : (r.clientName || 'Unknown');
+          const d = r.date ? new Date(r.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : (r.createdAt ? new Date(r.createdAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—');
+          return `<div class="referral-item"><span class="referral-client">👤 ${clientName}</span><span class="referral-date">${d}</span>${r.deal ? `<span class="referral-deal">${r.deal}</span>` : ''}${r.notes ? `<span class="referral-notes">${r.notes}</span>` : ''}</div>`;
+        }).join('')}
+      </div>
+    ` : ''}
+    ${isRyan() ? `<button class="btn-outline btn-full btn-danger-text" style="margin-top:20px" onclick="deleteVendor('${id}')">Delete Vendor</button>` : ''}
+  `, 'modal-lg');
 }
 
 function deleteVendor(id) {
@@ -2379,6 +2524,71 @@ function deleteVendor(id) {
   db.ref(`vendors/${id}`).remove();
   toast('Vendor deleted');
   closeModal();
+}
+
+// ══════════════════════════════════════
+// VENDOR REFERRAL TRACKING
+// ══════════════════════════════════════
+
+function showQuickReferForm(preselectedVendorId) {
+  const vendorOptions = Object.entries(vendorCache).map(([id, v]) => {
+    const catObj = VENDOR_CATS.find(c => c.id === v.category);
+    return `<option value="${id}" ${id===preselectedVendorId?'selected':''}>${v.name}${v.company ? ' — '+v.company : ''} (${catObj?catObj.label:v.category||''})</option>`;
+  }).join('');
+
+  const clientContacts = Object.entries(contactCache).filter(([,c]) => c.type !== 'vendor' && c.category !== 'vendor');
+  const clientOptions = clientContacts.map(([id, c]) => `<option value="${id}">${c.firstName} ${c.lastName}</option>`).join('');
+
+  const txnOptions = Object.entries(getVisibleTxns()).map(([id, t]) => `<option value="${id}">${t.property?.address || 'Unknown'}</option>`).join('');
+
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>⚡ Quick Refer Vendor</h2>
+    <p class="view-subtitle" style="margin-bottom:20px">Log a vendor referral to a client.</p>
+    <form id="refer-form" class="form-stack">
+      <div class="input-group"><label>Vendor</label>
+        <select id="ref-vendor" class="form-select" required><option value="">-- Select Vendor --</option>${vendorOptions}</select>
+      </div>
+      <div class="input-group"><label>Client</label>
+        <select id="ref-client" class="form-select" required><option value="">-- Select Client --</option>${clientOptions}</select>
+      </div>
+      <div class="input-group"><label>Deal (optional)</label>
+        <select id="ref-deal" class="form-select"><option value="">-- No Deal --</option>${txnOptions}</select>
+      </div>
+      <div class="form-row">
+        <div class="input-group"><label>Date</label><input type="date" id="ref-date" value="${localDateStr()}" required></div>
+      </div>
+      <div class="input-group"><label>Notes</label><textarea id="ref-notes" rows="2" placeholder="e.g. Referred for home inspection at 123 Main St"></textarea></div>
+      <button type="submit" class="btn-primary btn-full">Log Referral</button>
+    </form>
+  `);
+
+  document.getElementById('refer-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const vendorId = document.getElementById('ref-vendor').value;
+    const clientId = document.getElementById('ref-client').value;
+    const dealId = document.getElementById('ref-deal').value;
+    if (!vendorId || !clientId) return;
+
+    const vendor = vendorCache[vendorId];
+    const client = contactCache[clientId];
+    const deal = dealId ? txnCache[dealId] : null;
+
+    db.ref('vendorReferrals').push({
+      vendorId,
+      vendorName: vendor?.name || '',
+      clientId,
+      clientName: client ? `${client.firstName} ${client.lastName}` : '',
+      dealId: dealId || '',
+      deal: deal ? (deal.property?.address || '') : '',
+      date: document.getElementById('ref-date').value,
+      notes: document.getElementById('ref-notes').value.trim(),
+      createdAt: Date.now(),
+      createdBy: currentUser.uid
+    });
+    toast(`Referred ${vendor?.name || 'vendor'} to ${client?.firstName || 'client'}`);
+    closeModal();
+  });
 }
 
 // ══════════════════════════════════════
@@ -3630,16 +3840,32 @@ function timeAgo(ts) {
 // SEED DATA (run once)
 // ══════════════════════════════════════
 window.seedVendors = function() {
+  // Check if vendors already exist to avoid duplicates
+  const existingNames = Object.values(vendorCache).map(v => (v.name||'').toLowerCase());
   const vendors = [
     { name: "Michael Hellinger", phone: "+13157099648", email: "mhellinger2@gmail.com", category: "photographer", specialty: "Real estate photography + floor plans", notes: "Schedule via group text with Ally + Mike", rating: 5, active: true, createdAt: Date.now(), createdBy: 'ryan-001' },
     { name: "Cameron Glenn", company: "Sky Visions USA", email: "cameron@skyvisionsusa.com", category: "videographer", specialty: "Video walkthroughs, drone footage", rating: 5, active: true, createdAt: Date.now(), createdBy: 'ryan-001' },
-    { name: "Ali Dubois-Youngling", company: "Atlantic Bay Mortgage", email: "alidubois@atlanticbay.com", phone: "(269) 599-3395", category: "lender", specialty: "Preferred lender", rating: 5, active: true, createdAt: Date.now(), createdBy: 'ryan-001' },
+    { name: "Ali Dubois-Youngling", company: "Atlantic Bay Mortgage", email: "alidubois@atlanticbay.com", phone: "(269) 599-3395", category: "lender", specialty: "Preferred lender — Office: (540) 449-1427", rating: 5, active: true, createdAt: Date.now(), createdBy: 'ryan-001' },
     { name: "Jon Puente", company: "Edge Home Finance", email: "jon.puente@edgehomefinance.com", category: "lender", specialty: "Preferred lender", rating: 5, active: true, createdAt: Date.now(), createdBy: 'ryan-001' },
     { name: "Armstrong & Stokes", category: "attorney", specialty: "Preferred buyer attorney", rating: 5, active: true, createdAt: Date.now(), createdBy: 'ryan-001' }
   ];
-  vendors.forEach(v => db.ref('vendors').push(v));
-  toast('Vendors seeded');
+  let seeded = 0;
+  vendors.forEach(v => {
+    if (!existingNames.includes(v.name.toLowerCase())) {
+      db.ref('vendors').push(v);
+      seeded++;
+    }
+  });
+  toast(seeded > 0 ? `${seeded} vendors seeded` : 'Vendors already exist');
 };
+
+// Auto-seed vendors if none exist
+db.ref('vendors').once('value', snap => {
+  if (!snap.val() || Object.keys(snap.val()).length === 0) {
+    console.log('No vendors found — auto-seeding...');
+    setTimeout(() => window.seedVendors(), 2000);
+  }
+});
 
 // ══════════════════════════════════════
 // GOOGLE CALENDAR SYNC
