@@ -1401,9 +1401,12 @@ function showNewContactForm(prefill) {
             <select id="ct-source" class="form-select">${CONTACT_SOURCES.map(s => `<option value="${s}" ${p.source===s?'selected':''}>${s}</option>`).join('')}</select>
           </div>
         </div>
-        <div class="input-group"><label>Address</label><input type="text" id="ct-address" value="${p.address||''}"></div>
+        <div class="input-group"><label>Current Address</label><input type="text" id="ct-address" value="${p.address||''}"></div>
         <div class="form-row">
+          <div class="input-group"><label>Close Date</label><input type="date" id="ct-closedate" value="${p.closeDate||''}"></div>
           <div class="input-group"><label>Pre-approval Amount</label><input type="number" id="ct-preapproval" value="${p.preapprovalAmount||''}"></div>
+        </div>
+        <div class="form-row">
           <div class="input-group"><label>Price Min</label><input type="number" id="ct-pricemin" value="${p.priceMin||''}"></div>
           <div class="input-group"><label>Price Max</label><input type="number" id="ct-pricemax" value="${p.priceMax||''}"></div>
         </div>
@@ -1464,6 +1467,7 @@ function showNewContactForm(prefill) {
       data.status = document.getElementById('ct-pipeline').value;
       data.source = document.getElementById('ct-source').value;
       data.address = document.getElementById('ct-address').value.trim();
+      data.closeDate = document.getElementById('ct-closedate').value || '';
       data.preapprovalAmount = parseFloat(document.getElementById('ct-preapproval').value) || 0;
       data.priceMin = parseFloat(document.getElementById('ct-pricemin').value) || 0;
       data.priceMax = parseFloat(document.getElementById('ct-pricemax').value) || 0;
@@ -1659,7 +1663,8 @@ function renderContactOverviewTab(c, cat, linkedDeals) {
   if (c.email) html += `<div class="crm-info-row"><span class="crm-info-label">Email</span><span class="crm-info-value"><a href="mailto:${c.email}" style="color:var(--accent)">${c.email}</a></span></div>`;
 
   if (cat === 'client') {
-    if (c.address) html += `<div class="crm-info-row"><span class="crm-info-label">Address</span><span class="crm-info-value">${c.address}</span></div>`;
+    if (c.address) html += `<div class="crm-info-row"><span class="crm-info-label">Current Address</span><span class="crm-info-value">${c.address}</span></div>`;
+    if (c.closeDate) html += `<div class="crm-info-row"><span class="crm-info-label">Close Date</span><span class="crm-info-value">${new Date(c.closeDate+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></div>`;
     if (c.source) html += `<div class="crm-info-row"><span class="crm-info-label">Source</span><span class="crm-info-value">${c.source}</span></div>`;
     if (c.preapprovalAmount) html += `<div class="crm-info-row"><span class="crm-info-label">Pre-Approval</span><span class="crm-info-value">${formatPrice(c.preapprovalAmount)}</span></div>`;
     if (c.priceMin || c.priceMax) html += `<div class="crm-info-row"><span class="crm-info-label">Price Range</span><span class="crm-info-value">${formatPrice(c.priceMin)} – ${formatPrice(c.priceMax)}</span></div>`;
