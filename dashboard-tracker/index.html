@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Build — Project Tracker | RRA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f8f7f6;--primary:#130f0a;--accent:#793315;--border:#e5e7eb;
+  --muted:#9ca3af;--white:#fff;--surface:#fafafa;--success:#2d6a4f;
+  --warning:#b86e00;--danger:#c0392b;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,sans-serif;
+}
+body{font-family:var(--sans);background:var(--cream);color:var(--primary);line-height:1.6;padding:20px}
+.container{max-width:1200px;margin:0 auto}
+header{text-align:center;padding:40px 0 30px}
+header h1{font-family:var(--serif);font-size:2.4rem;font-weight:700;color:var(--primary)}
+header p{font-size:.9rem;color:var(--muted);margin-top:6px}
+.deadline-bar{background:var(--accent);color:#fff;text-align:center;padding:12px 20px;border-radius:12px;margin-bottom:30px;font-size:.9rem;font-weight:600;letter-spacing:.05em}
+.deadline-bar span{font-family:var(--serif);font-size:1.3rem;font-weight:700}
+
+/* Progress */
+.progress-section{background:var(--white);border-radius:14px;padding:24px;border:1px solid var(--border);margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.03)}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.progress-header h2{font-family:var(--serif);font-size:1.4rem;font-weight:700}
+.progress-pct{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--accent)}
+.progress-bar{height:8px;background:#e8e5e0;border-radius:4px;overflow:hidden;margin-bottom:8px}
+.progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .3s}
+.progress-label{font-size:.75rem;color:var(--muted)}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--white);transition:all .2s;color:var(--primary)}
+.tab:hover{border-color:var(--accent);color:var(--accent)}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab .count{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:10px;font-size:.7rem;background:rgba(0,0,0,.08)}
+.tab.active .count{background:rgba(255,255,255,.25)}
+
+/* Kanban */
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+.kanban-col{background:var(--surface);border-radius:12px;padding:14px;min-height:300px}
+.kanban-col-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.kanban-col-header .dot{width:10px;height:10px;border-radius:50%}
+.kanban-col-header h3{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kanban-col-header .num{font-size:.75rem;font-weight:600;color:var(--muted);margin-left:auto}
+.dot-todo{background:var(--muted)}
+.dot-progress{background:var(--warning)}
+.dot-blocked{background:var(--danger)}
+.dot-done{background:var(--success)}
+
+.task-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.03);transition:transform .2s}
+.task-card:hover{transform:translateY(-1px);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.task-card h4{font-size:.85rem;font-weight:600;color:var(--primary);margin-bottom:4px}
+.task-card p{font-size:.75rem;color:var(--muted);line-height:1.4}
+.task-meta{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tag{padding:2px 8px;border-radius:6px;font-size:.65rem;font-weight:600;letter-spacing:.03em}
+.tag-day{background:#eef4ff;color:#2c5ea0}
+.tag-owner{background:#f0fdf4;color:var(--success)}
+.tag-blocker{background:#fef2f2;color:var(--danger)}
+.tag-priority{background:#fff7ed;color:var(--warning)}
+
+/* Waiting Items */
+.waiting-section{background:var(--white);border-radius:14px;padding:24px;border:2px solid var(--warning);margin-bottom:24px}
+.waiting-section h2{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--warning);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.waiting-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.waiting-item:last-child{border-bottom:none}
+.waiting-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.waiting-info h4{font-size:.9rem;font-weight:600;color:var(--primary)}
+.waiting-info p{font-size:.8rem;color:var(--muted);margin-top:2px}
+.waiting-who{margin-left:auto;padding:4px 12px;border-radius:6px;font-size:.75rem;font-weight:600;background:var(--cream);color:var(--primary);white-space:nowrap}
+
+/* Day Plan */
+.day-plan{background:var(--white);border-radius:14px;padding:24px;border:1px solid var(--border);margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.03)}
+.day-plan h2{font-family:var(--serif);font-size:1.3rem;font-weight:700;margin-bottom:16px}
+.day-row{display:grid;grid-template-columns:120px 1fr 100px;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center}
+.day-row:last-child{border-bottom:none}
+.day-label{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--accent)}
+.day-tasks{font-size:.85rem;color:var(--primary)}
+.day-status{font-size:.75rem;font-weight:600;text-align:right;padding:4px 10px;border-radius:6px}
+.status-today{background:#fff7ed;color:var(--warning)}
+.status-upcoming{background:var(--surface);color:var(--muted)}
+.status-done{background:#f0fdf4;color:var(--success)}
+
+@media(max-width:900px){
+  .kanban{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .kanban{grid-template-columns:1fr}
+  .day-row{grid-template-columns:1fr;gap:4px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>RRA Command Center — Build Tracker</h1>
+    <p>Real-time project status for the Realty Ryan & Associates Dashboard</p>
+  </header>
+
+  <div class="deadline-bar">
+    🎯 DEADLINE: <span>Friday, February 28</span> — Full System Operational
+  </div>
+
+  <!-- Overall Progress -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <h2>Overall Progress</h2>
+      <div class="progress-pct" id="overallPct">0%</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="overallBar" style="width:0%"></div></div>
+    <div class="progress-label" id="overallLabel">0 of 0 tasks complete</div>
+  </div>
+
+  <!-- Waiting on Ryan / Ally -->
+  <div class="waiting-section">
+    <h2>⏳ Waiting On — Action Required</h2>
+    <div id="waitingItems">
+      <div class="waiting-item" data-id="w1">
+        <div class="waiting-icon">📄</div>
+        <div class="waiting-info">
+          <h4>Blank NC Transaction Forms</h4>
+          <p>All listing + buyer forms from SkySlope. Email sent to Ally tonight.</p>
+        </div>
+        <div class="waiting-who">Ally</div>
+      </div>
+      <div class="waiting-item" data-id="w2">
+        <div class="waiting-icon">✉️</div>
+        <div class="waiting-info">
+          <h4>Transaction Email Flow + Examples</h4>
+          <p>Step-by-step emails from UC to closing, with 2-3 real examples.</p>
+        </div>
+        <div class="waiting-who">Ally</div>
+      </div>
+      <div class="waiting-item" data-id="w3">
+        <div class="waiting-icon">📋</div>
+        <div class="waiting-info">
+          <h4>Form Field Mapping Verification</h4>
+          <p>Ally reviews field mapping sheets for each form (once Jarvis sends them).</p>
+        </div>
+        <div class="waiting-who">Ally — pending forms</div>
+      </div>
+      <div class="waiting-item" data-id="w4">
+        <div class="waiting-icon">📧</div>
+        <div class="waiting-info">
+          <h4>ShowingTime Feedback Email Sample</h4>
+          <p>Forward one ShowingTime feedback email to jarvis@realtyryan.com.</p>
+        </div>
+        <div class="waiting-who">Ryan</div>
+      </div>
+      <div class="waiting-item" data-id="w5">
+        <div class="waiting-icon">✅</div>
+        <div class="waiting-info">
+          <h4>Required vs Optional Docs</h4>
+          <p>Ally flags which forms are legally required vs optional for compliance.</p>
+        </div>
+        <div class="waiting-who">Ally</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day-by-Day Plan -->
+  <div class="day-plan">
+    <h2>📅 Build Schedule</h2>
+    <div class="day-row">
+      <div class="day-label">Sat 2/21</div>
+      <div class="day-tasks">Firebase project, auth, database schema, core UI shell, pipeline boards</div>
+      <div class="day-status status-today">Today</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Sun 2/22</div>
+      <div class="day-tasks">Transaction detail pages, document checklists, CRM/contacts</div>
+      <div class="day-status status-upcoming">Upcoming</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Mon 2/23</div>
+      <div class="day-tasks">Financials dashboard, P&L, vendor directory, task manager</div>
+      <div class="day-status status-upcoming">Upcoming</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Tue 2/24</div>
+      <div class="day-tasks">Email integration (per-transaction inbox), ShowingTime scraper, showing dashboard</div>
+      <div class="day-status status-upcoming">Upcoming</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Wed 2/25</div>
+      <div class="day-tasks">Client portal, automated comms engine (M/W/F emails, deadline alerts, texts)</div>
+      <div class="day-status status-upcoming">Upcoming</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Thu 2/26</div>
+      <div class="day-tasks">Dropbox Sign e-signatures, open house sign-in, Plaud meeting notes</div>
+      <div class="day-status status-upcoming">Upcoming</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Fri 2/27</div>
+      <div class="day-tasks">Polish, mobile optimization, testing, bug fixes</div>
+      <div class="day-status status-upcoming">Upcoming</div>
+    </div>
+    <div class="day-row">
+      <div class="day-label">Sat 2/28</div>
+      <div class="day-tasks">Final testing, go live, kink workout</div>
+      <div class="day-status status-upcoming">Deadline</div>
+    </div>
+  </div>
+
+  <!-- Kanban Board -->
+  <div class="tabs">
+    <div class="tab active" onclick="filterTasks('all')">All<span class="count" id="count-all"></span></div>
+    <div class="tab" onclick="filterTasks('foundation')">Foundation<span class="count" id="count-foundation"></span></div>
+    <div class="tab" onclick="filterTasks('pipeline')">Pipelines<span class="count" id="count-pipeline"></span></div>
+    <div class="tab" onclick="filterTasks('docs')">Documents<span class="count" id="count-docs"></span></div>
+    <div class="tab" onclick="filterTasks('crm')">CRM<span class="count" id="count-crm"></span></div>
+    <div class="tab" onclick="filterTasks('financial')">Financial<span class="count" id="count-financial"></span></div>
+    <div class="tab" onclick="filterTasks('comms')">Communications<span class="count" id="count-comms"></span></div>
+    <div class="tab" onclick="filterTasks('showings')">Showings<span class="count" id="count-showings"></span></div>
+    <div class="tab" onclick="filterTasks('portal')">Client Portal<span class="count" id="count-portal"></span></div>
+    <div class="tab" onclick="filterTasks('integration')">Integrations<span class="count" id="count-integration"></span></div>
+  </div>
+
+  <div class="kanban" id="kanban">
+    <div class="kanban-col" id="col-todo">
+      <div class="kanban-col-header"><div class="dot dot-todo"></div><h3>To Do</h3><div class="num" id="num-todo"></div></div>
+      <div id="tasks-todo"></div>
+    </div>
+    <div class="kanban-col" id="col-progress">
+      <div class="kanban-col-header"><div class="dot dot-progress"></div><h3>In Progress</h3><div class="num" id="num-progress"></div></div>
+      <div id="tasks-progress"></div>
+    </div>
+    <div class="kanban-col" id="col-blocked">
+      <div class="kanban-col-header"><div class="dot dot-blocked"></div><h3>Blocked</h3><div class="num" id="num-blocked"></div></div>
+      <div id="tasks-blocked"></div>
+    </div>
+    <div class="kanban-col" id="col-done">
+      <div class="kanban-col-header"><div class="dot dot-done"></div><h3>Done</h3><div class="num" id="num-done"></div></div>
+      <div id="tasks-done"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const tasks = [
+  // Foundation
+  {id:1,title:"New Firebase Project",desc:"Create fresh Firebase project, configure auth, security rules",status:"todo",cat:"foundation",day:"Sat",owner:"Jarvis"},
+  {id:2,title:"Firebase Auth Setup",desc:"Ryan + Ally accounts, role-based access (partner vs agent-lead)",status:"todo",cat:"foundation",day:"Sat",owner:"Jarvis"},
+  {id:3,title:"Database Schema",desc:"All 9+ collections: contacts, transactions, documents, emails, tasks, notes, vendors, showings, financials",status:"todo",cat:"foundation",day:"Sat",owner:"Jarvis"},
+  {id:4,title:"Core UI Shell",desc:"Apple × RH aesthetic — nav, sidebar, routing, responsive layout",status:"todo",cat:"foundation",day:"Sat",owner:"Jarvis"},
+  {id:5,title:"Branding & Design System",desc:"Cream/copper/serif theme, component library, animations",status:"todo",cat:"foundation",day:"Sat",owner:"Jarvis"},
+
+  // Pipeline
+  {id:6,title:"Listing Pipeline Board",desc:"Pre-List → Listed → UC → DD → Pending → Closed — drag & drop",status:"todo",cat:"pipeline",day:"Sat",owner:"Jarvis"},
+  {id:7,title:"Buyer Pipeline Board",desc:"Leads → Hot → Contingent → Active → UC → Closed — drag & drop",status:"todo",cat:"pipeline",day:"Sat",owner:"Jarvis"},
+  {id:8,title:"Transaction Detail Page",desc:"6 tabs: overview, docs, emails, tasks, notes, timeline",status:"todo",cat:"pipeline",day:"Sun",owner:"Jarvis"},
+  {id:9,title:"Listing Appointment Tracker",desc:"Listing apts section with auto to-do for Ally to prepare",status:"todo",cat:"pipeline",day:"Sun",owner:"Jarvis"},
+
+  // Documents
+  {id:10,title:"Document Checklist Engine",desc:"Auto-generate listing + buyer checklists per transaction",status:"todo",cat:"docs",day:"Sun",owner:"Jarvis"},
+  {id:11,title:"PDF Upload System",desc:"Upload, store, and track actual PDF documents per deal",status:"todo",cat:"docs",day:"Sun",owner:"Jarvis"},
+  {id:12,title:"Dropbox Sign Integration",desc:"E-signature flow: create, send, track, webhook for status",status:"todo",cat:"docs",day:"Thu",owner:"Jarvis"},
+  {id:13,title:"Form Templates (Dropbox Sign)",desc:"Pre-built templates for listing agreement, buyer agency, WWREA, Form 2-T, etc.",status:"blocked",cat:"docs",day:"Thu",owner:"Jarvis",blocker:"Waiting on blank forms from Ally"},
+  {id:14,title:"Form Field Mapping",desc:"Map every field/box on each NC form for auto-fill",status:"blocked",cat:"docs",day:"Thu",owner:"Jarvis + Ally",blocker:"Waiting on blank forms from Ally"},
+  {id:15,title:"3-Year Document Retention",desc:"Auto-archive closed deals, retention policy enforcement",status:"todo",cat:"docs",day:"Fri",owner:"Jarvis"},
+
+  // CRM
+  {id:16,title:"Contact Management",desc:"Full CRM: add/edit contacts, search, filter, tags",status:"todo",cat:"crm",day:"Sun",owner:"Jarvis"},
+  {id:17,title:"Lead Source Tracking",desc:"Instagram, referral, open house, sphere — tracked per contact",status:"todo",cat:"crm",day:"Sun",owner:"Jarvis"},
+  {id:18,title:"FUB Contact Migration",desc:"Export all contacts from FUB API, import into new CRM",status:"todo",cat:"crm",day:"Sun",owner:"Jarvis"},
+  {id:19,title:"Buyer Showing History",desc:"Track every property shown per buyer client",status:"todo",cat:"crm",day:"Mon",owner:"Jarvis"},
+  {id:20,title:"Past Client Pipeline",desc:"Post-closing category with drip/nurture automation",status:"todo",cat:"crm",day:"Wed",owner:"Jarvis"},
+  {id:21,title:"Post-Closing Drip Sequence",desc:"1wk, 30d, 6mo, 1yr anniversary + Starbucks + referral ask, annual",status:"todo",cat:"crm",day:"Wed",owner:"Jarvis"},
+
+  // Financial
+  {id:22,title:"Per-Deal Expense Tracking",desc:"12+ categories: photo, video, staging, ads, gifts, etc. + custom",status:"todo",cat:"financial",day:"Mon",owner:"Jarvis"},
+  {id:23,title:"Commission Tracker",desc:"GCI per deal, no splits (Ryan owns company), referral fees",status:"todo",cat:"financial",day:"Mon",owner:"Jarvis"},
+  {id:24,title:"P&L Dashboard",desc:"Revenue minus expenses = net profit. Per deal, month, quarter, year",status:"todo",cat:"financial",day:"Mon",owner:"Jarvis"},
+  {id:25,title:"Referral Fee Tracking",desc:"Track incoming/outgoing referral fees, dates, status",status:"todo",cat:"financial",day:"Mon",owner:"Jarvis"},
+
+  // Communications
+  {id:26,title:"Per-Transaction Email Inbox",desc:"Thread transaction emails inside each deal — no more Gmail digging",status:"todo",cat:"comms",day:"Tue",owner:"Jarvis"},
+  {id:27,title:"Monday Seller Recap Email",desc:"Weekly: showings, market data, home progress, action items",status:"todo",cat:"comms",day:"Wed",owner:"Jarvis"},
+  {id:28,title:"M/W/F Client Update Emails",desc:"Automated updates during listing + UC periods, Ryan's casual voice",status:"blocked",cat:"comms",day:"Wed",owner:"Jarvis",blocker:"Waiting on Ally's email flow examples"},
+  {id:29,title:"Deadline Alert System",desc:"7/3/1 day reminders for DD, closing, inspections, appraisals",status:"todo",cat:"comms",day:"Wed",owner:"Jarvis"},
+  {id:30,title:"Client Text Notifications",desc:"Key milestone texts: inspection scheduled, DD ending, closing soon",status:"todo",cat:"comms",day:"Wed",owner:"Jarvis"},
+  {id:31,title:"Smart Nudges",desc:"Auto follow-up if docs not returned in 48 hours",status:"todo",cat:"comms",day:"Wed",owner:"Jarvis"},
+  {id:32,title:"Morning Briefing (Ryan + Ally)",desc:"Daily email: all active deals, today's tasks, upcoming deadlines",status:"todo",cat:"comms",day:"Wed",owner:"Jarvis"},
+  {id:33,title:"Notification System",desc:"Ryan: Email + Telegram. Ally: Email + text for important tasks",status:"todo",cat:"comms",day:"Tue",owner:"Jarvis"},
+
+  // Showings
+  {id:34,title:"Showing Dashboard",desc:"Per-listing showing view: date, agent, buyer, feedback, interest",status:"todo",cat:"showings",day:"Tue",owner:"Jarvis"},
+  {id:35,title:"ShowingTime Gmail Scraper",desc:"Parse ShowingTime emails for bookings + feedback automatically",status:"blocked",cat:"showings",day:"Tue",owner:"Jarvis",blocker:"Waiting on ShowingTime email sample from Ryan"},
+  {id:36,title:"Open House Sign-In System",desc:"Digital sign-in: name, email, phone, agent status. Branded RRA.",status:"todo",cat:"showings",day:"Thu",owner:"Jarvis"},
+
+  // Client Portal
+  {id:37,title:"Client Portal Auth",desc:"Separate client login, limited view permissions",status:"todo",cat:"portal",day:"Wed",owner:"Jarvis"},
+  {id:38,title:"Client Transaction View",desc:"Status, progress, docs, showing activity — client-facing",status:"todo",cat:"portal",day:"Wed",owner:"Jarvis"},
+  {id:39,title:"Client Showing Feedback View",desc:"Sellers see showing activity + agent feedback on their listing",status:"todo",cat:"portal",day:"Wed",owner:"Jarvis"},
+
+  // Integrations
+  {id:40,title:"IDX Broker Auto-Sync",desc:"30-min sync: auto-pull listing status changes, update pipeline",status:"todo",cat:"integration",day:"Tue",owner:"Jarvis"},
+  {id:41,title:"Google Calendar Sync",desc:"Deadlines, showings, appointments → auto-create calendar events",status:"todo",cat:"integration",day:"Mon",owner:"Jarvis"},
+  {id:42,title:"Plaud Meeting Notes",desc:"Transcribe recordings → extract client details → auto-populate CRM",status:"todo",cat:"integration",day:"Thu",owner:"Jarvis"},
+  {id:43,title:"Vendor Directory",desc:"Categories, contacts, ratings, assignable to transactions",status:"todo",cat:"integration",day:"Mon",owner:"Jarvis"},
+
+  // Polish
+  {id:44,title:"Mobile Optimization",desc:"Full responsive design, touch-friendly on phone + tablet",status:"todo",cat:"foundation",day:"Fri",owner:"Jarvis"},
+  {id:45,title:"Manager Dashboard View",desc:"Brokerage-ready: see all agents' pipelines, deals, performance",status:"todo",cat:"foundation",day:"Fri",owner:"Jarvis"},
+  {id:46,title:"Testing & Bug Fixes",desc:"End-to-end testing, edge cases, polish",status:"todo",cat:"foundation",day:"Fri",owner:"Jarvis"},
+];
+
+let currentFilter = 'all';
+
+function renderBoard() {
+  const cols = {todo:[],progress:[],blocked:[],done:[]};
+  const filtered = currentFilter === 'all' ? tasks : tasks.filter(t => t.cat === currentFilter);
+
+  filtered.forEach(t => cols[t.status].push(t));
+
+  ['todo','progress','blocked','done'].forEach(status => {
+    const container = document.getElementById('tasks-' + status);
+    container.innerHTML = '';
+    document.getElementById('num-' + status).textContent = cols[status].length;
+    cols[status].forEach(t => {
+      let tags = `<span class="tag tag-day">${t.day}</span>`;
+      tags += `<span class="tag tag-owner">${t.owner}</span>`;
+      if (t.blocker) tags += `<span class="tag tag-blocker">⚠ Blocked</span>`;
+      container.innerHTML += `
+        <div class="task-card" data-cat="${t.cat}">
+          <h4>${t.title}</h4>
+          <p>${t.desc}</p>
+          <div class="task-meta">${tags}</div>
+        </div>`;
+    });
+  });
+
+  // Update counts
+  const catCounts = {};
+  tasks.forEach(t => { catCounts[t.cat] = (catCounts[t.cat]||0)+1; });
+  document.getElementById('count-all').textContent = tasks.length;
+  Object.keys(catCounts).forEach(c => {
+    const el = document.getElementById('count-' + c);
+    if (el) el.textContent = catCounts[c];
+  });
+
+  // Overall progress
+  const done = tasks.filter(t => t.status === 'done').length;
+  const total = tasks.length;
+  const pct = total ? Math.round((done/total)*100) : 0;
+  document.getElementById('overallPct').textContent = pct + '%';
+  document.getElementById('overallBar').style.width = pct + '%';
+  document.getElementById('overallLabel').textContent = `${done} of ${total} tasks complete`;
+}
+
+function filterTasks(cat) {
+  currentFilter = cat;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.closest('.tab').classList.add('active');
+  renderBoard();
+}
+
+renderBoard();
+</script>
+</body>
+</html>
