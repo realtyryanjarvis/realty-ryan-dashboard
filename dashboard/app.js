@@ -52,6 +52,17 @@ const BUYER_STAGES = [
 ];
 
 const CONTACT_TYPES = ['buyer','seller','both','vendor','agent','other'];
+const CONTACT_CATEGORIES = ['client','agent','vendor'];
+const CONTACT_PIPELINE_STAGES = [
+  {id:'lead',label:'Lead',color:'#9a9590'},
+  {id:'hot-lead',label:'Hot Lead',color:'#a0342e'},
+  {id:'active-buyer',label:'Active Buyer',color:'#3a6ea5'},
+  {id:'active-seller',label:'Active Seller',color:'#b8860b'},
+  {id:'under-contract',label:'Under Contract',color:'#6b4c9a'},
+  {id:'closed',label:'Closed',color:'#2d6a4f'},
+  {id:'archived',label:'Archived',color:'#9a9590'}
+];
+const CONTACT_NOTE_TYPES = ['note','call','email','meeting','showing'];
 const CONTACT_STATUSES = ['lead','active','under-contract','closed','archived','lost'];
 const CONTACT_SOURCES = ['zillow','realtor','referral','sphere','sign-call','open-house','fub-import','manual'];
 const EXPENSE_CATS = [
@@ -111,6 +122,14 @@ let vendorCache = {};
 let taskCache = {};
 let apptCache = {};
 let calEventCache = {};
+let contactNotesCache = {};
+
+// ── Contact CRM state ──
+let crmTypeFilter = '';
+let crmPipelineFilter = '';
+let crmCategoryFilter = '';
+let crmSelectedContactId = null;
+let crmNoteType = 'note';
 
 // ── Calendar state ──
 let calYear = new Date().getFullYear();
@@ -326,8 +345,18 @@ function showApp() {
   setDashboardDate();
   initFirebaseListeners();
   initNotifications();
-  // Default view based on role
-  if (currentUser.role === 'partner') navigateTo('tasks');
+  // Deep linking: check URL hash first, then default view based on role
+  const initialView = getInitialView();
+  if (initialView) {
+    navigateTo(initialView);
+    // Handle contacts/id deep link
+    const hash = window.location.hash.replace('#', '');
+    if (hash.startsWith('contacts/')) {
+      const cid = hash.split('/')[1];
+      if (cid) setTimeout(() => openContactDetail(cid), 500);
+    }
+  }
+  else if (currentUser.role === 'partner') navigateTo('tasks');
   else navigateTo('dashboard');
 }
 
@@ -349,24 +378,65 @@ function setupNav() {
   document.getElementById('sidebar-close').addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
 }
 
-function navigateTo(view) {
+let currentView = null;
+
+function navigateTo(view, pushState) {
+  if (pushState !== false) {
+    const hash = '#' + view;
+    if (window.location.hash !== hash) {
+      window.history.pushState({ view }, '', hash);
+    }
+  }
+  currentView = view;
   document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === view));
   document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display = 'none'; });
   const el = document.getElementById(`view-${view}`);
   if (el) { el.style.display = 'block'; requestAnimationFrame(() => el.classList.add('active')); }
   // Trigger view render
   if (view === 'dashboard') renderDashboard();
-  if (view === 'contacts') renderContacts();
+  if (view === 'contacts') { closeContactDetailSilent(); renderContacts(); }
   if (view === 'tasks') renderTasks();
   if (view === 'financials') renderFinancials();
   if (view === 'showings') renderShowings();
-  if (view === 'vendors') renderVendors();
+  if (view === 'vendors') { crmCategoryFilter = 'vendor'; crmTypeFilter = ''; navigateTo('contacts'); return; }
   if (view === 'appointments') renderAppointments();
   if (view === 'calendar') renderCalendar();
   if (view === 'activity') renderActivity();
   if (view === 'reports') renderReports();
   if (view === 'admin') renderAdminUsers();
   if (view === 'profile') renderMyProfile();
+}
+
+// Browser back/forward support
+window.addEventListener('popstate', e => {
+  if (e.state && e.state.view) {
+    navigateTo(e.state.view, false);
+    // Handle contact detail back
+    if (e.state.view === 'contacts' && !e.state.contactId) {
+      closeContactDetail();
+    } else if (e.state.view === 'contacts' && e.state.contactId) {
+      openContactDetail(e.state.contactId);
+    }
+  } else {
+    const hash = window.location.hash.replace('#', '');
+    const validViews = ['dashboard','listings','buyers','contacts','appointments','calendar','activity','reports','tasks','financials','showings','vendors','settings','admin','profile'];
+    // Handle contacts/id deep link
+    if (hash.startsWith('contacts/')) {
+      navigateTo('contacts', false);
+      const cid = hash.split('/')[1];
+      if (cid) setTimeout(() => openContactDetail(cid), 100);
+    } else if (hash && validViews.includes(hash)) {
+      navigateTo(hash, false);
+    }
+  }
+});
+
+function getInitialView() {
+  const hash = window.location.hash.replace('#', '');
+  const validViews = ['dashboard','listings','buyers','contacts','appointments','calendar','activity','reports','tasks','financials','showings','vendors','settings','admin','profile'];
+  if (hash.startsWith('contacts/')) return 'contacts';
+  if (hash && validViews.includes(hash)) return hash;
+  return null;
 }
 
 function setupGlobalSearch() {
@@ -418,6 +488,13 @@ function initFirebaseListeners() {
   db.ref('calendarEvents').on('value', snap => {
     calEventCache = snap.val() || {};
     if (document.getElementById('view-calendar').classList.contains('active')) renderCalendar();
+  });
+  db.ref('contactNotes').on('value', snap => {
+    contactNotesCache = snap.val() || {};
+    // Re-render contact detail if open
+    if (crmSelectedContactId && !document.getElementById('contact-detail-view').classList.contains('hidden')) {
+      renderContactDetailContent(crmSelectedContactId);
+    }
   });
 }
 
@@ -1129,24 +1206,68 @@ function showNewTxnForm(type) {
 }
 
 // ══════════════════════════════════════
-// CONTACTS (CRM)
+// CONTACTS (Full CRM)
 // ══════════════════════════════════════
-function renderContacts() {
-  const tbody = document.getElementById('contacts-tbody');
-  const empty = document.getElementById('contacts-empty');
-  const search = (document.getElementById('contacts-search').value || '').toLowerCase();
-  const typeFilter = document.getElementById('contacts-type-filter').value;
-  const statusFilter = document.getElementById('contacts-status-filter').value;
 
-  let entries = Object.entries(contactCache);
-  if (search) entries = entries.filter(([, c]) => `${c.firstName} ${c.lastName} ${c.email} ${c.phone}`.toLowerCase().includes(search));
-  if (typeFilter) entries = entries.filter(([, c]) => c.type === typeFilter);
-  if (statusFilter) entries = entries.filter(([, c]) => c.status === statusFilter);
+function getContactCategory(c) {
+  if (!c) return 'client';
+  if (c.category) return c.category;
+  if (c.type === 'vendor') return 'vendor';
+  if (c.type === 'agent') return 'agent';
+  return 'client';
+}
+
+function getContactInitials(c) {
+  return ((c.firstName || '')[0] || '') + ((c.lastName || '')[0] || '');
+}
+
+function renderContacts() {
+  const search = (document.getElementById('contacts-search').value || '').toLowerCase();
+  const empty = document.getElementById('contacts-empty');
+
+  // Merge vendors into the unified view
+  let entries = Object.entries(contactCache).map(([id, c]) => [id, { ...c, _src: 'contact' }]);
+  // Add vendors from vendorCache as type=vendor
+  Object.entries(vendorCache).forEach(([id, v]) => {
+    entries.push(['vendor-' + id, {
+      firstName: v.name ? v.name.split(' ')[0] : v.name,
+      lastName: v.name ? v.name.split(' ').slice(1).join(' ') : '',
+      email: v.email || '', phone: v.phone || '',
+      type: 'vendor', category: 'vendor',
+      company: v.company || '', vendorCategory: v.category || '',
+      rating: v.rating || 0, specialty: v.specialty || '',
+      notes: v.notes || '', status: 'active',
+      _src: 'vendor', _vendorId: id
+    }]);
+  });
+
+  // Category filter
+  if (crmCategoryFilter) {
+    entries = entries.filter(([, c]) => getContactCategory(c) === crmCategoryFilter);
+  }
+
+  // Type filter
+  if (crmTypeFilter) {
+    entries = entries.filter(([, c]) => c.type === crmTypeFilter);
+  }
+
+  // Pipeline filter
+  if (crmPipelineFilter) {
+    entries = entries.filter(([, c]) => (c.pipelineStage || c.status || 'lead') === crmPipelineFilter);
+  }
+
+  // Search
+  if (search) {
+    entries = entries.filter(([, c]) =>
+      `${c.firstName} ${c.lastName} ${c.email} ${c.phone} ${c.company || ''} ${c.brokerage || ''}`.toLowerCase().includes(search)
+    );
+  }
 
   entries.sort((a, b) => `${a[1].firstName} ${a[1].lastName}`.localeCompare(`${b[1].firstName} ${b[1].lastName}`));
 
   if (entries.length === 0) {
-    tbody.innerHTML = '';
+    document.getElementById('contacts-tbody').innerHTML = '';
+    document.getElementById('contacts-card-list').innerHTML = '';
     empty.classList.remove('hidden');
     document.querySelector('#contacts-table').classList.add('hidden');
     return;
@@ -1154,37 +1275,111 @@ function renderContacts() {
   empty.classList.add('hidden');
   document.querySelector('#contacts-table').classList.remove('hidden');
 
-  tbody.innerHTML = entries.map(([id, c]) => `
-    <tr class="clickable-row" onclick="openContactDetail('${id}')">
-      <td><strong>${c.firstName} ${c.lastName}</strong></td>
-      <td><span class="tag tag-${c.type}">${c.type || '—'}</span></td>
-      <td><span class="status-dot status-${c.status}"></span> ${c.status || '—'}</td>
-      <td>${c.phone || '—'}</td>
-      <td>${c.email || '—'}</td>
-      <td>${c.source || '—'}</td>
-      <td>${isRyan() ? `<button class="btn-xs btn-danger" onclick="event.stopPropagation();deleteContact('${id}')">×</button>` : ''}</td>
-    </tr>
-  `).join('');
+  // Desktop table
+  const tbody = document.getElementById('contacts-tbody');
+  tbody.innerHTML = entries.map(([id, c]) => {
+    const cat = getContactCategory(c);
+    const stage = c.pipelineStage || c.status || '';
+    const stageLabel = CONTACT_PIPELINE_STAGES.find(s => s.id === stage)?.label || stage || '—';
+    const thirdCol = cat === 'agent' ? (c.brokerage || '—') : cat === 'vendor' ? (c.vendorCategory || c.company || '—') : stageLabel;
+    return `
+      <tr class="clickable-row" onclick="openContactDetail('${id}')">
+        <td><strong>${c.firstName} ${c.lastName}</strong>${c.company ? `<br><small class="text-muted">${c.company}</small>` : ''}</td>
+        <td><span class="tag tag-${c.type}">${c.type || '—'}</span></td>
+        <td>${cat === 'client' ? `<span class="crm-tag stage-${stage}">${thirdCol}</span>` : thirdCol}</td>
+        <td>${c.phone || '—'}</td>
+        <td>${c.email || '—'}</td>
+        <td>${c.source || '—'}</td>
+        <td>${isRyan() ? `<button class="btn-xs btn-danger" onclick="event.stopPropagation();deleteContact('${id}')">×</button>` : ''}</td>
+      </tr>
+    `;
+  }).join('');
+
+  // Mobile cards
+  const cardList = document.getElementById('contacts-card-list');
+  cardList.innerHTML = entries.map(([id, c]) => {
+    const cat = getContactCategory(c);
+    const initials = getContactInitials(c).toUpperCase();
+    const stage = c.pipelineStage || c.status || '';
+    const sub = cat === 'agent' ? (c.brokerage || c.email || '') : cat === 'vendor' ? (c.vendorCategory || c.company || '') : (c.email || c.phone || '');
+    return `
+      <div class="crm-contact-card" onclick="openContactDetail('${id}')">
+        <div class="crm-card-avatar type-${cat === 'vendor' ? 'vendor' : cat === 'agent' ? 'agent' : ''}">${initials}</div>
+        <div class="crm-card-body">
+          <div class="crm-card-name">${c.firstName} ${c.lastName}</div>
+          <div class="crm-card-sub">${sub}</div>
+          <div class="crm-card-tags">
+            <span class="crm-tag tag-${c.type}">${c.type || ''}</span>
+            ${cat === 'client' && stage ? `<span class="crm-tag stage-${stage}">${CONTACT_PIPELINE_STAGES.find(s=>s.id===stage)?.label || stage}</span>` : ''}
+          </div>
+        </div>
+        <div class="crm-card-actions">
+          ${c.phone ? `<a class="crm-action-btn" href="tel:${c.phone}" onclick="event.stopPropagation()">📞</a>` : ''}
+          ${c.email ? `<a class="crm-action-btn" href="mailto:${c.email}" onclick="event.stopPropagation()">✉️</a>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
-// Contact filters
+// Contact CRM filter handlers
 document.addEventListener('input', e => {
-  if (['contacts-search','contacts-type-filter','contacts-status-filter'].includes(e.target.id)) renderContacts();
-});
-document.addEventListener('change', e => {
-  if (['contacts-type-filter','contacts-status-filter'].includes(e.target.id)) renderContacts();
+  if (e.target.id === 'contacts-search') renderContacts();
 });
 
 document.addEventListener('click', e => {
+  // Category tabs (All | Clients | Agents | Vendors)
   if (e.target.id === 'btn-new-contact') showNewContactForm();
+
+  // Type chips
+  if (e.target.classList.contains('crm-chip')) {
+    const filterType = e.target.dataset.filterType;
+    if (filterType === 'type') {
+      document.querySelectorAll('#contacts-filters .crm-chip').forEach(c => c.classList.remove('active'));
+      e.target.classList.add('active');
+      const val = e.target.dataset.filter;
+      // Map to category or type
+      if (val === '' || val === undefined) { crmTypeFilter = ''; crmCategoryFilter = ''; }
+      else if (['buyer','seller','both'].includes(val)) { crmTypeFilter = val; crmCategoryFilter = ''; }
+      else if (val === 'vendor') { crmTypeFilter = ''; crmCategoryFilter = 'vendor'; }
+      else if (val === 'agent') { crmTypeFilter = ''; crmCategoryFilter = 'agent'; }
+      else { crmTypeFilter = val; crmCategoryFilter = ''; }
+      renderContacts();
+    }
+    if (filterType === 'pipeline') {
+      document.querySelectorAll('#contacts-stage-filters .crm-chip').forEach(c => c.classList.remove('active'));
+      e.target.classList.add('active');
+      crmPipelineFilter = e.target.dataset.filter;
+      renderContacts();
+    }
+  }
 });
 
 function showNewContactForm(prefill) {
   const p = prefill || {};
+  const cat = p.category || getContactCategory(p) || 'client';
+  const isVendor = cat === 'vendor';
+  const isAgent = cat === 'agent';
+
+  const pipelineOptions = CONTACT_PIPELINE_STAGES.map(s =>
+    `<option value="${s.id}" ${(p.pipelineStage || p.status || 'lead') === s.id ? 'selected' : ''}>${s.label}</option>`
+  ).join('');
+
+  const vendorCatOptions = VENDOR_CATS.map(c =>
+    `<option value="${c.id}" ${p.vendorCategory === c.id ? 'selected' : ''}>${c.label}</option>`
+  ).join('');
+
   openModal(`
     <button class="modal-close" onclick="closeModal()">×</button>
     <h2>${p.id ? 'Edit Contact' : 'New Contact'}</h2>
     <form id="contact-form" class="form-stack">
+      <div class="input-group"><label>Category</label>
+        <select id="ct-category" class="form-select">
+          <option value="client" ${cat==='client'?'selected':''}>Client</option>
+          <option value="agent" ${cat==='agent'?'selected':''}>Agent/Realtor</option>
+          <option value="vendor" ${cat==='vendor'?'selected':''}>Vendor</option>
+        </select>
+      </div>
       <div class="form-row">
         <div class="input-group"><label>First Name</label><input type="text" id="ct-first" value="${p.firstName||''}" required></div>
         <div class="input-group"><label>Last Name</label><input type="text" id="ct-last" value="${p.lastName||''}" required></div>
@@ -1193,53 +1388,131 @@ function showNewContactForm(prefill) {
         <div class="input-group"><label>Email</label><input type="email" id="ct-email" value="${p.email||''}"></div>
         <div class="input-group"><label>Phone</label><input type="tel" id="ct-phone" value="${p.phone||''}"></div>
       </div>
-      <div class="form-row">
-        <div class="input-group"><label>Type</label>
-          <select id="ct-type" class="form-select">${CONTACT_TYPES.map(t => `<option value="${t}" ${p.type===t?'selected':''}>${t}</option>`).join('')}</select>
+      <!-- Client fields -->
+      <div id="ct-client-fields" class="${cat!=='client'?'hidden':''}">
+        <div class="form-row">
+          <div class="input-group"><label>Type</label>
+            <select id="ct-type" class="form-select">${['buyer','seller','both'].map(t => `<option value="${t}" ${p.type===t?'selected':''}>${t}</option>`).join('')}</select>
+          </div>
+          <div class="input-group"><label>Pipeline Stage</label>
+            <select id="ct-pipeline" class="form-select">${pipelineOptions}</select>
+          </div>
+          <div class="input-group"><label>Source</label>
+            <select id="ct-source" class="form-select">${CONTACT_SOURCES.map(s => `<option value="${s}" ${p.source===s?'selected':''}>${s}</option>`).join('')}</select>
+          </div>
         </div>
-        <div class="input-group"><label>Status</label>
-          <select id="ct-status" class="form-select">${CONTACT_STATUSES.map(s => `<option value="${s}" ${(p.status||'lead')===s?'selected':''}>${s}</option>`).join('')}</select>
-        </div>
-        <div class="input-group"><label>Source</label>
-          <select id="ct-source" class="form-select">${CONTACT_SOURCES.map(s => `<option value="${s}" ${p.source===s?'selected':''}>${s}</option>`).join('')}</select>
+        <div class="input-group"><label>Address</label><input type="text" id="ct-address" value="${p.address||''}"></div>
+        <div class="form-row">
+          <div class="input-group"><label>Pre-approval Amount</label><input type="number" id="ct-preapproval" value="${p.preapprovalAmount||''}"></div>
+          <div class="input-group"><label>Price Min</label><input type="number" id="ct-pricemin" value="${p.priceMin||''}"></div>
+          <div class="input-group"><label>Price Max</label><input type="number" id="ct-pricemax" value="${p.priceMax||''}"></div>
         </div>
       </div>
-      <div class="input-group"><label>Address</label><input type="text" id="ct-address" value="${p.address||''}"></div>
+      <!-- Agent fields -->
+      <div id="ct-agent-fields" class="${cat!=='agent'?'hidden':''}">
+        <div class="form-row">
+          <div class="input-group"><label>Brokerage</label><input type="text" id="ct-brokerage" value="${p.brokerage||''}"></div>
+          <div class="input-group"><label>MLS ID</label><input type="text" id="ct-mlsid" value="${p.mlsId||''}"></div>
+        </div>
+        <div class="form-row">
+          <div class="input-group"><label>Office</label><input type="text" id="ct-office" value="${p.office||''}"></div>
+          <div class="input-group"><label>Areas Served</label><input type="text" id="ct-areas" value="${p.areasServed||''}"></div>
+        </div>
+        <div class="input-group"><label>Specialties</label><input type="text" id="ct-specialties" value="${p.specialties||''}"></div>
+      </div>
+      <!-- Vendor fields -->
+      <div id="ct-vendor-fields" class="${cat!=='vendor'?'hidden':''}">
+        <div class="form-row">
+          <div class="input-group"><label>Company</label><input type="text" id="ct-company" value="${p.company||''}"></div>
+          <div class="input-group"><label>Category</label>
+            <select id="ct-vendorcat" class="form-select">${vendorCatOptions}</select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group"><label>Specialty</label><input type="text" id="ct-specialty" value="${p.specialty||''}"></div>
+          <div class="input-group"><label>Rating (1-5)</label><input type="number" id="ct-rating" min="1" max="5" value="${p.rating||5}"></div>
+        </div>
+      </div>
       <div class="input-group"><label>Notes</label><textarea id="ct-notes" rows="3">${p.notes||''}</textarea></div>
-      <div class="form-row">
-        <div class="input-group"><label>Pre-approval Amount</label><input type="number" id="ct-preapproval" value="${p.preapprovalAmount||''}"></div>
-        <div class="input-group"><label>Price Min</label><input type="number" id="ct-pricemin" value="${p.priceMin||''}"></div>
-        <div class="input-group"><label>Price Max</label><input type="number" id="ct-pricemax" value="${p.priceMax||''}"></div>
-      </div>
       <button type="submit" class="btn-primary btn-full">${p.id ? 'Save Changes' : 'Create Contact'}</button>
     </form>
-  `);
+  `, 'modal-lg');
+
+  // Toggle category fields
+  document.getElementById('ct-category').addEventListener('change', e => {
+    document.getElementById('ct-client-fields').classList.toggle('hidden', e.target.value !== 'client');
+    document.getElementById('ct-agent-fields').classList.toggle('hidden', e.target.value !== 'agent');
+    document.getElementById('ct-vendor-fields').classList.toggle('hidden', e.target.value !== 'vendor');
+  });
+
   document.getElementById('contact-form').addEventListener('submit', e => {
     e.preventDefault();
+    const category = document.getElementById('ct-category').value;
     const data = {
       firstName: document.getElementById('ct-first').value.trim(),
       lastName: document.getElementById('ct-last').value.trim(),
       email: document.getElementById('ct-email').value.trim(),
       phone: document.getElementById('ct-phone').value.trim(),
-      type: document.getElementById('ct-type').value,
-      status: document.getElementById('ct-status').value,
-      source: document.getElementById('ct-source').value,
-      address: document.getElementById('ct-address').value.trim(),
+      category,
       notes: document.getElementById('ct-notes').value.trim(),
-      preapprovalAmount: parseFloat(document.getElementById('ct-preapproval').value) || 0,
-      priceMin: parseFloat(document.getElementById('ct-pricemin').value) || 0,
-      priceMax: parseFloat(document.getElementById('ct-pricemax').value) || 0,
       updatedAt: Date.now()
     };
+
+    if (category === 'client') {
+      data.type = document.getElementById('ct-type').value;
+      data.pipelineStage = document.getElementById('ct-pipeline').value;
+      data.status = document.getElementById('ct-pipeline').value;
+      data.source = document.getElementById('ct-source').value;
+      data.address = document.getElementById('ct-address').value.trim();
+      data.preapprovalAmount = parseFloat(document.getElementById('ct-preapproval').value) || 0;
+      data.priceMin = parseFloat(document.getElementById('ct-pricemin').value) || 0;
+      data.priceMax = parseFloat(document.getElementById('ct-pricemax').value) || 0;
+    } else if (category === 'agent') {
+      data.type = 'agent';
+      data.brokerage = document.getElementById('ct-brokerage').value.trim();
+      data.mlsId = document.getElementById('ct-mlsid').value.trim();
+      data.office = document.getElementById('ct-office').value.trim();
+      data.areasServed = document.getElementById('ct-areas').value.trim();
+      data.specialties = document.getElementById('ct-specialties').value.trim();
+    } else if (category === 'vendor') {
+      data.type = 'vendor';
+      data.company = document.getElementById('ct-company').value.trim();
+      data.vendorCategory = document.getElementById('ct-vendorcat').value;
+      data.specialty = document.getElementById('ct-specialty').value.trim();
+      data.rating = parseInt(document.getElementById('ct-rating').value) || 5;
+    }
+
     if (p.id) {
-      db.ref(`contacts/${p.id}`).update(data);
+      // Handle vendor source
+      if (p._src === 'vendor' && p._vendorId) {
+        db.ref(`vendors/${p._vendorId}`).update({
+          name: `${data.firstName} ${data.lastName}`.trim(),
+          email: data.email, phone: data.phone, company: data.company,
+          category: data.vendorCategory, specialty: data.specialty,
+          rating: data.rating, notes: data.notes
+        });
+      } else {
+        const cleanId = p.id.startsWith('vendor-') ? null : p.id;
+        if (cleanId) db.ref(`contacts/${cleanId}`).update(data);
+      }
       toast('Contact updated');
     } else {
       data.createdAt = Date.now();
       data.createdBy = currentUser.uid;
       data.assignedTo = 'ryan-001';
       data.tags = [];
-      data.portalEnabled = false;
+
+      if (category === 'vendor') {
+        // Save to vendors collection too
+        db.ref('vendors').push({
+          name: `${data.firstName} ${data.lastName}`.trim(),
+          email: data.email, phone: data.phone, company: data.company,
+          category: data.vendorCategory, specialty: data.specialty,
+          rating: data.rating, notes: data.notes, active: true,
+          createdAt: Date.now(), createdBy: currentUser.uid
+        });
+      }
+
       const newContactRef = db.ref('contacts').push(data);
       notifyContactAdded(newContactRef.key, `${data.firstName} ${data.lastName}`);
       toast('Contact created');
@@ -1248,18 +1521,340 @@ function showNewContactForm(prefill) {
   });
 }
 
+// ══════════════════════════════════════
+// CONTACT DETAIL (FUB-style)
+// ══════════════════════════════════════
 function openContactDetail(contactId) {
-  const c = contactCache[contactId];
-  if (!c) return;
-  // Find linked transactions
-  const linkedTxns = Object.entries(txnCache).filter(([,t]) => t.contactId === contactId || (t.contactIds && t.contactIds.includes(contactId)));
-  showNewContactForm({ ...c, id: contactId });
+  // Could be a merged vendor ID
+  let c, isVendorSource = false, realVendorId = null;
+  if (contactId.startsWith('vendor-')) {
+    realVendorId = contactId.replace('vendor-', '');
+    const v = vendorCache[realVendorId];
+    if (!v) return;
+    c = {
+      firstName: v.name ? v.name.split(' ')[0] : v.name,
+      lastName: v.name ? v.name.split(' ').slice(1).join(' ') : '',
+      email: v.email || '', phone: v.phone || '',
+      type: 'vendor', category: 'vendor',
+      company: v.company || '', vendorCategory: v.category || '',
+      rating: v.rating || 0, specialty: v.specialty || '',
+      notes: v.notes || '', status: 'active',
+      _src: 'vendor', _vendorId: realVendorId
+    };
+    isVendorSource = true;
+  } else {
+    c = contactCache[contactId];
+    if (!c) return;
+  }
+
+  crmSelectedContactId = contactId;
+
+  // Push history for back button
+  window.history.pushState({ view: 'contacts', contactId }, '', '#contacts/' + contactId);
+
+  // Show detail view, hide list
+  document.getElementById('contacts-list-view').classList.add('hidden');
+  document.getElementById('contact-detail-view').classList.remove('hidden');
+
+  // Wire up back button
+  document.getElementById('contact-detail-back').onclick = () => closeContactDetail();
+  document.getElementById('contact-edit-btn').onclick = () => showNewContactForm({ ...c, id: contactId });
+  document.getElementById('contact-note-btn').onclick = () => showQuickNoteForm(contactId);
+
+  renderContactDetailContent(contactId);
+}
+
+function renderContactDetailContent(contactId) {
+  let c;
+  if (contactId.startsWith('vendor-')) {
+    const v = vendorCache[contactId.replace('vendor-', '')];
+    if (!v) return;
+    c = { firstName: v.name?.split(' ')[0]||'', lastName: v.name?.split(' ').slice(1).join(' ')||'',
+      email: v.email||'', phone: v.phone||'', type:'vendor', category:'vendor',
+      company: v.company||'', vendorCategory: v.category||'', rating: v.rating||0,
+      specialty: v.specialty||'', notes: v.notes||'', status:'active', _src:'vendor' };
+  } else {
+    c = contactCache[contactId];
+    if (!c) return;
+  }
+
+  const cat = getContactCategory(c);
+  const initials = getContactInitials(c).toUpperCase();
+  const stage = c.pipelineStage || c.status || '';
+  const stageObj = CONTACT_PIPELINE_STAGES.find(s => s.id === stage);
+
+  // Linked deals
+  const linkedDeals = Object.entries(txnCache).filter(([,t]) =>
+    t.contactId === contactId || (t.contactIds && t.contactIds.includes(contactId))
+  );
+
+  // Notes
+  const notes = contactNotesCache[contactId] ? Object.entries(contactNotesCache[contactId]) : [];
+  // Also include legacy notes from contact itself
+  if (c.notes && typeof c.notes === 'string' && c.notes.trim()) {
+    notes.push(['legacy', { type: 'note', text: c.notes, createdAt: c.createdAt || 0, createdBy: 'system' }]);
+  }
+  notes.sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+  const noteIcons = { note: '📝', call: '📞', email: '✉️', meeting: '🤝', showing: '🏠', system: '⚙️' };
+
+  const content = document.getElementById('contact-detail-content');
+  content.innerHTML = `
+    <div class="crm-detail-header">
+      <div class="crm-detail-avatar type-${cat === 'vendor' ? 'vendor' : cat === 'agent' ? 'agent' : ''}">${initials}</div>
+      <div class="crm-detail-name-area">
+        <div class="crm-detail-name">${c.firstName} ${c.lastName}</div>
+        <div class="crm-detail-meta">
+          <span class="crm-tag tag-${c.type}">${c.type || ''}</span>
+          ${cat === 'client' && stageObj ? `<span class="crm-tag stage-${stage}">${stageObj.label}</span>` : ''}
+          ${c.company ? `<span style="font-size:0.78rem;color:var(--muted)">${c.company}</span>` : ''}
+          ${c.brokerage ? `<span style="font-size:0.78rem;color:var(--muted)">${c.brokerage}</span>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="crm-quick-actions">
+      ${c.phone ? `<a class="crm-quick-btn" href="tel:${c.phone}"><span class="quick-icon">📞</span><span class="quick-label">Call</span></a>` : ''}
+      ${c.email ? `<a class="crm-quick-btn" href="mailto:${c.email}"><span class="quick-icon">✉️</span><span class="quick-label">Email</span></a>` : ''}
+      ${c.phone ? `<a class="crm-quick-btn" href="sms:${c.phone}"><span class="quick-icon">💬</span><span class="quick-label">Text</span></a>` : ''}
+      <div class="crm-quick-btn" onclick="showQuickNoteForm('${contactId}')"><span class="quick-icon">📝</span><span class="quick-label">Note</span></div>
+    </div>
+
+    <div class="crm-detail-tabs" id="crm-detail-tabs">
+      <button class="crm-detail-tab active" data-tab="overview">Overview</button>
+      <button class="crm-detail-tab" data-tab="notes">Notes (${notes.length})</button>
+      ${cat === 'client' ? `<button class="crm-detail-tab" data-tab="deals">Deals (${linkedDeals.length})</button>` : ''}
+    </div>
+
+    <div class="crm-detail-tab-content" id="crm-detail-tab-content">
+      ${renderContactOverviewTab(c, cat, linkedDeals)}
+    </div>
+  `;
+
+  // Tab switching
+  content.querySelectorAll('.crm-detail-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      content.querySelectorAll('.crm-detail-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const t = tab.dataset.tab;
+      const tabContent = document.getElementById('crm-detail-tab-content');
+      if (t === 'overview') tabContent.innerHTML = renderContactOverviewTab(c, cat, linkedDeals);
+      else if (t === 'notes') tabContent.innerHTML = renderContactNotesTab(contactId, notes, noteIcons);
+      else if (t === 'deals') tabContent.innerHTML = renderContactDealsTab(linkedDeals);
+      setupNoteFormHandlers(contactId);
+    });
+  });
+}
+
+function renderContactOverviewTab(c, cat, linkedDeals) {
+  let html = '<div class="crm-info-grid">';
+
+  if (c.phone) html += `<div class="crm-info-row"><span class="crm-info-label">Phone</span><span class="crm-info-value"><a href="tel:${c.phone}" style="color:var(--accent)">${c.phone}</a></span></div>`;
+  if (c.email) html += `<div class="crm-info-row"><span class="crm-info-label">Email</span><span class="crm-info-value"><a href="mailto:${c.email}" style="color:var(--accent)">${c.email}</a></span></div>`;
+
+  if (cat === 'client') {
+    if (c.address) html += `<div class="crm-info-row"><span class="crm-info-label">Address</span><span class="crm-info-value">${c.address}</span></div>`;
+    if (c.source) html += `<div class="crm-info-row"><span class="crm-info-label">Source</span><span class="crm-info-value">${c.source}</span></div>`;
+    if (c.preapprovalAmount) html += `<div class="crm-info-row"><span class="crm-info-label">Pre-Approval</span><span class="crm-info-value">${formatPrice(c.preapprovalAmount)}</span></div>`;
+    if (c.priceMin || c.priceMax) html += `<div class="crm-info-row"><span class="crm-info-label">Price Range</span><span class="crm-info-value">${formatPrice(c.priceMin)} – ${formatPrice(c.priceMax)}</span></div>`;
+  } else if (cat === 'agent') {
+    if (c.brokerage) html += `<div class="crm-info-row"><span class="crm-info-label">Brokerage</span><span class="crm-info-value">${c.brokerage}</span></div>`;
+    if (c.mlsId) html += `<div class="crm-info-row"><span class="crm-info-label">MLS ID</span><span class="crm-info-value">${c.mlsId}</span></div>`;
+    if (c.office) html += `<div class="crm-info-row"><span class="crm-info-label">Office</span><span class="crm-info-value">${c.office}</span></div>`;
+    if (c.areasServed) html += `<div class="crm-info-row"><span class="crm-info-label">Areas Served</span><span class="crm-info-value">${c.areasServed}</span></div>`;
+    if (c.specialties) html += `<div class="crm-info-row"><span class="crm-info-label">Specialties</span><span class="crm-info-value">${c.specialties}</span></div>`;
+  } else if (cat === 'vendor') {
+    if (c.company) html += `<div class="crm-info-row"><span class="crm-info-label">Company</span><span class="crm-info-value">${c.company}</span></div>`;
+    if (c.vendorCategory) {
+      const vc = VENDOR_CATS.find(v => v.id === c.vendorCategory);
+      html += `<div class="crm-info-row"><span class="crm-info-label">Category</span><span class="crm-info-value">${vc ? vc.label : c.vendorCategory}</span></div>`;
+    }
+    if (c.specialty) html += `<div class="crm-info-row"><span class="crm-info-label">Specialty</span><span class="crm-info-value">${c.specialty}</span></div>`;
+    if (c.rating) html += `<div class="crm-info-row"><span class="crm-info-label">Rating</span><span class="crm-info-value">${'⭐'.repeat(c.rating)}</span></div>`;
+  }
+
+  if (c.createdAt) html += `<div class="crm-info-row"><span class="crm-info-label">Added</span><span class="crm-info-value">${new Date(c.createdAt).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'})}</span></div>`;
+
+  html += '</div>';
+
+  // Show recent deals if client
+  if (cat === 'client' && linkedDeals.length > 0) {
+    html += '<h4 style="margin-top:20px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px">Linked Deals</h4>';
+    html += linkedDeals.slice(0, 3).map(([txnId, t]) => {
+      const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+      const stageObj = (t.type === 'listing' ? LISTING_STAGES : BUYER_STAGES).find(s => s.id === stage);
+      return `
+        <div class="crm-deal-card" onclick="openTransactionDetail('${txnId}')">
+          <span class="crm-deal-stage-dot" style="background:${stageObj?.color || '#9a9590'}"></span>
+          <div class="crm-deal-info">
+            <div class="crm-deal-addr">${t.property?.address || 'TBD'}</div>
+            <div class="crm-deal-meta">${stageObj?.label || stage} · ${t.type}</div>
+          </div>
+          <span class="crm-deal-price">${formatPrice(t.property?.price)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  return html;
+}
+
+function renderContactNotesTab(contactId, notes, noteIcons) {
+  let html = `
+    <div class="crm-add-note">
+      <div class="crm-note-type-picker">
+        ${CONTACT_NOTE_TYPES.map(t => `<button class="crm-note-type-btn${crmNoteType===t?' active':''}" data-note-type="${t}">${noteIcons[t] || '📝'} ${t}</button>`).join('')}
+      </div>
+      <textarea class="crm-note-textarea" id="crm-note-text" placeholder="Add a note..." rows="3"></textarea>
+      <div class="crm-note-submit">
+        <button class="btn-primary btn-sm" id="crm-note-save" data-contact-id="${contactId}">Save Note</button>
+      </div>
+    </div>
+  `;
+
+  if (notes.length === 0) {
+    html += '<p class="empty-msg">No notes yet. Add your first note above.</p>';
+  } else {
+    html += '<div class="crm-timeline">';
+    notes.forEach(([nid, n]) => {
+      const icon = noteIcons[n.type] || '📝';
+      const typeCls = `type-${n.type || 'note'}`;
+      html += `
+        <div class="crm-note-item">
+          <div class="crm-note-icon ${typeCls}">${icon}</div>
+          <div class="crm-note-body">
+            <div class="crm-note-header">
+              <span class="crm-note-type">${n.type || 'note'}</span>
+              <span class="crm-note-time">${n.createdAt ? timeAgo(n.createdAt) : ''}</span>
+            </div>
+            <div class="crm-note-text">${n.text || ''}</div>
+            <div class="crm-note-user">${n.createdByName || (n.createdBy === 'ryan-001' ? 'Ryan' : n.createdBy === 'ally-001' ? 'Ally' : n.createdBy || '')}</div>
+          </div>
+        </div>
+      `;
+    });
+    html += '</div>';
+  }
+
+  // Setup handlers after render
+  setTimeout(() => setupNoteFormHandlers(contactId), 0);
+  return html;
+}
+
+function renderContactDealsTab(linkedDeals) {
+  if (linkedDeals.length === 0) return '<p class="empty-msg">No linked deals. Deals are linked when you assign this contact to a transaction.</p>';
+
+  return linkedDeals.map(([txnId, t]) => {
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    const stageObj = (t.type === 'listing' ? LISTING_STAGES : BUYER_STAGES).find(s => s.id === stage);
+    const docs = t.documents ? Object.values(t.documents) : [];
+    const docsDone = docs.filter(d => ['signed','uploaded','verified'].includes(d.status)).length;
+    return `
+      <div class="crm-deal-card" onclick="openTransactionDetail('${txnId}')">
+        <span class="crm-deal-stage-dot" style="background:${stageObj?.color || '#9a9590'}"></span>
+        <div class="crm-deal-info">
+          <div class="crm-deal-addr">${t.property?.address || 'TBD'}</div>
+          <div class="crm-deal-meta">
+            ${stageObj?.label || stage} · ${t.type}
+            ${docs.length > 0 ? ` · 📋 ${docsDone}/${docs.length} docs` : ''}
+          </div>
+        </div>
+        <span class="crm-deal-price">${formatPrice(t.property?.price)}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function setupNoteFormHandlers(contactId) {
+  // Note type buttons
+  document.querySelectorAll('.crm-note-type-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.crm-note-type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      crmNoteType = btn.dataset.noteType;
+    });
+  });
+
+  // Save note
+  const saveBtn = document.getElementById('crm-note-save');
+  if (saveBtn) {
+    saveBtn.onclick = () => {
+      const text = document.getElementById('crm-note-text').value.trim();
+      if (!text) return;
+      addContactNote(contactId, crmNoteType, text);
+      document.getElementById('crm-note-text').value = '';
+    };
+  }
+}
+
+function addContactNote(contactId, type, text) {
+  const realId = contactId.startsWith('vendor-') ? contactId : contactId;
+  db.ref(`contactNotes/${realId}`).push({
+    type,
+    text,
+    createdAt: Date.now(),
+    createdBy: currentUser.uid,
+    createdByName: currentUser.name
+  });
+  toast('Note added');
+}
+
+function showQuickNoteForm(contactId) {
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Quick Note</h2>
+    <div class="crm-note-type-picker" style="margin-bottom:12px">
+      ${CONTACT_NOTE_TYPES.map(t => `<button class="crm-note-type-btn${t==='note'?' active':''}" data-note-type="${t}">${{note:'📝',call:'📞',email:'✉️',meeting:'🤝',showing:'🏠'}[t]||'📝'} ${t}</button>`).join('')}
+    </div>
+    <textarea id="quick-note-text" class="crm-note-textarea" rows="4" placeholder="What happened?"></textarea>
+    <button class="btn-primary btn-full" style="margin-top:12px" id="quick-note-save">Save Note</button>
+  `, 'modal-sm');
+
+  let quickNoteType = 'note';
+  document.querySelectorAll('.crm-note-type-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.crm-note-type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      quickNoteType = btn.dataset.noteType;
+    });
+  });
+
+  document.getElementById('quick-note-save').onclick = () => {
+    const text = document.getElementById('quick-note-text').value.trim();
+    if (!text) return;
+    addContactNote(contactId, quickNoteType, text);
+    closeModal();
+  };
+}
+
+function closeContactDetailSilent() {
+  crmSelectedContactId = null;
+  const listView = document.getElementById('contacts-list-view');
+  const detailView = document.getElementById('contact-detail-view');
+  if (listView) listView.classList.remove('hidden');
+  if (detailView) detailView.classList.add('hidden');
+}
+
+function closeContactDetail() {
+  crmSelectedContactId = null;
+  document.getElementById('contacts-list-view').classList.remove('hidden');
+  document.getElementById('contact-detail-view').classList.add('hidden');
+  // Go back in history if we pushed a contact detail state
+  if (window.location.hash.includes('/')) {
+    window.history.pushState({ view: 'contacts' }, '', '#contacts');
+  }
 }
 
 function deleteContact(id) {
   if (!isRyan()) return;
   if (!confirm('Delete this contact?')) return;
-  db.ref(`contacts/${id}`).remove();
+  if (id.startsWith('vendor-')) {
+    db.ref(`vendors/${id.replace('vendor-', '')}`).remove();
+  } else {
+    db.ref(`contacts/${id}`).remove();
+  }
   toast('Contact deleted');
 }
 
@@ -1850,50 +2445,50 @@ function buildCalendarEvents() {
   return events;
 }
 
+let calSelectedDate = null;
+
 function renderCalendar() {
-  // Auto-switch to list view on mobile for better readability
-  const mode = (window.innerWidth <= 480 && calViewMode === 'month') ? 'list' : calViewMode;
   const grid = document.getElementById('calendar-grid');
   const list = document.getElementById('calendar-list');
+  const detail = document.getElementById('calendar-day-detail');
 
-  // Update label
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('cal-month-label').textContent = `${months[calMonth]} ${calYear}`;
 
+  // Update toggle buttons
+  document.querySelectorAll('.apple-cal-toggle-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === calViewMode);
+  });
+
   const events = buildCalendarEvents();
 
-  if (mode === 'list') {
+  if (calViewMode === 'list') {
     grid.classList.add('hidden');
+    detail.classList.add('hidden');
     list.classList.remove('hidden');
     renderCalendarList(list, events);
-  } else if (mode === 'week') {
-    list.classList.add('hidden');
-    grid.classList.remove('hidden');
-    grid.classList.add('week-view');
-    renderCalendarWeek(grid, events);
   } else {
     list.classList.add('hidden');
     grid.classList.remove('hidden');
-    grid.classList.remove('week-view');
-    renderCalendarMonth(grid, events);
+    renderCalendarMonthApple(grid, events);
+    // Show detail if a date is selected
+    if (calSelectedDate) {
+      renderCalendarDayDetail(calSelectedDate, events);
+    } else {
+      detail.classList.add('hidden');
+    }
   }
 }
 
-function renderCalendarMonth(grid, events) {
+function renderCalendarMonthApple(grid, events) {
   const firstDay = new Date(calYear, calMonth, 1);
   const lastDay = new Date(calYear, calMonth + 1, 0);
   const startDow = firstDay.getDay();
   const daysInMonth = lastDay.getDate();
   const today = localDateStr();
-
-  // Previous month filler
   const prevMonthLast = new Date(calYear, calMonth, 0).getDate();
 
-  let html = '';
-  // Header row
-  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
-    html += `<div class="cal-header-cell">${d}</div>`;
-  });
+  const colorMap = { dd: '#a0342e', closing: '#2d6a4f', inspection: '#3a6ea5', appraisal: '#6b4c9a', appointment: '#b8860b', other: '#9a9590' };
 
   // Group events by date
   const eventsByDate = {};
@@ -1902,7 +2497,12 @@ function renderCalendarMonth(grid, events) {
     eventsByDate[e.date].push(e);
   });
 
-  // Calendar cells
+  let html = '<div class="acal-weekdays">';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+    html += `<div class="acal-weekday">${d}</div>`;
+  });
+  html += '</div><div class="acal-days">';
+
   let dayNum = 1;
   let nextMonthDay = 1;
   const totalCells = Math.ceil((startDow + daysInMonth) / 7) * 7;
@@ -1911,14 +2511,12 @@ function renderCalendarMonth(grid, events) {
     let dateStr, num, outside = false;
 
     if (i < startDow) {
-      // Previous month
       num = prevMonthLast - startDow + i + 1;
       const pm = calMonth === 0 ? 11 : calMonth - 1;
       const py = calMonth === 0 ? calYear - 1 : calYear;
       dateStr = `${py}-${String(pm + 1).padStart(2, '0')}-${String(num).padStart(2, '0')}`;
       outside = true;
     } else if (dayNum > daysInMonth) {
-      // Next month
       num = nextMonthDay++;
       const nm = calMonth === 11 ? 0 : calMonth + 1;
       const ny = calMonth === 11 ? calYear + 1 : calYear;
@@ -1930,60 +2528,80 @@ function renderCalendarMonth(grid, events) {
     }
 
     const isToday = dateStr === today;
+    const isSelected = dateStr === calSelectedDate;
     const dayEvents = eventsByDate[dateStr] || [];
-    const maxShow = 3;
 
-    html += `<div class="cal-day${outside ? ' outside' : ''}${isToday ? ' today' : ''}" data-date="${dateStr}">
-      <span class="cal-day-num">${num}</span>
-      ${dayEvents.slice(0, maxShow).map(e => `<span class="cal-event type-${e.type}" title="${e.title}${e.time ? ' @ ' + e.time : ''}" onclick="event.stopPropagation();${e.txnId ? `openTransactionDetail('${e.txnId}')` : ''}">${e.time ? e.time + ' ' : ''}${e.title.split('—')[0].trim()}</span>`).join('')}
-      ${dayEvents.length > maxShow ? `<span class="cal-more">+${dayEvents.length - maxShow} more</span>` : ''}
+    // Unique event type colors as dots (max 3)
+    const dotColors = [];
+    const seenColors = new Set();
+    dayEvents.forEach(e => {
+      const c = colorMap[e.type] || colorMap.other;
+      if (!seenColors.has(c) && dotColors.length < 3) { dotColors.push(c); seenColors.add(c); }
+    });
+
+    html += `<div class="acal-cell${outside ? ' outside' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" data-date="${dateStr}">
+      <span class="acal-num">${num}</span>
+      <div class="acal-dots">${dotColors.map(c => `<span class="acal-dot" style="background:${c}"></span>`).join('')}</div>
     </div>`;
   }
 
+  html += '</div>';
   grid.innerHTML = html;
 
-  // Click day to add event
-  grid.querySelectorAll('.cal-day').forEach(cell => {
+  // Click handlers
+  grid.querySelectorAll('.acal-cell').forEach(cell => {
     cell.addEventListener('click', () => {
       const date = cell.dataset.date;
-      showNewCalEventForm(date);
+      // Remove previous selection
+      grid.querySelectorAll('.acal-cell.selected').forEach(c => c.classList.remove('selected'));
+      cell.classList.add('selected');
+      calSelectedDate = date;
+      renderCalendarDayDetail(date, events);
     });
   });
 }
 
-function renderCalendarWeek(grid, events) {
-  // Show current week (Mon-Sun) of calYear/calMonth
-  const today = new Date();
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay());
+function renderCalendarDayDetail(dateStr, events) {
+  const detail = document.getElementById('calendar-day-detail');
+  const colorMap = { dd: '#a0342e', closing: '#2d6a4f', inspection: '#3a6ea5', appraisal: '#6b4c9a', appointment: '#b8860b', other: '#9a9590' };
+  const dayEvents = events.filter(e => e.date === dateStr);
+  const d = new Date(dateStr + 'T12:00:00');
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dateLabel = `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
 
-  const eventsByDate = {};
-  events.forEach(e => {
-    if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
-    eventsByDate[e.date].push(e);
-  });
+  let html = `
+    <div class="acal-detail-header">
+      <span class="acal-detail-date">${dateLabel}</span>
+      <button class="acal-detail-close" onclick="calSelectedDate=null;document.getElementById('calendar-day-detail').classList.add('hidden');document.querySelectorAll('.acal-cell.selected').forEach(c=>c.classList.remove('selected'))">×</button>
+    </div>
+    <div class="acal-detail-list">
+  `;
 
-  let html = '';
-  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
-    html += `<div class="cal-header-cell">${d}</div>`;
-  });
-
-  const todayStr = localDateStr(today);
-
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(startOfWeek);
-    d.setDate(startOfWeek.getDate() + i);
-    const dateStr = localDateStr(d);
-    const isToday = dateStr === todayStr;
-    const dayEvents = eventsByDate[dateStr] || [];
-
-    html += `<div class="cal-day${isToday ? ' today' : ''}" data-date="${dateStr}">
-      <span class="cal-day-num">${d.getDate()}</span>
-      ${dayEvents.map(e => `<span class="cal-event type-${e.type}" title="${e.title}" onclick="event.stopPropagation();${e.txnId ? `openTransactionDetail('${e.txnId}')` : ''}">${e.time ? e.time + ' ' : ''}${e.title}</span>`).join('')}
-    </div>`;
+  if (dayEvents.length === 0) {
+    html += '<div class="acal-detail-empty">No events</div>';
+  } else {
+    dayEvents.forEach(e => {
+      const color = colorMap[e.type] || colorMap.other;
+      const onclick = e.txnId ? `openTransactionDetail('${e.txnId}')` : '';
+      html += `
+        <div class="acal-detail-item" onclick="${onclick}">
+          <span class="acal-detail-dot" style="background:${color}"></span>
+          <div class="acal-detail-info">
+            <div class="acal-detail-title">${e.title}</div>
+            <div class="acal-detail-meta">${e.time || 'All day'}${e.type ? ' · ' + e.type.replace('dd','DD Deadline') : ''}</div>
+          </div>
+        </div>
+      `;
+    });
   }
 
-  grid.innerHTML = html;
+  html += `</div>
+    <div class="acal-detail-add" onclick="showNewCalEventForm('${dateStr}')">+ Add Event</div>
+  `;
+
+  detail.innerHTML = html;
+  detail.classList.remove('hidden');
 }
 
 function renderCalendarList(container, events) {
@@ -2036,9 +2654,11 @@ document.addEventListener('click', e => {
   }
 });
 
-document.addEventListener('change', e => {
-  if (e.target.id === 'cal-view-mode') {
-    calViewMode = e.target.value;
+// Calendar view toggle (Apple-style buttons)
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('apple-cal-toggle-btn')) {
+    calViewMode = e.target.dataset.mode;
+    calSelectedDate = null;
     renderCalendar();
   }
 });

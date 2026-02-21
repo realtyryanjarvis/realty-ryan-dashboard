@@ -189,50 +189,68 @@
 
       <!-- CONTACTS -->
       <section id="view-contacts" class="view">
-        <div class="view-header">
-          <h2>Contacts</h2>
-          <div class="view-actions">
-            <button class="btn-primary btn-sm" id="btn-new-contact">+ New Contact</button>
+        <!-- Contact List View -->
+        <div id="contacts-list-view">
+          <div class="view-header">
+            <h2>Contacts</h2>
+            <div class="view-actions">
+              <button class="btn-primary btn-sm" id="btn-new-contact">+ New Contact</button>
+            </div>
+          </div>
+          <div class="crm-search-bar">
+            <input type="text" class="crm-search-input" id="contacts-search" placeholder="Search contacts...">
+          </div>
+          <div class="crm-filter-chips" id="contacts-filters">
+            <button class="crm-chip active" data-filter="" data-filter-type="type">All</button>
+            <button class="crm-chip" data-filter="buyer" data-filter-type="type">Buyers</button>
+            <button class="crm-chip" data-filter="seller" data-filter-type="type">Sellers</button>
+            <button class="crm-chip" data-filter="both" data-filter-type="type">Both</button>
+            <button class="crm-chip" data-filter="vendor" data-filter-type="type">Vendors</button>
+            <button class="crm-chip" data-filter="agent" data-filter-type="type">Agents</button>
+          </div>
+          <div class="crm-filter-chips crm-stage-chips" id="contacts-stage-filters">
+            <button class="crm-chip active" data-filter="" data-filter-type="pipeline">All Stages</button>
+            <button class="crm-chip" data-filter="lead" data-filter-type="pipeline">Lead</button>
+            <button class="crm-chip" data-filter="hot-lead" data-filter-type="pipeline">Hot Lead</button>
+            <button class="crm-chip" data-filter="active-buyer" data-filter-type="pipeline">Active Buyer</button>
+            <button class="crm-chip" data-filter="active-seller" data-filter-type="pipeline">Active Seller</button>
+            <button class="crm-chip" data-filter="under-contract" data-filter-type="pipeline">Under Contract</button>
+            <button class="crm-chip" data-filter="closed" data-filter-type="pipeline">Closed</button>
+            <button class="crm-chip" data-filter="archived" data-filter-type="pipeline">Archived</button>
+          </div>
+          <!-- Desktop table (hidden on mobile) -->
+          <div class="data-table-wrap crm-desktop-only">
+            <table class="data-table" id="contacts-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Stage</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Source</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="contacts-tbody"></tbody>
+            </table>
+          </div>
+          <!-- Mobile card list -->
+          <div class="crm-card-list crm-mobile-only" id="contacts-card-list"></div>
+          <div class="empty-state hidden" id="contacts-empty">
+            <p>No contacts yet. Add your first contact to get started.</p>
           </div>
         </div>
-        <div class="filter-bar" id="contacts-filters">
-          <input type="text" class="filter-search" id="contacts-search" placeholder="Search contacts...">
-          <select class="filter-select" id="contacts-type-filter">
-            <option value="">All Types</option>
-            <option value="buyer">Buyers</option>
-            <option value="seller">Sellers</option>
-            <option value="both">Both</option>
-            <option value="vendor">Vendors</option>
-            <option value="agent">Agents</option>
-            <option value="other">Other</option>
-          </select>
-          <select class="filter-select" id="contacts-status-filter">
-            <option value="">All Statuses</option>
-            <option value="lead">Lead</option>
-            <option value="active">Active</option>
-            <option value="under-contract">Under Contract</option>
-            <option value="closed">Closed</option>
-            <option value="archived">Archived</option>
-          </select>
-        </div>
-        <div class="data-table-wrap">
-          <table class="data-table" id="contacts-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Source</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="contacts-tbody"></tbody>
-          </table>
-        </div>
-        <div class="empty-state hidden" id="contacts-empty">
-          <p>No contacts yet. Add your first contact to get started.</p>
+        <!-- Contact Detail View (slides in on mobile) -->
+        <div id="contact-detail-view" class="crm-detail-view hidden">
+          <div class="crm-detail-topbar">
+            <button class="crm-back-btn" id="contact-detail-back">‹ Contacts</button>
+            <div class="crm-detail-actions">
+              <button class="btn-sm btn-outline" id="contact-edit-btn">Edit</button>
+              <button class="btn-sm btn-outline" id="contact-note-btn">+ Note</button>
+            </div>
+          </div>
+          <div id="contact-detail-content"></div>
         </div>
       </section>
 
@@ -247,30 +265,31 @@
 
       <!-- CALENDAR -->
       <section id="view-calendar" class="view">
-        <div class="view-header">
-          <h2>Calendar</h2>
-          <div class="view-actions">
-            <button class="btn-outline btn-sm" id="cal-prev">‹</button>
-            <span class="cal-month-label" id="cal-month-label"></span>
-            <button class="btn-outline btn-sm" id="cal-next">›</button>
+        <div class="apple-cal-header">
+          <div class="apple-cal-nav">
+            <button class="apple-cal-arrow" id="cal-prev">‹</button>
+            <h2 class="apple-cal-title" id="cal-month-label"></h2>
+            <button class="apple-cal-arrow" id="cal-next">›</button>
+          </div>
+          <div class="apple-cal-actions">
             <button class="btn-outline btn-sm" id="cal-today">Today</button>
-            <select class="filter-select" id="cal-view-mode">
-              <option value="month">Month</option>
-              <option value="week">Week</option>
-              <option value="list">List</option>
-            </select>
-            <button class="btn-primary btn-sm" id="btn-new-cal-event">+ Event</button>
+            <div class="apple-cal-toggle" id="cal-view-toggle">
+              <button class="apple-cal-toggle-btn active" data-mode="month">Month</button>
+              <button class="apple-cal-toggle-btn" data-mode="list">List</button>
+            </div>
+            <button class="btn-primary btn-sm" id="btn-new-cal-event">+</button>
           </div>
         </div>
-        <div class="cal-legend" id="cal-legend">
-          <span class="cal-leg-item"><span class="cal-dot" style="background:#a0342e"></span> DD Deadline</span>
+        <div class="apple-cal-legend" id="cal-legend">
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#a0342e"></span> DD</span>
           <span class="cal-leg-item"><span class="cal-dot" style="background:#2d6a4f"></span> Closing</span>
           <span class="cal-leg-item"><span class="cal-dot" style="background:#3a6ea5"></span> Inspection</span>
           <span class="cal-leg-item"><span class="cal-dot" style="background:#6b4c9a"></span> Appraisal</span>
-          <span class="cal-leg-item"><span class="cal-dot" style="background:#b8860b"></span> Appointment</span>
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#b8860b"></span> Appt</span>
           <span class="cal-leg-item"><span class="cal-dot" style="background:#9a9590"></span> Other</span>
         </div>
-        <div id="calendar-grid" class="calendar-grid"></div>
+        <div id="calendar-grid" class="apple-cal-grid"></div>
+        <div id="calendar-day-detail" class="apple-cal-day-detail hidden"></div>
         <div id="calendar-list" class="calendar-list hidden"></div>
       </section>
 
