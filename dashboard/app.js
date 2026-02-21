@@ -4221,3 +4221,138 @@ db.ref('users').once('value', snap => {
 window.db = db;
 window.txnCache = () => txnCache;
 window.contactCache = () => contactCache;
+
+// ══════════════════════════════════════
+// CLIENT PORTAL MANAGEMENT
+// ══════════════════════════════════════
+
+function hashEmail(email) { return email.toLowerCase().replace(/[.#$\[\]\/]/g, '_'); }
+
+// Admin tab switching for portal
+document.addEventListener('click', e => {
+  if (e.target.matches('[data-admin-tab]')) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    const tab = e.target.dataset.adminTab;
+    const usersPanel = document.getElementById('admin-panel-users');
+    const portalPanel = document.getElementById('admin-panel-portal');
+    const newUserBtn = document.getElementById('btn-new-user');
+    if (tab === 'users') {
+      if (usersPanel) usersPanel.classList.remove('hidden');
+      if (portalPanel) portalPanel.classList.add('hidden');
+      if (newUserBtn) newUserBtn.classList.remove('hidden');
+    } else if (tab === 'portal') {
+      if (usersPanel) usersPanel.classList.add('hidden');
+      if (portalPanel) portalPanel.classList.remove('hidden');
+      if (newUserBtn) newUserBtn.classList.add('hidden');
+      renderPortalUsers();
+    }
+  }
+});
+
+// Generate access code
+function generateAccessCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+// Portal access form
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'portal-access-form') return;
+  e.preventDefault();
+  const email = document.getElementById('pa-email').value.trim().toLowerCase();
+  const name = document.getElementById('pa-name').value.trim();
+  const contactId = document.getElementById('pa-contact-id').value.trim();
+  const dealIdsStr = document.getElementById('pa-deal-ids').value.trim();
+  const type = document.getElementById('pa-type').value;
+
+  const dealIds = {};
+  dealIdsStr.split(',').map(s => s.trim()).filter(Boolean).forEach(id => { dealIds[id] = true; });
+
+  const code = generateAccessCode();
+  const key = hashEmail(email);
+
+  await db.ref('portalUsers/' + key).set({
+    name,
+    email,
+    contactId,
+    dealIds,
+    type,
+    accessCode: code,
+    status: 'active',
+    createdAt: new Date().toISOString(),
+    createdBy: currentUser ? currentUser.name : 'admin'
+  });
+
+  // Show result
+  document.getElementById('pa-result-code').textContent = code;
+  const link = 'https://homes.realtyryan.com/portal/';
+  document.getElementById('pa-result-link').textContent = link;
+  document.getElementById('pa-result-link').href = link;
+  document.getElementById('portal-access-result').classList.remove('hidden');
+  document.getElementById('portal-access-result').dataset.email = email;
+  document.getElementById('portal-access-result').dataset.name = name;
+  document.getElementById('portal-access-result').dataset.code = code;
+
+  toast('Portal access created for ' + name);
+  renderPortalUsers();
+});
+
+window.copyPortalLink = function() {
+  const code = document.getElementById('pa-result-code').textContent;
+  const link = 'https://homes.realtyryan.com/portal/';
+  const text = `Your client portal is ready!\n\nLink: ${link}\nAccess Code: ${code}\n\nLog in with your email and the code above.`;
+  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard!'));
+};
+
+window.emailPortalAccess = function() {
+  const el = document.getElementById('portal-access-result');
+  const email = el.dataset.email;
+  const name = el.dataset.name;
+  const code = el.dataset.code;
+  const subject = encodeURIComponent('Your Realty Ryan Client Portal Access');
+  const body = encodeURIComponent(`Hi ${name},\n\nYour client portal is ready! You can view your transaction status, documents, and more at:\n\nhttps://homes.realtyryan.com/portal/\n\nYour Access Code: ${code}\n\nLog in with your email address and the access code above.\n\nRyan Palmer\nRealty Ryan & Associates\nCorcoran HM Properties\n508-954-2159`);
+  window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+};
+
+function renderPortalUsers() {
+  const tbody = document.getElementById('portal-users-tbody');
+  if (!tbody) return;
+  db.ref('portalUsers').once('value').then(snap => {
+    const users = snap.val() || {};
+    const entries = Object.entries(users);
+    if (!entries.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">No portal users yet.</td></tr>';
+      return;
+    }
+    entries.sort((a,b) => (a[1].name || '').localeCompare(b[1].name || ''));
+    tbody.innerHTML = entries.map(([key, u]) => {
+      const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Never';
+      return `<tr>
+        <td><strong>${u.name || '—'}</strong></td>
+        <td>${u.email || '—'}</td>
+        <td>${u.type || '—'}</td>
+        <td><code>${u.accessCode || '—'}</code></td>
+        <td>${lastLogin}</td>
+        <td>
+          <button class="btn-xs" onclick="regeneratePortalCode('${key}')">🔄 New Code</button>
+          ${u.status === 'active'
+            ? `<button class="btn-xs btn-danger-outline" onclick="togglePortalUser('${key}','disabled')">Disable</button>`
+            : `<button class="btn-xs btn-success-outline" onclick="togglePortalUser('${key}','active')">Enable</button>`}
+        </td>
+      </tr>`;
+    }).join('');
+  });
+}
+
+window.regeneratePortalCode = async function(key) {
+  const code = generateAccessCode();
+  await db.ref('portalUsers/' + key + '/accessCode').set(code);
+  toast('New access code: ' + code);
+  renderPortalUsers();
+};
+
+window.togglePortalUser = async function(key, status) {
+  await db.ref('portalUsers/' + key + '/status').set(status);
+  toast('Portal user ' + status);
+  renderPortalUsers();
+};

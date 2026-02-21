@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>My Portal — Realty Ryan & Associates</title>
+<meta name="theme-color" content="#7A3B14">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+:root{--brand:#7A3B14;--brand-light:#a05a2c;--brand-bg:#faf7f4;--bg:#fff;--text:#1a1a1a;--text-muted:#6b6b6b;--border:#e8e0d8;--success:#2d6a4f;--warning:#b8860b;--danger:#a0342e;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.06)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:'Work Sans',sans-serif;background:var(--brand-bg);color:var(--text);min-height:100dvh;line-height:1.5}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.2}
+h1{font-size:1.8rem}h2{font-size:1.4rem}h3{font-size:1.15rem}
+a{color:var(--brand);text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:1rem;border:1px solid var(--border);border-radius:8px;padding:10px 14px;outline:none;width:100%;transition:border .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--brand)}
+
+/* Login */
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:24px}
+.login-card{background:#fff;border-radius:var(--radius);padding:40px 32px;max-width:380px;width:100%;box-shadow:var(--shadow);text-align:center}
+.login-logo .logo-mark{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--brand);letter-spacing:2px;margin-bottom:4px}
+.login-logo h1{font-size:1.2rem;color:var(--text-muted);font-family:'Work Sans',sans-serif;font-weight:400;margin-bottom:24px}
+.login-card .input-group{text-align:left;margin-bottom:16px}
+.login-card label{display:block;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;color:var(--text-muted)}
+.login-error{color:var(--danger);font-size:.85rem;margin-bottom:12px;min-height:20px}
+.btn-primary{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-weight:600;font-size:.95rem;transition:background .2s;width:100%}
+.btn-primary:hover{background:var(--brand-light)}
+
+/* App shell */
+#app{display:none;min-height:100dvh;padding-bottom:80px}
+.top-bar{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar .logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.3rem;color:var(--brand)}
+.top-bar .user-info{font-size:.85rem;color:var(--text-muted)}
+.top-bar .btn-logout{font-size:.8rem;color:var(--brand);font-weight:600;margin-left:12px}
+
+/* Bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);display:flex;z-index:100;padding:6px 0 env(safe-area-inset-bottom,8px)}
+.bottom-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:.65rem;color:var(--text-muted);font-weight:500;transition:color .2s}
+.bottom-nav button.active{color:var(--brand)}
+.bottom-nav button .nav-icon{font-size:1.3rem}
+
+/* Content */
+.content{padding:20px;max-width:600px;margin:0 auto}
+.section{display:none}
+.section.active{display:block}
+
+/* Cards */
+.card{background:#fff;border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-header h3{color:var(--text)}
+
+/* Progress tracker */
+.progress-tracker{display:flex;gap:0;margin:20px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.progress-step{flex:1;text-align:center;position:relative;min-width:70px;padding:0 4px}
+.progress-step .step-dot{width:28px;height:28px;border-radius:50%;background:var(--border);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;position:relative;z-index:2;transition:all .3s}
+.progress-step.completed .step-dot{background:var(--success)}
+.progress-step.current .step-dot{background:var(--brand);box-shadow:0 0 0 4px rgba(122,59,20,.2)}
+.progress-step .step-label{font-size:.65rem;color:var(--text-muted);line-height:1.2}
+.progress-step.completed .step-label,.progress-step.current .step-label{color:var(--text);font-weight:600}
+.progress-line{position:absolute;top:14px;left:50%;right:-50%;height:3px;background:var(--border);z-index:1}
+.progress-step.completed .progress-line{background:var(--success)}
+.progress-step:last-child .progress-line{display:none}
+
+/* Key dates */
+.date-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.date-row:last-child{border:none}
+.date-label{font-size:.85rem;color:var(--text-muted)}
+.date-value{font-weight:600;font-size:.9rem}
+.date-countdown{font-size:.75rem;padding:3px 8px;border-radius:20px;font-weight:600}
+.countdown-urgent{background:#fde8e8;color:var(--danger)}
+.countdown-soon{background:#fef3cd;color:var(--warning)}
+.countdown-ok{background:#e8f5e9;color:var(--success)}
+
+/* Status message */
+.status-msg{background:var(--brand-bg);border-left:3px solid var(--brand);padding:14px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:.9rem;color:var(--text)}
+
+/* Documents */
+.doc-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.doc-item:last-child{border:none}
+.doc-name{font-weight:500;font-size:.9rem}
+.doc-status{font-size:.75rem;padding:3px 10px;border-radius:20px;font-weight:600}
+.doc-status.pending{background:#fef3cd;color:var(--warning)}
+.doc-status.signed{background:#e8f5e9;color:var(--success)}
+.doc-status.complete{background:#e8f5e9;color:var(--success)}
+.upload-zone{border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;color:var(--text-muted);cursor:pointer;transition:border-color .2s;margin-top:12px}
+.upload-zone:hover{border-color:var(--brand)}
+.upload-zone input{display:none}
+
+/* Listing cards */
+.listing-card{background:#fff;border-radius:var(--radius);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)}
+.listing-img{width:100%;height:180px;object-fit:cover;background:#eee}
+.listing-body{padding:16px}
+.listing-body h3{font-size:1.1rem;margin-bottom:4px}
+.listing-body .listing-details{font-size:.85rem;color:var(--text-muted);margin-bottom:8px}
+.listing-body .match-score{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--brand-bg);color:var(--brand)}
+.listing-actions{display:flex;gap:8px;margin-top:12px}
+.listing-actions button{flex:1;padding:10px;border-radius:8px;font-weight:600;font-size:.85rem}
+.btn-fav{background:#fef3cd;color:var(--warning)}
+.btn-fav.favorited{background:var(--warning);color:#fff}
+.btn-dismiss{background:#f5f5f5;color:var(--text-muted)}
+.btn-dismiss.dismissed{background:var(--text-muted);color:#fff}
+
+/* Showing list */
+.showing-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.showing-item:last-child{border:none}
+.showing-date{font-size:.8rem;color:var(--text-muted);margin-bottom:2px}
+.showing-addr{font-weight:600;font-size:.95rem}
+.showing-notes{font-size:.85rem;color:var(--text-muted);margin-top:4px;font-style:italic}
+
+/* Vendor */
+.vendor-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.vendor-item:last-child{border:none}
+.vendor-icon{width:40px;height:40px;border-radius:50%;background:var(--brand-bg);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.vendor-info h4{font-size:.95rem;font-family:'Work Sans',sans-serif;font-weight:600}
+.vendor-info p{font-size:.8rem;color:var(--text-muted)}
+
+/* Team */
+.team-member{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)}
+.team-member:last-child{border:none}
+.team-avatar{width:48px;height:48px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.2rem;flex-shrink:0}
+.team-info h4{font-size:.95rem;font-family:'Work Sans',sans-serif;font-weight:600}
+.team-info p{font-size:.8rem;color:var(--text-muted)}
+.btn-msg{display:inline-block;margin-top:6px;font-size:.8rem;color:var(--brand);font-weight:600}
+
+/* Timeline */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline-item{position:relative;padding-bottom:20px}
+.timeline-item::before{content:'';position:absolute;left:-20px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--border);border:2px solid #fff;z-index:1}
+.timeline-item.type-stage::before{background:var(--brand)}
+.timeline-item.type-doc::before{background:var(--success)}
+.timeline-item.type-showing::before{background:var(--warning)}
+.timeline-item.type-email::before{background:#3a6ea5}
+.timeline-date{font-size:.75rem;color:var(--text-muted)}
+.timeline-text{font-size:.9rem;margin-top:2px}
+
+/* Empty state */
+.empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
+.empty .empty-icon{font-size:2.5rem;margin-bottom:8px}
+
+/* Utility */
+.hidden{display:none!important}
+.mb-12{margin-bottom:12px}
+.mb-16{margin-bottom:16px}
+@media(min-width:480px){.content{padding:24px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-mark">RRA</div>
+      <h1>Client Portal</h1>
+    </div>
+    <form id="login-form" autocomplete="off">
+      <div class="input-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="your@email.com" required>
+      </div>
+      <div class="input-group">
+        <label for="login-code">Access Code</label>
+        <input type="text" id="login-code" placeholder="6-digit code" maxlength="6" inputmode="numeric" required>
+      </div>
+      <div id="login-error" class="login-error"></div>
+      <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+    <p style="font-size:.8rem;color:var(--text-muted);margin-top:20px">Your agent provided your access code.<br>Contact your agent if you need help.</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="top-bar">
+    <span class="logo">RRA</span>
+    <div>
+      <span class="user-info" id="user-name"></span>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- TRANSACTION STATUS -->
+    <section id="sec-status" class="section active">
+      <h2 style="margin-bottom:16px">Transaction Status</h2>
+      <div id="status-message"></div>
+      <div class="card">
+        <div id="progress-tracker"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px">Key Dates</h3>
+        <div id="key-dates"></div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTS -->
+    <section id="sec-docs" class="section">
+      <h2 style="margin-bottom:16px">Documents</h2>
+      <div class="card">
+        <div id="doc-list"></div>
+        <div class="upload-zone" id="upload-zone">
+          <label for="file-upload" style="cursor:pointer">
+            <div style="font-size:1.5rem;margin-bottom:4px">📄</div>
+            <div style="font-weight:500">Tap to upload a document</div>
+            <div style="font-size:.8rem;margin-top:4px">PDF, JPG, PNG up to 10MB</div>
+          </label>
+          <input type="file" id="file-upload" accept=".pdf,.jpg,.jpeg,.png">
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTINGS (buyer only) -->
+    <section id="sec-listings" class="section">
+      <h2 style="margin-bottom:16px">Listing Alerts</h2>
+      <div id="listings-list"></div>
+      <div id="listings-empty" class="empty hidden">
+        <div class="empty-icon">🏠</div>
+        <p>No matched listings yet.<br>Your agent is searching for you!</p>
+      </div>
+    </section>
+
+    <!-- SHOWINGS -->
+    <section id="sec-showings" class="section">
+      <h2 style="margin-bottom:16px">Showing History</h2>
+      <div class="card">
+        <div id="showings-list"></div>
+        <div id="showings-empty" class="empty hidden">
+          <div class="empty-icon">🗓️</div>
+          <p>No showings yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VENDORS -->
+    <section id="sec-vendors" class="section">
+      <h2 style="margin-bottom:16px">Vendor Recommendations</h2>
+      <div class="card">
+        <div id="vendor-list"></div>
+        <div id="vendor-empty" class="empty hidden">
+          <div class="empty-icon">🔧</div>
+          <p>No vendor recommendations yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="sec-team" class="section">
+      <h2 style="margin-bottom:16px">Your Team</h2>
+      <div class="card">
+        <div class="team-member">
+          <div class="team-avatar">RP</div>
+          <div class="team-info">
+            <h4>Ryan Palmer</h4>
+            <p>Lead Agent</p>
+            <p>📱 (508) 954-2159</p>
+            <a class="btn-msg" href="mailto:ryanpalmer@hmproperties.com">✉️ Message Ryan</a>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">AD</div>
+          <div class="team-info">
+            <h4>Ally Doerr</h4>
+            <p>Partner</p>
+            <a class="btn-msg" href="mailto:ally@realtyryan.com">✉️ Message Ally</a>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center">
+        <p style="font-size:.85rem;color:var(--text-muted)">Realty Ryan & Associates</p>
+        <p style="font-size:.85rem;color:var(--text-muted)">Corcoran HM Properties</p>
+        <p style="font-size:.85rem;color:var(--text-muted)">6857 Fairview Road, Charlotte, NC</p>
+      </div>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section id="sec-activity" class="section">
+      <h2 style="margin-bottom:16px">Activity Timeline</h2>
+      <div class="card">
+        <div id="timeline" class="timeline"></div>
+        <div id="timeline-empty" class="empty hidden">
+          <div class="empty-icon">📋</div>
+          <p>No activity yet.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <button class="active" data-sec="status"><span class="nav-icon">📊</span>Status</button>
+    <button data-sec="docs"><span class="nav-icon">📄</span>Docs</button>
+    <button data-sec="listings" id="nav-listings"><span class="nav-icon">🏠</span>Listings</button>
+    <button data-sec="showings"><span class="nav-icon">🗓️</span>Showings</button>
+    <button data-sec="team"><span class="nav-icon">👥</span>Team</button>
+    <button data-sec="activity"><span class="nav-icon">📋</span>Activity</button>
+  </nav>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   RRA CLIENT PORTAL
+   Firebase Realtime DB · Vanilla JS
+   ═══════════════════════════════════════ */
+
+const firebaseConfig = { databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com" };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+let portalUser = null; // { email, name, contactId, dealIds, type }
+let contactData = null;
+let dealsData = {};
+let transactionsData = {};
+
+// ── Helpers ──
+function $(id) { return document.getElementById(id); }
+function hashEmail(email) { return email.toLowerCase().replace(/[.#$\[\]\/]/g, '_'); }
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function daysUntil(d) {
+  if (!d) return null;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const target = new Date(d); target.setHours(0,0,0,0);
+  return Math.ceil((target - now) / 86400000);
+}
+function countdownBadge(days) {
+  if (days === null) return '';
+  if (days < 0) return `<span class="date-countdown countdown-urgent">${Math.abs(days)}d ago</span>`;
+  if (days <= 3) return `<span class="date-countdown countdown-urgent">${days}d</span>`;
+  if (days <= 7) return `<span class="date-countdown countdown-soon">${days}d</span>`;
+  return `<span class="date-countdown countdown-ok">${days}d</span>`;
+}
+
+// ── Login ──
+$('login-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = $('login-email').value.trim().toLowerCase();
+  const code = $('login-code').value.trim();
+  const errEl = $('login-error');
+  errEl.textContent = '';
+
+  try {
+    const snap = await db.ref('portalUsers/' + hashEmail(email)).once('value');
+    const user = snap.val();
+    if (!user) { errEl.textContent = 'Account not found. Contact your agent.'; return; }
+    if (user.accessCode !== code) { errEl.textContent = 'Invalid access code.'; return; }
+    if (user.status === 'disabled') { errEl.textContent = 'Access disabled. Contact your agent.'; return; }
+
+    portalUser = { ...user, email };
+    db.ref('portalUsers/' + hashEmail(email) + '/lastLogin').set(new Date().toISOString());
+    localStorage.setItem('portal_email', email);
+    startApp();
+  } catch (err) {
+    errEl.textContent = 'Error signing in. Try again.';
+    console.error(err);
+  }
+});
+
+// Auto-login
+(async function() {
+  const saved = localStorage.getItem('portal_email');
+  if (!saved) return;
+  try {
+    const snap = await db.ref('portalUsers/' + hashEmail(saved)).once('value');
+    const user = snap.val();
+    if (user && user.status !== 'disabled') {
+      portalUser = { ...user, email: saved };
+      startApp();
+    }
+  } catch(e) {}
+})();
+
+function logout() {
+  localStorage.removeItem('portal_email');
+  portalUser = null;
+  $('login-screen').style.display = 'flex';
+  $('app').style.display = 'none';
+}
+
+// ── App start ──
+function startApp() {
+  $('login-screen').style.display = 'none';
+  $('app').style.display = 'block';
+  $('user-name').textContent = portalUser.name || portalUser.email;
+
+  // Hide listings tab if seller
+  if (portalUser.type === 'seller') {
+    $('nav-listings').classList.add('hidden');
+  }
+
+  loadData();
+}
+
+// ── Nav ──
+document.querySelectorAll('.bottom-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    $('sec-' + btn.dataset.sec).classList.add('active');
+  });
+});
+
+// ── Load data ──
+function loadData() {
+  const contactId = portalUser.contactId;
+  const dealIds = portalUser.dealIds || {};
+
+  // Contact
+  if (contactId) {
+    db.ref('contacts/' + contactId).on('value', snap => {
+      contactData = snap.val();
+    });
+  }
+
+  // Deals & transactions
+  Object.keys(dealIds).forEach(dealId => {
+    db.ref('realty-ryan/deals/' + dealId).on('value', snap => {
+      dealsData[dealId] = snap.val();
+      renderStatus();
+      renderTimeline();
+    });
+    db.ref('transactions/' + dealId).on('value', snap => {
+      transactionsData[dealId] = snap.val();
+      renderStatus();
+      renderDocs();
+      renderTimeline();
+    });
+  });
+
+  // Buyer matches
+  if (portalUser.type === 'buyer' || portalUser.type === 'both') {
+    Object.keys(dealIds).forEach(dealId => {
+      db.ref('buyerMatches/' + dealId).on('value', snap => {
+        renderListings(snap.val() || {}, dealId);
+      });
+    });
+  }
+
+  // Showings
+  if (contactId) {
+    db.ref('contactNotes/' + contactId).on('value', snap => {
+      renderShowings(snap.val() || {});
+    });
+  }
+
+  // Vendor referrals
+  if (contactId) {
+    db.ref('vendorReferrals').orderByChild('clientId').equalTo(contactId).on('value', snap => {
+      renderVendors(snap.val() || {});
+    });
+  }
+}
+
+// ── Render: Transaction Status ──
+function renderStatus() {
+  const dealId = Object.keys(portalUser.dealIds || {})[0];
+  if (!dealId) return;
+  const deal = dealsData[dealId];
+  const tx = transactionsData[dealId];
+  if (!deal && !tx) return;
+
+  const isSeller = portalUser.type === 'seller';
+  const stages = isSeller
+    ? ['Pre-List','Listed','Under Contract','Due Diligence','Pending','Closed']
+    : ['Lead','Active Buyer','Under Contract','Due Diligence','Pending','Closed'];
+  const stageIds = isSeller
+    ? ['pre-list','listed','under-contract','due-diligence','pending','closed']
+    : ['lead','active-buyer','under-contract','due-diligence','pending','closed'];
+
+  const currentStage = (deal && deal.stage) || (tx && tx.stage) || stageIds[0];
+  const currentIdx = stageIds.indexOf(currentStage);
+
+  // Status message
+  const msg = (deal && deal.portalMessage) || (tx && tx.portalMessage) || '';
+  $('status-message').innerHTML = msg ? `<div class="status-msg">${msg}</div>` : '';
+
+  // Progress tracker
+  $('progress-tracker').innerHTML = '<div class="progress-tracker">' + stages.map((label, i) => {
+    let cls = '';
+    if (i < currentIdx) cls = 'completed';
+    else if (i === currentIdx) cls = 'current';
+    return `<div class="progress-step ${cls}">
+      ${i < stages.length - 1 ? '<div class="progress-line"></div>' : ''}
+      <div class="step-dot">${i < currentIdx ? '✓' : i + 1}</div>
+      <div class="step-label">${label}</div>
+    </div>`;
+  }).join('') + '</div>';
+
+  // Key dates
+  const dates = [];
+  const src = tx || deal || {};
+  if (src.ddDeadline) dates.push({ label: 'Due Diligence Deadline', date: src.ddDeadline });
+  if (src.inspectionDate) dates.push({ label: 'Inspection', date: src.inspectionDate });
+  if (src.appraisalDate) dates.push({ label: 'Appraisal', date: src.appraisalDate });
+  if (src.closingDate) dates.push({ label: 'Closing', date: src.closingDate });
+  if (src.listDate) dates.push({ label: 'List Date', date: src.listDate });
+
+  $('key-dates').innerHTML = dates.length
+    ? dates.map(d => {
+        const days = daysUntil(d.date);
+        return `<div class="date-row">
+          <span class="date-label">${d.label}</span>
+          <span><span class="date-value">${formatDate(d.date)}</span> ${countdownBadge(days)}</span>
+        </div>`;
+      }).join('')
+    : '<div class="empty"><p>No key dates set yet.</p></div>';
+}
+
+// ── Render: Documents ──
+function renderDocs() {
+  const dealId = Object.keys(portalUser.dealIds || {})[0];
+  if (!dealId) return;
+  const tx = transactionsData[dealId];
+  const docs = (tx && tx.clientDocs) || {};
+  const entries = Object.entries(docs);
+
+  $('doc-list').innerHTML = entries.length
+    ? entries.map(([id, d]) => `
+      <div class="doc-item">
+        <div>
+          <div class="doc-name">${d.name || 'Document'}</div>
+          <div style="font-size:.75rem;color:var(--text-muted)">${formatDate(d.uploadedAt)}</div>
+        </div>
+        <span class="doc-status ${d.status || 'pending'}">${d.status || 'pending'}</span>
+      </div>`).join('')
+    : '<div class="empty"><p>No documents shared yet.</p></div>';
+}
+
+// File upload
+$('file-upload').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const dealId = Object.keys(portalUser.dealIds || {})[0];
+  if (!dealId) return;
+
+  // Convert to base64 (simple approach for small files)
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const docRef = db.ref('transactions/' + dealId + '/clientDocs').push();
+    await docRef.set({
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      data: reader.result,
+      status: 'pending',
+      uploadedBy: portalUser.email,
+      uploadedAt: new Date().toISOString(),
+      flaggedForReview: true
+    });
+    e.target.value = '';
+  };
+  reader.readAsDataURL(file);
+});
+
+// ── Render: Listings ──
+function renderListings(matches, dealId) {
+  const entries = Object.entries(matches);
+  if (!entries.length) {
+    $('listings-list').innerHTML = '';
+    $('listings-empty').classList.remove('hidden');
+    return;
+  }
+  $('listings-empty').classList.add('hidden');
+
+  // Load favorites
+  db.ref('portalFavorites/' + portalUser.contactId).once('value').then(snap => {
+    const favs = snap.val() || {};
+
+    $('listings-list').innerHTML = entries
+      .filter(([,m]) => !favs[m.mlsId || '']?.dismissed)
+      .map(([id, m]) => {
+        const isFav = favs[m.mlsId || '']?.favorited;
+        return `<div class="listing-card">
+          ${m.photo ? `<img class="listing-img" src="${m.photo}" alt="">` : '<div class="listing-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem">🏠</div>'}
+          <div class="listing-body">
+            <h3>${m.address || 'Property'}</h3>
+            <div class="listing-details">${[m.beds ? m.beds + ' bd' : '', m.baths ? m.baths + ' ba' : '', m.sqft ? m.sqft.toLocaleString() + ' sqft' : '', m.price ? '$' + Number(m.price).toLocaleString() : ''].filter(Boolean).join(' · ')}</div>
+            ${m.matchScore ? `<span class="match-score">${m.matchScore}% Match</span>` : ''}
+            <div class="listing-actions">
+              <button class="btn-fav ${isFav ? 'favorited' : ''}" onclick="toggleFav('${m.mlsId || id}', true)">❤️ ${isFav ? 'Favorited' : 'Favorite'}</button>
+              <button class="btn-dismiss" onclick="toggleFav('${m.mlsId || id}', false)">✕ Dismiss</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+  });
+}
+
+window.toggleFav = function(mlsId, fav) {
+  const path = 'portalFavorites/' + portalUser.contactId + '/' + mlsId;
+  if (fav) {
+    db.ref(path).update({ favorited: true, dismissed: false, updatedAt: new Date().toISOString() });
+  } else {
+    db.ref(path).update({ dismissed: true, favorited: false, updatedAt: new Date().toISOString() });
+  }
+  // Re-render
+  const dealId = Object.keys(portalUser.dealIds || {})[0];
+  if (dealId) db.ref('buyerMatches/' + dealId).once('value').then(s => renderListings(s.val() || {}, dealId));
+};
+
+// ── Render: Showings ──
+function renderShowings(notes) {
+  const showings = Object.entries(notes)
+    .filter(([,n]) => n.type === 'showing')
+    .sort((a,b) => (b[1].date || b[1].createdAt || '').localeCompare(a[1].date || a[1].createdAt || ''));
+
+  if (!showings.length) {
+    $('showings-list').innerHTML = '';
+    $('showings-empty').classList.remove('hidden');
+    return;
+  }
+  $('showings-empty').classList.add('hidden');
+  $('showings-list').innerHTML = showings.map(([,s]) => `
+    <div class="showing-item">
+      <div class="showing-date">${formatDate(s.date || s.createdAt)}</div>
+      <div class="showing-addr">${s.address || s.title || 'Showing'}</div>
+      ${s.notes ? `<div class="showing-notes">${s.notes}</div>` : ''}
+      ${s.feedback ? `<div class="showing-notes">Feedback: ${s.feedback}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ── Render: Vendors ──
+function renderVendors(referrals) {
+  const entries = Object.entries(referrals);
+  if (!entries.length) {
+    $('vendor-list').innerHTML = '';
+    $('vendor-empty').classList.remove('hidden');
+    return;
+  }
+  $('vendor-empty').classList.add('hidden');
+
+  // Look up vendor details
+  const vendorIds = [...new Set(entries.map(([,r]) => r.vendorId).filter(Boolean))];
+  const promises = vendorIds.map(vid => db.ref('contacts/' + vid).once('value'));
+
+  Promise.all(promises).then(snaps => {
+    const vendors = {};
+    snaps.forEach(s => { if (s.val()) vendors[s.key] = s.val(); });
+
+    $('vendor-list').innerHTML = entries.map(([,r]) => {
+      const v = vendors[r.vendorId] || {};
+      const icons = { photographer:'📸', inspector:'🔍', attorney:'⚖️', lender:'🏦', contractor:'🔨', painter:'🎨', stager:'🛋️', cleaner:'🧹', handyman:'🔧' };
+      return `<div class="vendor-item">
+        <div class="vendor-icon">${icons[r.category || v.vendorCategory] || '👤'}</div>
+        <div class="vendor-info">
+          <h4>${v.name || r.vendorName || 'Vendor'}</h4>
+          <p>${r.category || v.vendorCategory || ''}</p>
+          ${v.phone ? `<p>📱 ${v.phone}</p>` : ''}
+          ${v.email ? `<p>✉️ ${v.email}</p>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+
+// ── Render: Activity Timeline ──
+function renderTimeline() {
+  const dealId = Object.keys(portalUser.dealIds || {})[0];
+  if (!dealId) return;
+
+  const items = [];
+  const tx = transactionsData[dealId] || {};
+  const deal = dealsData[dealId] || {};
+
+  // Stage changes from activity log
+  const activity = tx.activity || deal.activity || {};
+  Object.entries(activity).forEach(([id, a]) => {
+    items.push({
+      date: a.date || a.createdAt || '',
+      text: a.text || a.description || '',
+      type: a.type || 'note'
+    });
+  });
+
+  // Doc uploads
+  const docs = tx.clientDocs || {};
+  Object.entries(docs).forEach(([id, d]) => {
+    items.push({ date: d.uploadedAt || '', text: `Document uploaded: ${d.name}`, type: 'doc' });
+  });
+
+  items.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  if (!items.length) {
+    $('timeline').innerHTML = '';
+    $('timeline-empty').classList.remove('hidden');
+    return;
+  }
+  $('timeline-empty').classList.add('hidden');
+  $('timeline').innerHTML = items.map(i => `
+    <div class="timeline-item type-${i.type}">
+      <div class="timeline-date">${formatDate(i.date)}</div>
+      <div class="timeline-text">${i.text}</div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
