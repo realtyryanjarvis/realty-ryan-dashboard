@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>RRA Command Center</title>
 <meta name="description" content="Realty Ryan & Associates Command Center">
-<meta name="theme-color" content="#130f0a">
+<meta name="theme-color" content="#7A3B14">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -55,6 +56,8 @@
       <li class="nav-item" data-view="contacts"><span class="nav-icon">◉</span> Contacts</li>
       <li class="nav-item" data-view="appointments"><span class="nav-icon">▣</span> Appointments</li>
       <li class="nav-item" data-view="calendar"><span class="nav-icon">📅</span> Calendar</li>
+      <li class="nav-item" data-view="activity"><span class="nav-icon">⚡</span> Activity</li>
+      <li class="nav-item" data-view="reports"><span class="nav-icon">📊</span> Reports</li>
       <li class="nav-divider"></li>
       <li class="nav-item" data-view="tasks"><span class="nav-icon">☐</span> Tasks</li>
       <li class="nav-item" data-view="financials"><span class="nav-icon">◆</span> Financials</li>
@@ -84,10 +87,19 @@
         </div>
       </div>
       <div class="topbar-right">
-        <button class="notif-bell" id="notif-bell">
-          <span class="bell-icon">⚡</span>
-          <span class="notif-count" id="notif-count">0</span>
+        <button class="notif-bell" id="notif-bell" aria-label="Notifications">
+          <span class="bell-icon">🔔</span>
+          <span class="notif-count hidden" id="notif-count">0</span>
         </button>
+        <div class="notif-panel hidden" id="notif-panel">
+          <div class="notif-panel-header">
+            <h4>Notifications</h4>
+            <button class="btn-link" id="notif-mark-all-read">Mark all read</button>
+          </div>
+          <div class="notif-panel-list" id="notif-panel-list">
+            <p class="empty-msg">No notifications</p>
+          </div>
+        </div>
         <div class="topbar-user">
           <span class="topbar-user-name" id="topbar-name">Ryan Palmer</span>
           <div class="topbar-avatar" id="topbar-avatar">RP</div>
@@ -303,12 +315,58 @@
         <div id="vendors-grid" class="vendors-grid"></div>
       </section>
 
+      <!-- ACTIVITY -->
+      <section id="view-activity" class="view">
+        <div class="view-header">
+          <h2>Activity</h2>
+          <div class="view-actions">
+            <input type="date" id="activity-date" class="form-input">
+          </div>
+        </div>
+        <div id="activity-feed-full" class="activity-feed-full"></div>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="view-reports" class="view">
+        <div class="view-header">
+          <h2>Reports</h2>
+          <div class="view-actions">
+            <input type="date" id="report-start" class="form-input">
+            <span style="color:var(--muted);line-height:36px">to</span>
+            <input type="date" id="report-end" class="form-input">
+            <button class="btn-outline btn-sm" id="btn-run-report">Generate</button>
+          </div>
+        </div>
+        <div class="stats-grid" id="report-stats"></div>
+        <div class="report-charts">
+          <div class="panel"><h3>Monthly Production</h3><canvas id="chart-production"></canvas></div>
+          <div class="panel"><h3>Conversion Funnel</h3><canvas id="chart-funnel"></canvas></div>
+        </div>
+        <div class="report-charts" style="margin-top:20px">
+          <div class="panel"><h3>Avg Days on Market</h3><canvas id="chart-dom"></canvas></div>
+          <div class="panel"><h3>Agent Performance</h3><canvas id="chart-agents"></canvas></div>
+        </div>
+      </section>
+
       <!-- SETTINGS -->
       <section id="view-settings" class="view">
         <div class="view-header"><h2>Settings</h2></div>
         <div class="panel">
           <h3>Account</h3>
           <div class="settings-section" id="settings-account"></div>
+        </div>
+        <div class="panel" style="margin-top:20px">
+          <h3>🔔 Notifications</h3>
+          <p class="view-subtitle" style="margin-bottom:16px">Toggle which notification types you receive.</p>
+          <div class="settings-section" id="settings-notifications">
+            <label class="toggle-row"><input type="checkbox" data-notif-type="stage-change" checked><span>Deal stage changes</span></label>
+            <label class="toggle-row"><input type="checkbox" data-notif-type="doc-uploaded" checked><span>Documents uploaded/signed</span></label>
+            <label class="toggle-row"><input type="checkbox" data-notif-type="deadline-approaching" checked><span>Deadlines approaching</span></label>
+            <label class="toggle-row"><input type="checkbox" data-notif-type="task-assigned" checked><span>New tasks assigned</span></label>
+            <label class="toggle-row"><input type="checkbox" data-notif-type="contact-added" checked><span>New contacts added</span></label>
+            <label class="toggle-row"><input type="checkbox" data-notif-type="showing" checked><span>Showings scheduled/completed</span></label>
+            <label class="toggle-row"><input type="checkbox" data-notif-type="sound" checked><span>🔊 Notification sound</span></label>
+          </div>
         </div>
       </section>
 
@@ -324,6 +382,8 @@
 <!-- TOAST -->
 <div id="toast-container" class="toast-container"></div>
 
+<audio id="notif-sound" preload="auto" src="data:audio/wav;base64,UklGRlQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTAFAAAAAAAtAFoAhACmAL8AzwDWANQAyQC2AJ0AfgBaADMADADo/8P/ov+F/27/Xf9T/1D/Vf9h/3P/jP+q/8z/8P8TADUAVABuAIIAjwCTAI8AhAByAFoAPQAbAPj/0v+s/4j/Z/9L/zb/Kf8k/yf/Mv9F/1//f/+k/8z/9f8dAEMAZACAAJQAoACjAJwAjAByAFAAJwD4/8b/kv9f/zD/CP/o/tH+xP7C/sv+3/7+/ib/Uf+B/7P/5P8TAD4AYgB+AI8AlgCRAIIAaQBGABwA7v+8/4n/WP8r/wT/5v7T/sv+z/7f/vv+JP9T/4j/v//4/y8AZACRAJ4ApgCkAJcAgABfADQAAgDK/5D/Vv8i//b+2f7K/sn+1v7x/hX/Qv92/63/5v8cAFAAewCcALIAuwC5AKoAkABrADwABgDM/5D/V/8k//3+5v7d/uP+9/4Z/0T/d/+u/+j/IQBXAIYArADFANIA0gDIALIAkgBoADUA/P/A/4X/UP8k/wT/8v7v/vr+E/82/2L/lP/I//3/MABgAIkAqAC8AMQAwgC0AJwAegBNABgA4P+m/3D/Qf8a/wD/9P71/gT/Hf8+/2b/k//D//P/IgBNAHIAjgCgAKgAowCTAHgAUwAkAPL/vf+K/1z/NP8W/wX/A/8L/x3/N/9Y/37/pv/R//z/JQBJAGcAfACJAIoAgABuAFIAMAAN/+j/w/+i/4b/cf9i/1z/Xv9n/3j/j/+s/8v/6/8MACoAQwBUAF8AZQBYAEYALQAQ//H/0/+4/6H/kP+G/4L/hv+R/6L/t//R/+z/BwAhADkASgBWAFwAWABKADkAIQAI/+7/1f+//67/o/+e/5//p/+1/8b/3P/0/wwAIwA3AEYAUABUAE4AQgAyAB0ABv/v/9n/xf+2/6z/p/+o/67/uf/I/9n/7P8AABIAIwAyADoAPgA8ADQAKAAZAAYA8v/i/9X/yv/E/8L/xP/L/9T/4P/t//z/CgAXACIAKQAtAC0AKAAhABcACwD+//L/6P/g/9v/2P/Y/9v/4f/p//H/+v8DAAoAEQAVABgAFwATAA0ABgD//w=="></audio>
 <script src="app.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
 </body>
 </html>

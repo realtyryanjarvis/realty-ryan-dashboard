@@ -172,6 +172,7 @@ function showApp() {
   document.getElementById('topbar-avatar').textContent = currentUser.initials;
   setDashboardDate();
   initFirebaseListeners();
+  initNotifications();
   // Default view based on role
   if (currentUser.role === 'partner') navigateTo('tasks');
   else navigateTo('dashboard');
@@ -208,6 +209,8 @@ function navigateTo(view) {
   if (view === 'vendors') renderVendors();
   if (view === 'appointments') renderAppointments();
   if (view === 'calendar') renderCalendar();
+  if (view === 'activity') renderActivity();
+  if (view === 'reports') renderReports();
 }
 
 function setupGlobalSearch() {
@@ -248,6 +251,9 @@ function initFirebaseListeners() {
   db.ref('listingAppointments').on('value', snap => {
     apptCache = snap.val() || {};
     if (document.getElementById('view-appointments').classList.contains('active')) renderAppointments();
+  });
+  db.ref('activityLog').orderByChild('timestamp').limitToLast(100).on('value', snap => {
+    activityCache = snap.val() || {};
   });
   db.ref('calendarEvents').on('value', snap => {
     calEventCache = snap.val() || {};
@@ -369,41 +375,63 @@ function renderDashboardCalendarEvents() {
 // ══════════════════════════════════════
 // PIPELINE
 // ══════════════════════════════════════
+// Pipeline open-stage state
+let listingOpenStages = {};
+let buyerOpenStages = {};
+
 function renderListingPipeline() {
   const board = document.getElementById('listing-pipeline');
-  board.innerHTML = '';
   const listings = Object.entries(getVisibleTxns()).filter(([,t]) => t.type === 'listing');
+  // Default: open stages with cards
+  if (Object.keys(listingOpenStages).length === 0) LISTING_STAGES.forEach(s => { listingOpenStages[s.id] = true; });
+  board.innerHTML = '';
   LISTING_STAGES.forEach(stage => {
     const cards = listings.filter(([,t]) => t.listingPipeline?.stage === stage.id);
-    board.appendChild(createPipelineColumn(stage, cards, 'listing'));
+    board.appendChild(createPipelineAccordion(stage, cards, 'listing', listingOpenStages));
   });
 }
 
 function renderBuyerPipeline() {
   const board = document.getElementById('buyer-pipeline');
-  board.innerHTML = '';
   const buyers = Object.entries(getVisibleTxns()).filter(([,t]) => t.type === 'buyer');
+  if (Object.keys(buyerOpenStages).length === 0) BUYER_STAGES.forEach(s => { buyerOpenStages[s.id] = true; });
+  board.innerHTML = '';
   BUYER_STAGES.forEach(stage => {
     const cards = buyers.filter(([,t]) => t.buyerPipeline?.stage === stage.id);
-    board.appendChild(createPipelineColumn(stage, cards, 'buyer'));
+    board.appendChild(createPipelineAccordion(stage, cards, 'buyer', buyerOpenStages));
   });
 }
 
-function createPipelineColumn(stage, items, type) {
-  const col = document.createElement('div');
-  col.className = 'pipeline-column';
-  col.innerHTML = `
-    <div class="column-header">
-      <span class="column-title">${stage.label}</span>
-      <span class="column-count">${items.length}</span>
+function createPipelineAccordion(stage, items, type, openState) {
+  const section = document.createElement('div');
+  section.className = 'pipeline-stage-section';
+  const isOpen = openState[stage.id] !== false;
+
+  section.innerHTML = `
+    <div class="pipeline-stage-header${isOpen ? ' open' : ''}">
+      <div class="stage-header-left">
+        <span class="stage-color-dot" style="background:${stage.color}"></span>
+        <span class="column-title">${stage.label}</span>
+        <span class="column-count">${items.length}</span>
+      </div>
+      <span class="stage-chevron">›</span>
     </div>
-    <div class="column-cards" data-stage="${stage.id}" data-type="${type}"></div>
+    <div class="column-cards${isOpen ? '' : ' collapsed'}" data-stage="${stage.id}" data-type="${type}"></div>
   `;
-  const container = col.querySelector('.column-cards');
+
+  const header = section.querySelector('.pipeline-stage-header');
+  const container = section.querySelector('.column-cards');
+
+  header.addEventListener('click', () => {
+    openState[stage.id] = container.classList.contains('collapsed');
+    container.classList.toggle('collapsed');
+    header.classList.toggle('open');
+  });
+
   items.forEach(([txnId, txn]) => container.appendChild(createPipelineCard(txnId, txn, type)));
 
   // Drop zone
-  container.addEventListener('dragover', e => { e.preventDefault(); container.classList.add('drag-over'); });
+  container.addEventListener('dragover', e => { e.preventDefault(); container.classList.add('drag-over'); if(container.classList.contains('collapsed')){container.classList.remove('collapsed');header.classList.add('open');openState[stage.id]=true;} });
   container.addEventListener('dragleave', () => container.classList.remove('drag-over'));
   container.addEventListener('drop', e => {
     e.preventDefault(); container.classList.remove('drag-over');
@@ -413,16 +441,17 @@ function createPipelineColumn(stage, items, type) {
     if (dragType !== type) return;
     const pipeline = type === 'listing' ? 'listingPipeline' : 'buyerPipeline';
     db.ref(`transactions/${dragId}/${pipeline}/stage`).set(stage.id);
-    // Stage history
     db.ref(`transactions/${dragId}/${pipeline}/stageHistory`).push({
       stage: stage.id, timestamp: Date.now(), changedBy: currentUser.uid
     });
+    // Log activity + notify
+    logActivity('stage-change', `Moved to ${stage.label}`, txnCache[dragId]?.property?.address || '', currentUser.uid);
+    notifyStageChange(dragId, stage.label, txnCache[dragId]?.property?.address || '');
     toast(`Moved to ${stage.label}`);
-    // Trigger automations
     runAutomations(dragId, stage.id, type);
     createCalendarEventsForStage(dragId, stage.id, type);
   });
-  return col;
+  return section;
 }
 
 function createPipelineCard(txnId, txn, type) {
@@ -735,6 +764,12 @@ function setDocStatus(txnId, docId, status) {
     action: status, timestamp: Date.now(), userId: currentUser.uid, userName: currentUser.name,
     details: `Status changed to ${status}`
   });
+  // Notify doc status change
+  const docName = txnCache[txnId]?.documents?.[docId]?.name || 'Document';
+  const addr = txnCache[txnId]?.property?.address || '';
+  if (status === 'uploaded' || status === 'signed' || status === 'verified') {
+    notifyDocUploaded(txnId, `${docName} (${status})`, addr);
+  }
   toast(`Document marked as ${status}`);
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -771,13 +806,15 @@ function showAddTaskForm(txnId) {
 function addTask(txnId) {
   const title = document.getElementById(`new-task-title-${txnId}`).value.trim();
   if (!title) return;
+  const assignee = document.getElementById(`new-task-assignee-${txnId}`).value;
   db.ref(`transactions/${txnId}/tasks`).push({
     title,
-    assignedTo: document.getElementById(`new-task-assignee-${txnId}`).value,
+    assignedTo: assignee,
     dueDate: document.getElementById(`new-task-due-${txnId}`).value,
     priority: document.getElementById(`new-task-priority-${txnId}`).value,
     status: 'pending', category: 'general', createdAt: Date.now(), createdBy: currentUser.uid
   });
+  notifyTaskAssigned(txnId, title, assignee);
   toast('Task added');
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -786,6 +823,7 @@ function completeTask(txnId, taskId) {
   db.ref(`transactions/${txnId}/tasks/${taskId}`).update({
     status: 'complete', completedAt: Date.now(), completedBy: currentUser.uid
   });
+  logActivity('task-completed', 'Task completed', txnCache[txnId]?.property?.address || '', currentUser.uid);
   toast('Task completed');
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -840,6 +878,7 @@ function addNote(txnId) {
   db.ref(`transactions/${txnId}/notes`).push({
     text, type: 'note', createdAt: Date.now(), createdBy: currentUser.uid
   });
+  logActivity('note-added', 'Note added', txnCache[txnId]?.property?.address || '', currentUser.uid);
   toast('Note added');
   setTimeout(() => openTransactionDetail(txnId), 300);
 }
@@ -1041,7 +1080,8 @@ function showNewContactForm(prefill) {
       data.assignedTo = 'ryan-001';
       data.tags = [];
       data.portalEnabled = false;
-      db.ref('contacts').push(data);
+      const newContactRef = db.ref('contacts').push(data);
+      notifyContactAdded(newContactRef.key, `${data.firstName} ${data.lastName}`);
       toast('Contact created');
     }
     closeModal();
@@ -1441,6 +1481,8 @@ function showAddShowingForm() {
       },
       source: 'manual', createdAt: Date.now(), createdBy: currentUser.uid
     });
+    const showAddr = txnCache[txnId]?.property?.address || 'Unknown';
+    notifyShowingEvent(txnId, showAddr, 'recorded');
     toast('Showing added');
     closeModal();
     renderShowings();
@@ -2001,6 +2043,721 @@ function createAutoTask(ref, title, assignedTo, dueDaysOffset, priority) {
 }
 
 // ══════════════════════════════════════
+// ACTIVITY LOG
+// ══════════════════════════════════════
+let activityCache = {};
+
+function logActivity(type, title, detail, userId) {
+  db.ref('activityLog').push({
+    type, title, detail, userId,
+    userName: currentUser?.name || 'System',
+    timestamp: Date.now()
+  });
+}
+
+function renderActivity() {
+  const dateInput = document.getElementById('activity-date');
+  if (!dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
+  const selectedDate = dateInput.value;
+  const startOfDay = new Date(selectedDate + 'T00:00:00').getTime();
+  const endOfDay = new Date(selectedDate + 'T23:59:59').getTime();
+
+  db.ref('activityLog').orderByChild('timestamp').startAt(startOfDay).endAt(endOfDay).once('value', snap => {
+    const entries = [];
+    snap.forEach(child => {
+      const a = child.val();
+      // Filter: broker sees all, agents see only their own
+      if (currentUser.role !== 'agent-lead' && currentUser.role !== 'partner' && a.userId !== currentUser.uid) return;
+      entries.push(a);
+    });
+    entries.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    const el = document.getElementById('activity-feed-full');
+
+    if (entries.length === 0) {
+      el.innerHTML = '<p class="empty-msg">No activity for this date.</p>';
+      return;
+    }
+
+    const iconMap = {
+      'stage-change': '🔄', 'doc-upload': '📄', 'note-added': '📝',
+      'contact-created': '👤', 'task-completed': '✅', 'deal-created': '🏠',
+      'expense-added': '💰', 'showing-added': '👁️'
+    };
+
+    el.innerHTML = entries.map(a => `
+      <div class="activity-card">
+        <div class="activity-icon">${iconMap[a.type] || '⚡'}</div>
+        <div class="activity-body">
+          <div class="activity-body-title">${a.title}</div>
+          ${a.detail ? `<div class="activity-body-detail">${a.detail}</div>` : ''}
+          <div class="activity-body-time">${new Date(a.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</div>
+        </div>
+        <span class="activity-user-tag">${a.userName || 'System'}</span>
+      </div>
+    `).join('');
+  });
+}
+
+document.addEventListener('change', e => {
+  if (e.target.id === 'activity-date') renderActivity();
+});
+
+// ══════════════════════════════════════
+// REPORTS MODULE
+// ══════════════════════════════════════
+let reportCharts = {};
+
+function renderReports() {
+  const startInput = document.getElementById('report-start');
+  const endInput = document.getElementById('report-end');
+  const now = new Date();
+  if (!startInput.value) {
+    startInput.value = `${now.getFullYear()}-01-01`;
+    endInput.value = now.toISOString().slice(0, 10);
+  }
+  generateReport();
+}
+
+function generateReport() {
+  const startDate = document.getElementById('report-start').value;
+  const endDate = document.getElementById('report-end').value;
+  const txns = Object.values(getVisibleTxns());
+
+  // Closed deals in range
+  const closedDeals = txns.filter(t => {
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    if (stage !== 'closed') return false;
+    const closeDate = t.listingPipeline?.actualCloseDate || t.buyerPipeline?.actualCloseDate || t.listingPipeline?.closingDate || t.buyerPipeline?.closingDate;
+    if (!closeDate) return true;
+    return closeDate >= startDate && closeDate <= endDate;
+  });
+
+  const totalVolume = closedDeals.reduce((s, t) => s + (t.property?.price || t.financials?.commission?.salePrice || 0), 0);
+  const totalGCI = closedDeals.reduce((s, t) => s + (t.financials?.commission?.gci || 0), 0);
+
+  // Conversion rates
+  const allListings = txns.filter(t => t.type === 'listing');
+  const allBuyers = txns.filter(t => t.type === 'buyer');
+  const ucListings = allListings.filter(t => ['under-contract','due-diligence','pending','closed'].includes(t.listingPipeline?.stage));
+  const closedListings = allListings.filter(t => t.listingPipeline?.stage === 'closed');
+
+  // Avg DOM
+  let totalDOM = 0, domCount = 0;
+  allListings.forEach(t => {
+    const lp = t.listingPipeline;
+    if (lp?.listDate && (lp?.contractDate || lp?.closingDate)) {
+      const listed = new Date(lp.listDate);
+      const sold = new Date(lp.contractDate || lp.closingDate);
+      const days = Math.ceil((sold - listed) / 86400000);
+      if (days > 0) { totalDOM += days; domCount++; }
+    }
+  });
+  const avgDOM = domCount > 0 ? Math.round(totalDOM / domCount) : 0;
+
+  // Stats cards
+  document.getElementById('report-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-number">${closedDeals.length}</div><div class="stat-label">Deals Closed</div></div>
+    <div class="stat-card"><div class="stat-number">${formatPriceShort(totalVolume)}</div><div class="stat-label">Volume</div></div>
+    <div class="stat-card"><div class="stat-number">${formatPriceShort(totalGCI)}</div><div class="stat-label">GCI</div></div>
+    <div class="stat-card accent"><div class="stat-number">${avgDOM}d</div><div class="stat-label">Avg DOM</div></div>
+  `;
+
+  // Charts
+  renderProductionChart(txns, startDate, endDate);
+  renderFunnelChart(allListings, allBuyers);
+  renderDOMChart(allListings);
+  renderAgentChart(txns);
+}
+
+function renderProductionChart(txns, startDate, endDate) {
+  const ctx = document.getElementById('chart-production');
+  if (reportCharts.production) reportCharts.production.destroy();
+
+  // Group closed deals by month
+  const months = {};
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  for (let d = new Date(start); d <= end; d.setMonth(d.getMonth() + 1)) {
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    months[key] = { count: 0, volume: 0 };
+  }
+  txns.forEach(t => {
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    if (stage !== 'closed') return;
+    const cd = t.listingPipeline?.actualCloseDate || t.buyerPipeline?.actualCloseDate || t.listingPipeline?.closingDate || t.buyerPipeline?.closingDate;
+    if (!cd) return;
+    const key = cd.slice(0, 7);
+    if (months[key]) {
+      months[key].count++;
+      months[key].volume += (t.property?.price || 0);
+    }
+  });
+
+  const labels = Object.keys(months).map(k => { const [y,m] = k.split('-'); return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m)-1] + ' ' + y.slice(2); });
+
+  reportCharts.production = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Deals Closed',
+        data: Object.values(months).map(m => m.count),
+        backgroundColor: '#7A3B14',
+        borderRadius: 6,
+        yAxisID: 'y'
+      }, {
+        label: 'Volume ($)',
+        data: Object.values(months).map(m => m.volume),
+        type: 'line',
+        borderColor: '#2d6a4f',
+        backgroundColor: 'rgba(45,106,79,0.1)',
+        tension: 0.3,
+        yAxisID: 'y1'
+      }]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Deals' } },
+        y1: { position: 'right', beginAtZero: true, title: { display: true, text: 'Volume' }, ticks: { callback: v => formatPriceShort(v) }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+}
+
+function renderFunnelChart(listings, buyers) {
+  const ctx = document.getElementById('chart-funnel');
+  if (reportCharts.funnel) reportCharts.funnel.destroy();
+
+  const all = [...listings, ...buyers];
+  const leads = all.length;
+  const active = all.filter(t => {
+    const s = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    return !['closed'].includes(s);
+  }).length;
+  const uc = all.filter(t => {
+    const s = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    return ['under-contract','due-diligence','pending','closed'].includes(s);
+  }).length;
+  const closed = all.filter(t => {
+    const s = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    return s === 'closed';
+  }).length;
+
+  reportCharts.funnel = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Total Leads', 'Active', 'Under Contract', 'Closed'],
+      datasets: [{
+        data: [leads, active, uc, closed],
+        backgroundColor: ['#9a9590', '#3a6ea5', '#b8860b', '#2d6a4f'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } }
+    }
+  });
+}
+
+function renderDOMChart(listings) {
+  const ctx = document.getElementById('chart-dom');
+  if (reportCharts.dom) reportCharts.dom.destroy();
+
+  const data = [];
+  listings.forEach(t => {
+    const lp = t.listingPipeline;
+    if (lp?.listDate && (lp?.contractDate || lp?.closingDate)) {
+      const listed = new Date(lp.listDate);
+      const sold = new Date(lp.contractDate || lp.closingDate);
+      const days = Math.ceil((sold - listed) / 86400000);
+      if (days > 0) data.push({ label: (t.property?.address || 'Unknown').split(',')[0], days });
+    }
+  });
+
+  if (data.length === 0) {
+    reportCharts.dom = new Chart(ctx, { type: 'bar', data: { labels: ['No data'], datasets: [{ data: [0] }] }, options: { responsive: true } });
+    return;
+  }
+
+  reportCharts.dom = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.map(d => d.label),
+      datasets: [{ label: 'Days on Market', data: data.map(d => d.days), backgroundColor: '#7A3B14', borderRadius: 6 }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+  });
+}
+
+function renderAgentChart(txns) {
+  const ctx = document.getElementById('chart-agents');
+  if (reportCharts.agents) reportCharts.agents.destroy();
+
+  const agents = {};
+  txns.forEach(t => {
+    const a = t.assignedTo || 'unassigned';
+    if (!agents[a]) agents[a] = { closed: 0, active: 0, volume: 0 };
+    const stage = t.type === 'listing' ? t.listingPipeline?.stage : t.buyerPipeline?.stage;
+    if (stage === 'closed') { agents[a].closed++; agents[a].volume += (t.property?.price || 0); }
+    else agents[a].active++;
+  });
+
+  const nameMap = {};
+  Object.values(USERS).forEach(u => { nameMap[u.uid] = u.name.split(' ')[0]; });
+
+  const labels = Object.keys(agents).map(a => nameMap[a] || a);
+
+  reportCharts.agents = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Closed', data: Object.values(agents).map(a => a.closed), backgroundColor: '#2d6a4f', borderRadius: 6 },
+        { label: 'Active', data: Object.values(agents).map(a => a.active), backgroundColor: '#3a6ea5', borderRadius: 6 }
+      ]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+  });
+}
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'btn-run-report') generateReport();
+});
+
+// ══════════════════════════════════════
+// NOTIFICATION CENTER
+// ══════════════════════════════════════
+let notifCache = {};
+let notifListener = null;
+let notifPrefs = null;
+let notifInitialLoad = true;
+
+function getNotifPrefs() {
+  if (notifPrefs) return notifPrefs;
+  const saved = localStorage.getItem('rra_notif_prefs');
+  notifPrefs = saved ? JSON.parse(saved) : {
+    'stage-change': true, 'doc-uploaded': true, 'deadline-approaching': true,
+    'task-assigned': true, 'contact-added': true, 'showing': true, 'sound': true
+  };
+  return notifPrefs;
+}
+
+function saveNotifPrefs() {
+  localStorage.setItem('rra_notif_prefs', JSON.stringify(notifPrefs));
+}
+
+function initNotifications() {
+  if (!currentUser) return;
+  notifInitialLoad = true;
+  const prefs = getNotifPrefs();
+
+  // Restore checkbox states
+  document.querySelectorAll('[data-notif-type]').forEach(cb => {
+    const type = cb.dataset.notifType;
+    cb.checked = prefs[type] !== false;
+    cb.addEventListener('change', () => {
+      notifPrefs[type] = cb.checked;
+      saveNotifPrefs();
+    });
+  });
+
+  // Ryan sees all notifications; agents see only their own
+  const isLead = currentUser.role === 'agent-lead' || currentUser.role === 'partner';
+
+  if (notifListener) {
+    // Clean up previous listener
+    db.ref('notifications').off('value', notifListener);
+  }
+
+  if (isLead) {
+    // Listen to ALL notifications
+    notifListener = db.ref('notifications').orderByChild('createdAt').limitToLast(50).on('value', snap => {
+      const allNotifs = {};
+      snap.forEach(userSnap => {
+        // Each child could be userId node or direct notif
+        const val = userSnap.val();
+        if (val && typeof val === 'object' && val.type) {
+          // Direct notification
+          allNotifs[userSnap.key] = val;
+        } else if (val && typeof val === 'object') {
+          // userId node containing notifications
+          Object.entries(val).forEach(([nid, n]) => {
+            if (n && typeof n === 'object' && n.type) allNotifs[nid] = n;
+          });
+        }
+      });
+      processNotifications(allNotifs);
+    });
+  } else {
+    // Agent: listen to own notifications
+    notifListener = db.ref(`notifications/${currentUser.uid}`).orderByChild('createdAt').limitToLast(50).on('value', snap => {
+      processNotifications(snap.val() || {});
+    });
+  }
+
+  // Setup bell click
+  document.getElementById('notif-bell').addEventListener('click', e => {
+    e.stopPropagation();
+    const panel = document.getElementById('notif-panel');
+    panel.classList.toggle('hidden');
+  });
+
+  // Close panel on outside click
+  document.addEventListener('click', e => {
+    const panel = document.getElementById('notif-panel');
+    if (!panel.classList.contains('hidden') && !panel.contains(e.target) && e.target.id !== 'notif-bell') {
+      panel.classList.add('hidden');
+    }
+  });
+
+  // Mark all read
+  document.getElementById('notif-mark-all-read').addEventListener('click', () => {
+    markAllNotifsRead();
+  });
+
+  // Run deadline check
+  setTimeout(() => checkDeadlinesAndCreateNotifs(), 3000);
+}
+
+function processNotifications(notifs) {
+  const oldKeys = Object.keys(notifCache);
+  notifCache = notifs;
+  const prefs = getNotifPrefs();
+
+  // Filter by prefs
+  const filtered = {};
+  Object.entries(notifs).forEach(([id, n]) => {
+    if (prefs[n.type] !== false) filtered[id] = n;
+  });
+
+  // Read state from localStorage
+  const readSet = getReadNotifs();
+
+  // Count unread
+  const unread = Object.entries(filtered).filter(([id, n]) => !n.read && !readSet.has(id)).length;
+  const countEl = document.getElementById('notif-count');
+  countEl.textContent = unread > 99 ? '99+' : unread;
+  countEl.classList.toggle('hidden', unread === 0);
+
+  // Flash + sound for new notifications
+  if (!notifInitialLoad && Object.keys(filtered).length > oldKeys.length) {
+    const bell = document.getElementById('notif-bell');
+    bell.classList.add('flash');
+    setTimeout(() => bell.classList.remove('flash'), 600);
+    if (prefs.sound !== false) {
+      try { document.getElementById('notif-sound').play().catch(() => {}); } catch(e) {}
+    }
+  }
+  notifInitialLoad = false;
+
+  // Render panel
+  renderNotifPanel(filtered, readSet);
+}
+
+function getReadNotifs() {
+  const stored = localStorage.getItem('rra_read_notifs');
+  return new Set(stored ? JSON.parse(stored) : []);
+}
+
+function markNotifRead(notifId) {
+  const readSet = getReadNotifs();
+  readSet.add(notifId);
+  localStorage.setItem('rra_read_notifs', JSON.stringify([...readSet]));
+  processNotifications(notifCache);
+}
+
+function markAllNotifsRead() {
+  const readSet = getReadNotifs();
+  Object.keys(notifCache).forEach(id => readSet.add(id));
+  localStorage.setItem('rra_read_notifs', JSON.stringify([...readSet]));
+  processNotifications(notifCache);
+}
+
+function renderNotifPanel(notifs, readSet) {
+  const list = document.getElementById('notif-panel-list');
+  const entries = Object.entries(notifs).sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+  if (entries.length === 0) {
+    list.innerHTML = '<p class="empty-msg" style="padding:24px;text-align:center">No notifications</p>';
+    return;
+  }
+
+  const iconMap = {
+    'stage-change': '🔄', 'doc-uploaded': '📄', 'deadline-approaching': '⏰',
+    'task-assigned': '☐', 'contact-added': '👤', 'showing': '🏠'
+  };
+
+  list.innerHTML = entries.slice(0, 30).map(([id, n]) => {
+    const isUnread = !n.read && !readSet.has(id);
+    return `
+      <div class="notif-item${isUnread ? ' unread' : ''}" data-notif-id="${id}" data-link-type="${n.linkType || ''}" data-link-id="${n.linkId || ''}">
+        <div class="notif-item-icon">${iconMap[n.type] || '🔔'}</div>
+        <div class="notif-item-body">
+          <div class="notif-item-title">${n.message || n.title || ''}</div>
+          <div class="notif-item-time">${timeAgo(n.createdAt)}</div>
+        </div>
+        <div class="notif-item-mark"></div>
+      </div>
+    `;
+  }).join('');
+
+  // Click handlers
+  list.querySelectorAll('.notif-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const nid = el.dataset.notifId;
+      markNotifRead(nid);
+      // Navigate
+      const linkType = el.dataset.linkType;
+      const linkId = el.dataset.linkId;
+      if (linkType === 'transaction' && linkId) {
+        document.getElementById('notif-panel').classList.add('hidden');
+        openTransactionDetail(linkId);
+      } else if (linkType === 'contact' && linkId) {
+        document.getElementById('notif-panel').classList.add('hidden');
+        navigateTo('contacts');
+        setTimeout(() => openContactDetail(linkId), 200);
+      } else if (linkType === 'task' && linkId) {
+        document.getElementById('notif-panel').classList.add('hidden');
+        navigateTo('tasks');
+      }
+    });
+  });
+}
+
+// ── Create notification helper ──
+function createNotification(opts) {
+  // opts: { type, message, userId (target), linkType, linkId }
+  const userId = opts.userId || 'all';
+  const data = {
+    type: opts.type,
+    message: opts.message,
+    linkType: opts.linkType || '',
+    linkId: opts.linkId || '',
+    createdAt: Date.now(),
+    createdBy: currentUser ? currentUser.uid : 'system',
+    read: false
+  };
+  db.ref(`notifications/${userId}`).push(data);
+}
+
+// ── Hook into existing actions to auto-generate notifications ──
+
+// Wrap stage change drops (already in pipeline drop handler) — we hook via logActivity override
+const _origLogActivity = typeof logActivity === 'function' ? logActivity : null;
+
+function hookNotificationsIntoActions() {
+  // We'll monkey-patch key functions to emit notifications
+
+  // 1. Stage changes — patch the drop handler's logActivity call
+  //    (already calls logActivity('stage-change', ...))
+  //    We override logActivity to also create notifications
+  const origLog = window._origLogActivity || logActivity;
+  window._origLogActivity = origLog;
+
+  // We can't easily override logActivity since it's used everywhere,
+  // so instead we intercept at the Firebase write level.
+  // Better approach: override specific action functions.
+}
+
+// Override logActivity to also create notifications
+const __originalLogActivity = logActivity;
+window.logActivity = logActivity; // ensure it's accessible
+
+function logActivityWithNotif(type, title, detail, userId) {
+  // Call original
+  __originalLogActivity(type, title, detail, userId);
+
+  // Map activity types to notification types
+  const typeMap = {
+    'stage-change': 'stage-change',
+    'doc-upload': 'doc-uploaded',
+    'note-added': null,
+    'contact-created': 'contact-added',
+    'task-completed': 'task-assigned',
+    'deal-created': 'stage-change',
+    'showing-added': 'showing'
+  };
+
+  const notifType = typeMap[type];
+  if (!notifType) return;
+
+  // Create notification for relevant users
+  // Ryan always gets notified; specific agent gets notified
+  const targetUsers = ['ryan-001'];
+  if (userId && userId !== 'ryan-001') targetUsers.push(userId);
+
+  targetUsers.forEach(uid => {
+    createNotification({
+      type: notifType,
+      message: `${title}${detail ? ' — ' + detail : ''}`,
+      userId: uid,
+      linkType: detail ? 'transaction' : '',
+      linkId: ''
+    });
+  });
+}
+
+// Replace logActivity globally
+function logActivity(type, title, detail, userId) {
+  logActivityWithNotif(type, title, detail, userId);
+}
+
+// ── Enhanced notification creators for specific actions ──
+
+function notifyStageChange(txnId, stageName, address) {
+  ['ryan-001', 'ally-001'].forEach(uid => {
+    createNotification({
+      type: 'stage-change',
+      message: `Deal moved to ${stageName} — ${address}`,
+      userId: uid,
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  });
+}
+
+function notifyDocUploaded(txnId, docName, address) {
+  ['ryan-001', 'ally-001'].forEach(uid => {
+    createNotification({
+      type: 'doc-uploaded',
+      message: `${docName} uploaded — ${address}`,
+      userId: uid,
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  });
+}
+
+function notifyTaskAssigned(txnId, taskTitle, assigneeId) {
+  createNotification({
+    type: 'task-assigned',
+    message: `New task: ${taskTitle}`,
+    userId: assigneeId,
+    linkType: 'transaction',
+    linkId: txnId
+  });
+  if (assigneeId !== 'ryan-001') {
+    createNotification({
+      type: 'task-assigned',
+      message: `Task assigned: ${taskTitle}`,
+      userId: 'ryan-001',
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  }
+}
+
+function notifyContactAdded(contactId, contactName) {
+  createNotification({
+    type: 'contact-added',
+    message: `New contact: ${contactName}`,
+    userId: 'ryan-001',
+    linkType: 'contact',
+    linkId: contactId
+  });
+}
+
+function notifyShowingEvent(txnId, address, showType) {
+  ['ryan-001', 'ally-001'].forEach(uid => {
+    createNotification({
+      type: 'showing',
+      message: `Showing ${showType} — ${address}`,
+      userId: uid,
+      linkType: 'transaction',
+      linkId: txnId
+    });
+  });
+}
+
+// ── Deadline checker ──
+function checkDeadlinesAndCreateNotifs() {
+  if (!currentUser) return;
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+
+  // Check if already ran today
+  const lastCheck = localStorage.getItem('rra_deadline_check');
+  if (lastCheck === todayStr) return;
+  localStorage.setItem('rra_deadline_check', todayStr);
+
+  const txns = Object.entries(getVisibleTxns());
+
+  txns.forEach(([txnId, txn]) => {
+    const addr = txn.property?.address || 'Unknown';
+    const pipeline = txn.type === 'listing' ? txn.listingPipeline : txn.buyerPipeline;
+    const stage = pipeline?.stage;
+    if (!pipeline || stage === 'closed') return;
+
+    // DD End Date warnings
+    if (pipeline.ddEndDate) {
+      const ddEnd = new Date(pipeline.ddEndDate + 'T23:59:59');
+      const daysUntil = Math.ceil((ddEnd - today) / 86400000);
+      if (daysUntil === 3 || daysUntil === 1) {
+        ['ryan-001', 'ally-001'].forEach(uid => {
+          createNotification({
+            type: 'deadline-approaching',
+            message: `⚠️ DD deadline in ${daysUntil} day${daysUntil > 1 ? 's' : ''} — ${addr}`,
+            userId: uid,
+            linkType: 'transaction',
+            linkId: txnId
+          });
+        });
+      }
+      if (daysUntil < 0) {
+        createNotification({
+          type: 'deadline-approaching',
+          message: `🚨 DD deadline OVERDUE — ${addr}`,
+          userId: 'ryan-001',
+          linkType: 'transaction',
+          linkId: txnId
+        });
+      }
+    }
+
+    // Closing date warnings
+    if (pipeline.closingDate) {
+      const closing = new Date(pipeline.closingDate + 'T23:59:59');
+      const daysUntil = Math.ceil((closing - today) / 86400000);
+      if (daysUntil === 7 || daysUntil === 3 || daysUntil === 1) {
+        ['ryan-001', 'ally-001'].forEach(uid => {
+          createNotification({
+            type: 'deadline-approaching',
+            message: `📅 Closing in ${daysUntil} day${daysUntil > 1 ? 's' : ''} — ${addr}`,
+            userId: uid,
+            linkType: 'transaction',
+            linkId: txnId
+          });
+        });
+      }
+    }
+
+    // Overdue tasks
+    if (txn.tasks) {
+      Object.entries(txn.tasks).forEach(([taskId, task]) => {
+        if (task.status === 'complete' || task.status === 'skipped' || !task.dueDate) return;
+        const due = new Date(task.dueDate + 'T23:59:59');
+        if (due < today) {
+          const assignee = task.assignedTo || 'ryan-001';
+          createNotification({
+            type: 'deadline-approaching',
+            message: `⚠️ Overdue task: ${task.title} — ${addr}`,
+            userId: assignee,
+            linkType: 'transaction',
+            linkId: txnId
+          });
+        }
+      });
+    }
+  });
+}
+
+// ══════════════════════════════════════
 // MODAL SYSTEM
 // ══════════════════════════════════════
 function openModal(html, cls) {
@@ -2084,6 +2841,27 @@ window.seedVendors = function() {
   vendors.forEach(v => db.ref('vendors').push(v));
   toast('Vendors seeded');
 };
+
+// ══════════════════════════════════════
+// GOOGLE CALENDAR SYNC
+// ══════════════════════════════════════
+// Dashboard ↔ Firebase ↔ Google Calendar (via sync script)
+// Events created in dashboard get flagged for Google Calendar push.
+// The sync script (gcal_sync.sh) reads pending events from Firebase
+// and pushes them to Google Calendar via gog CLI, then marks them synced.
+
+// Patch the calendar event creation to flag for Google sync
+const _originalPushCalEvent = db.ref('calendarEvents').push;
+
+// Watch for new calendar events that need Google Calendar sync
+db.ref('calendarEvents').on('child_added', snap => {
+  const evt = snap.val();
+  // If event was created in dashboard (not from Google) and not yet synced
+  if (evt && !evt.source && !evt.synced && !evt.googleEventId) {
+    // Flag it for sync
+    db.ref(`calendarEvents/${snap.key}/pendingGoogleSync`).set(true);
+  }
+});
 
 // Expose for console
 window.db = db;
