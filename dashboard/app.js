@@ -1649,6 +1649,12 @@ function renderContactDetailContent(contactId) {
 function renderContactOverviewTab(c, cat, linkedDeals) {
   let html = '<div class="crm-info-grid">';
 
+  // Type switcher for clients (buyer/seller/both)
+  if (cat === 'client') {
+    const types = ['buyer','seller','both'];
+    html += `<div class="crm-info-row"><span class="crm-info-label">Type</span><span class="crm-info-value"><div class="crm-type-switcher">${types.map(t => `<button class="crm-type-btn ${c.type===t?'active':''}" onclick="changeContactType('${crmSelectedContactId}','${t}')">${t.charAt(0).toUpperCase()+t.slice(1)}</button>`).join('')}</div></span></div>`;
+  }
+
   if (c.phone) html += `<div class="crm-info-row"><span class="crm-info-label">Phone</span><span class="crm-info-value"><a href="tel:${c.phone}" style="color:var(--accent)">${c.phone}</a></span></div>`;
   if (c.email) html += `<div class="crm-info-row"><span class="crm-info-label">Email</span><span class="crm-info-value"><a href="mailto:${c.email}" style="color:var(--accent)">${c.email}</a></span></div>`;
 
@@ -1845,6 +1851,16 @@ function closeContactDetail() {
   if (window.location.hash.includes('/')) {
     window.history.pushState({ view: 'contacts' }, '', '#contacts');
   }
+}
+
+function changeContactType(id, newType) {
+  const ref = id.startsWith('vendor-') ? null : db.ref('contacts/' + id);
+  if (!ref) return;
+  ref.update({ type: newType }).then(() => {
+    if (contactCache[id]) contactCache[id].type = newType;
+    renderContactDetailContent(id);
+    renderContacts();
+  });
 }
 
 function deleteContact(id) {
