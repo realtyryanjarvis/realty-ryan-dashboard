@@ -2577,3 +2577,5 @@ body {
 .crm-type-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--white); color: var(--text); font-size: 0.75rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
 .crm-type-btn:hover { border-color: var(--accent); color: var(--accent); }
 .crm-type-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.cal-event-mini-time { font-size: 0.72rem; font-weight: 600; color: var(--accent); white-space: nowrap; }

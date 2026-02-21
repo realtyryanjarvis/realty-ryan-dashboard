@@ -603,6 +603,7 @@ function renderDashboardCalendarEvents() {
       <div class="cal-event-mini"${urgency}>
         <span class="cal-dot" style="background:${colorMap[e.type] || '#9a9590'}"></span>
         <span class="cal-event-mini-date">${months[d.getMonth()]} ${d.getDate()}</span>
+        ${e.time ? `<span class="cal-event-mini-time">${e.time}</span>` : ''}
         <span>${e.title}</span>
         ${daysUntil <= 7 ? `<span class="task-due">${daysUntil === 0 ? 'Today' : daysUntil === 1 ? 'Tomorrow' : daysUntil + 'd'}</span>` : ''}
       </div>
