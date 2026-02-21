@@ -433,6 +433,7 @@ document.querySelectorAll('.bottom-nav button').forEach(btn => {
     btn.classList.add('active');
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     $('sec-' + btn.dataset.sec).classList.add('active');
+    if (btn.dataset.sec === 'map') { setTimeout(() => { initPortalMap(); refreshPortalMapData(); }, 150); }
   });
 });
 
