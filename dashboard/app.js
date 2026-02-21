@@ -1851,7 +1851,8 @@ function buildCalendarEvents() {
 }
 
 function renderCalendar() {
-  const mode = calViewMode;
+  // Auto-switch to list view on mobile for better readability
+  const mode = (window.innerWidth <= 480 && calViewMode === 'month') ? 'list' : calViewMode;
   const grid = document.getElementById('calendar-grid');
   const list = document.getElementById('calendar-list');
 
