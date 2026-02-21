@@ -469,11 +469,11 @@ body {
 }
 
 .notif-panel {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: -60px;
+  position: fixed;
+  top: 56px;
+  right: 16px;
   width: 380px;
-  max-height: 480px;
+  max-height: calc(100vh - 80px);
   background: var(--white);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
@@ -582,8 +582,9 @@ body {
 
 @media (max-width: 768px) {
   .notif-panel {
-    width: calc(100vw - 32px);
-    right: -16px;
+    width: calc(100vw - 16px);
+    right: 8px;
+    left: 8px;
   }
 }
 
