@@ -26,6 +26,12 @@ async function sha256(message) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// ── Date Helper (local timezone, not UTC) ──
+function localDateStr(d) {
+  d = d || new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
 // ── Constants ──
 const LISTING_STAGES = [
   { id: 'pre-list', label: 'Pre-List', color: '#9a9590' },
@@ -500,7 +506,7 @@ function renderDashboardCalendarEvents() {
   const events = buildCalendarEvents();
   const now = new Date();
   const upcoming = events
-    .filter(e => new Date(e.date) >= new Date(now.toISOString().slice(0,10)))
+    .filter(e => new Date(e.date) >= new Date(localDateStr(now)))
     .sort((a, b) => new Date(a.date) - new Date(b.date))
     .slice(0, 8);
 
@@ -1008,7 +1014,7 @@ function addExpense(txnId) {
   const amt = parseFloat(document.getElementById(`new-exp-amt-${txnId}`).value) || 0;
   if (!amt) return;
   db.ref(`transactions/${txnId}/financials/expenses`).push({
-    category: cat, description: desc, amount: amt, date: new Date().toISOString().slice(0, 10),
+    category: cat, description: desc, amount: amt, date: localDateStr(),
     paid: false, createdAt: Date.now(), createdBy: currentUser.uid
   });
   // Recalc total
@@ -1378,8 +1384,8 @@ function renderTasks() {
   if (assigneeFilter) filtered = filtered.filter(t => t.assignedTo === assigneeFilter);
 
   const overdue = filtered.filter(t => t.status !== 'complete' && t.status !== 'skipped' && t.dueDate && new Date(t.dueDate) < new Date());
-  const today = filtered.filter(t => t.status !== 'complete' && t.status !== 'skipped' && t.dueDate === new Date().toISOString().slice(0, 10));
-  const upcoming = filtered.filter(t => t.status !== 'complete' && t.status !== 'skipped' && t.dueDate && new Date(t.dueDate) >= new Date() && t.dueDate !== new Date().toISOString().slice(0, 10));
+  const today = filtered.filter(t => t.status !== 'complete' && t.status !== 'skipped' && t.dueDate === localDateStr());
+  const upcoming = filtered.filter(t => t.status !== 'complete' && t.status !== 'skipped' && t.dueDate && new Date(t.dueDate) >= new Date() && t.dueDate !== localDateStr());
   const noDue = filtered.filter(t => t.status !== 'complete' && t.status !== 'skipped' && !t.dueDate);
   const completed = filtered.filter(t => t.status === 'complete');
 
@@ -1827,7 +1833,7 @@ function buildCalendarEvents() {
     if (appt.scheduledAt) {
       const d = new Date(appt.scheduledAt);
       events.push({
-        date: d.toISOString().slice(0, 10),
+        date: localDateStr(d),
         title: `Listing Appt — ${appt.address || 'TBD'} (${appt.contactName || appt.client || ''})`,
         type: 'appointment',
         time: d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
@@ -1877,7 +1883,7 @@ function renderCalendarMonth(grid, events) {
   const lastDay = new Date(calYear, calMonth + 1, 0);
   const startDow = firstDay.getDay();
   const daysInMonth = lastDay.getDate();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
 
   // Previous month filler
   const prevMonthLast = new Date(calYear, calMonth, 0).getDate();
@@ -1961,12 +1967,12 @@ function renderCalendarWeek(grid, events) {
     html += `<div class="cal-header-cell">${d}</div>`;
   });
 
-  const todayStr = today.toISOString().slice(0, 10);
+  const todayStr = localDateStr(today);
 
   for (let i = 0; i < 7; i++) {
     const d = new Date(startOfWeek);
     d.setDate(startOfWeek.getDate() + i);
-    const dateStr = d.toISOString().slice(0, 10);
+    const dateStr = localDateStr(d);
     const isToday = dateStr === todayStr;
     const dayEvents = eventsByDate[dateStr] || [];
 
@@ -1980,7 +1986,7 @@ function renderCalendarWeek(grid, events) {
 }
 
 function renderCalendarList(container, events) {
-  const now = new Date().toISOString().slice(0, 10);
+  const now = localDateStr();
   const upcoming = events
     .filter(e => e.date >= now)
     .sort((a, b) => a.date.localeCompare(b.date))
@@ -2025,7 +2031,7 @@ document.addEventListener('click', e => {
     renderCalendar();
   }
   if (e.target.id === 'btn-new-cal-event') {
-    showNewCalEventForm(new Date().toISOString().slice(0, 10));
+    showNewCalEventForm(localDateStr());
   }
 });
 
@@ -2107,7 +2113,7 @@ function createCalendarEventsForStage(txnId, newStage, type) {
       const remind = new Date(pipeline.ddEndDate);
       remind.setDate(remind.getDate() - 3);
       db.ref('calendarEvents').push({
-        title: `DD Deadline in 3 Days — ${addr}`, date: remind.toISOString().slice(0, 10), type: 'dd',
+        title: `DD Deadline in 3 Days — ${addr}`, date: localDateStr(remind), type: 'dd',
         txnId, allDay: true, autoCreated: true, createdAt: Date.now(), createdBy: 'system'
       });
     }
@@ -2120,7 +2126,7 @@ function createCalendarEventsForStage(txnId, newStage, type) {
       const remind = new Date(pipeline.closingDate);
       remind.setDate(remind.getDate() - 7);
       db.ref('calendarEvents').push({
-        title: `Closing in 1 Week — ${addr}`, date: remind.toISOString().slice(0, 10), type: 'closing',
+        title: `Closing in 1 Week — ${addr}`, date: localDateStr(remind), type: 'closing',
         txnId, allDay: true, autoCreated: true, createdAt: Date.now(), createdBy: 'system'
       });
     }
@@ -2190,7 +2196,7 @@ function createAutoTask(ref, title, assignedTo, dueDaysOffset, priority) {
   const due = new Date();
   due.setDate(due.getDate() + dueDaysOffset);
   ref.push({
-    title, assignedTo, dueDate: due.toISOString().slice(0, 10), priority,
+    title, assignedTo, dueDate: localDateStr(due), priority,
     status: 'pending', category: 'general', dueDateSource: 'auto',
     automationRule: true, createdAt: Date.now(), createdBy: 'system'
   });
@@ -2211,7 +2217,7 @@ function logActivity(type, title, detail, userId) {
 
 function renderActivity() {
   const dateInput = document.getElementById('activity-date');
-  if (!dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
+  if (!dateInput.value) dateInput.value = localDateStr();
   const selectedDate = dateInput.value;
   const startOfDay = new Date(selectedDate + 'T00:00:00').getTime();
   const endOfDay = new Date(selectedDate + 'T23:59:59').getTime();
@@ -2267,7 +2273,7 @@ function renderReports() {
   const now = new Date();
   if (!startInput.value) {
     startInput.value = `${now.getFullYear()}-01-01`;
-    endInput.value = now.toISOString().slice(0, 10);
+    endInput.value = localDateStr(now);
   }
   generateReport();
 }
@@ -2833,7 +2839,7 @@ function notifyShowingEvent(txnId, address, showType) {
 function checkDeadlinesAndCreateNotifs() {
   if (!currentUser) return;
   const today = new Date();
-  const todayStr = today.toISOString().slice(0, 10);
+  const todayStr = localDateStr(today);
 
   // Check if already ran today
   const lastCheck = localStorage.getItem('rra_deadline_check');
