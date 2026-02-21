@@ -404,6 +404,7 @@ function navigateTo(view, pushState) {
   if (view === 'calendar') renderCalendar();
   if (view === 'activity') renderActivity();
   if (view === 'reports') renderReports();
+  if (view === 'map') renderMap();
   if (view === 'admin') renderAdminUsers();
   if (view === 'profile') renderMyProfile();
 }
@@ -420,7 +421,7 @@ window.addEventListener('popstate', e => {
     }
   } else {
     const hash = window.location.hash.replace('#', '');
-    const validViews = ['dashboard','listings','buyers','contacts','appointments','calendar','activity','reports','tasks','financials','showings','vendors','settings','admin','profile'];
+    const validViews = ['dashboard','listings','buyers','contacts','appointments','calendar','activity','reports','map','tasks','financials','showings','vendors','settings','admin','profile'];
     // Handle contacts/id deep link
     if (hash.startsWith('contacts/')) {
       navigateTo('contacts', false);
@@ -434,7 +435,7 @@ window.addEventListener('popstate', e => {
 
 function getInitialView() {
   const hash = window.location.hash.replace('#', '');
-  const validViews = ['dashboard','listings','buyers','contacts','appointments','calendar','activity','reports','tasks','financials','showings','vendors','settings','admin','profile'];
+  const validViews = ['dashboard','listings','buyers','contacts','appointments','calendar','activity','reports','map','tasks','financials','showings','vendors','settings','admin','profile'];
   if (hash.startsWith('contacts/')) return 'contacts';
   if (hash && validViews.includes(hash)) return hash;
   return null;
@@ -783,6 +784,7 @@ function openTransactionDetail(txnId) {
       <button class="modal-tab" data-tab="showings">Showings (${showings.length})</button>
       <button class="modal-tab" data-tab="financials">Financials</button>
       <button class="modal-tab" data-tab="notes">Notes</button>
+      ${txn.type === 'buyer' ? '<button class="modal-tab" data-tab="matches">🏠 Matches</button>' : ''}
     </div>
     <div id="txn-tab-content">
       ${renderOverviewTab(txn, txnId, pipeline, contact, docsTotal, docsDone, fin, totalExp)}
@@ -802,6 +804,7 @@ function openTransactionDetail(txnId) {
       else if (t === 'showings') content.innerHTML = renderShowingsTab(txnId, showings);
       else if (t === 'financials') { content.innerHTML = renderFinancialsTab(txnId, fin, expenses, totalExp); setupFinActions(txnId); }
       else if (t === 'notes') { content.innerHTML = renderNotesTab(txnId, txn.notes); setupNoteActions(txnId); }
+      else if (t === 'matches') { renderMatchesTab(txnId, content); }
     });
   });
 }
@@ -1129,6 +1132,102 @@ function addNote(txnId) {
 }
 
 function setupNoteActions() {}
+
+// ══════════════════════════════════════
+// BUYER MATCHES TAB
+// ══════════════════════════════════════
+function renderMatchesTab(dealId, container) {
+  container.innerHTML = '<p class="empty-msg">Loading matches...</p>';
+  db.ref('buyerMatches/' + dealId).once('value').then(snap => {
+    const matches = snap.val();
+    if (!matches) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:32px;color:var(--muted)">
+          <p style="font-size:2rem">🏠</p>
+          <p>No matches yet.</p>
+          <p style="font-size:0.85rem">The buyer match monitor checks for new listings every 5 minutes and scores them against this buyer's criteria.</p>
+          ${renderBuyerCriteria(dealId)}
+        </div>`;
+      return;
+    }
+    const list = Object.entries(matches).sort((a,b) => (b[1].matchedAt||'').localeCompare(a[1].matchedAt||''));
+    const statusColors = {new:'#3a6ea5','viewed':'#b8860b','scheduled-showing':'#6b4c9a','dismissed':'#9a9590'};
+    const statusLabels = {new:'New','viewed':'Viewed','scheduled-showing':'Scheduled Showing','dismissed':'Dismissed'};
+    container.innerHTML = `
+      ${renderBuyerCriteria(dealId)}
+      <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center">
+        <span style="font-weight:600">${list.length} match${list.length!==1?'es':''}</span>
+      </div>
+      <div class="matches-list">
+        ${list.map(([mid, m]) => {
+          const pct = m.matchTotal > 0 ? Math.round(m.matchScore/m.matchTotal*100) : 0;
+          const status = m.status || 'new';
+          return `
+          <div class="match-card" style="border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;${status==='dismissed'?'opacity:0.5':''}">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+              <div>
+                <div style="font-weight:600;font-size:1.05rem">${m.address || 'Unknown'}</div>
+                <div style="color:var(--muted);font-size:0.85rem">${m.city||''}${m.subdivision?' · '+m.subdivision:''}</div>
+              </div>
+              <span style="background:${statusColors[status]||'#9a9590'};color:#fff;padding:2px 10px;border-radius:12px;font-size:0.75rem;white-space:nowrap">${statusLabels[status]||status}</span>
+            </div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px;font-size:0.9rem">
+              <span><strong>$${(m.price||0).toLocaleString()}</strong></span>
+              <span>${m.bedrooms||'?'} bd / ${m.bathrooms||'?'} ba</span>
+              <span>${(m.sqft||0).toLocaleString()} sqft</span>
+              ${m.acres ? `<span>${m.acres} acres</span>` : ''}
+            </div>
+            <div style="margin-bottom:8px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div style="flex:1;background:var(--border);border-radius:4px;height:6px;overflow:hidden">
+                  <div style="width:${pct}%;height:100%;background:${pct>=75?'#2d6a4f':'#a0342e'};border-radius:4px"></div>
+                </div>
+                <span style="font-size:0.8rem;font-weight:600">${m.matchScore}/${m.matchTotal} (${pct}%)</span>
+              </div>
+              <div style="font-size:0.8rem;color:var(--muted)">
+                ✅ ${(m.matchedCriteria||[]).join(', ') || 'none'}
+                ${(m.unmatchedCriteria||[]).length > 0 ? ` · ❌ ${m.unmatchedCriteria.join(', ')}` : ''}
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              ${m.detailsURL ? `<a href="${m.detailsURL}" target="_blank" class="btn-sm btn-outline" style="text-decoration:none">🔗 View Listing</a>` : ''}
+              ${status!=='scheduled-showing' ? `<button class="btn-sm btn-outline" onclick="updateMatchStatus('${dealId}','${mid}','scheduled-showing')">📅 Schedule Showing</button>` : ''}
+              ${status!=='dismissed' ? `<button class="btn-sm btn-outline" onclick="updateMatchStatus('${dealId}','${mid}','dismissed')">✕ Dismiss</button>` : ''}
+              ${status==='new' ? `<button class="btn-sm btn-outline" onclick="updateMatchStatus('${dealId}','${mid}','viewed')">👁 Mark Viewed</button>` : ''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+  });
+}
+
+function renderBuyerCriteria(dealId) {
+  const txn = txnCache[dealId];
+  if (!txn) return '';
+  const locs = txn.criteriaLocations || [];
+  const fields = [];
+  if (locs.length) fields.push(`📍 ${locs.join(', ')}`);
+  if (txn.criteriaPriceMax) fields.push(`💰 Up to $${txn.criteriaPriceMax.toLocaleString()}`);
+  if (txn.criteriaBedsMin) fields.push(`🛏 ${txn.criteriaBedsMin}+ beds`);
+  if (txn.criteriaBathsMin) fields.push(`🚿 ${txn.criteriaBathsMin}+ baths`);
+  if (txn.criteriaSqftMin || txn.criteriaSqftMax) fields.push(`📐 ${txn.criteriaSqftMin||'?'}–${txn.criteriaSqftMax||'?'} sqft`);
+  if (txn.criteriaLotMin) fields.push(`🌳 ${txn.criteriaLotMin}+ acres`);
+  if ((txn.criteriaStyle||[]).length) fields.push(`🏗 ${txn.criteriaStyle.join(', ')}`);
+  if (!fields.length) return '<p style="font-size:0.85rem;color:var(--muted)">No criteria set for this buyer.</p>';
+  return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:16px">
+    <div style="font-weight:600;margin-bottom:6px;font-size:0.85rem">Buyer Criteria</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:0.85rem">${fields.map(f=>`<span>${f}</span>`).join('')}</div>
+  </div>`;
+}
+
+function updateMatchStatus(dealId, matchId, status) {
+  db.ref('buyerMatches/' + dealId + '/' + matchId + '/status').set(status).then(() => {
+    toast('Status updated to ' + status);
+    // Re-render
+    const content = document.getElementById('txn-tab-content');
+    if (content) renderMatchesTab(dealId, content);
+  });
+}
 
 // ══════════════════════════════════════
 // NEW TRANSACTION
@@ -4222,137 +4321,126 @@ window.db = db;
 window.txnCache = () => txnCache;
 window.contactCache = () => contactCache;
 
-// ══════════════════════════════════════
-// CLIENT PORTAL MANAGEMENT
-// ══════════════════════════════════════
+// ═══════════════════════════════════════
+// MAP VIEW
+// ═══════════════════════════════════════
+let dashboardMap = null;
+let mapMarkers = null;
+let mapDataCache = {};
 
-function hashEmail(email) { return email.toLowerCase().replace(/[.#$\[\]\/]/g, '_'); }
+function createMapIcon(color) {
+  return L.divIcon({
+    className: 'rra-map-pin',
+    html: `<svg width="28" height="38" viewBox="0 0 28 38"><path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.27 21.73 0 14 0z" fill="${color}"/><circle cx="14" cy="14" r="6" fill="#fff"/></svg>`,
+    iconSize: [28, 38],
+    iconAnchor: [14, 38],
+    popupAnchor: [0, -38]
+  });
+}
 
-// Admin tab switching for portal
-document.addEventListener('click', e => {
-  if (e.target.matches('[data-admin-tab]')) {
-    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    e.target.classList.add('active');
-    const tab = e.target.dataset.adminTab;
-    const usersPanel = document.getElementById('admin-panel-users');
-    const portalPanel = document.getElementById('admin-panel-portal');
-    const newUserBtn = document.getElementById('btn-new-user');
-    if (tab === 'users') {
-      if (usersPanel) usersPanel.classList.remove('hidden');
-      if (portalPanel) portalPanel.classList.add('hidden');
-      if (newUserBtn) newUserBtn.classList.remove('hidden');
-    } else if (tab === 'portal') {
-      if (usersPanel) usersPanel.classList.add('hidden');
-      if (portalPanel) portalPanel.classList.remove('hidden');
-      if (newUserBtn) newUserBtn.classList.add('hidden');
-      renderPortalUsers();
-    }
+function renderMap() {
+  if (!dashboardMap) {
+    dashboardMap = L.map('dashboard-map').setView([35.19, -80.83], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+      maxZoom: 19
+    }).addTo(dashboardMap);
+    mapMarkers = L.markerClusterGroup({ maxClusterRadius: 40 });
+    dashboardMap.addLayer(mapMarkers);
+
+    document.getElementById('map-buyer-filter').addEventListener('change', () => populateMapMarkers());
   }
-});
-
-// Generate access code
-function generateAccessCode() {
-  return String(Math.floor(100000 + Math.random() * 900000));
+  setTimeout(() => dashboardMap.invalidateSize(), 200);
+  loadMapData();
 }
 
-// Portal access form
-document.addEventListener('submit', async e => {
-  if (e.target.id !== 'portal-access-form') return;
-  e.preventDefault();
-  const email = document.getElementById('pa-email').value.trim().toLowerCase();
-  const name = document.getElementById('pa-name').value.trim();
-  const contactId = document.getElementById('pa-contact-id').value.trim();
-  const dealIdsStr = document.getElementById('pa-deal-ids').value.trim();
-  const type = document.getElementById('pa-type').value;
+function loadMapData() {
+  // Load all buyer deals to get buyer names + matches
+  db.ref('realty-ryan/deals').once('value').then(snap => {
+    const deals = snap.val() || {};
+    const buyerFilter = document.getElementById('map-buyer-filter');
+    const currentVal = buyerFilter.value;
+    buyerFilter.innerHTML = '<option value="">All Buyers</option>';
 
-  const dealIds = {};
-  dealIdsStr.split(',').map(s => s.trim()).filter(Boolean).forEach(id => { dealIds[id] = true; });
+    const buyerDeals = {};
+    Object.entries(deals).forEach(([id, d]) => {
+      if (d.type === 'buyer' || d.pipelineType === 'buyer') {
+        buyerDeals[id] = d;
+        const opt = document.createElement('option');
+        opt.value = id;
+        opt.textContent = d.clientName || d.name || id;
+        buyerFilter.appendChild(opt);
+      }
+    });
+    buyerFilter.value = currentVal;
+    mapDataCache.buyerDeals = buyerDeals;
 
-  const code = generateAccessCode();
-  const key = hashEmail(email);
+    // Load all buyer matches
+    const matchPromises = Object.keys(buyerDeals).map(dealId =>
+      db.ref('buyerMatches/' + dealId).once('value').then(s => ({ dealId, matches: s.val() || {} }))
+    );
 
-  await db.ref('portalUsers/' + key).set({
-    name,
-    email,
-    contactId,
-    dealIds,
-    type,
-    accessCode: code,
-    status: 'active',
-    createdAt: new Date().toISOString(),
-    createdBy: currentUser ? currentUser.name : 'admin'
-  });
+    // Load Ryan's listings
+    const listingsPromise = db.ref('realty-ryan/deals').once('value').then(s => {
+      const all = s.val() || {};
+      return Object.entries(all).filter(([,d]) => d.type === 'listing' || d.pipelineType === 'listing');
+    });
 
-  // Show result
-  document.getElementById('pa-result-code').textContent = code;
-  const link = 'https://homes.realtyryan.com/portal/';
-  document.getElementById('pa-result-link').textContent = link;
-  document.getElementById('pa-result-link').href = link;
-  document.getElementById('portal-access-result').classList.remove('hidden');
-  document.getElementById('portal-access-result').dataset.email = email;
-  document.getElementById('portal-access-result').dataset.name = name;
-  document.getElementById('portal-access-result').dataset.code = code;
-
-  toast('Portal access created for ' + name);
-  renderPortalUsers();
-});
-
-window.copyPortalLink = function() {
-  const code = document.getElementById('pa-result-code').textContent;
-  const link = 'https://homes.realtyryan.com/portal/';
-  const text = `Your client portal is ready!\n\nLink: ${link}\nAccess Code: ${code}\n\nLog in with your email and the code above.`;
-  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard!'));
-};
-
-window.emailPortalAccess = function() {
-  const el = document.getElementById('portal-access-result');
-  const email = el.dataset.email;
-  const name = el.dataset.name;
-  const code = el.dataset.code;
-  const subject = encodeURIComponent('Your Realty Ryan Client Portal Access');
-  const body = encodeURIComponent(`Hi ${name},\n\nYour client portal is ready! You can view your transaction status, documents, and more at:\n\nhttps://homes.realtyryan.com/portal/\n\nYour Access Code: ${code}\n\nLog in with your email address and the access code above.\n\nRyan Palmer\nRealty Ryan & Associates\nCorcoran HM Properties\n508-954-2159`);
-  window.open(`mailto:${email}?subject=${subject}&body=${body}`);
-};
-
-function renderPortalUsers() {
-  const tbody = document.getElementById('portal-users-tbody');
-  if (!tbody) return;
-  db.ref('portalUsers').once('value').then(snap => {
-    const users = snap.val() || {};
-    const entries = Object.entries(users);
-    if (!entries.length) {
-      tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">No portal users yet.</td></tr>';
-      return;
-    }
-    entries.sort((a,b) => (a[1].name || '').localeCompare(b[1].name || ''));
-    tbody.innerHTML = entries.map(([key, u]) => {
-      const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Never';
-      return `<tr>
-        <td><strong>${u.name || '—'}</strong></td>
-        <td>${u.email || '—'}</td>
-        <td>${u.type || '—'}</td>
-        <td><code>${u.accessCode || '—'}</code></td>
-        <td>${lastLogin}</td>
-        <td>
-          <button class="btn-xs" onclick="regeneratePortalCode('${key}')">🔄 New Code</button>
-          ${u.status === 'active'
-            ? `<button class="btn-xs btn-danger-outline" onclick="togglePortalUser('${key}','disabled')">Disable</button>`
-            : `<button class="btn-xs btn-success-outline" onclick="togglePortalUser('${key}','active')">Enable</button>`}
-        </td>
-      </tr>`;
-    }).join('');
+    Promise.all([Promise.all(matchPromises), listingsPromise]).then(([matchResults, listings]) => {
+      mapDataCache.matches = matchResults;
+      mapDataCache.listings = listings;
+      populateMapMarkers();
+    });
   });
 }
 
-window.regeneratePortalCode = async function(key) {
-  const code = generateAccessCode();
-  await db.ref('portalUsers/' + key + '/accessCode').set(code);
-  toast('New access code: ' + code);
-  renderPortalUsers();
-};
+function populateMapMarkers() {
+  mapMarkers.clearLayers();
+  const filterDeal = document.getElementById('map-buyer-filter').value;
 
-window.togglePortalUser = async function(key, status) {
-  await db.ref('portalUsers/' + key + '/status').set(status);
-  toast('Portal user ' + status);
-  renderPortalUsers();
-};
+  const iconMatch = createMapIcon('#7A3B14');
+  const iconListing = createMapIcon('#2d6a4f');
+  const iconFav = createMapIcon('#3a6ea5');
+
+  // Add buyer match markers
+  (mapDataCache.matches || []).forEach(({ dealId, matches }) => {
+    if (filterDeal && dealId !== filterDeal) return;
+    const buyerName = mapDataCache.buyerDeals[dealId]?.clientName || dealId;
+
+    Object.entries(matches).forEach(([id, m]) => {
+      const lat = parseFloat(m.latitude || m.lat);
+      const lng = parseFloat(m.longitude || m.lng);
+      if (!lat || !lng) return;
+
+      const icon = m.favorited ? iconFav : iconMatch;
+      const popup = `<div class="rra-popup">
+        ${m.photo ? `<img src="${m.photo}" alt="">` : ''}
+        <h4>${m.address || 'Property'}</h4>
+        <div class="popup-details">${[m.beds ? m.beds + ' bd' : '', m.baths ? m.baths + ' ba' : '', m.sqft ? Number(m.sqft).toLocaleString() + ' sqft' : ''].filter(Boolean).join(' · ')}</div>
+        ${m.price ? `<div class="popup-price">$${Number(m.price).toLocaleString()}</div>` : ''}
+        ${m.matchScore ? `<div class="popup-score">${m.matchScore}% Match</div>` : ''}
+        <div style="font-size:.78rem;color:#6b6b6b;margin-bottom:4px">Buyer: ${buyerName}</div>
+        ${m.listingUrl ? `<a class="popup-link" href="${m.listingUrl}" target="_blank">View Listing →</a>` : ''}
+      </div>`;
+
+      L.marker([lat, lng], { icon }).bindPopup(popup).addTo(mapMarkers);
+    });
+  });
+
+  // Add Ryan's listings
+  (mapDataCache.listings || []).forEach(([id, d]) => {
+    const lat = parseFloat(d.latitude || d.lat);
+    const lng = parseFloat(d.longitude || d.lng);
+    if (!lat || !lng) return;
+
+    const popup = `<div class="rra-popup">
+      ${d.photo ? `<img src="${d.photo}" alt="">` : ''}
+      <h4>${d.address || d.name || 'Listing'}</h4>
+      <div class="popup-details">${[d.beds ? d.beds + ' bd' : '', d.baths ? d.baths + ' ba' : '', d.sqft ? Number(d.sqft).toLocaleString() + ' sqft' : ''].filter(Boolean).join(' · ')}</div>
+      ${d.listPrice ? `<div class="popup-price">$${Number(d.listPrice).toLocaleString()}</div>` : ''}
+      <div style="font-size:.78rem;color:#2d6a4f;font-weight:600">Ryan's Listing</div>
+    </div>`;
+
+    L.marker([lat, lng], { icon: iconListing }).bindPopup(popup).addTo(mapMarkers);
+  });
+}

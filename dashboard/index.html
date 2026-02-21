@@ -9,7 +9,33 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1771699042">
+<link rel="stylesheet" href="styles.css?v=1771699995">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<style>
+#view-map{position:relative}
+.map-container{width:100%;height:calc(100vh - 120px);border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.map-filter-bar{display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.map-filter-bar select{padding:8px 14px;border:1px solid #e8e0d8;border-radius:8px;font-size:.9rem;background:#fff;max-width:260px}
+.map-filter-bar .map-legend{display:flex;gap:16px;margin-left:auto;font-size:.8rem;color:#6b6b6b;align-items:center}
+.map-legend-dot{width:12px;height:12px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:4px}
+.rra-popup{font-family:'Work Sans',sans-serif;min-width:220px;max-width:280px}
+.rra-popup img{width:100%;height:130px;object-fit:cover;border-radius:8px 8px 0 0;margin:-14px -14px 10px}
+.rra-popup h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:2px;color:#1a1a1a}
+.rra-popup .popup-details{font-size:.82rem;color:#6b6b6b;margin-bottom:6px}
+.rra-popup .popup-price{font-size:1.05rem;font-weight:700;color:#7A3B14;margin-bottom:6px}
+.rra-popup .popup-score{display:inline-block;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:12px;background:#faf7f4;color:#7A3B14;margin-bottom:8px}
+.rra-popup .popup-link{display:inline-block;font-size:.82rem;color:#7A3B14;font-weight:600}
+@media(max-width:768px){
+  .map-container{height:calc(100vh - 160px);border-radius:0}
+  .map-filter-bar{padding:0 8px}
+  .map-filter-bar .map-legend{display:none}
+  .map-filter-mobile{position:absolute;top:16px;right:16px;z-index:1000;background:#fff;border:none;border-radius:50%;width:44px;height:44px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:1.2rem;display:none}
+}
+</style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -88,6 +114,7 @@
       <li class="nav-item" data-view="appointments"><span class="nav-icon">▣</span> Appointments</li>
       <li class="nav-item" data-view="calendar"><span class="nav-icon">📅</span> Calendar</li>
       <li class="nav-item" data-view="activity"><span class="nav-icon">⚡</span> Activity</li>
+      <li class="nav-item" data-view="map"><span class="nav-icon">🗺️</span> Map</li>
       <li class="nav-item" data-view="reports"><span class="nav-icon">📊</span> Reports</li>
       <li class="nav-divider"></li>
       <li class="nav-item" data-view="tasks"><span class="nav-icon">☐</span> Tasks</li>
@@ -409,6 +436,22 @@
         </div>
       </section>
 
+      <!-- MAP VIEW -->
+      <section id="view-map" class="view">
+        <div class="view-header">
+          <h2>🗺️ Listing Map</h2>
+        </div>
+        <div class="map-filter-bar">
+          <select id="map-buyer-filter"><option value="">All Buyers</option></select>
+          <div class="map-legend">
+            <span><span class="map-legend-dot" style="background:#7A3B14"></span>Matched</span>
+            <span><span class="map-legend-dot" style="background:#2d6a4f"></span>Ryan's Listings</span>
+            <span><span class="map-legend-dot" style="background:#3a6ea5"></span>Favorited</span>
+          </div>
+        </div>
+        <div id="dashboard-map" class="map-container"></div>
+      </section>
+
       <!-- ADMIN PANEL -->
       <section id="view-admin" class="view">
         <div class="view-header">
@@ -417,57 +460,15 @@
         </div>
         <div class="admin-tabs" id="admin-tabs">
           <button class="admin-tab active" data-admin-tab="users">Users</button>
-          <button class="admin-tab" data-admin-tab="portal">Client Portal</button>
         </div>
         <div id="admin-tab-content">
-          <!-- Users tab -->
-          <div id="admin-panel-users">
-            <div class="data-table-wrap">
-              <table class="data-table" id="admin-users-table">
-                <thead>
-                  <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th></tr>
-                </thead>
-                <tbody id="admin-users-tbody"></tbody>
-              </table>
-            </div>
-          </div>
-          <!-- Portal tab -->
-          <div id="admin-panel-portal" class="hidden">
-            <div class="panel" style="margin-bottom:20px">
-              <h3 style="margin-bottom:12px">Generate Client Portal Access</h3>
-              <form id="portal-access-form" class="form-stack">
-                <div class="form-row">
-                  <div class="input-group"><label>Client Email</label><input type="email" id="pa-email" required placeholder="client@email.com"></div>
-                  <div class="input-group"><label>Client Name</label><input type="text" id="pa-name" required placeholder="Full name"></div>
-                </div>
-                <div class="form-row">
-                  <div class="input-group"><label>Contact ID</label><input type="text" id="pa-contact-id" placeholder="Firebase contact ID"></div>
-                  <div class="input-group"><label>Deal ID(s)</label><input type="text" id="pa-deal-ids" placeholder="Comma-separated deal IDs"></div>
-                </div>
-                <div class="form-row">
-                  <div class="input-group"><label>Client Type</label>
-                    <select id="pa-type" class="form-select"><option value="buyer">Buyer</option><option value="seller">Seller</option><option value="both">Both</option></select>
-                  </div>
-                </div>
-                <button type="submit" class="btn-primary">Generate Access Code</button>
-              </form>
-              <div id="portal-access-result" class="hidden" style="margin-top:16px;padding:16px;background:#f0fdf4;border-radius:8px">
-                <p style="font-weight:600;margin-bottom:8px">✅ Portal Access Created</p>
-                <p>Access Code: <strong id="pa-result-code" style="font-size:1.2rem;letter-spacing:2px"></strong></p>
-                <p>Portal Link: <a id="pa-result-link" href="#" target="_blank" style="word-break:break-all"></a></p>
-                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-                  <button class="btn-sm btn-primary" onclick="copyPortalLink()">📋 Copy Link</button>
-                  <button class="btn-sm btn-outline" onclick="emailPortalAccess()">✉️ Email Client</button>
-                </div>
-              </div>
-            </div>
-            <h3 style="margin-bottom:12px">Active Portal Users</h3>
-            <div class="data-table-wrap">
-              <table class="data-table">
-                <thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Code</th><th>Last Login</th><th>Actions</th></tr></thead>
-                <tbody id="portal-users-tbody"></tbody>
-              </table>
-            </div>
+          <div class="data-table-wrap">
+            <table class="data-table" id="admin-users-table">
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="admin-users-tbody"></tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -515,7 +516,7 @@
 <div id="toast-container" class="toast-container"></div>
 
 <audio id="notif-sound" preload="auto" src="data:audio/wav;base64,UklGRlQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTAFAAAAAAAtAFoAhACmAL8AzwDWANQAyQC2AJ0AfgBaADMADADo/8P/ov+F/27/Xf9T/1D/Vf9h/3P/jP+q/8z/8P8TADUAVABuAIIAjwCTAI8AhAByAFoAPQAbAPj/0v+s/4j/Z/9L/zb/Kf8k/yf/Mv9F/1//f/+k/8z/9f8dAEMAZACAAJQAoACjAJwAjAByAFAAJwD4/8b/kv9f/zD/CP/o/tH+xP7C/sv+3/7+/ib/Uf+B/7P/5P8TAD4AYgB+AI8AlgCRAIIAaQBGABwA7v+8/4n/WP8r/wT/5v7T/sv+z/7f/vv+JP9T/4j/v//4/y8AZACRAJ4ApgCkAJcAgABfADQAAgDK/5D/Vv8i//b+2f7K/sn+1v7x/hX/Qv92/63/5v8cAFAAewCcALIAuwC5AKoAkABrADwABgDM/5D/V/8k//3+5v7d/uP+9/4Z/0T/d/+u/+j/IQBXAIYArADFANIA0gDIALIAkgBoADUA/P/A/4X/UP8k/wT/8v7v/vr+E/82/2L/lP/I//3/MABgAIkAqAC8AMQAwgC0AJwAegBNABgA4P+m/3D/Qf8a/wD/9P71/gT/Hf8+/2b/k//D//P/IgBNAHIAjgCgAKgAowCTAHgAUwAkAPL/vf+K/1z/NP8W/wX/A/8L/x3/N/9Y/37/pv/R//z/JQBJAGcAfACJAIoAgABuAFIAMAAN/+j/w/+i/4b/cf9i/1z/Xv9n/3j/j/+s/8v/6/8MACoAQwBUAF8AZQBYAEYALQAQ//H/0/+4/6H/kP+G/4L/hv+R/6L/t//R/+z/BwAhADkASgBWAFwAWABKADkAIQAI/+7/1f+//67/o/+e/5//p/+1/8b/3P/0/wwAIwA3AEYAUABUAE4AQgAyAB0ABv/v/9n/xf+2/6z/p/+o/67/uf/I/9n/7P8AABIAIwAyADoAPgA8ADQAKAAZAAYA8v/i/9X/yv/E/8L/xP/L/9T/4P/t//z/CgAXACIAKQAtAC0AKAAhABcACwD+//L/6P/g/9v/2P/Y/9v/4f/p//H/+v8DAAoAEQAVABgAFwATAA0ABgD//w=="></audio>
-<script src="app.js?v=1771699042"></script>
+<script src="app.js?v=1771699995?v=1771697950"></script>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
 </body>
 </html>

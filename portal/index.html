@@ -8,6 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <style>
 :root{--brand:#7A3B14;--brand-light:#a05a2c;--brand-bg:#faf7f4;--bg:#fff;--text:#1a1a1a;--text-muted:#6b6b6b;--border:#e8e0d8;--success:#2d6a4f;--warning:#b8860b;--danger:#a0342e;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.06)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -147,6 +152,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand)}
 .hidden{display:none!important}
 .mb-12{margin-bottom:12px}
 .mb-16{margin-bottom:16px}
+/* Portal Map */
+#sec-map{padding:0!important}
+.portal-map{width:100%;height:calc(100vh - 120px)}
+.rra-popup{font-family:'Work Sans',sans-serif;min-width:200px;max-width:260px}
+.rra-popup img{width:100%;height:120px;object-fit:cover;border-radius:8px 8px 0 0;margin:-14px -14px 8px}
+.rra-popup h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:2px;color:#1a1a1a}
+.rra-popup .popup-details{font-size:.8rem;color:#6b6b6b;margin-bottom:4px}
+.rra-popup .popup-price{font-size:1rem;font-weight:700;color:#7A3B14;margin-bottom:4px}
+.rra-popup .popup-score{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:12px;background:#faf7f4;color:#7A3B14;margin-bottom:6px}
+.rra-popup .popup-actions{display:flex;gap:6px;margin-top:8px}
+.rra-popup .popup-actions button{flex:1;padding:8px;border-radius:6px;font-size:.78rem;font-weight:600;border:none;cursor:pointer}
+.rra-popup .btn-popup-fav{background:#fef3cd;color:#b8860b}
+.rra-popup .btn-popup-fav.active{background:#b8860b;color:#fff}
+.rra-popup .btn-popup-showing{background:#7A3B14;color:#fff}
+.portal-map-pin svg{filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
 @media(min-width:480px){.content{padding:24px}}
 </style>
 </head>
@@ -225,6 +245,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand)}
       </div>
     </section>
 
+    <!-- MAP -->
+    <section id="sec-map" class="section">
+      <div id="portal-map" class="portal-map"></div>
+    </section>
+
     <!-- SHOWINGS -->
     <section id="sec-showings" class="section">
       <h2 style="margin-bottom:16px">Showing History</h2>
@@ -296,6 +321,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand)}
     <button class="active" data-sec="status"><span class="nav-icon">📊</span>Status</button>
     <button data-sec="docs"><span class="nav-icon">📄</span>Docs</button>
     <button data-sec="listings" id="nav-listings"><span class="nav-icon">🏠</span>Listings</button>
+    <button data-sec="map" id="nav-map"><span class="nav-icon">🗺️</span>Map</button>
     <button data-sec="showings"><span class="nav-icon">🗓️</span>Showings</button>
     <button data-sec="team"><span class="nav-icon">👥</span>Team</button>
     <button data-sec="activity"><span class="nav-icon">📋</span>Activity</button>
@@ -391,9 +417,10 @@ function startApp() {
   $('app').style.display = 'block';
   $('user-name').textContent = portalUser.name || portalUser.email;
 
-  // Hide listings tab if seller
+  // Hide listings/map tab if seller
   if (portalUser.type === 'seller') {
     $('nav-listings').classList.add('hidden');
+    if ($('nav-map')) $('nav-map').classList.add('hidden');
   }
 
   loadData();
@@ -662,6 +689,111 @@ function renderVendors(referrals) {
     }).join('');
   });
 }
+
+// ── Portal Map ──
+let portalMap = null;
+let portalMapMarkers = null;
+let portalFavsCache = {};
+
+function createPortalIcon(color) {
+  return L.divIcon({
+    className: 'portal-map-pin',
+    html: `<svg width="26" height="36" viewBox="0 0 28 38"><path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.27 21.73 0 14 0z" fill="${color}"/><circle cx="14" cy="14" r="6" fill="#fff"/></svg>`,
+    iconSize: [26, 36],
+    iconAnchor: [13, 36],
+    popupAnchor: [0, -36]
+  });
+}
+
+function initPortalMap() {
+  if (portalMap) { portalMap.invalidateSize(); return; }
+  portalMap = L.map('portal-map').setView([35.19, -80.83], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap', maxZoom: 19
+  }).addTo(portalMap);
+  portalMapMarkers = L.markerClusterGroup({ maxClusterRadius: 40 });
+  portalMap.addLayer(portalMapMarkers);
+}
+
+function renderPortalMap(matches, dealId) {
+  if (!portalMap) return;
+  portalMapMarkers.clearLayers();
+
+  // Load favorites
+  db.ref('portalFavorites/' + portalUser.contactId).once('value').then(snap => {
+    portalFavsCache = snap.val() || {};
+    const iconMatch = createPortalIcon('#7A3B14');
+    const iconFav = createPortalIcon('#3a6ea5');
+
+    Object.entries(matches).forEach(([id, m]) => {
+      if (portalFavsCache[m.mlsId || id]?.dismissed) return;
+      const lat = parseFloat(m.latitude || m.lat);
+      const lng = parseFloat(m.longitude || m.lng);
+      if (!lat || !lng) return;
+
+      const isFav = portalFavsCache[m.mlsId || id]?.favorited;
+      const icon = isFav ? iconFav : iconMatch;
+      const mlsKey = m.mlsId || id;
+
+      const popup = `<div class="rra-popup">
+        ${m.photo ? `<img src="${m.photo}" alt="">` : ''}
+        <h4>${m.address || 'Property'}</h4>
+        <div class="popup-details">${[m.beds ? m.beds + ' bd' : '', m.baths ? m.baths + ' ba' : '', m.sqft ? Number(m.sqft).toLocaleString() + ' sqft' : ''].filter(Boolean).join(' · ')}</div>
+        ${m.price ? `<div class="popup-price">$${Number(m.price).toLocaleString()}</div>` : ''}
+        ${m.matchScore ? `<div class="popup-score">${m.matchScore}% Match</div>` : ''}
+        <div class="popup-actions">
+          <button class="btn-popup-fav ${isFav ? 'active' : ''}" onclick="mapToggleFav('${mlsKey}')">❤️ ${isFav ? 'Saved' : 'Favorite'}</button>
+          <button class="btn-popup-showing" onclick="mapScheduleShowing('${(m.address||'').replace(/'/g,"\\'")}')">📅 Schedule</button>
+        </div>
+      </div>`;
+
+      L.marker([lat, lng], { icon }).bindPopup(popup).addTo(portalMapMarkers);
+    });
+  });
+}
+
+window.mapToggleFav = function(mlsId) {
+  const path = 'portalFavorites/' + portalUser.contactId + '/' + mlsId;
+  const isFav = portalFavsCache[mlsId]?.favorited;
+  db.ref(path).update({ favorited: !isFav, dismissed: false, updatedAt: new Date().toISOString() });
+  // Refresh map
+  const dealId = Object.keys(portalUser.dealIds || {})[0];
+  if (dealId) db.ref('buyerMatches/' + dealId).once('value').then(s => renderPortalMap(s.val() || {}, dealId));
+};
+
+window.mapScheduleShowing = function(address) {
+  const msg = encodeURIComponent(`Hi Ryan, I'd like to schedule a showing for ${address}. What times work?`);
+  window.open(`mailto:ryanpalmer@hmproperties.com?subject=Showing Request: ${encodeURIComponent(address)}&body=${msg}`);
+};
+
+// Hook into nav to init map
+const origNavHandler = document.querySelectorAll('.bottom-nav button');
+origNavHandler.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.sec === 'map') {
+      setTimeout(() => { initPortalMap(); refreshPortalMapData(); }, 100);
+    }
+  });
+});
+
+function refreshPortalMapData() {
+  if (!portalUser) return;
+  const dealIds = portalUser.dealIds || {};
+  Object.keys(dealIds).forEach(dealId => {
+    db.ref('buyerMatches/' + dealId).once('value').then(s => renderPortalMap(s.val() || {}, dealId));
+  });
+}
+
+// Hide map tab for sellers
+function hideMapForSellers() {
+  if (portalUser && portalUser.type === 'seller') {
+    const mapNav = document.getElementById('nav-map');
+    if (mapNav) mapNav.classList.add('hidden');
+  }
+}
+
+// Patch startApp to hide map for sellers
+const origStartApp = startApp;
 
 // ── Render: Activity Timeline ──
 function renderTimeline() {
