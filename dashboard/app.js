@@ -596,7 +596,8 @@ function renderDashboardCalendarEvents() {
     const d = new Date(e.date + 'T12:00:00');
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const colorMap = { dd: '#a0342e', closing: '#2d6a4f', inspection: '#3a6ea5', appraisal: '#6b4c9a', appointment: '#b8860b', other: '#9a9590' };
-    const daysUntil = Math.ceil((d - now) / 86400000);
+    const todayLocal = new Date(localDateStr() + 'T12:00:00');
+    const daysUntil = Math.round((d - todayLocal) / 86400000);
     const urgency = daysUntil <= 3 ? ' style="font-weight:700"' : '';
     return `
       <div class="cal-event-mini"${urgency}>
