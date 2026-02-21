@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RRA Command Center</title>
+<meta name="description" content="Realty Ryan & Associates Command Center">
+<meta name="theme-color" content="#130f0a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-mark">RRA</div>
+      <h1>Command Center</h1>
+      <p class="login-subtitle">Realty Ryan & Associates</p>
+    </div>
+    <form id="login-form" autocomplete="off">
+      <div class="input-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="you@realtyryan.com" required>
+      </div>
+      <div class="input-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" required>
+      </div>
+      <div id="login-error" class="login-error"></div>
+      <button type="submit" class="btn-primary btn-full">Sign In</button>
+    </form>
+  </div>
+  <div class="login-footer">Corcoran HM Properties</div>
+</div>
+
+<!-- APP SHELL -->
+<div id="app-shell" class="app-shell hidden">
+  <!-- SIDEBAR -->
+  <nav id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">RRA</div>
+      <span class="sidebar-title">Command Center</span>
+      <button class="sidebar-close" id="sidebar-close">×</button>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item active" data-view="dashboard"><span class="nav-icon">◎</span> Dashboard</li>
+      <li class="nav-item" data-view="listings"><span class="nav-icon">⌂</span> Listings Pipeline</li>
+      <li class="nav-item" data-view="buyers"><span class="nav-icon">◈</span> Buyers Pipeline</li>
+      <li class="nav-item" data-view="contacts"><span class="nav-icon">◉</span> Contacts</li>
+      <li class="nav-item" data-view="appointments"><span class="nav-icon">▣</span> Appointments</li>
+      <li class="nav-item" data-view="calendar"><span class="nav-icon">📅</span> Calendar</li>
+      <li class="nav-divider"></li>
+      <li class="nav-item" data-view="tasks"><span class="nav-icon">☐</span> Tasks</li>
+      <li class="nav-item" data-view="financials"><span class="nav-icon">◆</span> Financials</li>
+      <li class="nav-item" data-view="showings"><span class="nav-icon">◐</span> Showings</li>
+      <li class="nav-item" data-view="vendors"><span class="nav-icon">◧</span> Vendors</li>
+      <li class="nav-divider"></li>
+      <li class="nav-item" data-view="settings"><span class="nav-icon">⚙</span> Settings</li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="user-avatar" id="sidebar-avatar">RP</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebar-name">Ryan Palmer</span>
+          <span class="user-role" id="sidebar-role">Agent Lead</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="search-box">
+          <input type="text" placeholder="Search transactions, contacts..." id="global-search">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="notif-bell" id="notif-bell">
+          <span class="bell-icon">⚡</span>
+          <span class="notif-count" id="notif-count">0</span>
+        </button>
+        <div class="topbar-user">
+          <span class="topbar-user-name" id="topbar-name">Ryan Palmer</span>
+          <div class="topbar-avatar" id="topbar-avatar">RP</div>
+        </div>
+        <button class="btn-signout" id="btn-signout" title="Sign Out">↗</button>
+      </div>
+    </header>
+
+    <div class="view-container" id="view-container">
+
+      <!-- DASHBOARD -->
+      <section id="view-dashboard" class="view active">
+        <div class="view-header">
+          <h2>Dashboard</h2>
+          <p class="view-subtitle" id="dashboard-date"></p>
+        </div>
+        <div class="stats-grid" id="dashboard-stats"></div>
+        <div class="dashboard-panels">
+          <div class="panel">
+            <h3>Upcoming Tasks</h3>
+            <div class="task-list" id="dashboard-tasks"></div>
+          </div>
+          <div class="panel">
+            <h3>Recent Activity</h3>
+            <div class="activity-feed" id="dashboard-activity"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:20px">
+          <div class="panel-header-row">
+            <h3>📅 Upcoming Calendar Events</h3>
+            <button class="btn-link" onclick="navigateTo('calendar')">View Full Calendar →</button>
+          </div>
+          <div id="dashboard-calendar-events" class="calendar-event-list"></div>
+        </div>
+      </section>
+
+      <!-- LISTINGS PIPELINE -->
+      <section id="view-listings" class="view">
+        <div class="view-header">
+          <h2>Listings Pipeline</h2>
+          <button class="btn-primary btn-sm" id="btn-new-listing">+ New Listing</button>
+        </div>
+        <div class="pipeline-board" id="listing-pipeline"></div>
+      </section>
+
+      <!-- BUYERS PIPELINE -->
+      <section id="view-buyers" class="view">
+        <div class="view-header">
+          <h2>Buyers Pipeline</h2>
+          <button class="btn-primary btn-sm" id="btn-new-buyer">+ New Buyer</button>
+        </div>
+        <div class="pipeline-board" id="buyer-pipeline"></div>
+      </section>
+
+      <!-- CONTACTS -->
+      <section id="view-contacts" class="view">
+        <div class="view-header">
+          <h2>Contacts</h2>
+          <div class="view-actions">
+            <button class="btn-primary btn-sm" id="btn-new-contact">+ New Contact</button>
+          </div>
+        </div>
+        <div class="filter-bar" id="contacts-filters">
+          <input type="text" class="filter-search" id="contacts-search" placeholder="Search contacts...">
+          <select class="filter-select" id="contacts-type-filter">
+            <option value="">All Types</option>
+            <option value="buyer">Buyers</option>
+            <option value="seller">Sellers</option>
+            <option value="both">Both</option>
+            <option value="vendor">Vendors</option>
+            <option value="agent">Agents</option>
+            <option value="other">Other</option>
+          </select>
+          <select class="filter-select" id="contacts-status-filter">
+            <option value="">All Statuses</option>
+            <option value="lead">Lead</option>
+            <option value="active">Active</option>
+            <option value="under-contract">Under Contract</option>
+            <option value="closed">Closed</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table" id="contacts-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Source</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="contacts-tbody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state hidden" id="contacts-empty">
+          <p>No contacts yet. Add your first contact to get started.</p>
+        </div>
+      </section>
+
+      <!-- APPOINTMENTS -->
+      <section id="view-appointments" class="view">
+        <div class="view-header">
+          <h2>Listing Appointments</h2>
+          <button class="btn-primary btn-sm" id="btn-new-appt">+ New Appointment</button>
+        </div>
+        <div id="appointments-list" class="appointments-list"></div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section id="view-calendar" class="view">
+        <div class="view-header">
+          <h2>Calendar</h2>
+          <div class="view-actions">
+            <button class="btn-outline btn-sm" id="cal-prev">‹</button>
+            <span class="cal-month-label" id="cal-month-label"></span>
+            <button class="btn-outline btn-sm" id="cal-next">›</button>
+            <button class="btn-outline btn-sm" id="cal-today">Today</button>
+            <select class="filter-select" id="cal-view-mode">
+              <option value="month">Month</option>
+              <option value="week">Week</option>
+              <option value="list">List</option>
+            </select>
+            <button class="btn-primary btn-sm" id="btn-new-cal-event">+ Event</button>
+          </div>
+        </div>
+        <div class="cal-legend" id="cal-legend">
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#a0342e"></span> DD Deadline</span>
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#2d6a4f"></span> Closing</span>
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#3a6ea5"></span> Inspection</span>
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#6b4c9a"></span> Appraisal</span>
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#b8860b"></span> Appointment</span>
+          <span class="cal-leg-item"><span class="cal-dot" style="background:#9a9590"></span> Other</span>
+        </div>
+        <div id="calendar-grid" class="calendar-grid"></div>
+        <div id="calendar-list" class="calendar-list hidden"></div>
+      </section>
+
+      <!-- TASKS -->
+      <section id="view-tasks" class="view">
+        <div class="view-header">
+          <h2>Tasks</h2>
+          <div class="view-actions">
+            <select class="filter-select" id="tasks-filter-assignee">
+              <option value="">All</option>
+              <option value="ryan-001">Ryan</option>
+              <option value="ally-001">Ally</option>
+            </select>
+            <button class="btn-primary btn-sm" id="btn-new-task">+ New Task</button>
+          </div>
+        </div>
+        <div id="tasks-sections"></div>
+      </section>
+
+      <!-- FINANCIALS -->
+      <section id="view-financials" class="view">
+        <div class="view-header">
+          <h2>Financials</h2>
+          <div class="view-actions">
+            <select class="filter-select" id="fin-period">
+              <option value="month">This Month</option>
+              <option value="quarter">This Quarter</option>
+              <option value="year">This Year</option>
+              <option value="all">All Time</option>
+            </select>
+          </div>
+        </div>
+        <div class="stats-grid" id="fin-stats"></div>
+        <div class="panel" style="margin-top:20px">
+          <h3>Per-Deal Breakdown</h3>
+          <div class="data-table-wrap">
+            <table class="data-table" id="fin-deals-table">
+              <thead><tr><th>Deal</th><th>GCI</th><th>Expenses</th><th>Net</th><th>Status</th></tr></thead>
+              <tbody id="fin-deals-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHOWINGS -->
+      <section id="view-showings" class="view">
+        <div class="view-header">
+          <h2>Showings</h2>
+          <button class="btn-primary btn-sm" id="btn-add-showing">+ Add Showing</button>
+        </div>
+        <div id="showings-summary" class="stats-grid"></div>
+        <div id="showings-by-listing" style="margin-top:20px"></div>
+      </section>
+
+      <!-- VENDORS -->
+      <section id="view-vendors" class="view">
+        <div class="view-header">
+          <h2>Vendor Directory</h2>
+          <button class="btn-primary btn-sm" id="btn-new-vendor">+ Add Vendor</button>
+        </div>
+        <div class="filter-bar">
+          <input type="text" class="filter-search" id="vendors-search" placeholder="Search vendors...">
+          <select class="filter-select" id="vendors-cat-filter">
+            <option value="">All Categories</option>
+            <option value="photographer">Photographer</option>
+            <option value="videographer">Videographer</option>
+            <option value="inspector">Inspector</option>
+            <option value="attorney">Attorney</option>
+            <option value="lender">Lender</option>
+            <option value="contractor">Contractor</option>
+            <option value="stager">Stager</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div id="vendors-grid" class="vendors-grid"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="view-settings" class="view">
+        <div class="view-header"><h2>Settings</h2></div>
+        <div class="panel">
+          <h3>Account</h3>
+          <div class="settings-section" id="settings-account"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODAL CONTAINER -->
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div class="modal-content" id="modal-content"></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container" class="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
