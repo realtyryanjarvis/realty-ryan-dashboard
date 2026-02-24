@@ -5,7 +5,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 // ── Firebase ──
-const firebaseConfig = { databaseURL: "https://realty-ryan-dashboard-default-rtdb.firebaseio.com" };
+const firebaseConfig = { databaseURL: "https://realtyryan-dashboard-default-rtdb.firebaseio.com" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
