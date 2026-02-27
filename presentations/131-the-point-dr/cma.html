@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMA — 131 The Point Drive, Mooresville | Realty Ryan & Associates</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f8f7f6;
+  --primary:#130f0a;
+  --navy:#113665;
+  --navy-light:rgba(17,54,101,.07);
+  --border:#dde3ea;
+  --muted:#6b7280;
+  --white:#fff;
+  --surface:#f4f6f9;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --row-alt:#f0f4f8;
+}
+html{font-size:15px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--sans);background:#e8ecf0;color:var(--primary);line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ── PAGE WRAPPER ── */
+.page{
+  max-width:900px;
+  margin:32px auto;
+  background:var(--white);
+  padding:52px 60px 40px;
+  box-shadow:0 8px 48px rgba(0,0,0,.13);
+  position:relative;
+}
+
+/* ── HEADER ── */
+.cma-header{text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--navy)}
+.cma-title{font-family:var(--serif);font-size:2.4rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);margin-bottom:10px}
+.cma-subtitle{font-size:.82rem;color:var(--muted);letter-spacing:.04em;line-height:1.7}
+.cma-subtitle strong{color:var(--primary);font-weight:600}
+
+/* ── SECTION LABEL ── */
+.section-label{
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--navy);font-weight:700;margin-bottom:8px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.section-subhead{font-size:.82rem;color:var(--muted);margin-bottom:14px;letter-spacing:.02em}
+
+/* ── TABLES ── */
+table{width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:14px}
+thead tr{background:var(--navy);color:#fff}
+thead th{padding:8px 10px;text-align:left;font-weight:600;letter-spacing:.04em;font-size:.7rem;text-transform:uppercase}
+tbody tr:nth-child(even){background:var(--row-alt)}
+tbody tr:nth-child(odd){background:var(--white)}
+tbody td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr:hover{background:#e8eef6}
+
+/* ── STAT BOXES ── */
+.stat-row{display:flex;gap:16px;margin:18px 0}
+.stat-box{flex:1;border:1.5px solid var(--border);border-top:3px solid var(--navy);border-radius:8px;padding:16px 18px;background:var(--white)}
+.stat-box .stat-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:600}
+.stat-box .stat-value{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--navy);line-height:1.2}
+.stat-box .stat-sub{font-size:.72rem;color:var(--muted);margin-top:3px}
+
+/* ── STATS BAR ── */
+.stats-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:14px 0;background:var(--surface)}
+.stats-bar-item{flex:1;padding:10px 14px;text-align:center;border-right:1px solid var(--border)}
+.stats-bar-item:last-child{border-right:none}
+.stats-bar-item .sb-label{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:3px}
+.stats-bar-item .sb-value{font-size:.92rem;font-weight:700;color:var(--navy);font-family:var(--serif)}
+
+/* ── HIGHLIGHTS ── */
+.highlights-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin:12px 0}
+.highlights-list li{font-size:.83rem;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.highlights-list li::before{content:'✦';color:var(--navy);font-size:.7rem;flex-shrink:0;margin-top:2px}
+
+/* ── ANALYSIS ── */
+.analysis{font-size:.82rem;color:var(--muted);line-height:1.65;margin:10px 0;font-style:italic;padding:10px 14px;background:var(--surface);border-left:3px solid var(--navy);border-radius:0 6px 6px 0}
+
+/* ── EQUITY METRICS ── */
+.equity-metrics{display:flex;gap:12px;margin:8px 0 4px;font-size:.8rem;color:var(--muted)}
+.equity-metrics span{display:flex;align-items:center;gap:6px}
+.equity-metrics strong{color:var(--navy);font-weight:700}
+.equity-sep{color:var(--border)}
+
+/* ── NARRATIVE ── */
+.narrative{font-size:.83rem;line-height:1.7;color:#374151;margin-top:12px;padding:14px 18px;background:var(--navy-light);border-radius:8px}
+
+/* ── PRICING FRAMEWORK ── */
+.star-row{background:#fffbe6!important}
+.star-row td:first-child::after{content:' ★';color:#c49a00;font-size:.75rem}
+
+/* ── CTA BOX ── */
+.cta-box{text-align:center;margin-top:20px;padding:18px;border:1.5px solid var(--navy);border-radius:10px;background:var(--navy-light)}
+.cta-box h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--navy);margin-bottom:6px}
+.cta-box p{font-size:.78rem;color:var(--muted)}
+
+/* ── FOOTER ── */
+.page-footer{
+  margin-top:32px;padding-top:14px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+}
+.page-footer .brand{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--navy)}
+.page-footer .page-num{font-weight:700;color:var(--navy)}
+
+/* ── SECTION SPACING ── */
+.section-block{margin-bottom:28px}
+
+/* ── BOTTOM LINE ── */
+.bottom-line{font-size:.88rem;font-weight:600;color:var(--navy);padding:12px 16px;border:1.5px solid var(--navy);border-radius:8px;margin:12px 0;text-align:center;background:var(--navy-light)}
+
+/* ── PRINT ── */
+@media print{
+  body{background:#fff}
+  .page{
+    margin:0;
+    padding:36px 48px 28px;
+    box-shadow:none;
+    max-width:100%;
+    page-break-after:always;
+  }
+  .page:last-child{page-break-after:avoid}
+  .stat-box,.stats-bar,.analysis,.narrative,.cta-box,.bottom-line{
+    box-shadow:none!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  thead tr{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tbody tr:nth-child(even){background:var(--row-alt)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  a{text-decoration:none;color:inherit}
+}
+
+@page{margin:0.5in 0.6in;size:letter portrait}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 1 -->
+<div class="page" id="page1">
+
+  <div class="cma-header">
+    <div class="cma-title">Comparative Market Analysis</div>
+    <div class="cma-subtitle">
+      <strong>131 The Point Drive, Mooresville, NC 28117</strong>
+      &nbsp;·&nbsp; The Point
+      &nbsp;·&nbsp; 4 BD / 3 Full / 3 Half BA
+      &nbsp;·&nbsp; 6,176 SF
+      &nbsp;·&nbsp; Prepared February 2026
+    </div>
+  </div>
+
+  <!-- Subject Property -->
+  <div class="section-block">
+    <div class="section-label">Subject Property</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Beds</th><th>Baths</th><th>SF</th>
+          <th>Acres</th><th>Year Built</th><th>Subdivision</th><th>Last Sale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>131 The Point Drive, Mooresville NC</td>
+          <td>4</td>
+          <td>3 Full / 3 Half</td>
+          <td>6,176</td>
+          <td>0.94</td>
+          <td>—</td>
+          <td>The Point</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Property Highlights -->
+  <div class="section-block">
+    <div class="section-label">Property Highlights</div>
+    <ul class="highlights-list">
+      <li>Simonini Builders — premium custom construction</li><li>Overlooks the 9th green — golf course views</li><li>Deeded boat slip conveys with the property</li><li>3-car garage</li><li>Traditional architecture — unique among contemporary comps</li><li>0.94-acre lot in The Point community</li>
+    </ul>
+  </div>
+
+  <!-- Equity Growth -->
+  <div class="section-block">
+    <div class="section-label">Equity Growth Since Purchase</div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-label">Purchase Price</div>
+        <div class="stat-value">—</div>
+        <div class="stat-sub">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Estimated Current Value</div>
+        <div class="stat-value">$3,250,000</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Estimated Equity Gain</div>
+        <div class="stat-value">—</div>
+      </div>
+    </div>
+    <div class="equity-metrics">
+      <span><strong>—</strong> Appreciation Over —</span>
+      <span class="equity-sep">·</span>
+      <span><strong>$526</strong> Current $/SF</span>
+    </div>
+    <div class="narrative">131 The Point Drive was previously listed at $3,250,000 by Ben Bowen in March 2025 and withdrawn after 103 days in June. At $526/SF, the home is priced above the area's average closed price of $438/SF. A modest price adjustment to $3,199,000 would bring the $/SF closer to market norms and provide a fresh start with improved market positioning. With a deeded boat slip, golf course views, and premium Simonini construction, the home's fundamentals are strong — the opportunity is in strategic repositioning.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
+    <span class="page-num">1 of 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 2 -->
+<div class="page" id="page2">
+
+  <div class="cma-header">
+    <div class="cma-title">Comparative Market Analysis</div>
+    <div class="cma-subtitle">
+      <strong>131 The Point Drive, Mooresville, NC 28117</strong>
+      &nbsp;·&nbsp; Sold &amp; Pending Comparables
+    </div>
+  </div>
+
+  <!-- Recently Sold -->
+  <div class="section-block">
+    <div class="section-label">Recently Sold</div>
+    <div class="section-subhead">Within 0.5 Miles of 131 The Point Drive · The Point Subdivision · Last 365 Days</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Sold Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Closed</th><th>Dist.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>130 Brick Kiln Way</td><td>$3,730,000</td><td>$650</td><td>4</td><td>3/3</td><td>5,744</td><td>1.02</td><td>24</td><td>May 2025</td><td>0.3 mi</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">The strongest closed comp is 130 Brick Kiln Way — a 4/6, 5,744 SF waterfront property with 250+ ft of shoreline and a private beach that sold for $3,730,000 ($650/SF) in just 24 days. Notably, it had no pool (only renderings) and came off the market quickly due to its exceptional waterfront position. This sets a ceiling for premium waterfront product. Non-waterfront and less premium properties in The Point have closed in the $1–2M range, underscoring the premium buyers assign to direct water access.</div>
+    <div class="stats-bar">
+      <div class="stats-bar-item">
+        <span class="sb-label">Median Price</span>
+        <span class="sb-value">$3,730,000</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Sales</span>
+        <span class="sb-value">1</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Avg $/SF</span>
+        <span class="sb-value">$650</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Median DOM</span>
+        <span class="sb-value">24</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Under Contract -->
+  <div class="section-block">
+    <div class="section-label">Under Contract</div>
+    <div class="section-subhead">Within 0.5 Miles of 131 The Point Drive · Currently Under Contract</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Status</th><th>Date</th><th>Dist.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>105 Moors End Loop</td><td>$4,975,000</td><td>$692</td><td>4</td><td>5/2</td><td>7,190</td><td>0.82</td><td>21</td><td>Active → UC</td><td>—</td><td>0.4 mi</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">105 Moors End Loop — a 4/7, 7,190 SF waterfront home with dock and pool — went under contract in 21 days at $4,975,000 ($692/SF). This confirms strong buyer demand for fully-loaded waterfront product with pool and dock at the $4.5M–$5M range. The premium over 131 The Point is justified by direct waterfront access, dock, and pool — all features buyers in this market prioritize.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
+    <span class="page-num">2 of 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 3 -->
+<div class="page" id="page3">
+
+  <div class="cma-header">
+    <div class="cma-title">Comparative Market Analysis</div>
+    <div class="cma-subtitle">
+      <strong>131 The Point Drive, Mooresville, NC 28117</strong>
+      &nbsp;·&nbsp; Active Listings
+    </div>
+  </div>
+
+  <!-- Active Listings -->
+  <div class="section-block">
+    <div class="section-label">Current Active Listings</div>
+    <div class="section-subhead">Within 0.5 Miles of 131 The Point Drive · Current Active Listings · Last 30 Days</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Subdivision</th><th>Dist.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>128 Brownstone Drive</td><td>$3,895,000</td><td>$601</td><td>5</td><td>4/2</td><td>6,478</td><td>0.82</td><td>106</td><td>The Point</td><td>0.2 mi</td></tr><tr><td>1812 Brawley School Rd</td><td>$3,895,000</td><td>$752</td><td>5</td><td>4/2</td><td>5,177</td><td>1.12</td><td>1</td><td>The Point</td><td>0.5 mi</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">Two active listings compete directly for the same buyer pool. 128 Brownstone Drive (waterfront, boat lift, no pool) has sat for 106 days at $3,895,000 despite a $100K price reduction in December — a signal that the market is not fully absorbing waterfront product at this price point. 1812 Brawley School Road just hit the market today at $3,895,000 with Trump National golf views, pool, and dedicated boat slip, but features a dated kitchen. Both competitors are waterfront or golf-view product priced above $3.8M. This presents an opportunity for 131 The Point to stand out as the most competitively priced premium option in the subdivision.</div>
+    <div class="stats-bar">
+      <div class="stats-bar-item">
+        <span class="sb-label">Median Price</span>
+        <span class="sb-value">$3,895,000</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Listings</span>
+        <span class="sb-value">2</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Avg $/SF</span>
+        <span class="sb-value">$677</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Median DOM</span>
+        <span class="sb-value">54</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
+    <span class="page-num">3 of 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 4 -->
+<div class="page" id="page4">
+
+  <div class="cma-header">
+    <div class="cma-title">Strategic Summary</div>
+    <div class="cma-subtitle">
+      Pricing Analysis &amp; Recommendation &nbsp;·&nbsp;
+      <strong>131 The Point Drive</strong>
+      &nbsp;·&nbsp; 4 BD/3 Full / 3 Half BA &nbsp;·&nbsp; 6,176 SF
+    </div>
+  </div>
+
+  <!-- $/SF Benchmarking -->
+  <div class="section-block">
+    <div class="section-label">$/SF Benchmarking</div>
+    <table>
+      <thead>
+        <tr><th>Property</th><th>Price</th><th>SF</th><th>$/SF</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>130 Brick Kiln Way (Sold)</td><td>$3,730,000</td><td>5,744</td><td>$650</td><td>Sold</td></tr><tr><td>105 Moors End Loop (UC)</td><td>$4,975,000</td><td>7,190</td><td>$692</td><td>Under Contract</td></tr><tr><td>128 Brownstone Drive (Active)</td><td>$3,895,000</td><td>6,478</td><td>$601</td><td>Active · 106 DOM</td></tr><tr><td>1812 Brawley School Rd (Active)</td><td>$3,895,000</td><td>5,177</td><td>$752</td><td>Active · 1 DOM</td></tr><tr><td>Area Average (Closed)</td><td>—</td><td>—</td><td>$438</td><td>Market Average</td></tr><tr><td style="font-weight:700">131 The Point Dr (Subject)</td><td>TBD</td><td>6,176</td><td>$518–$526</td><td>Subject</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">At the current list price of $3,250,000, the subject sits at $526/SF — above the area's average closed price of $438/SF and above the closed comp at $650/SF only due to that property's exceptional 250+ ft waterfront. The active comps range from $601–$752/SF, but both are waterfront or have pool amenities. A price adjustment to $3,199,000 brings the subject to $518/SF — still competitive, more defensible, and positioned for renewed market interest.</div>
+  </div>
+
+  <!-- Pricing Framework -->
+  <div class="section-block">
+    <div class="section-label">Pricing Framework</div>
+    <table>
+      <thead>
+        <tr><th>Strategy</th><th>Price</th><th>$/SF</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Aggressive</td><td>$3,395,000</td><td>$550</td><td>Tests market ceiling; accounts for deeded boat slip and Simonini quality</td></tr><tr><td><strong>Market Value ★</strong></td><td><strong>$3,199,000</strong></td><td><strong>$518</strong></td><td><strong>Fresh start positioning; aligns with area avg; drives renewed showing activity</strong></td></tr><tr><td>Quick Sale</td><td>$2,995,000</td><td>$485</td><td>Below competition; maximizes buyer urgency and offer activity</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Market Position Summary -->
+  <div class="section-block">
+    <div class="section-label">Market Position Summary</div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-label">Comparable Properties</div>
+        <div class="stat-value">4</div>
+        <div class="stat-sub">Within 0.5 Miles</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Market Median</div>
+        <div class="stat-value">$3,895,000</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Recommended List Price</div>
+        <div class="stat-value">$3,199,000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="section-block">
+    <div class="section-label">Recommendation</div>
+    <div class="narrative">List at $3,199,000. This represents a modest adjustment from the prior list price of $3,250,000 — enough to signal a fresh start to buyers who may have dismissed the property, without conceding significant value. At $518/SF, the home is priced competitively against its waterfront competitors and below the area's active median. The deeded boat slip, Simonini construction quality, and golf course views are compelling differentiators that need the right price to convert showings to offers.</div>
+    <div class="bottom-line">The buyer pool at $3M+ is notably thinner — showings at the $2.1M range average 13, while $3M+ homes typically see a maximum of 3 showings. This is expected at the luxury level, but sets the stage: every showing is high-stakes, and pricing needs to convert. A $3,199,000 list price provides the best balance of perceived value, competitive positioning, and realistic path to contract.</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>Ready to Move Forward?</h3>
+    <p>Based on Canopy MLS data as of February 2026. A walkthrough may refine pricing based on current condition and recent updates.</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties &nbsp;·&nbsp; February 2026</span>
+    <span class="page-num">4 of 4</span>
+  </div>
+</div>
+
+</body>
+</html>
