@@ -8,7 +8,7 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --cream:#f8f7f6;--primary:#1a1a1a;--accent:#113665;--accent-light:rgba(17,54,101,.07);
+  --cream:#f8f7f6;--primary:#1a1a1a;--accent:#113665;--accent-light:rgba(122,79,46,.07);
   --border:#e8e2d9;--muted:#6b6560;--white:#fff;
   --dark:#0f1923;--bg:#ffffff;--surface:#f7f5f2;--surface2:#ede9e3;
   --success:#2d6a4f;--corcoran:#0c2340;
@@ -39,12 +39,12 @@ section>.container{width:100%}
 
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--bg)}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(17,54,101,.04) 0%,transparent 70%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(122,79,46,.04) 0%,transparent 70%)}
 .hero-content{position:relative;z-index:2;width:100%;max-width:800px;padding:0 24px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 /* ── CARDS ── */
 .card{padding:24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
-.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.08);border-color:rgba(17,54,101,.25)}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.08);border-color:rgba(122,79,46,.25)}
 .card-grid{display:grid;gap:16px;margin-top:32px}
 .card-grid.g2{grid-template-columns:1fr 1fr}
 .card-grid.g3{grid-template-columns:1fr 1fr 1fr}
@@ -52,22 +52,22 @@ section>.container{width:100%}
 
 /* ── STAT CARDS ── */
 .stat-big{text-align:center;padding:40px 24px;border-radius:16px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),border-color .3s}
-.stat-big:hover{transform:translateY(-4px);border-color:rgba(17,54,101,.3)}
+.stat-big:hover{transform:translateY(-4px);border-color:rgba(122,79,46,.3)}
 .stat-big .number{font-family:var(--serif);font-size:clamp(2.8rem,5vw,4rem);font-weight:700;color:var(--accent);line-height:1;margin-bottom:12px}
 .stat-big .label{font-size:.9rem;color:var(--primary);letter-spacing:.04em;line-height:1.4}
 .stat-big .sublabel{font-size:.75rem;color:var(--muted);margin-top:6px;letter-spacing:.08em}
 
 /* ── PROPERTY CARDS ── */
 .prop-card{padding:22px 24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s var(--ease),border-color .3s}
-.prop-card:hover{transform:translateY(-3px);border-color:rgba(17,54,101,.25)}
+.prop-card:hover{transform:translateY(-3px);border-color:rgba(122,79,46,.25)}
 .prop-addr{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--primary);margin-bottom:6px}
 .prop-price{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:10px}
 .prop-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .prop-tag{font-size:.7rem;padding:4px 10px;border-radius:20px;font-weight:500;letter-spacing:.05em}
-.tag-wf{background:rgba(17,54,101,.08);color:var(--accent);border:1px solid rgba(17,54,101,.2)}
+.tag-wf{background:rgba(122,79,46,.08);color:var(--accent);border:1px solid rgba(122,79,46,.2)}
 .tag-nwf{background:rgba(107,101,96,.08);color:var(--muted);border:1px solid rgba(107,101,96,.2)}
 .tag-dom{background:rgba(107,101,96,.06);color:var(--muted);border:1px solid rgba(107,101,96,.15)}
-.tag-psf{background:rgba(17,54,101,.1);color:var(--accent);border:1px solid rgba(17,54,101,.25);font-weight:700}
+.tag-psf{background:rgba(122,79,46,.1);color:var(--accent);border:1px solid rgba(122,79,46,.25);font-weight:700}
 .tag-uc{background:rgba(45,106,79,.08);color:#2d6a4f;border:1px solid rgba(45,106,79,.2)}
 .prop-details{font-size:.82rem;color:var(--muted);line-height:1.5}
 .prop-note{font-size:.8rem;color:#9b9490;font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
@@ -88,12 +88,12 @@ section>.container{width:100%}
 .tier-examples li span{font-weight:600;color:var(--primary)}
 
 /* ── CENTER CALLOUT ── */
-.center-callout{text-align:center;padding:28px 32px;border-radius:14px;background:rgba(17,54,101,.04);border:1px solid rgba(17,54,101,.15);border-left:3px solid var(--accent);margin-top:24px}
+.center-callout{text-align:center;padding:28px 32px;border-radius:14px;background:rgba(122,79,46,.04);border:1px solid rgba(122,79,46,.15);border-left:3px solid var(--accent);margin-top:24px}
 
 /* ── PRICING ── */
 .price-option{padding:24px;border-radius:14px;background:var(--white);border:2px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s,border-color .3s}
 .price-option:hover{transform:translateY(-3px)}
-.price-option.recommended{border-color:var(--accent);background:rgba(17,54,101,.04)}
+.price-option.recommended{border-color:var(--accent);background:rgba(122,79,46,.04)}
 .price-option .opt-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px;color:var(--muted)}
 .price-option .opt-price{font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px;color:var(--primary)}
 .price-option .opt-psf{font-size:.85rem;color:var(--muted);margin-bottom:10px}
@@ -168,7 +168,7 @@ section>.container{width:100%}
         <div class="label">Active Listings</div>
         <div class="sublabel">avg 144 days on market</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(17,54,101,.25)">
+      <div class="stat-big" style="border-color:rgba(122,79,46,.25)">
         <div class="number">16</div>
         <div class="label">Closed Sales</div>
         <div class="sublabel">past 12 months · $2.25M–$5M</div>
@@ -318,7 +318,7 @@ section>.container{width:100%}
         <div class="prop-note" style="color:#2d6a4f">Under contract in 22 days — premium waterfront with dock and pool commands immediate buyer action at $4.97M. Different tier than 131 The Point.</div>
       </div>
     </div>
-    <div class="fade-in" style="margin-top:24px;max-width:520px;padding:20px 24px;border-radius:12px;background:rgba(17,54,101,.04);border:1px solid rgba(17,54,101,.15);border-left:3px solid var(--accent)">
+    <div class="fade-in" style="margin-top:24px;max-width:520px;padding:20px 24px;border-radius:12px;background:rgba(122,79,46,.04);border:1px solid rgba(122,79,46,.15);border-left:3px solid var(--accent)">
       <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px">The Takeaway</div>
       <p style="font-size:.9rem;color:var(--muted);line-height:1.6">Buyers at the $5M tier with waterfront + dock + pool are active and moving fast. The challenge for 131 The Point is that it is not competing in that tier — and buyers in the $2.5M–$3.5M range are far more selective.</p>
     </div>
@@ -421,7 +421,7 @@ section>.container{width:100%}
         <div class="label">Showing at $3.2M</div>
         <div class="sublabel">131 The Point's prior price zone</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(17,54,101,.2)">
+      <div class="stat-big" style="border-color:rgba(122,79,46,.2)">
         <div class="number" style="color:var(--accent)">0</div>
         <div class="label">Showings at $2.9–3.1M</div>
         <div class="sublabel">no listings there — opportunity zone</div>
@@ -451,7 +451,7 @@ section>.container{width:100%}
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">$3.8M+</div>
           <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
-            <div style="width:21%;height:100%;background:rgba(17,54,101,.5);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+            <div style="width:21%;height:100%;background:rgba(122,79,46,.5);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">3</span>
             </div>
           </div>
@@ -461,7 +461,7 @@ section>.container{width:100%}
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">$3.4M – $3.5M</div>
           <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
-            <div style="width:14%;height:100%;background:rgba(17,54,101,.35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+            <div style="width:14%;height:100%;background:rgba(122,79,46,.35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;color:#fff">2</span>
             </div>
           </div>
@@ -471,7 +471,7 @@ section>.container{width:100%}
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">$2.0M – $2.1M</div>
           <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
-            <div style="width:14%;height:100%;background:rgba(17,54,101,.35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+            <div style="width:14%;height:100%;background:rgba(122,79,46,.35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;color:#fff">2</span>
             </div>
           </div>
@@ -490,7 +490,7 @@ section>.container{width:100%}
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--accent);font-weight:600">$2.9M – $3.1M ★</div>
-          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:24px;position:relative;border:1px dashed rgba(17,54,101,.3)">
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:24px;position:relative;border:1px dashed rgba(122,79,46,.3)">
             <div style="padding-left:12px;height:100%;display:flex;align-items:center">
               <span style="font-size:.75rem;color:var(--accent);font-style:italic">0 showings — no listings in this range right now</span>
             </div>
@@ -502,7 +502,7 @@ section>.container{width:100%}
     </div>
 
     <!-- Insight callout -->
-    <div class="fade-in" style="padding:28px 36px;border-radius:16px;background:rgba(17,54,101,.04);border:1px solid rgba(17,54,101,.15);border-left:3px solid var(--accent)">
+    <div class="fade-in" style="padding:28px 36px;border-radius:16px;background:rgba(122,79,46,.04);border:1px solid rgba(122,79,46,.15);border-left:3px solid var(--accent)">
       <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px">The Strategic Read</div>
       <p style="font-size:1rem;color:var(--primary);line-height:1.75;margin:0">
         The $2.1M price band captured <strong>13 of 21 total showings</strong> — that's the active buyer pool in The Point right now. The $3.2M range (131 The Point's prior list price) received just <strong style="color:#b91c1c">1 showing in 30 days</strong>. The $2.9M–$3.1M range had <strong style="color:var(--accent)">zero showings</strong> — not because buyers don't exist there, but because there are <em>no listings</em>. At $2,990,000, 131 The Point enters the market just under the $3M psychological threshold — priced $500K above the only other non-waterfront active listing (1812 Brawley School Rd at $2,490,000), with a clear quality and size premium to justify every dollar of that gap.
