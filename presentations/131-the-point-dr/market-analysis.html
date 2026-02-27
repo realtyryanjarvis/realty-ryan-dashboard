@@ -8,17 +8,17 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --cream:#f8f7f6;--primary:#130f0a;--accent:#c4893a;--accent-light:rgba(196,137,58,.1);
-  --border:rgba(255,255,255,.1);--muted:rgba(255,255,255,.5);--white:#fff;
-  --dark:#0d0b08;--bg:#111009;--surface:#1a1712;--surface2:#211e18;
-  --success:#4ade80;--corcoran:#0c2340;--copper:#c4893a;
+  --cream:#f8f7f6;--primary:#1a1a1a;--accent:#113665;--accent-light:rgba(17,54,101,.07);
+  --border:#e8e2d9;--muted:#6b6560;--white:#fff;
+  --dark:#0f1923;--bg:#ffffff;--surface:#f7f5f2;--surface2:#ede9e3;
+  --success:#2d6a4f;--corcoran:#0c2340;
   --section-gap:40px;--ease:cubic-bezier(.25,.46,.45,.94);
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
 }
 html{scroll-behavior:smooth;font-size:18px}
-body{font-family:var(--sans);background:var(--bg);color:var(--white);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:18px}
-::selection{background:var(--accent);color:#000}
+body{font-family:var(--sans);background:var(--bg);color:var(--primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:18px}
+::selection{background:var(--accent);color:#fff}
 
 /* ── UTILITY ── */
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
@@ -33,71 +33,71 @@ body{font-family:var(--sans);background:var(--bg);color:var(--white);line-height
 section{padding:var(--section-gap) 0;display:flex;align-items:center;min-height:100vh}
 section>.container{width:100%}
 .section-label{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}
-.section-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:18px;letter-spacing:-.01em}
+.section-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:18px;letter-spacing:-.01em;color:var(--primary)}
 .section-title strong{font-weight:700}
 .section-sub{font-size:1.05rem;color:var(--muted);max-width:560px;line-height:1.6}
 
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--bg)}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(196,137,58,.07) 0%,transparent 70%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(17,54,101,.04) 0%,transparent 70%)}
 .hero-content{position:relative;z-index:2;width:100%;max-width:800px;padding:0 24px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 /* ── CARDS ── */
-.card{padding:24px;border-radius:14px;background:var(--surface);border:1px solid rgba(255,255,255,.08);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
-.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4);border-color:rgba(196,137,58,.3)}
+.card{padding:24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.08);border-color:rgba(17,54,101,.25)}
 .card-grid{display:grid;gap:16px;margin-top:32px}
 .card-grid.g2{grid-template-columns:1fr 1fr}
 .card-grid.g3{grid-template-columns:1fr 1fr 1fr}
 .card-grid.g4{grid-template-columns:repeat(2,1fr)}
 
 /* ── STAT CARDS ── */
-.stat-big{text-align:center;padding:40px 24px;border-radius:16px;background:var(--surface);border:1px solid rgba(255,255,255,.08);transition:transform .3s var(--ease),border-color .3s}
-.stat-big:hover{transform:translateY(-4px);border-color:rgba(196,137,58,.4)}
+.stat-big{text-align:center;padding:40px 24px;border-radius:16px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),border-color .3s}
+.stat-big:hover{transform:translateY(-4px);border-color:rgba(17,54,101,.3)}
 .stat-big .number{font-family:var(--serif);font-size:clamp(2.8rem,5vw,4rem);font-weight:700;color:var(--accent);line-height:1;margin-bottom:12px}
-.stat-big .label{font-size:.9rem;color:rgba(255,255,255,.7);letter-spacing:.04em;line-height:1.4}
+.stat-big .label{font-size:.9rem;color:var(--primary);letter-spacing:.04em;line-height:1.4}
 .stat-big .sublabel{font-size:.75rem;color:var(--muted);margin-top:6px;letter-spacing:.08em}
 
 /* ── PROPERTY CARDS ── */
-.prop-card{padding:22px 24px;border-radius:14px;background:var(--surface);border:1px solid rgba(255,255,255,.08);transition:transform .3s var(--ease),border-color .3s}
-.prop-card:hover{transform:translateY(-3px);border-color:rgba(196,137,58,.3)}
-.prop-addr{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:6px}
+.prop-card{padding:22px 24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s var(--ease),border-color .3s}
+.prop-card:hover{transform:translateY(-3px);border-color:rgba(17,54,101,.25)}
+.prop-addr{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--primary);margin-bottom:6px}
 .prop-price{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:10px}
 .prop-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .prop-tag{font-size:.7rem;padding:4px 10px;border-radius:20px;font-weight:500;letter-spacing:.05em}
-.tag-wf{background:rgba(196,137,58,.15);color:var(--accent);border:1px solid rgba(196,137,58,.3)}
-.tag-nwf{background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)}
-.tag-dom{background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.08)}
-.tag-psf{background:rgba(196,137,58,.2);color:var(--accent);border:1px solid rgba(196,137,58,.35);font-weight:700}
-.tag-uc{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.25)}
-.prop-details{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.5}
-.prop-note{font-size:.8rem;color:rgba(255,255,255,.4);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
+.tag-wf{background:rgba(17,54,101,.08);color:var(--accent);border:1px solid rgba(17,54,101,.2)}
+.tag-nwf{background:rgba(107,101,96,.08);color:var(--muted);border:1px solid rgba(107,101,96,.2)}
+.tag-dom{background:rgba(107,101,96,.06);color:var(--muted);border:1px solid rgba(107,101,96,.15)}
+.tag-psf{background:rgba(17,54,101,.1);color:var(--accent);border:1px solid rgba(17,54,101,.25);font-weight:700}
+.tag-uc{background:rgba(45,106,79,.08);color:#2d6a4f;border:1px solid rgba(45,106,79,.2)}
+.prop-details{font-size:.82rem;color:var(--muted);line-height:1.5}
+.prop-note{font-size:.8rem;color:#9b9490;font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
 
 /* ── SPLIT ── */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 
 /* ── TIER SPLIT ── */
-.tier-panel{padding:36px;border-radius:16px;background:var(--surface);border:1px solid rgba(255,255,255,.08)}
+.tier-panel{padding:36px;border-radius:16px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04)}
 .tier-panel.wf{border-left:3px solid var(--accent)}
-.tier-panel.nwf{border-left:3px solid rgba(255,255,255,.2)}
-.tier-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.tier-panel.nwf{border-left:3px solid var(--border)}
+.tier-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin-bottom:6px;color:var(--primary)}
 .tier-range{font-size:2rem;font-weight:700;font-family:var(--serif);color:var(--accent);margin-bottom:16px}
-.tier-range.dim{color:rgba(255,255,255,.5)}
+.tier-range.dim{color:var(--muted)}
 .tier-examples{list-style:none;display:flex;flex-direction:column;gap:8px}
-.tier-examples li{font-size:.9rem;color:rgba(255,255,255,.65);display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.tier-examples li{font-size:.9rem;color:var(--muted);display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
 .tier-examples li:last-child{border-bottom:none}
-.tier-examples li span{font-weight:600;color:rgba(255,255,255,.85)}
+.tier-examples li span{font-weight:600;color:var(--primary)}
 
 /* ── CENTER CALLOUT ── */
-.center-callout{text-align:center;padding:28px 32px;border-radius:14px;background:linear-gradient(135deg,rgba(196,137,58,.12),rgba(196,137,58,.06));border:1px solid rgba(196,137,58,.3);margin-top:24px}
+.center-callout{text-align:center;padding:28px 32px;border-radius:14px;background:rgba(17,54,101,.04);border:1px solid rgba(17,54,101,.15);border-left:3px solid var(--accent);margin-top:24px}
 
 /* ── PRICING ── */
-.price-option{padding:24px;border-radius:14px;background:var(--surface);border:2px solid rgba(255,255,255,.08);transition:transform .3s,border-color .3s}
+.price-option{padding:24px;border-radius:14px;background:var(--white);border:2px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s,border-color .3s}
 .price-option:hover{transform:translateY(-3px)}
-.price-option.recommended{border-color:var(--accent);background:rgba(196,137,58,.06)}
-.price-option .opt-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
-.price-option .opt-price{font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px}
+.price-option.recommended{border-color:var(--accent);background:rgba(17,54,101,.04)}
+.price-option .opt-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px;color:var(--muted)}
+.price-option .opt-price{font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px;color:var(--primary)}
 .price-option .opt-psf{font-size:.85rem;color:var(--muted);margin-bottom:10px}
-.price-option .opt-desc{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.5}
+.price-option .opt-desc{font-size:.82rem;color:var(--muted);line-height:1.5}
 
 /* ── RESPONSIVE ── */
 @media(min-width:768px) and (max-width:1400px){
@@ -128,26 +128,26 @@ section>.container{width:100%}
 <section class="hero" id="hero">
   <div class="hero-content fade-in">
     <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Market Analysis</div>
-    <h1 style="font-family:var(--serif);font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.05;letter-spacing:-.03em;margin-bottom:16px;color:var(--white)">
+    <h1 style="font-family:var(--serif);font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.05;letter-spacing:-.03em;margin-bottom:16px;color:var(--primary)">
       131 The Point Drive
     </h1>
-    <div style="font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;color:rgba(255,255,255,.5);letter-spacing:.04em;margin-bottom:32px">
+    <div style="font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;color:var(--muted);letter-spacing:.04em;margin-bottom:32px">
       Mooresville, North Carolina
     </div>
-    <div style="display:inline-block;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:8px 22px;border-radius:30px;margin-bottom:60px">
+    <div style="display:inline-block;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:8px 22px;border-radius:30px;margin-bottom:60px">
       Prepared for Lisa Behring
     </div>
 
     <!-- divider line -->
-    <div style="width:40px;height:1px;background:rgba(255,255,255,.15);margin:0 auto 24px"></div>
+    <div style="width:40px;height:1px;background:var(--border);margin:0 auto 24px"></div>
 
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
-      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:rgba(255,255,255,.9)">Ryan Palmer</div>
-      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:500">Corcoran HM Properties</div>
+      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--primary)">Ryan Palmer</div>
+      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500">Corcoran HM Properties</div>
     </div>
 
-    <a href="#snapshot" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:50%;margin-top:48px;cursor:pointer;text-decoration:none;transition:border-color .3s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(255,255,255,.15)'">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <a href="#snapshot" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:50%;margin-top:48px;cursor:pointer;text-decoration:none;transition:border-color .3s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b6560" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
     </a>
   </div>
 </section>
@@ -155,11 +155,11 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 2. MARKET SNAPSHOT                          -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="snapshot" style="background:var(--bg)">
+<section id="snapshot" style="background:var(--surface)">
   <div class="container">
     <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto 48px">
       <div class="section-label">The Numbers</div>
-      <div class="section-title" style="color:var(--white)">Market Snapshot — <strong>The Point</strong></div>
+      <div class="section-title">Market Snapshot — <strong>The Point</strong></div>
       <div class="section-sub" style="margin:0 auto">Current market conditions in The Point subdivision, Lake Norman · Mooresville, NC</div>
     </div>
     <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:860px;margin:0 auto">
@@ -168,7 +168,7 @@ section>.container{width:100%}
         <div class="label">Active Listings</div>
         <div class="sublabel">avg 144 days on market</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(196,137,58,.3)">
+      <div class="stat-big" style="border-color:rgba(17,54,101,.25)">
         <div class="number">16</div>
         <div class="label">Closed Sales</div>
         <div class="sublabel">past 12 months · $2.25M–$5M</div>
@@ -190,11 +190,11 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 3. PRICE TIER STORY                         -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="tiers" style="background:var(--surface)">
+<section id="tiers" style="background:var(--bg)">
   <div class="container">
     <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto 40px">
       <div class="section-label">Pricing Dynamics</div>
-      <div class="section-title" style="color:var(--white)">The Price <strong>Tier Story</strong></div>
+      <div class="section-title">The Price <strong>Tier Story</strong></div>
       <div class="section-sub" style="margin:0 auto">Not all homes in The Point are equal. The data tells a clear two-tier story — and where 131 The Point sits is the key to positioning.</div>
     </div>
 
@@ -202,7 +202,7 @@ section>.container{width:100%}
       <!-- Waterfront -->
       <div class="tier-panel wf">
         <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">⚓ Waterfront Premium</div>
-        <div class="tier-title" style="color:var(--white)">Waterfront</div>
+        <div class="tier-title">Waterfront</div>
         <div class="tier-range">$547–$692<span style="font-size:1.2rem;font-weight:400">/SF</span></div>
         <ul class="tier-examples">
           <li>235 Milford Cir <span>$4.9M · $947/SF</span></li>
@@ -213,8 +213,8 @@ section>.container{width:100%}
 
       <!-- Non-Waterfront -->
       <div class="tier-panel nwf">
-        <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600;margin-bottom:10px">🏌️ Non-Waterfront</div>
-        <div class="tier-title" style="color:rgba(255,255,255,.7)">Non-Waterfront</div>
+        <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px">🏌️ Non-Waterfront</div>
+        <div class="tier-title" style="color:var(--muted)">Non-Waterfront</div>
         <div class="tier-range dim">$258–$417<span style="font-size:1.2rem;font-weight:400">/SF</span></div>
         <ul class="tier-examples">
           <li>105 Grey Lady Ct <span>$3.68M · $502/SF</span></li>
@@ -227,10 +227,10 @@ section>.container{width:100%}
     <!-- Center callout -->
     <div class="center-callout fade-in">
       <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">📍 The Positioning</div>
-      <div style="font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:600;color:var(--white);line-height:1.4">
+      <div style="font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:600;color:var(--primary);line-height:1.4">
         131 The Point — Golf views + deeded boat slip — <span style="color:var(--accent)">sits between these two tiers</span>
       </div>
-      <div style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:10px;line-height:1.5">The deeded boat slip elevates it above non-waterfront; the absence of direct lake frontage keeps it below the waterfront premium. Priced correctly, this is the most compelling value in the subdivision.</div>
+      <div style="font-size:.85rem;color:var(--muted);margin-top:10px;line-height:1.5">The deeded boat slip elevates it above non-waterfront; the absence of direct lake frontage keeps it below the waterfront premium. Priced correctly, this is the most compelling value in the subdivision.</div>
     </div>
   </div>
 </section>
@@ -238,11 +238,11 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 4. ACTIVE COMPETITION                       -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="active" style="background:var(--bg)">
+<section id="active" style="background:var(--surface)">
   <div class="container">
     <div class="fade-in" style="margin-bottom:36px">
       <div class="section-label">Active Listings · The Point</div>
-      <div class="section-title" style="color:var(--white)">Active <strong>Competition</strong></div>
+      <div class="section-title">Active <strong>Competition</strong></div>
       <div class="section-sub">What buyers comparing 131 The Point are also seeing right now.</div>
     </div>
 
@@ -298,30 +298,30 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 5. UNDER CONTRACT                           -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="undercontract" style="background:var(--surface)">
+<section id="undercontract" style="background:var(--bg)">
   <div class="container">
     <div class="fade-in" style="margin-bottom:36px">
       <div class="section-label">Under Contract</div>
-      <div class="section-title" style="color:var(--white)">What's <strong>Going Pending</strong></div>
+      <div class="section-title">What's <strong>Going Pending</strong></div>
       <div class="section-sub">These contracts show where real buyer demand is moving.</div>
     </div>
 
     <div class="fade-in" style="max-width:520px">
-      <div class="prop-card" style="border-color:rgba(74,222,128,.25)">
+      <div class="prop-card" style="border-color:rgba(45,106,79,.2)">
         <div class="prop-addr">105 Moors End Loop</div>
-        <div class="prop-price" style="color:#4ade80">$4,975,000</div>
+        <div class="prop-price" style="color:#2d6a4f">$4,975,000</div>
         <div class="prop-meta">
           <span class="prop-tag tag-psf">$692/SF</span>
           <span class="prop-tag tag-wf">Waterfront + Dock + Pool</span>
           <span class="prop-tag tag-uc">Under Contract · 22 DOM</span>
         </div>
         <div class="prop-details">4 bed · 6.5 bath · 7,190 SF · 0.82 acres</div>
-        <div class="prop-note" style="color:rgba(74,222,128,.7)">Under contract in 22 days — premium waterfront with dock and pool commands immediate buyer action at $4.97M. Different tier than 131 The Point.</div>
+        <div class="prop-note" style="color:#2d6a4f">Under contract in 22 days — premium waterfront with dock and pool commands immediate buyer action at $4.97M. Different tier than 131 The Point.</div>
       </div>
     </div>
-    <div class="fade-in" style="margin-top:24px;max-width:520px;padding:20px 24px;border-radius:12px;background:rgba(196,137,58,.06);border:1px solid rgba(196,137,58,.2)">
+    <div class="fade-in" style="margin-top:24px;max-width:520px;padding:20px 24px;border-radius:12px;background:rgba(17,54,101,.04);border:1px solid rgba(17,54,101,.15);border-left:3px solid var(--accent)">
       <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px">The Takeaway</div>
-      <p style="font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.6">Buyers at the $5M tier with waterfront + dock + pool are active and moving fast. The challenge for 131 The Point is that it is not competing in that tier — and buyers in the $2.5M–$3.5M range are far more selective.</p>
+      <p style="font-size:.9rem;color:var(--muted);line-height:1.6">Buyers at the $5M tier with waterfront + dock + pool are active and moving fast. The challenge for 131 The Point is that it is not competing in that tier — and buyers in the $2.5M–$3.5M range are far more selective.</p>
     </div>
   </div>
 </section>
@@ -329,11 +329,11 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 6. CLOSED SALES                             -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="closed" style="background:var(--bg)">
+<section id="closed" style="background:var(--surface)">
   <div class="container">
     <div class="fade-in" style="margin-bottom:36px">
       <div class="section-label">Closed Sales · Last 12 Months · $2.25M–$5M</div>
-      <div class="section-title" style="color:var(--white)">The <strong>True Comp Set</strong></div>
+      <div class="section-title">The <strong>True Comp Set</strong></div>
       <div class="section-sub">7 closed transactions in the past 6 months — the most current picture of where The Point is trading.</div>
     </div>
 
@@ -395,9 +395,9 @@ section>.container{width:100%}
         <div class="prop-note">Feb 2026 · 8,640 SF deflates $/SF — outlier in dataset</div>
       </div>
 
-    </div></section>
-
-
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════ -->
 <!-- SHOWINGTIME DATA                            -->
@@ -412,22 +412,22 @@ section>.container{width:100%}
 
     <!-- Key stats row -->
     <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:40px">
-      <div class="stat-big" style="border-color:rgba(196,137,58,.3)">
-        <div class="number" style="color:#4ade80">13</div>
+      <div class="stat-big" style="border-color:rgba(45,106,79,.2)">
+        <div class="number" style="color:#2d6a4f">13</div>
         <div class="label">Showings at $2.1M</div>
         <div class="sublabel">6.5 showings/listing · most active tier</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(248,113,113,.2)">
-        <div class="number" style="color:#f87171">1</div>
+      <div class="stat-big" style="border-color:rgba(185,28,28,.15)">
+        <div class="number" style="color:#b91c1c">1</div>
         <div class="label">Showing at $3.2M</div>
         <div class="sublabel">131 The Point's prior price zone</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(196,137,58,.3)">
+      <div class="stat-big" style="border-color:rgba(17,54,101,.2)">
         <div class="number" style="color:var(--accent)">0</div>
         <div class="label">Showings at $2.9–3.1M</div>
         <div class="sublabel">no listings there — opportunity zone</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(255,255,255,.1)">
+      <div class="stat-big">
         <div class="number">21</div>
         <div class="label">Total Showings</div>
         <div class="sublabel">The Point · last 30 days · $2M–$4M</div>
@@ -440,60 +440,60 @@ section>.container{width:100%}
       <div style="display:flex;flex-direction:column;gap:10px">
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
-          <div style="font-size:.8rem;color:rgba(255,255,255,.5)">$2.1M – $2.2M</div>
-          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:24px;position:relative">
-            <div style="width:100%;height:100%;background:linear-gradient(90deg,#4ade80,#22c55e);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+          <div style="font-size:.8rem;color:var(--muted)">$2.1M – $2.2M</div>
+          <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
+            <div style="width:100%;height:100%;background:linear-gradient(90deg,#2d6a4f,#1a4a35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;font-weight:700;color:#fff">13 showings — 61.9%</span>
             </div>
           </div>
-          <div style="font-size:.85rem;font-weight:700;color:#4ade80">6.5/listing</div>
+          <div style="font-size:.85rem;font-weight:700;color:#2d6a4f">6.5/listing</div>
         </div>
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
-          <div style="font-size:.8rem;color:rgba(255,255,255,.5)">$3.8M+</div>
-          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:24px;position:relative">
-            <div style="width:21%;height:100%;background:rgba(196,137,58,.5);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+          <div style="font-size:.8rem;color:var(--muted)">$3.8M+</div>
+          <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
+            <div style="width:21%;height:100%;background:rgba(17,54,101,.5);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">3</span>
             </div>
           </div>
-          <div style="font-size:.85rem;color:rgba(255,255,255,.5)">3/listing</div>
+          <div style="font-size:.85rem;color:var(--muted)">3/listing</div>
         </div>
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
-          <div style="font-size:.8rem;color:rgba(255,255,255,.5)">$3.4M – $3.5M</div>
-          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:24px;position:relative">
-            <div style="width:14%;height:100%;background:rgba(196,137,58,.4);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+          <div style="font-size:.8rem;color:var(--muted)">$3.4M – $3.5M</div>
+          <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
+            <div style="width:14%;height:100%;background:rgba(17,54,101,.35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;color:#fff">2</span>
             </div>
           </div>
-          <div style="font-size:.85rem;color:rgba(255,255,255,.5)">2/listing</div>
+          <div style="font-size:.85rem;color:var(--muted)">2/listing</div>
         </div>
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
-          <div style="font-size:.8rem;color:rgba(255,255,255,.5)">$2.0M – $2.1M</div>
-          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:24px;position:relative">
-            <div style="width:14%;height:100%;background:rgba(196,137,58,.4);border-radius:4px;display:flex;align-items:center;padding-left:10px">
+          <div style="font-size:.8rem;color:var(--muted)">$2.0M – $2.1M</div>
+          <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
+            <div style="width:14%;height:100%;background:rgba(17,54,101,.35);border-radius:4px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:.75rem;color:#fff">2</span>
             </div>
           </div>
-          <div style="font-size:.85rem;color:rgba(255,255,255,.5)">2/listing</div>
+          <div style="font-size:.85rem;color:var(--muted)">2/listing</div>
         </div>
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
-          <div style="font-size:.8rem;color:rgba(255,255,255,.5)">$3.2M – $3.3M</div>
-          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:24px;position:relative">
-            <div style="width:7%;height:100%;background:rgba(248,113,113,.5);border-radius:4px;display:flex;align-items:center;padding-left:8px">
+          <div style="font-size:.8rem;color:var(--muted)">$3.2M – $3.3M</div>
+          <div style="background:rgba(0,0,0,.05);border-radius:4px;height:24px;position:relative">
+            <div style="width:7%;height:100%;background:rgba(185,28,28,.4);border-radius:4px;display:flex;align-items:center;padding-left:8px">
               <span style="font-size:.75rem;color:#fff">1</span>
             </div>
           </div>
-          <div style="font-size:.85rem;color:#f87171">1/listing ← prior price</div>
+          <div style="font-size:.85rem;color:#b91c1c">1/listing ← prior price</div>
         </div>
 
         <div style="display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--accent);font-weight:600">$2.9M – $3.1M ★</div>
-          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:24px;position:relative;border:1px dashed rgba(196,137,58,.4)">
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:24px;position:relative;border:1px dashed rgba(17,54,101,.3)">
             <div style="padding-left:12px;height:100%;display:flex;align-items:center">
-              <span style="font-size:.75rem;color:rgba(196,137,58,.8);font-style:italic">0 showings — no listings in this range right now</span>
+              <span style="font-size:.75rem;color:var(--accent);font-style:italic">0 showings — no listings in this range right now</span>
             </div>
           </div>
           <div style="font-size:.75rem;color:var(--accent);font-weight:600">Opportunity</div>
@@ -503,10 +503,10 @@ section>.container{width:100%}
     </div>
 
     <!-- Insight callout -->
-    <div class="fade-in" style="padding:28px 36px;border-radius:16px;background:rgba(196,137,58,.06);border:1px solid rgba(196,137,58,.25)">
+    <div class="fade-in" style="padding:28px 36px;border-radius:16px;background:rgba(17,54,101,.04);border:1px solid rgba(17,54,101,.15);border-left:3px solid var(--accent)">
       <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px">The Strategic Read</div>
-      <p style="font-size:1rem;color:rgba(255,255,255,.75);line-height:1.75;margin:0">
-        The $2.1M price band captured <strong style="color:#fff">13 of 21 total showings</strong> — that's the active buyer pool in The Point right now. The $3.2M range (131 The Point's prior list price) received just <strong style="color:#f87171">1 showing in 30 days</strong>. The $2.9M–$3.1M range had <strong style="color:var(--accent)">zero showings</strong> — not because buyers don't exist there, but because there are <em>no listings</em>. At $2,990,000, 131 The Point would be the only home available for buyers searching under $3M in The Point, entering a completely uncontested price band.
+      <p style="font-size:1rem;color:var(--primary);line-height:1.75;margin:0">
+        The $2.1M price band captured <strong>13 of 21 total showings</strong> — that's the active buyer pool in The Point right now. The $3.2M range (131 The Point's prior list price) received just <strong style="color:#b91c1c">1 showing in 30 days</strong>. The $2.9M–$3.1M range had <strong style="color:var(--accent)">zero showings</strong> — not because buyers don't exist there, but because there are <em>no listings</em>. At $2,990,000, 131 The Point would be the only home available for buyers searching under $3M in The Point, entering a completely uncontested price band.
       </p>
     </div>
   </div>
@@ -518,25 +518,25 @@ section>.container{width:100%}
 <section id="nwf" style="background:var(--surface)">
   <div class="container">
     <div class="fade-in" style="margin-bottom:36px">
-      <div class="section-label" style="color:#f87171">Non-Waterfront Reality Check</div>
-      <div class="section-title" style="color:var(--white)">What Non-Waterfront <strong>Actually Sells For</strong></div>
+      <div class="section-label" style="color:#b91c1c">Non-Waterfront Reality Check</div>
+      <div class="section-title">What Non-Waterfront <strong>Actually Sells For</strong></div>
       <div class="section-sub">131 The Point is non-waterfront. Here's what the market says about non-waterfront homes in The Point over the past year.</div>
     </div>
 
     <!-- 3 key stats -->
     <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:760px;margin-bottom:40px">
-      <div class="stat-big" style="border-color:rgba(248,113,113,.2)">
-        <div class="number" style="color:#f87171">$2,382,000</div>
+      <div class="stat-big" style="border-color:rgba(185,28,28,.15)">
+        <div class="number" style="color:#b91c1c">$2,382,000</div>
         <div class="label">Non-WF Median Closed</div>
         <div class="sublabel">4 closed sales · last 12 months</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(248,113,113,.2)">
-        <div class="number" style="color:#f87171">$455</div>
+      <div class="stat-big" style="border-color:rgba(185,28,28,.15)">
+        <div class="number" style="color:#b91c1c">$455</div>
         <div class="label">Avg Closed $/SF</div>
         <div class="sublabel">non-waterfront · The Point</div>
       </div>
-      <div class="stat-big" style="border-color:rgba(248,113,113,.2)">
-        <div class="number" style="color:#f87171">27 Days</div>
+      <div class="stat-big" style="border-color:rgba(185,28,28,.15)">
+        <div class="number" style="color:#b91c1c">27 Days</div>
         <div class="label">Median DOM</div>
         <div class="sublabel">when priced correctly</div>
       </div>
@@ -544,30 +544,30 @@ section>.container{width:100%}
 
     <!-- Non-WF comp cards -->
     <div class="card-grid g4 fade-in">
-      <div class="prop-card" style="border-color:rgba(74,222,128,.15)">
+      <div class="prop-card" style="border-color:rgba(45,106,79,.15)">
         <div class="prop-addr">167 Quaker Road</div>
-        <div class="prop-price" style="color:#4ade80">$2,449,000</div>
+        <div class="prop-price" style="color:#2d6a4f">$2,449,000</div>
         <div class="prop-meta"><span class="prop-tag tag-psf">$449/SF</span><span class="prop-tag tag-uc">Sold · 100% LP</span><span class="prop-tag tag-dom">8 DOM</span></div>
         <div class="prop-details">4/4.5 · 5,451 SF · 1.21 acres</div>
-        <div class="prop-note" style="color:rgba(74,222,128,.6)">Jul 2025 · Sold at full ask in 8 days when priced right</div>
+        <div class="prop-note" style="color:#2d6a4f">Jul 2025 · Sold at full ask in 8 days when priced right</div>
       </div>
-      <div class="prop-card" style="border-color:rgba(74,222,128,.15)">
+      <div class="prop-card" style="border-color:rgba(45,106,79,.15)">
         <div class="prop-addr">115 Brawley Harbor Pl</div>
-        <div class="prop-price" style="color:#4ade80">$2,399,000</div>
+        <div class="prop-price" style="color:#2d6a4f">$2,399,000</div>
         <div class="prop-meta"><span class="prop-tag tag-psf">$535/SF</span><span class="prop-tag tag-uc">Sold · 100% LP</span><span class="prop-tag tag-dom">23 DOM</span></div>
         <div class="prop-details">4/3.5 · 4,486 SF · 0.95 acres</div>
-        <div class="prop-note" style="color:rgba(74,222,128,.6)">Jun 2025 · Full ask · Smallest SF in the set</div>
+        <div class="prop-note" style="color:#2d6a4f">Jun 2025 · Full ask · Smallest SF in the set</div>
       </div>
-      <div class="prop-card" style="border-color:rgba(74,222,128,.15)">
+      <div class="prop-card" style="border-color:rgba(45,106,79,.15)">
         <div class="prop-addr">178 Shelburne Place</div>
-        <div class="prop-price" style="color:#4ade80">$2,250,000</div>
+        <div class="prop-price" style="color:#2d6a4f">$2,250,000</div>
         <div class="prop-meta"><span class="prop-tag tag-psf">$564/SF</span><span class="prop-tag tag-uc">Sold · 94% LP</span><span class="prop-tag tag-dom">49 DOM</span></div>
         <div class="prop-details">4/5.5 · 3,991 SF · 0.89 acres</div>
-        <div class="prop-note" style="color:rgba(74,222,128,.6)">Oct 2025</div>
+        <div class="prop-note" style="color:#2d6a4f">Oct 2025</div>
       </div>
-      <div class="prop-card" style="border-color:rgba(248,113,113,.15)">
+      <div class="prop-card" style="border-color:rgba(185,28,28,.12)">
         <div class="prop-addr">1754 Brawley School Rd</div>
-        <div class="prop-price" style="color:#f87171">$2,295,000</div>
+        <div class="prop-price" style="color:#b91c1c">$2,295,000</div>
         <div class="prop-meta"><span class="prop-tag tag-nwf">Withdrawn</span><span class="prop-tag tag-dom">119 DOM</span></div>
         <div class="prop-details">4/5.5 · 5,918 SF · 1.09 acres</div>
         <div class="prop-note">Withdrawn after 119 DOM — non-WF ceiling was not $2.295M</div>
@@ -575,26 +575,26 @@ section>.container{width:100%}
     </div>
 
     <!-- The gap callout -->
-    <div class="fade-in" style="margin-top:32px;padding:28px 36px;border-radius:16px;background:linear-gradient(135deg,rgba(248,113,113,.08),rgba(196,137,58,.08));border:1px solid rgba(196,137,58,.25)">
+    <div class="fade-in" style="margin-top:32px;padding:28px 36px;border-radius:16px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04)">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;text-align:center">
         <div>
-          <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,113,113,.8);font-weight:600;margin-bottom:8px">Non-WF Ceiling</div>
-          <div style="font-family:var(--serif);font-size:2rem;font-weight:700;color:#f87171">~$2.45M</div>
-          <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-top:4px">Where non-WF homes close</div>
+          <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#b91c1c;font-weight:600;margin-bottom:8px">Non-WF Ceiling</div>
+          <div style="font-family:var(--serif);font-size:2rem;font-weight:700;color:#b91c1c">~$2.45M</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:4px">Where non-WF homes close</div>
         </div>
         <div style="display:flex;flex-direction:column;justify-content:center;align-items:center">
           <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px">Premium Required</div>
           <div style="font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--accent)">~$550K+</div>
-          <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-top:4px">To justify $2.99M</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:4px">To justify $2.99M</div>
         </div>
         <div>
           <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px">Recommended Price</div>
           <div style="font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--accent)">$2,990,000</div>
-          <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-top:4px">Boat slip + pool + Simonini justify it</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:4px">Boat slip + pool + Simonini justify it</div>
         </div>
       </div>
-      <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.7;text-align:left">
-        The $550K premium over the non-waterfront ceiling is justified by three things no other non-waterfront listing has: a <strong style="color:rgba(255,255,255,.8)">deeded boat slip</strong> (lake access), a <strong style="color:rgba(255,255,255,.8)">Simonini-built heated pool</strong>, and <strong style="color:rgba(255,255,255,.8)">direct golf course views</strong>. These are the talking points that convert a showing into an offer.
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-size:.9rem;color:var(--muted);line-height:1.7;text-align:left">
+        The $550K premium over the non-waterfront ceiling is justified by three things no other non-waterfront listing has: a <strong style="color:var(--primary)">deeded boat slip</strong> (lake access), a <strong style="color:var(--primary)">Simonini-built heated pool</strong>, and <strong style="color:var(--primary)">direct golf course views</strong>. These are the talking points that convert a showing into an offer.
       </div>
     </div>
   </div>
@@ -603,52 +603,52 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 7. PRICING RECOMMENDATION                   -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="pricing" style="background:var(--surface)">
+<section id="pricing" style="background:var(--dark)">
   <div class="container">
     <div class="fade-in" style="text-align:center;max-width:680px;margin:0 auto 20px">
-      <div class="section-label">Pricing Recommendation</div>
+      <div class="section-label" style="color:rgba(255,255,255,.5)">Pricing Recommendation</div>
 
       <!-- Big number -->
-      <div style="font-family:var(--serif);font-size:clamp(3.5rem,8vw,6rem);font-weight:700;color:var(--accent);line-height:1;margin:20px 0 12px">
+      <div style="font-family:var(--serif);font-size:clamp(3.5rem,8vw,6rem);font-weight:700;color:#fff;line-height:1;margin:20px 0 12px">
         $2,990,000
       </div>
-      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:8px">
+      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:400;color:rgba(255,255,255,.5);margin-bottom:8px">
         $484/SF · Strategically positioned below the $500/SF threshold
       </div>
-      <div style="width:40px;height:1px;background:rgba(196,137,58,.4);margin:20px auto"></div>
+      <div style="width:40px;height:1px;background:rgba(255,255,255,.2);margin:20px auto"></div>
     </div>
 
     <!-- 3 options -->
     <div class="card-grid g3 fade-in" style="max-width:900px;margin:0 auto">
 
-      <div class="price-option">
-        <div class="opt-label" style="color:rgba(255,255,255,.4)">Aggressive</div>
-        <div class="opt-price" style="color:rgba(255,255,255,.8)">$3,250,000</div>
-        <div class="opt-psf">$526 / SF</div>
-        <div class="opt-desc">Current list price. Above the $500/SF threshold — limits buyer pool in a market averaging 1–3 showings per listing.</div>
+      <div style="padding:24px;border-radius:14px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);transition:transform .3s,border-color .3s">
+        <div style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.4)">Aggressive</div>
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px;color:rgba(255,255,255,.8)">$3,250,000</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.35);margin-bottom:10px">$526 / SF</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.5">Current list price. Above the $500/SF threshold — limits buyer pool in a market averaging 1–3 showings per listing.</div>
       </div>
 
-      <div class="price-option recommended">
+      <div style="padding:24px;border-radius:14px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.6);transition:transform .3s,border-color .3s">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-          <div class="opt-label" style="color:var(--accent)">Market Value</div>
-          <span style="font-size:.65rem;background:var(--accent);color:#000;padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.1em">★ RECOMMENDED</span>
+          <div style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:#fff">Market Value</div>
+          <span style="font-size:.65rem;background:#fff;color:var(--dark);padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.1em">★ RECOMMENDED</span>
         </div>
-        <div class="opt-price" style="color:var(--accent)">$2,990,000</div>
-        <div class="opt-psf" style="color:rgba(196,137,58,.7)">$484 / SF</div>
-        <div class="opt-desc">Fresh start below $500/SF — psychological threshold for buyers at this price point. Positions as the most compelling value vs. competition.</div>
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px;color:#fff">$2,990,000</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:10px">$484 / SF</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.5">Fresh start below $500/SF — psychological threshold for buyers at this price point. Positions as the most compelling value vs. competition.</div>
       </div>
 
-      <div class="price-option">
-        <div class="opt-label" style="color:rgba(255,255,255,.4)">Quick Sale</div>
-        <div class="opt-price" style="color:rgba(255,255,255,.8)">$2,750,000</div>
-        <div class="opt-psf">$445 / SF</div>
-        <div class="opt-desc">Meaningful discount to competition. Drives urgency and multiple-showing velocity. Best path if timeline is the priority over net proceeds.</div>
+      <div style="padding:24px;border-radius:14px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);transition:transform .3s,border-color .3s">
+        <div style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.4)">Quick Sale</div>
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px;color:rgba(255,255,255,.8)">$2,750,000</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.35);margin-bottom:10px">$445 / SF</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.5">Meaningful discount to competition. Drives urgency and multiple-showing velocity. Best path if timeline is the priority over net proceeds.</div>
       </div>
 
     </div>
 
     <!-- Bottom quote -->
-    <div class="fade-in" style="text-align:center;max-width:580px;margin:40px auto 0;padding:24px;border-top:1px solid rgba(255,255,255,.08)">
+    <div class="fade-in" style="text-align:center;max-width:580px;margin:40px auto 0;padding:24px;border-top:1px solid rgba(255,255,255,.1)">
       <p style="font-family:var(--serif);font-size:1rem;font-style:italic;color:rgba(255,255,255,.45);line-height:1.7">
         "16 closed sales over the past year. Median $/SF: $556. 131 The Point at $484/SF re-enters below the median — Simonini quality, heated pool, golf views, and a deeded boat slip at the most competitive price in The Point."
       </p>
@@ -664,30 +664,30 @@ section>.container{width:100%}
 
     <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">The Bottom Line</div>
 
-    <div style="font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:32px;max-width:700px">
+    <div style="font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--primary);line-height:1.1;margin-bottom:32px;max-width:700px">
       The <strong style="font-weight:700">Opportunity</strong>
     </div>
 
-    <div style="width:40px;height:1px;background:rgba(196,137,58,.4);margin:0 auto 32px"></div>
+    <div style="width:40px;height:1px;background:var(--border);margin:0 auto 32px"></div>
 
-    <p style="font-size:1.05rem;color:rgba(255,255,255,.6);max-width:620px;line-height:1.8;margin:0 auto 48px">
+    <p style="font-size:1.05rem;color:var(--muted);max-width:620px;line-height:1.8;margin:0 auto 48px">
       131 The Point Drive offers Simonini craftsmanship, a heated pool, golf course views, and a deeded boat slip — at $484/SF, it is the most compelling value proposition in The Point for a buyer who wants premium without the waterfront price tag.
     </p>
 
     <!-- Divider -->
-    <div style="width:60px;height:1px;background:rgba(255,255,255,.1);margin:0 auto 32px"></div>
+    <div style="width:60px;height:1px;background:var(--border);margin:0 auto 32px"></div>
 
     <!-- Branding -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-      <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--white)">Ryan Palmer</div>
-      <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35)">Corcoran HM Properties</div>
-      <div style="font-size:.85rem;color:rgba(255,255,255,.3);margin-top:4px">ryanpalmer@hmproperties.com</div>
+      <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">Ryan Palmer</div>
+      <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Corcoran HM Properties</div>
+      <div style="font-size:.85rem;color:#aaa;margin-top:4px">ryanpalmer@hmproperties.com</div>
     </div>
 
   </div>
 
-  <footer style="padding:24px 40px;border-top:1px solid rgba(255,255,255,.07);text-align:center">
-    <p style="font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:.12em">
+  <footer style="padding:24px 40px;border-top:1px solid var(--border);text-align:center">
+    <p style="font-size:.6rem;color:#bbb;letter-spacing:.12em">
       © 2026 Ryan Palmer · Corcoran HM Properties · All Rights Reserved · Market data sourced from MLS · Prepared for Lisa Behring
     </p>
   </footer>
