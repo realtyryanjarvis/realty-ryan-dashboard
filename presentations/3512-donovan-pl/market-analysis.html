@@ -47,7 +47,7 @@ section>.container{width:100%}
 /* ── CARDS ── */
 .card{padding:24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.08);border-color:rgba(122,79,46,.25)}
-.card-grid{display:grid;gap:16px;margin-top:32px}
+.card-grid{display:grid;gap:16px;margin-top:16px}
 .card-grid.g2{grid-template-columns:1fr 1fr}
 .card-grid.g3{grid-template-columns:1fr 1fr 1fr}
 
@@ -107,22 +107,62 @@ section>.container{width:100%}
   .container{max-width:1000px;padding:0 48px;width:100%}
 }
 @media(max-width:768px){
-  :root{--section-gap:60px}
-  .card-grid.g2,.card-grid.g3,.card-grid.g4{grid-template-columns:1fr}
-  .price-option .opt-price{font-size:2rem}
-  #shannon-map{height:300px}
+  :root{--section-gap:0px}
+
+  /* Full-screen slide per section */
+  html{scroll-snap-type:y mandatory;overflow-x:hidden}
+  section{
+    min-height:100svh;
+    max-height:100svh;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:28px 0!important;
+    box-sizing:border-box;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  section > .container{width:100%;box-sizing:border-box;padding:0 16px!important;overflow:hidden}
+
+  /* Typography scale-down */
+  .section-title{font-size:1.5rem!important;line-height:1.2!important}
+  .section-label{font-size:.6rem!important}
+  .section-sub{font-size:.8rem!important}
+  .hero-content h1{font-size:2rem!important}
+  .hero-content p{font-size:.85rem!important}
+  .prop-addr{font-size:.85rem!important}
+  .prop-price{font-size:1.4rem!important}
+  .prop-details{font-size:.72rem!important}
+  .prop-note{font-size:.72rem!important}
+  .opt-price{font-size:1.8rem!important}
+  .opt-psf{font-size:.78rem!important}
+  .opt-desc{font-size:.78rem!important}
+  .opt-label{font-size:.6rem!important}
+
+  /* Grids */
+  .card-grid.g2,.card-grid.g3,.card-grid.g4{grid-template-columns:1fr 1fr!important;gap:8px!important}
   .grid-2col{grid-template-columns:1fr!important}
-  .grid-3col{grid-template-columns:1fr 1fr!important}
-  .grid-4col{grid-template-columns:1fr 1fr!important}
-  .grid-bar{grid-template-columns:100px 1fr 60px!important;gap:8px!important}
-  .snap-section{scroll-snap-align:none!important}
-  section{min-height:auto!important;overflow:visible!important}
-  .hero{min-height:100svh}
-  .hero-content h1{font-size:2.4rem!important}
-  .section-title{font-size:1.8rem!important}
-  .stat-big .number{font-size:2.4rem!important}
-  .container{padding:0 18px!important}
-  .price-option{padding:20px!important}
+  .grid-3col{grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .grid-4col{grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .grid-bar{grid-template-columns:90px 1fr 50px!important;gap:6px!important;font-size:.7rem!important}
+
+  /* Cards compact */
+  .prop-card{padding:10px 12px!important}
+  .prop-meta{gap:4px!important;margin:6px 0!important}
+  .prop-tag{font-size:.6rem!important;padding:2px 6px!important}
+  .price-option{padding:14px!important}
+
+  /* Map */
+  #shannon-map{height:220px!important}
+
+  /* Stat tiles */
+  .stat-big{padding:12px 8px!important}
+
+  /* Misc */
+  .container{padding:0 16px!important;max-width:100%!important}
+  .fade-in,.fade-left,.fade-right{margin-bottom:0!important}
 }
 @media print{
   .fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
@@ -143,7 +183,7 @@ section>.container{width:100%}
     <div style="font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:400;color:var(--accent);letter-spacing:.08em;margin-bottom:8px">
       Shannon Park
     </div>
-    <div style="font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.3rem);font-weight:300;color:var(--muted);letter-spacing:.04em;margin-bottom:32px">
+    <div style="font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.3rem);font-weight:300;color:var(--muted);letter-spacing:.04em;margin-bottom:16px">
       Charlotte, North Carolina 28215
     </div>
     <div style="display:inline-block;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:8px 22px;border-radius:30px;margin-bottom:60px">
@@ -168,7 +208,7 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section style="background:var(--bg);padding:60px 0">
   <div class="container">
-    <div class="fade-in" style="margin-bottom:32px">
+    <div class="fade-in" style="margin-bottom:16px">
       <div class="section-label">Subject Property</div>
       <div class="section-title">3512 Donovan Place</div>
       <div class="section-sub">Charlotte, NC 28215 · Shannon Park · Steel tape measured floor plan</div>
@@ -286,7 +326,7 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section id="map-section" style="background:var(--bg)">
   <div class="container">
-    <div class="fade-in" style="margin-bottom:32px">
+    <div class="fade-in" style="margin-bottom:16px">
       <div class="section-label">Comp Map · Shannon Park</div>
       <div class="section-title">Where the <strong>Market is Trading</strong></div>
       <div class="section-sub">All active, under contract, and closed comparables plotted across the Shannon Park area.</div>
@@ -323,13 +363,13 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section id="active" style="background:var(--surface)">
   <div class="container">
-    <div class="fade-in" style="margin-bottom:36px">
+    <div class="fade-in" style="margin-bottom:16px">
       <div class="section-label">Active Listings · Shannon Park</div>
       <div class="section-title">Active <strong>Competition</strong></div>
       <div class="section-sub">What buyers comparing this home are also seeing right now.</div>
     </div>
 
-    <div class="card-grid g3 fade-in">
+    <div class="card-grid g3 fade-in" style="gap:8px">
 
       <!-- 5413 Ruth Dr — NEW -->
       <div class="prop-card" style="border-color:rgba(122,79,46,.3)">
@@ -391,7 +431,7 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section id="undercontract" style="background:var(--bg)">
   <div class="container">
-    <div class="fade-in" style="margin-bottom:36px">
+    <div class="fade-in" style="margin-bottom:16px">
       <div class="section-label">Under Contract</div>
       <div class="section-title">What's Going <strong>Pending</strong></div>
       <div class="section-sub">Active buyer demand in the Shannon Park area right now.</div>
@@ -424,13 +464,13 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section id="closed" style="background:var(--surface)">
   <div class="container">
-    <div class="fade-in" style="margin-bottom:36px">
+    <div class="fade-in" style="margin-bottom:16px">
       <div class="section-label">Closed Sales · Past 12 Months · Shannon Park / Shamrock Hills</div>
       <div class="section-title">The <strong>True Comp Set</strong></div>
       <div class="section-sub">8 closed transactions — the complete picture of where this market is trading. Data as of Feb 27, 2026.</div>
     </div>
 
-    <div class="card-grid g3 fade-in">
+    <div class="card-grid g3 fade-in" style="gap:8px">
 
       <div class="prop-card" style="border-color:rgba(37,99,235,.15)">
         <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#1d4ed8;font-weight:700;margin-bottom:6px">Highest Resale · Oct 2025</div>
@@ -533,7 +573,7 @@ section>.container{width:100%}
     </div>
 
     <!-- Closed stats bar -->
-    <div class="fade-in grid-4col" style="margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+    <div class="fade-in grid-4col" style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
       <div style="text-align:center;padding:20px 16px;border-radius:12px;background:var(--white);border:1px solid var(--border)">
         <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">$518K</div>
         <div style="font-size:.75rem;color:var(--muted);margin-top:4px;letter-spacing:.06em">Median Closed</div>
@@ -559,14 +599,14 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section id="dynamics" style="background:var(--bg)">
   <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:640px;margin:0 auto 40px">
+    <div class="fade-in" style="text-align:center;max-width:640px;margin:0 auto 20px">
       <div class="section-label">Pricing Dynamics · $/SF Analysis</div>
       <div class="section-title">What Shannon Park <strong>Actually Trades At</strong></div>
       <div class="section-sub" style="margin:0 auto">The data draws a clear picture of where resale value lives — and where it tops out.</div>
     </div>
 
     <!-- $/SF range bar -->
-    <div class="fade-in" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 28px;margin-bottom:32px;overflow-x:auto">
+    <div class="fade-in" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:16px;overflow-x:auto">
       <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Closed $/SF — Shannon Park / Adjacent · 8 Comps</div>
       <div style="display:flex;flex-direction:column;gap:10px;min-width:300px">
 
@@ -657,7 +697,7 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <section id="pricing" style="background:var(--surface)">
   <div class="container">
-    <div class="fade-in" style="text-align:center;max-width:640px;margin:0 auto 40px">
+    <div class="fade-in" style="text-align:center;max-width:640px;margin:0 auto 20px">
       <div class="section-label">Pricing Strategy · 3512 Donovan Place</div>
       <div class="section-title">The <strong>Right Number</strong></div>
       <div class="section-sub" style="margin:0 auto">Final price confirmed once home condition is evaluated in person.</div>
@@ -726,12 +766,12 @@ section>.container{width:100%}
 <!-- 9. FINAL SLIDE                              -->
 <!-- ═══════════════════════════════════════════ -->
 <section id="close" style="background:var(--bg);min-height:60vh;display:flex;align-items:center">
-  <div class="container fade-in" style="text-align:center;padding:60px 24px">
+  <div class="container fade-in" style="text-align:center;padding:32px 16px">
     <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Shannon Park · Charlotte NC</div>
     <div style="font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:300;color:var(--primary);line-height:1.1;margin-bottom:16px">
       Priced to <strong style="font-weight:700">Move Fast</strong>
     </div>
-    <div style="font-family:var(--serif);font-size:1.2rem;color:var(--muted);margin-bottom:32px">3512 Donovan Place · Charlotte, NC 28215</div>
+    <div style="font-family:var(--serif);font-size:1.2rem;color:var(--muted);margin-bottom:16px">3512 Donovan Place · Charlotte, NC 28215</div>
     <div style="width:40px;height:1px;background:var(--border);margin:0 auto 32px"></div>
     <p style="font-size:.95rem;color:var(--muted);max-width:560px;line-height:1.85;margin:0 auto 48px">
       Shannon Park is one of Charlotte's most consistently active resale neighborhoods. With 8 closed comps in 12 months at a 102% avg LP ratio and 7-day median DOM, the data is decisive. At <strong style="color:var(--accent)">$565,000–$575,000</strong>, this home is positioned above the $535K median — justified by 2,303 SF and superior size — and below the hard ceiling set by new construction.
