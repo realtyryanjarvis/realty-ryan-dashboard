@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Market Analysis — 131 The Point Drive, Mooresville NC | Ryan Palmer · Corcoran HM Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f8f7f6;--primary:#130f0a;--accent:#c4893a;--accent-light:rgba(196,137,58,.1);
+  --border:rgba(255,255,255,.1);--muted:rgba(255,255,255,.5);--white:#fff;
+  --dark:#0d0b08;--bg:#111009;--surface:#1a1712;--surface2:#211e18;
+  --success:#4ade80;--corcoran:#0c2340;--copper:#c4893a;
+  --section-gap:40px;--ease:cubic-bezier(.25,.46,.45,.94);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:18px}
+body{font-family:var(--sans);background:var(--bg);color:var(--white);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:18px}
+::selection{background:var(--accent);color:#000}
+
+/* ── UTILITY ── */
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.fade-in{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-left{opacity:0;transform:translateX(-40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-left.visible{opacity:1;transform:translateX(0)}
+.fade-right{opacity:0;transform:translateX(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-right.visible{opacity:1;transform:translateX(0)}
+
+/* ── SECTIONS ── */
+section{padding:var(--section-gap) 0;display:flex;align-items:center;min-height:100vh}
+section>.container{width:100%}
+.section-label{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}
+.section-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:18px;letter-spacing:-.01em}
+.section-title strong{font-weight:700}
+.section-sub{font-size:1.05rem;color:var(--muted);max-width:560px;line-height:1.6}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--bg)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(196,137,58,.07) 0%,transparent 70%)}
+.hero-content{position:relative;z-index:2;width:100%;max-width:800px;padding:0 24px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+/* ── CARDS ── */
+.card{padding:24px;border-radius:14px;background:var(--surface);border:1px solid rgba(255,255,255,.08);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4);border-color:rgba(196,137,58,.3)}
+.card-grid{display:grid;gap:16px;margin-top:32px}
+.card-grid.g2{grid-template-columns:1fr 1fr}
+.card-grid.g3{grid-template-columns:1fr 1fr 1fr}
+.card-grid.g4{grid-template-columns:repeat(2,1fr)}
+
+/* ── STAT CARDS ── */
+.stat-big{text-align:center;padding:40px 24px;border-radius:16px;background:var(--surface);border:1px solid rgba(255,255,255,.08);transition:transform .3s var(--ease),border-color .3s}
+.stat-big:hover{transform:translateY(-4px);border-color:rgba(196,137,58,.4)}
+.stat-big .number{font-family:var(--serif);font-size:clamp(2.8rem,5vw,4rem);font-weight:700;color:var(--accent);line-height:1;margin-bottom:12px}
+.stat-big .label{font-size:.9rem;color:rgba(255,255,255,.7);letter-spacing:.04em;line-height:1.4}
+.stat-big .sublabel{font-size:.75rem;color:var(--muted);margin-top:6px;letter-spacing:.08em}
+
+/* ── PROPERTY CARDS ── */
+.prop-card{padding:22px 24px;border-radius:14px;background:var(--surface);border:1px solid rgba(255,255,255,.08);transition:transform .3s var(--ease),border-color .3s}
+.prop-card:hover{transform:translateY(-3px);border-color:rgba(196,137,58,.3)}
+.prop-addr{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:6px}
+.prop-price{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:10px}
+.prop-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.prop-tag{font-size:.7rem;padding:4px 10px;border-radius:20px;font-weight:500;letter-spacing:.05em}
+.tag-wf{background:rgba(196,137,58,.15);color:var(--accent);border:1px solid rgba(196,137,58,.3)}
+.tag-nwf{background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)}
+.tag-dom{background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.08)}
+.tag-psf{background:rgba(196,137,58,.2);color:var(--accent);border:1px solid rgba(196,137,58,.35);font-weight:700}
+.tag-uc{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.25)}
+.prop-details{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.5}
+.prop-note{font-size:.8rem;color:rgba(255,255,255,.4);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
+
+/* ── SPLIT ── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+
+/* ── TIER SPLIT ── */
+.tier-panel{padding:36px;border-radius:16px;background:var(--surface);border:1px solid rgba(255,255,255,.08)}
+.tier-panel.wf{border-left:3px solid var(--accent)}
+.tier-panel.nwf{border-left:3px solid rgba(255,255,255,.2)}
+.tier-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.tier-range{font-size:2rem;font-weight:700;font-family:var(--serif);color:var(--accent);margin-bottom:16px}
+.tier-range.dim{color:rgba(255,255,255,.5)}
+.tier-examples{list-style:none;display:flex;flex-direction:column;gap:8px}
+.tier-examples li{font-size:.9rem;color:rgba(255,255,255,.65);display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.tier-examples li:last-child{border-bottom:none}
+.tier-examples li span{font-weight:600;color:rgba(255,255,255,.85)}
+
+/* ── CENTER CALLOUT ── */
+.center-callout{text-align:center;padding:28px 32px;border-radius:14px;background:linear-gradient(135deg,rgba(196,137,58,.12),rgba(196,137,58,.06));border:1px solid rgba(196,137,58,.3);margin-top:24px}
+
+/* ── PRICING ── */
+.price-option{padding:24px;border-radius:14px;background:var(--surface);border:2px solid rgba(255,255,255,.08);transition:transform .3s,border-color .3s}
+.price-option:hover{transform:translateY(-3px)}
+.price-option.recommended{border-color:var(--accent);background:rgba(196,137,58,.06)}
+.price-option .opt-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.price-option .opt-price{font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:4px}
+.price-option .opt-psf{font-size:.85rem;color:var(--muted);margin-bottom:10px}
+.price-option .opt-desc{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.5}
+
+/* ── RESPONSIVE ── */
+@media(min-width:768px) and (max-width:1400px){
+  :root{--section-gap:0px}
+  html{font-size:20px;scroll-snap-type:y mandatory}
+  section{padding:32px 0;min-height:100vh;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden}
+  .container{max-width:1000px;padding:0 48px;width:100%}
+  .split{gap:36px}
+  .card-grid.g4{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  :root{--section-gap:60px}
+  .split{grid-template-columns:1fr;gap:24px}
+  .card-grid.g2,.card-grid.g3,.card-grid.g4{grid-template-columns:1fr}
+  .tier-panel{padding:24px}
+  .price-option .opt-price{font-size:1.6rem}
+}
+@media print{
+  .fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 1. HERO                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-content fade-in">
+    <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Market Analysis</div>
+    <h1 style="font-family:var(--serif);font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.05;letter-spacing:-.03em;margin-bottom:16px;color:var(--white)">
+      131 The Point Drive
+    </h1>
+    <div style="font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;color:rgba(255,255,255,.5);letter-spacing:.04em;margin-bottom:32px">
+      Mooresville, North Carolina
+    </div>
+    <div style="display:inline-block;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:8px 22px;border-radius:30px;margin-bottom:60px">
+      Prepared for Lisa Behring
+    </div>
+
+    <!-- divider line -->
+    <div style="width:40px;height:1px;background:rgba(255,255,255,.15);margin:0 auto 24px"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:rgba(255,255,255,.9)">Ryan Palmer</div>
+      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:500">Corcoran HM Properties</div>
+    </div>
+
+    <a href="#snapshot" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:50%;margin-top:48px;cursor:pointer;text-decoration:none;transition:border-color .3s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(255,255,255,.15)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 2. MARKET SNAPSHOT                          -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="snapshot" style="background:var(--bg)">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto 48px">
+      <div class="section-label">The Numbers</div>
+      <div class="section-title" style="color:var(--white)">Market Snapshot — <strong>The Point</strong></div>
+      <div class="section-sub" style="margin:0 auto">Current market conditions in The Point subdivision, Lake Norman · Mooresville, NC</div>
+    </div>
+    <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:860px;margin:0 auto">
+      <div class="stat-big">
+        <div class="number">3</div>
+        <div class="label">Active Listings</div>
+        <div class="sublabel">in The Point subdivision</div>
+      </div>
+      <div class="stat-big" style="border-color:rgba(196,137,58,.3)">
+        <div class="number">8</div>
+        <div class="label">Closed Sales</div>
+        <div class="sublabel">in the past 12 months</div>
+      </div>
+      <div class="stat-big">
+        <div class="number">$439</div>
+        <div class="label">Average Closed $/SF</div>
+        <div class="sublabel">across all closed sales · The Point</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 3. PRICE TIER STORY                         -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="tiers" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:620px;margin:0 auto 40px">
+      <div class="section-label">Pricing Dynamics</div>
+      <div class="section-title" style="color:var(--white)">The Price <strong>Tier Story</strong></div>
+      <div class="section-sub" style="margin:0 auto">Not all homes in The Point are equal. The data tells a clear two-tier story — and where 131 The Point sits is the key to positioning.</div>
+    </div>
+
+    <div class="split fade-in">
+      <!-- Waterfront -->
+      <div class="tier-panel wf">
+        <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">⚓ Waterfront Premium</div>
+        <div class="tier-title" style="color:var(--white)">Waterfront</div>
+        <div class="tier-range">$547–$692<span style="font-size:1.2rem;font-weight:400">/SF</span></div>
+        <ul class="tier-examples">
+          <li>111 Moors End Loop <span>$5.25M</span></li>
+          <li>104 Standish Lane <span>$4.45M</span></li>
+          <li>130 Brick Kiln Way <span>$3.73M</span></li>
+        </ul>
+      </div>
+
+      <!-- Non-Waterfront -->
+      <div class="tier-panel nwf">
+        <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600;margin-bottom:10px">🏌️ Non-Waterfront</div>
+        <div class="tier-title" style="color:rgba(255,255,255,.7)">Non-Waterfront</div>
+        <div class="tier-range dim">$258–$417<span style="font-size:1.2rem;font-weight:400">/SF</span></div>
+        <ul class="tier-examples">
+          <li>115 Stonewall Beach Ln <span>$2.14M</span></li>
+          <li>176 Old Post Road <span>$1.55M</span></li>
+          <li>115 Union Chapel Dr <span>$1.37M</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Center callout -->
+    <div class="center-callout fade-in">
+      <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">📍 The Positioning</div>
+      <div style="font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:600;color:var(--white);line-height:1.4">
+        131 The Point — Golf views + deeded boat slip — <span style="color:var(--accent)">sits between these two tiers</span>
+      </div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:10px;line-height:1.5">The deeded boat slip elevates it above non-waterfront; the absence of direct lake frontage keeps it below the waterfront premium. Priced correctly, this is the most compelling value in the subdivision.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 4. ACTIVE COMPETITION                       -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="active" style="background:var(--bg)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:36px">
+      <div class="section-label">Active Listings · The Point</div>
+      <div class="section-title" style="color:var(--white)">Active <strong>Competition</strong></div>
+      <div class="section-sub">What buyers comparing 131 The Point are also seeing right now.</div>
+    </div>
+
+    <div class="card-grid g3 fade-in">
+      <!-- Card 1 -->
+      <div class="prop-card">
+        <div class="prop-addr">128 Brownstone Drive</div>
+        <div class="prop-price">$3,895,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-wf">Waterfront + Boat Lift</span>
+          <span class="prop-tag tag-dom">106 DOM</span>
+        </div>
+        <div class="prop-details">
+          5 bed · 5.5 bath · 6,478 SF
+        </div>
+        <div class="prop-note">Sitting 106 days despite waterfront premium</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="prop-card">
+        <div class="prop-addr">1812 Brawley School Rd</div>
+        <div class="prop-price">$2,490,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-wf">Golf Views + Boat Slip</span>
+          <span class="prop-tag tag-dom">Just Listed</span>
+        </div>
+        <div class="prop-details">
+          5 bed · 4.5 bath · 5,177 SF
+        </div>
+        <div class="prop-note">Dated kitchen · Just hit market — direct comp for 131</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="prop-card">
+        <div class="prop-addr">133 Brick Kiln Way</div>
+        <div class="prop-price">$1,950,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-nwf">Non-Waterfront</span>
+          <span class="prop-tag tag-dom">161 DOM</span>
+        </div>
+        <div class="prop-details">
+          4 bed · 4.5 bath · 4,975 SF
+        </div>
+        <div class="prop-note">Longest active DOM in subdivision</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 5. UNDER CONTRACT                           -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="undercontract" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:36px">
+      <div class="section-label">Under Contract</div>
+      <div class="section-title" style="color:var(--white)">What's <strong>Going Pending</strong></div>
+      <div class="section-sub">These contracts show where real buyer demand is moving.</div>
+    </div>
+
+    <div class="card-grid g2 fade-in" style="max-width:760px">
+      <!-- Card 1 -->
+      <div class="prop-card" style="border-color:rgba(74,222,128,.15)">
+        <div class="prop-addr">105 Moors End Loop</div>
+        <div class="prop-price">$4,975,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-wf">Waterfront + Dock + Pool</span>
+          <span class="prop-tag tag-uc">Under Contract · 22 DOM</span>
+        </div>
+        <div class="prop-details">
+          4 bed · 6.5 bath · 7,190 SF
+        </div>
+        <div class="prop-note" style="color:rgba(74,222,128,.6)">Under contract in 22 days — buyers are active at the top tier</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="prop-card" style="border-color:rgba(74,222,128,.15)">
+        <div class="prop-addr">1946 Brawley School Rd</div>
+        <div class="prop-price">$1,775,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-nwf">Non-Waterfront</span>
+          <span class="prop-tag tag-uc">Under Contract · 68 DOM</span>
+        </div>
+        <div class="prop-details">
+          4 bed · 4 bath · 4,165 SF
+        </div>
+        <div class="prop-note">68 DOM before going under contract at non-waterfront pricing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 6. CLOSED SALES                             -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="closed" style="background:var(--bg)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:36px">
+      <div class="section-label">Closed Sales · Last 12 Months</div>
+      <div class="section-title" style="color:var(--white)">The <strong>True Comp Set</strong></div>
+      <div class="section-sub">8 closed transactions — the most complete picture of where The Point has been trading.</div>
+    </div>
+
+    <div class="card-grid g4 fade-in">
+
+      <!-- 1 -->
+      <div class="prop-card">
+        <div class="prop-addr">111 Moors End Loop</div>
+        <div class="prop-price">$5,250,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$647/SF</span>
+          <span class="prop-tag tag-wf">Waterfront</span>
+          <span class="prop-tag tag-dom">1 DOM</span>
+        </div>
+        <div class="prop-details">4/6.5 · 8,114 SF</div>
+        <div class="prop-note">May 2025 · Closed essentially the day listed</div>
+      </div>
+
+      <!-- 2 -->
+      <div class="prop-card">
+        <div class="prop-addr">104 Standish Lane</div>
+        <div class="prop-price">$4,450,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$548/SF</span>
+          <span class="prop-tag tag-wf">Waterfront</span>
+          <span class="prop-tag tag-dom">0 DOM</span>
+        </div>
+        <div class="prop-details">5/5.5 · 8,125 SF</div>
+        <div class="prop-note">Mar 2025 · Off-market or day-of transaction</div>
+      </div>
+
+      <!-- 3 -->
+      <div class="prop-card">
+        <div class="prop-addr">130 Brick Kiln Way</div>
+        <div class="prop-price">$3,730,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$649/SF</span>
+          <span class="prop-tag tag-wf">Waterfront</span>
+          <span class="prop-tag tag-dom">24 DOM</span>
+        </div>
+        <div class="prop-details">4/5.5 · 5,744 SF</div>
+        <div class="prop-note">May 2025 · Highest $/SF of all closed sales</div>
+      </div>
+
+      <!-- 4 -->
+      <div class="prop-card">
+        <div class="prop-addr">123 Stonewall Beach Ln</div>
+        <div class="prop-price">$2,365,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$274/SF</span>
+          <span class="prop-tag tag-wf">Waterfront</span>
+          <span class="prop-tag tag-dom">30 DOM</span>
+        </div>
+        <div class="prop-details">5/5.5 · 8,640 SF</div>
+        <div class="prop-note">Feb 2026 · Large SF dragged down $/SF — outlier</div>
+      </div>
+
+      <!-- 5 -->
+      <div class="prop-card">
+        <div class="prop-addr">115 Stonewall Beach Ln</div>
+        <div class="prop-price">$2,142,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$417/SF</span>
+          <span class="prop-tag tag-nwf">Non-Waterfront</span>
+          <span class="prop-tag tag-dom">29 DOM</span>
+        </div>
+        <div class="prop-details">4/4.5 · 5,141 SF</div>
+        <div class="prop-note">May 2025 · Top non-waterfront $/SF comp</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="prop-card">
+        <div class="prop-addr">176 Old Post Road</div>
+        <div class="prop-price">$1,550,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$381/SF</span>
+          <span class="prop-tag tag-nwf">Non-Waterfront</span>
+          <span class="prop-tag tag-dom">19 DOM</span>
+        </div>
+        <div class="prop-details">4/4.5 · 4,064 SF</div>
+        <div class="prop-note">Oct 2025 · Fast sale at strong non-WF pricing</div>
+      </div>
+
+      <!-- 7 -->
+      <div class="prop-card">
+        <div class="prop-addr">170 Old Post Road</div>
+        <div class="prop-price">$1,400,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$338/SF</span>
+          <span class="prop-tag tag-nwf">Non-Waterfront</span>
+          <span class="prop-tag tag-dom">210 DOM</span>
+        </div>
+        <div class="prop-details">4/3.5 · 4,147 SF</div>
+        <div class="prop-note">Jun 2025 · 210 DOM reflects overpriced launch</div>
+      </div>
+
+      <!-- 8 -->
+      <div class="prop-card">
+        <div class="prop-addr">115 Union Chapel Drive</div>
+        <div class="prop-price">$1,365,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$258/SF</span>
+          <span class="prop-tag tag-nwf">Non-Waterfront</span>
+          <span class="prop-tag tag-dom">246 DOM</span>
+        </div>
+        <div class="prop-details">5/4.5 · 5,288 SF</div>
+        <div class="prop-note">Dec 2025 · Longest DOM — lowest $/SF outcome</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 7. PRICING RECOMMENDATION                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="pricing" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:680px;margin:0 auto 20px">
+      <div class="section-label">Pricing Recommendation</div>
+
+      <!-- Big number -->
+      <div style="font-family:var(--serif);font-size:clamp(3.5rem,8vw,6rem);font-weight:700;color:var(--accent);line-height:1;margin:20px 0 12px">
+        $3,088,000
+      </div>
+      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:8px">
+        $499/SF · Strategically positioned below the $500/SF threshold
+      </div>
+      <div style="width:40px;height:1px;background:rgba(196,137,58,.4);margin:20px auto"></div>
+    </div>
+
+    <!-- 3 options -->
+    <div class="card-grid g3 fade-in" style="max-width:900px;margin:0 auto">
+
+      <div class="price-option">
+        <div class="opt-label" style="color:rgba(255,255,255,.4)">Aggressive</div>
+        <div class="opt-price" style="color:rgba(255,255,255,.8)">$3,250,000</div>
+        <div class="opt-psf">$526 / SF</div>
+        <div class="opt-desc">Current list price. Above the $500/SF threshold — limits buyer pool in a market averaging 1–3 showings per listing.</div>
+      </div>
+
+      <div class="price-option recommended">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <div class="opt-label" style="color:var(--accent)">Market Value</div>
+          <span style="font-size:.65rem;background:var(--accent);color:#000;padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.1em">★ RECOMMENDED</span>
+        </div>
+        <div class="opt-price" style="color:var(--accent)">$3,088,000</div>
+        <div class="opt-psf" style="color:rgba(196,137,58,.7)">$499 / SF</div>
+        <div class="opt-desc">Fresh start below $500/SF — psychological threshold for buyers at this price point. Positions as the most compelling value vs. competition.</div>
+      </div>
+
+      <div class="price-option">
+        <div class="opt-label" style="color:rgba(255,255,255,.4)">Quick Sale</div>
+        <div class="opt-price" style="color:rgba(255,255,255,.8)">$2,995,000</div>
+        <div class="opt-psf">$485 / SF</div>
+        <div class="opt-desc">Below all competition. Drives urgency and multiple-showing velocity. Best path if timeline is the priority over net proceeds.</div>
+      </div>
+
+    </div>
+
+    <!-- Bottom quote -->
+    <div class="fade-in" style="text-align:center;max-width:580px;margin:40px auto 0;padding:24px;border-top:1px solid rgba(255,255,255,.08)">
+      <p style="font-family:var(--serif);font-size:1rem;font-style:italic;color:rgba(255,255,255,.45);line-height:1.7">
+        "The buyer pool above $3M in The Point averages 1–3 showings per listing. Every showing counts."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 8. FINAL SLIDE                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="opportunity" style="background:var(--bg);display:flex;flex-direction:column;justify-content:center">
+  <div class="container fade-in" style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center">
+
+    <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">The Bottom Line</div>
+
+    <div style="font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:32px;max-width:700px">
+      The <strong style="font-weight:700">Opportunity</strong>
+    </div>
+
+    <div style="width:40px;height:1px;background:rgba(196,137,58,.4);margin:0 auto 32px"></div>
+
+    <p style="font-size:1.05rem;color:rgba(255,255,255,.6);max-width:620px;line-height:1.8;margin:0 auto 48px">
+      131 The Point Drive offers Simonini craftsmanship, a heated pool, golf course views, and a deeded boat slip — at $499/SF, it is the most compelling value proposition in The Point for a buyer who wants premium without the waterfront price tag.
+    </p>
+
+    <!-- Divider -->
+    <div style="width:60px;height:1px;background:rgba(255,255,255,.1);margin:0 auto 32px"></div>
+
+    <!-- Branding -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+      <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--white)">Ryan Palmer</div>
+      <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35)">Corcoran HM Properties</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.3);margin-top:4px">ryanpalmer@hmproperties.com</div>
+    </div>
+
+  </div>
+
+  <footer style="padding:24px 40px;border-top:1px solid rgba(255,255,255,.07);text-align:center">
+    <p style="font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:.12em">
+      © 2026 Ryan Palmer · Corcoran HM Properties · All Rights Reserved · Market data sourced from MLS · Prepared for Lisa Behring
+    </p>
+  </footer>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCRIPTS                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<script>
+// Intersection observer — fade in elements
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in,.fade-left,.fade-right').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
