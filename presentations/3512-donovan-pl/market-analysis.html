@@ -156,6 +156,7 @@ section>.container{width:100%}
   /* Stat tiles */
   .stat-big{padding:14px 8px!important}
 }
+.fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
 @media print{
   .fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
 }
@@ -775,29 +776,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /* Fade-in on scroll */
-  var fadeEls = document.querySelectorAll('.fade-in, .fade-left, .fade-right');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'none';
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-    fadeEls.forEach(function(el) {
-      el.style.opacity = '0';
-      el.style.transition = 'opacity .6s ease, transform .6s ease';
-      if (el.classList.contains('fade-left')) el.style.transform = 'translateX(-24px)';
-      else if (el.classList.contains('fade-right')) el.style.transform = 'translateX(24px)';
-      else el.style.transform = 'translateY(20px)';
-      io.observe(el);
-    });
-  } else {
-    fadeEls.forEach(function(el) { el.style.opacity = '1'; });
-  }
+  /* No fade animations — content always visible */
+  document.querySelectorAll('.fade-in, .fade-left, .fade-right').forEach(function(el) {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
 
 });
 </script>
