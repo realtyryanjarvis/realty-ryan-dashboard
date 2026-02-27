@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Analysis — {{PROPERTY_ADDRESS}}, {{PROPERTY_CITY}} | Ryan Palmer · Corcoran HM Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f8f7f6;
+  --primary:#130f0a;
+  --accent:#793315;
+  --accent-light:rgba(121,51,21,.07);
+  --border:#e5e7eb;
+  --muted:#6b7280;
+  --white:#fff;
+  --surface:#fafafa;
+  --corcoran:#0c2340;
+  --copper:#793315;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+html{font-size:15px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{
+  font-family:var(--sans);
+  background:var(--white);
+  color:var(--primary);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  max-width:900px;
+  margin:0 auto;
+  padding:0 32px 48px;
+}
+
+/* ── UTILITIES ── */
+.section-label{
+  font-size:.65rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+  font-family:var(--sans);
+}
+.serif{font-family:var(--serif)}
+
+/* ══════════════════════════════════════════════
+   PAGE 1 — HEADER + SHOWINGTIME
+   ══════════════════════════════════════════════ */
+
+/* ── HEADER BAR ── */
+.doc-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 0 18px;
+  border-bottom:2px solid var(--accent);
+  margin-bottom:28px;
+}
+.doc-header-left .doc-type{
+  font-size:.65rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+  margin-bottom:4px;
+}
+.doc-header-left .doc-address{
+  font-family:var(--serif);
+  font-size:1.7rem;
+  font-weight:600;
+  line-height:1.1;
+  color:var(--primary);
+  letter-spacing:-.01em;
+}
+.doc-header-left .doc-city{
+  font-size:.85rem;
+  color:var(--muted);
+  margin-top:2px;
+}
+.doc-header-right{
+  text-align:right;
+  flex-shrink:0;
+  padding-left:24px;
+}
+.doc-header-right .agent-name{
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--primary);
+}
+.doc-header-right .agent-brokerage{
+  font-size:.75rem;
+  color:var(--muted);
+  margin-top:1px;
+}
+.doc-header-right .prepared-badge{
+  display:inline-block;
+  margin-top:8px;
+  font-size:.65rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid var(--accent);
+  padding:4px 12px;
+  border-radius:20px;
+  font-weight:600;
+}
+
+/* ── SECTION HEADERS ── */
+.section-header{
+  margin-bottom:16px;
+}
+.section-header .section-label{
+  display:block;
+  margin-bottom:4px;
+}
+.section-header h2{
+  font-family:var(--serif);
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--primary);
+  letter-spacing:-.01em;
+}
+.section-header .source-note{
+  font-size:.72rem;
+  color:var(--muted);
+  margin-top:3px;
+  font-style:italic;
+}
+
+/* ── SHOWINGTIME STATS ── */
+.stats-page{
+  margin-bottom:36px;
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:20px;
+}
+.stat-card{
+  background:var(--cream);
+  border:1px solid rgba(121,51,21,.15);
+  border-radius:10px;
+  padding:20px 18px;
+  text-align:center;
+}
+.stat-card .stat-number{
+  font-family:var(--serif);
+  font-size:2.6rem;
+  font-weight:700;
+  color:var(--accent);
+  line-height:1;
+  margin-bottom:6px;
+}
+.stat-card .stat-label{
+  font-size:.72rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  line-height:1.4;
+}
+.stat-source{
+  font-size:.7rem;
+  color:var(--muted);
+  text-align:center;
+  font-style:italic;
+  padding:8px 0 0;
+}
+
+/* ── WHAT THIS MEANS ── */
+.insight-section{
+  margin-bottom:36px;
+}
+.insight-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:16px;
+}
+.insight-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px;
+  border-left:3px solid var(--accent);
+}
+.insight-card .insight-headline{
+  font-family:var(--serif);
+  font-size:1rem;
+  font-weight:600;
+  color:var(--primary);
+  margin-bottom:6px;
+  line-height:1.3;
+}
+.insight-card .insight-headline strong{
+  color:var(--accent);
+  font-size:1.1rem;
+}
+.insight-card .insight-body{
+  font-size:.78rem;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+/* bottom-line paragraph */
+.insight-bottom{
+  background:var(--accent-light);
+  border-radius:10px;
+  padding:16px 20px;
+  border-left:3px solid var(--accent);
+}
+.insight-bottom p{
+  font-size:.85rem;
+  color:var(--primary);
+  line-height:1.65;
+}
+.insight-bottom p strong{
+  color:var(--accent);
+}
+
+/* ── MARKET SNAPSHOT ROW ── */
+.snapshot-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:36px;
+}
+.snap-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:14px 12px;
+  text-align:center;
+}
+.snap-card .snap-val{
+  font-family:var(--serif);
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--primary);
+  line-height:1;
+  margin-bottom:4px;
+}
+.snap-card .snap-val.accent{color:var(--accent)}
+.snap-card .snap-label{
+  font-size:.65rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+/* ══════════════════════════════════════════════
+   PAGE BREAK
+   ══════════════════════════════════════════════ */
+.page-break{
+  page-break-after:always;
+  break-after:page;
+  height:0;
+  margin:0;
+  border:none;
+}
+
+/* ── MINI HEADER (repeated on comps pages) ── */
+.mini-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 0 10px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:22px;
+}
+.mini-header .mini-address{
+  font-family:var(--serif);
+  font-size:.95rem;
+  font-weight:600;
+  color:var(--muted);
+}
+.mini-header .mini-brand{
+  font-size:.7rem;
+  color:var(--muted);
+  text-align:right;
+}
+.mini-header .mini-label{
+  font-size:.65rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+}
+
+/* ══════════════════════════════════════════════
+   COMP CARDS
+   ══════════════════════════════════════════════ */
+.comps-section{
+  margin-bottom:32px;
+}
+.comps-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+/* Default comp card — injected via {{ACTIVE_COMPS_HTML}} / {{CLOSED_COMPS_HTML}} */
+.comp-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  break-inside:avoid;
+  page-break-inside:avoid;
+}
+.comp-card .comp-status{
+  display:inline-block;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:3px 10px;
+  border-radius:20px;
+  align-self:flex-start;
+}
+.comp-card .comp-status.active{
+  background:rgba(45,106,79,.1);
+  color:#2d6a4f;
+  border:1px solid rgba(45,106,79,.25);
+}
+.comp-card .comp-status.sold{
+  background:rgba(121,51,21,.1);
+  color:var(--accent);
+  border:1px solid rgba(121,51,21,.25);
+}
+.comp-card .comp-address{
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1.2;
+  color:var(--primary);
+}
+.comp-card .comp-city{
+  font-size:.75rem;
+  color:var(--muted);
+  margin-top:-4px;
+}
+.comp-card .comp-details{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.comp-card .comp-detail{
+  font-size:.72rem;
+  color:var(--muted);
+  background:var(--cream);
+  padding:3px 9px;
+  border-radius:5px;
+  white-space:nowrap;
+}
+.comp-card .comp-price-row{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  margin-top:4px;
+}
+.comp-card .comp-price{
+  font-family:var(--serif);
+  font-size:1.25rem;
+  font-weight:700;
+  color:var(--accent);
+}
+.comp-card .comp-badge{
+  font-size:.65rem;
+  color:var(--muted);
+  letter-spacing:.05em;
+}
+.comp-card .comp-ppsf{
+  font-size:.72rem;
+  color:var(--muted);
+  margin-top:-2px;
+}
+
+/* ── FOOTER ── */
+.doc-footer{
+  margin-top:40px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.doc-footer .footer-agent{
+  font-family:var(--serif);
+  font-size:.95rem;
+  font-weight:600;
+  color:var(--primary);
+}
+.doc-footer .footer-brokerage{
+  font-size:.72rem;
+  color:var(--muted);
+  margin-top:1px;
+}
+.doc-footer .footer-email{
+  font-size:.72rem;
+  color:var(--accent);
+  text-decoration:none;
+}
+.doc-footer .footer-right{
+  text-align:right;
+}
+.doc-footer .footer-disclaimer{
+  font-size:.6rem;
+  color:var(--muted);
+  max-width:360px;
+  line-height:1.4;
+  text-align:right;
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN ENHANCEMENTS
+   (looks good on screen, ignored/overridden for print)
+   ══════════════════════════════════════════════ */
+@media screen {
+  body{
+    padding:40px 40px 64px;
+    background:#eee;
+  }
+  .doc-page{
+    background:var(--white);
+    max-width:860px;
+    margin:0 auto 32px;
+    padding:40px 48px;
+    border-radius:4px;
+    box-shadow:0 4px 32px rgba(0,0,0,.10);
+  }
+  .stat-card{
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+  }
+  .comp-card{
+    box-shadow:0 1px 8px rgba(0,0,0,.04);
+    transition:box-shadow .2s;
+  }
+  .comp-card:hover{
+    box-shadow:0 4px 16px rgba(0,0,0,.09);
+  }
+  .page-break{
+    display:none;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════════════ */
+@media print {
+  @page{
+    size:letter portrait;
+    margin:0.65in 0.65in 0.75in 0.65in;
+  }
+  html,body{
+    background:white!important;
+    padding:0!important;
+    max-width:100%!important;
+    font-size:10.5pt!important;
+  }
+  .doc-page{
+    padding:0!important;
+    box-shadow:none!important;
+    border-radius:0!important;
+  }
+  /* Kill shadows */
+  *{
+    box-shadow:none!important;
+    text-shadow:none!important;
+  }
+  /* Preserve background colors */
+  .stat-card,
+  .insight-bottom,
+  .comp-card .comp-detail,
+  .snap-card{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  /* Page breaks */
+  .page-break{
+    page-break-after:always!important;
+    break-after:page!important;
+  }
+  .comps-section{
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  .comp-card{
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
+  }
+  .insight-grid,
+  .stats-grid,
+  .snapshot-row{
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  /* Links */
+  a{color:inherit!important;text-decoration:none!important}
+  /* Hide screen-only elements */
+  .screen-only{display:none!important}
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE (tablet / narrow)
+   ══════════════════════════════════════════════ */
+@media screen and (max-width:700px){
+  .stats-grid,
+  .insight-grid{grid-template-columns:1fr!important}
+  .snapshot-row{grid-template-columns:1fr 1fr!important}
+  .comps-grid{grid-template-columns:1fr!important}
+  .doc-header{flex-direction:column;align-items:flex-start;gap:14px}
+  .doc-header-right{text-align:left;padding-left:0}
+  .doc-footer{flex-direction:column;gap:10px}
+  .doc-footer .footer-disclaimer{text-align:left;max-width:100%}
+  body{padding:16px!important}
+  .doc-page{padding:20px 18px!important;border-radius:0!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     PAGE 1 — COVER + SHOWINGTIME STATS
+     ════════════════════════════════════════════ -->
+<div class="doc-page">
+
+  <!-- Header Bar -->
+  <header class="doc-header">
+    <div class="doc-header-left">
+      <div class="doc-type">Market Analysis · Comparative Market Data</div>
+      <div class="doc-address">{{PROPERTY_ADDRESS}}</div>
+      <div class="doc-city">{{PROPERTY_CITY}}, {{PROPERTY_STATE}}</div>
+    </div>
+    <div class="doc-header-right">
+      <div class="agent-name">Ryan Palmer</div>
+      <div class="agent-brokerage">Corcoran HM Properties</div>
+      <div class="prepared-badge">Prepared for {{CLIENT_NAME}}</div>
+    </div>
+  </header>
+
+  <!-- ShowingTime Section -->
+  <div class="stats-page">
+    <div class="section-header">
+      <span class="section-label">ShowingTime Data</span>
+      <h2 class="serif">Luxury Market Activity</h2>
+      <div class="source-note">{{PRICE_POINT}} · Within {{PRICE_RADIUS}} of {{PRICE_RADIUS_REFERENCE}} · Last 90 Days</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">{{MARKET_TOTAL_SHOWINGS}}</div>
+        <div class="stat-label">Total Showings<br>Last 90 Days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{MARKET_ACTIVE_LISTINGS}}</div>
+        <div class="stat-label">Active Listings<br>at {{PRICE_POINT}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{MARKET_SHOWINGS_PER_LISTING}}</div>
+        <div class="stat-label">Avg Showings<br>Per Listing</div>
+      </div>
+    </div>
+    <div class="stat-source">Source: ShowingTime · {{PRICE_POINT}} · Within {{PRICE_RADIUS}} of {{PRICE_RADIUS_REFERENCE}}</div>
+  </div>
+
+  <!-- Market Snapshot Row -->
+  <div class="snapshot-row">
+    <div class="snap-card">
+      <div class="snap-val">{{MARKET_SHOWINGS_PER_MONTH}}</div>
+      <div class="snap-label">Avg Showings<br>Per Month</div>
+    </div>
+    <div class="snap-card">
+      <div class="snap-val accent">{{MARKET_DOM_RANGE}}</div>
+      <div class="snap-label">Typical Days<br>on Market</div>
+    </div>
+    <div class="snap-card">
+      <div class="snap-val">{{MARKET_CONTRACT_PCT}}</div>
+      <div class="snap-label">Convert to<br>Contract</div>
+    </div>
+    <div class="snap-card">
+      <div class="snap-val">{{MARKET_MEDIAN_DAYS}}</div>
+      <div class="snap-label">Median Days<br>to Close</div>
+    </div>
+  </div>
+
+  <!-- What This Means -->
+  <div class="insight-section">
+    <div class="section-header">
+      <span class="section-label">What This Means For You</span>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-headline"><strong>{{MARKET_SHOWINGS_PER_MONTH}}</strong> Showing Per Month</div>
+        <div class="insight-body">At this price point, every showing is a serious, qualified buyer. Volume is low by design — these are not casual visitors.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-headline"><strong>{{MARKET_DOM_RANGE}}</strong> on Market</div>
+        <div class="insight-body">Luxury takes time. The right buyer is worth waiting for — and a well-marketed property will outperform the average.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-headline"><strong>{{MARKET_CONTRACT_PCT}}</strong> Convert to Contract</div>
+        <div class="insight-body">Marketing quality, strategic pricing, and agent network separate the listings that close from the ones that sit.</div>
+      </div>
+    </div>
+
+    <div class="insight-bottom">
+      <p>
+        This data frames your competitive reality. With <strong>{{MARKET_ACTIVE_LISTINGS}} active listings</strong> competing for <strong>{{MARKET_TOTAL_SHOWINGS}} showings</strong> across the last 90 days, buyers have options — and so do you. The difference is strategy. Positioning your home at the right price point, presented with the right marketing, and represented by an agent with the right network is what converts a showing into a contract. That's exactly what we're here to build together.
+      </p>
+    </div>
+  </div>
+
+</div><!-- /doc-page 1 -->
+
+<div class="page-break"></div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 2 — ACTIVE COMPETITION
+     ════════════════════════════════════════════ -->
+<div class="doc-page">
+
+  <div class="mini-header">
+    <div>
+      <div class="mini-label">Active Competition</div>
+      <div class="mini-address">{{PROPERTY_ADDRESS}}, {{PROPERTY_CITY}}</div>
+    </div>
+    <div class="mini-brand">Ryan Palmer · Corcoran HM Properties</div>
+  </div>
+
+  <div class="comps-section">
+    <div class="section-header">
+      <span class="section-label">Canopy MLS · Active Listings</span>
+      <h2 class="serif">What Buyers Are Seeing Right Now</h2>
+      <div class="source-note">{{PRICE_POINT}} · Within {{PRICE_RADIUS}} of {{PRICE_RADIUS_REFERENCE}}</div>
+    </div>
+    <div class="comps-grid">
+      {{ACTIVE_COMPS_HTML}}
+    </div>
+  </div>
+
+</div><!-- /doc-page 2 -->
+
+<div class="page-break"></div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 3 — CLOSED SALES
+     ════════════════════════════════════════════ -->
+<div class="doc-page">
+
+  <div class="mini-header">
+    <div>
+      <div class="mini-label">Recent Closed Sales</div>
+      <div class="mini-address">{{PROPERTY_ADDRESS}}, {{PROPERTY_CITY}}</div>
+    </div>
+    <div class="mini-brand">Ryan Palmer · Corcoran HM Properties</div>
+  </div>
+
+  <div class="comps-section">
+    <div class="section-header">
+      <span class="section-label">Canopy MLS · Closed Sales</span>
+      <h2 class="serif">What the Market Has Paid</h2>
+      <div class="source-note">{{PRICE_POINT}} · Recent Transactions · Comparable Properties</div>
+    </div>
+    <div class="comps-grid">
+      {{CLOSED_COMPS_HTML}}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="doc-footer">
+    <div>
+      <div class="footer-agent">Ryan Palmer</div>
+      <div class="footer-brokerage">Corcoran HM Properties</div>
+      <a href="mailto:ryan@realtyryan.com" class="footer-email">ryan@realtyryan.com</a>
+    </div>
+    <div class="footer-right">
+      <div class="footer-disclaimer">All data sourced from Canopy MLS and ShowingTime. Information is deemed reliable but not guaranteed. Market conditions change — this report reflects data available at time of preparation.</div>
+    </div>
+  </footer>
+
+</div><!-- /doc-page 3 -->
+
+</body>
+</html>
