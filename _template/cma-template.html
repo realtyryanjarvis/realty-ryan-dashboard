@@ -312,6 +312,29 @@ tbody tr:hover{background:#e8eef6}
     </div>
   </div>
 
+  <!-- Non-Waterfront Comps -->
+  <div class="section-block" style="margin-top:18px">
+    <div class="section-label" style="color:#c0392b">Non-Waterfront Comparable Set</div>
+    <div class="section-subhead">{{NWF_RADIUS_DESC}}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{NWF_COMPS_TABLE_HTML}}
+      </tbody>
+    </table>
+    <div class="analysis">{{NWF_COMPS_ANALYSIS}}</div>
+    <div class="stats-bar">
+      <div class="stats-bar-item"><span class="sb-label">Non-WF Median Closed</span><span class="sb-value">{{NWF_MEDIAN_CLOSED}}</span></div>
+      <div class="stats-bar-item"><span class="sb-label">Avg $/SF</span><span class="sb-value">{{NWF_AVG_PSF}}</span></div>
+      <div class="stats-bar-item"><span class="sb-label">Median DOM</span><span class="sb-value">{{NWF_MEDIAN_DOM}}</span></div>
+    </div>
+  </div>
+
   <div class="page-footer">
     <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
     <span class="page-num">3 of 4</span>
