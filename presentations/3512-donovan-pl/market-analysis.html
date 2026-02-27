@@ -744,6 +744,69 @@ section>.container{width:100%}
   </footer>
 </section>
 
+<script>
+/* ── MAP INIT ── */
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* Leaflet map */
+  if (typeof L !== 'undefined' && document.getElementById('shannon-map')) {
+    var map = L.map('shannon-map', { scrollWheelZoom: false }).setView([35.2565, -80.7105], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors', maxZoom: 19
+    }).addTo(map);
+
+    var pins = [
+      { lat: 35.2568, lng: -80.7112, label: '3512 Donovan Pl', sub: 'Subject · 2,303 SF', color: '#dc2626', type: 'subject' },
+      { lat: 35.2601, lng: -80.7089, label: '5315 Ruth Dr', sub: 'Active · $603K · 383 CDOM', color: '#f97316', type: 'active' },
+      { lat: 35.2571, lng: -80.7115, label: '3524 Donovan Pl', sub: 'Active · $529K · 41 DOM', color: '#f97316', type: 'active' },
+      { lat: 35.2590, lng: -80.7098, label: '1835 Shannonhouse Dr', sub: 'Under Contract · $550K · New Construction', color: '#7c3aed', type: 'uc' },
+      { lat: 35.2582, lng: -80.7081, label: '5331 Coburg Ave', sub: 'Closed · $589,500', color: '#1d4ed8', type: 'closed' },
+      { lat: 35.2574, lng: -80.7103, label: '3538 Denson Pl', sub: 'Closed · $525,000', color: '#1d4ed8', type: 'closed' },
+      { lat: 35.2559, lng: -80.7121, label: '3406 Erinbrook Ln', sub: 'Closed · $535,000', color: '#1d4ed8', type: 'closed' },
+      { lat: 35.2595, lng: -80.7076, label: '1900 Lakedell Dr', sub: 'Closed · $615,000 · 2020 Build', color: '#1d4ed8', type: 'closed' },
+      { lat: 35.2578, lng: -80.7094, label: '1611 Shannonhouse Dr', sub: 'Closed · $500,000 · Multiple offers', color: '#1d4ed8', type: 'closed' },
+    ];
+
+    pins.forEach(function(p) {
+      var size = p.type === 'subject' ? 14 : 10;
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:' + p.color + ';border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>',
+        iconSize: [size, size],
+        iconAnchor: [size/2, size/2]
+      });
+      L.marker([p.lat, p.lng], { icon: icon })
+        .addTo(map)
+        .bindPopup('<strong>' + p.label + '</strong><br><span style="font-size:.8rem;color:#666">' + p.sub + '</span>');
+    });
+  }
+
+  /* Fade-in on scroll */
+  var fadeEls = document.querySelectorAll('.fade-in, .fade-left, .fade-right');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+      if (el.classList.contains('fade-left')) el.style.transform = 'translateX(-24px)';
+      else if (el.classList.contains('fade-right')) el.style.transform = 'translateX(24px)';
+      else el.style.transform = 'translateY(20px)';
+      io.observe(el);
+    });
+  } else {
+    fadeEls.forEach(function(el) { el.style.opacity = '1'; });
+  }
+
+});
+</script>
 </body>
 </html>
 
