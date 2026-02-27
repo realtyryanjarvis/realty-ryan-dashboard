@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Market Analysis — 3512 Donovan Place, Charlotte NC | Ryan Palmer · Corcoran HM Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f8f7f6;--primary:#1a1a1a;--accent:#7A4F2E;--accent-light:rgba(122,79,46,.07);
+  --border:#e8e2d9;--muted:#6b6560;--white:#fff;
+  --bg:#ffffff;--surface:#f7f5f2;--surface2:#ede9e3;
+  --success:#2d6a4f;
+  --section-gap:40px;--ease:cubic-bezier(.25,.46,.45,.94);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:18px}
+body{font-family:var(--sans);background:var(--bg);color:var(--primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:18px}
+::selection{background:var(--accent);color:#fff}
+
+/* ── UTILITY ── */
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.fade-in{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-left{opacity:0;transform:translateX(-40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-left.visible{opacity:1;transform:translateX(0)}
+.fade-right{opacity:0;transform:translateX(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.fade-right.visible{opacity:1;transform:translateX(0)}
+
+/* ── SECTIONS ── */
+section{padding:var(--section-gap) 0;display:flex;align-items:center;min-height:100vh}
+section>.container{width:100%}
+.section-label{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}
+.section-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:18px;letter-spacing:-.01em;color:var(--primary)}
+.section-title strong{font-weight:700}
+.section-sub{font-size:1.05rem;color:var(--muted);max-width:560px;line-height:1.6}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--bg)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(122,79,46,.04) 0%,transparent 70%)}
+.hero-content{position:relative;z-index:2;width:100%;max-width:800px;padding:0 24px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+/* ── CARDS ── */
+.card{padding:24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.08);border-color:rgba(122,79,46,.25)}
+.card-grid{display:grid;gap:16px;margin-top:32px}
+.card-grid.g2{grid-template-columns:1fr 1fr}
+.card-grid.g3{grid-template-columns:1fr 1fr 1fr}
+
+/* ── STAT CARDS ── */
+.stat-big{text-align:center;padding:40px 24px;border-radius:16px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .3s var(--ease),border-color .3s}
+.stat-big:hover{transform:translateY(-4px);border-color:rgba(122,79,46,.3)}
+.stat-big .number{font-family:var(--serif);font-size:clamp(2.4rem,4vw,3.4rem);font-weight:700;color:var(--accent);line-height:1;margin-bottom:12px}
+.stat-big .label{font-size:.9rem;color:var(--primary);letter-spacing:.04em;line-height:1.4}
+.stat-big .sublabel{font-size:.75rem;color:var(--muted);margin-top:6px;letter-spacing:.08em}
+
+/* ── PROPERTY CARDS ── */
+.prop-card{padding:22px 24px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s var(--ease),border-color .3s}
+.prop-card:hover{transform:translateY(-3px);border-color:rgba(122,79,46,.25)}
+.prop-addr{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--primary);margin-bottom:6px}
+.prop-price{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:10px}
+.prop-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.prop-tag{font-size:.7rem;padding:4px 10px;border-radius:20px;font-weight:500;letter-spacing:.05em}
+.tag-active{background:rgba(217,119,6,.08);color:#b45309;border:1px solid rgba(217,119,6,.2)}
+.tag-closed{background:rgba(37,99,235,.07);color:#1d4ed8;border:1px solid rgba(37,99,235,.18)}
+.tag-uc{background:rgba(109,40,217,.08);color:#6d28d9;border:1px solid rgba(109,40,217,.2)}
+.tag-dom{background:rgba(107,101,96,.06);color:var(--muted);border:1px solid rgba(107,101,96,.15)}
+.tag-psf{background:rgba(122,79,46,.1);color:var(--accent);border:1px solid rgba(122,79,46,.25);font-weight:700}
+.tag-warn{background:rgba(220,38,38,.07);color:#dc2626;border:1px solid rgba(220,38,38,.18)}
+.prop-details{font-size:.82rem;color:var(--muted);line-height:1.5}
+.prop-note{font-size:.8rem;color:#9b9490;font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ── CENTER CALLOUT ── */
+.center-callout{text-align:center;padding:28px 32px;border-radius:14px;background:rgba(122,79,46,.04);border:1px solid rgba(122,79,46,.15);border-left:3px solid var(--accent);margin-top:24px}
+
+/* ── PRICING OPTIONS ── */
+.price-option{padding:32px 28px;border-radius:16px;background:var(--white);border:2px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s,border-color .3s}
+.price-option:hover{transform:translateY(-3px)}
+.price-option.recommended{border-color:var(--accent);background:rgba(122,79,46,.03)}
+.price-option .opt-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:10px;color:var(--muted)}
+.price-option .opt-price{font-family:var(--serif);font-size:clamp(2.2rem,3.5vw,3rem);font-weight:700;margin-bottom:6px;color:var(--primary)}
+.price-option .opt-psf{font-size:.9rem;color:var(--muted);margin-bottom:14px}
+.price-option .opt-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+/* ── MAP ── */
+#shannon-map{height:480px;border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.06);z-index:0}
+.map-legend{display:flex;flex-wrap:wrap;gap:20px;margin-top:18px;padding:16px 20px;background:var(--white);border:1px solid var(--border);border-radius:10px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);font-weight:500}
+.legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:2px solid rgba(0,0,0,.12)}
+
+/* ── MAP PIN STYLES ── */
+.map-pin{display:flex;flex-direction:column;align-items:center;cursor:pointer}
+.map-pin .pin-body{width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.map-pin .pin-body span{transform:rotate(45deg);font-size:.6rem;font-weight:700;color:#fff}
+.map-pin .pin-subject .pin-body{width:40px;height:40px}
+.map-pin .pin-subject .pin-body span{font-size:.65rem}
+
+/* ── RESPONSIVE ── */
+@media(min-width:768px) and (max-width:1400px){
+  :root{--section-gap:0px}
+  html{font-size:20px;scroll-snap-type:y mandatory}
+  section{padding:32px 0;min-height:100vh;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden}
+  .container{max-width:1000px;padding:0 48px;width:100%}
+}
+@media(max-width:768px){
+  :root{--section-gap:60px}
+  .card-grid.g2,.card-grid.g3{grid-template-columns:1fr}
+  .price-option .opt-price{font-size:2rem}
+  #shannon-map{height:360px}
+}
+@media print{
+  .fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 1. HERO                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-content fade-in">
+    <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Market Analysis</div>
+    <h1 style="font-family:var(--serif);font-size:clamp(2.8rem,6vw,4.8rem);font-weight:300;line-height:1.05;letter-spacing:-.03em;margin-bottom:12px;color:var(--primary)">
+      3512 Donovan Place
+    </h1>
+    <div style="font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:400;color:var(--accent);letter-spacing:.08em;margin-bottom:8px">
+      Shannon Park
+    </div>
+    <div style="font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.3rem);font-weight:300;color:var(--muted);letter-spacing:.04em;margin-bottom:32px">
+      Charlotte, North Carolina 28215
+    </div>
+    <div style="display:inline-block;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:8px 22px;border-radius:30px;margin-bottom:60px">
+      Prepared by Ryan Palmer
+    </div>
+
+    <div style="width:40px;height:1px;background:var(--border);margin:0 auto 24px"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--primary)">Ryan Palmer</div>
+      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500">Corcoran HM Properties</div>
+    </div>
+
+    <a href="#snapshot" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:50%;margin-top:48px;cursor:pointer;text-decoration:none;transition:border-color .3s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b6560" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 2. MARKET SNAPSHOT                          -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="snapshot" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:640px;margin:0 auto 48px">
+      <div class="section-label">The Numbers</div>
+      <div class="section-title">Market Snapshot — <strong>Shannon Park</strong></div>
+      <div class="section-sub" style="margin:0 auto">Current market conditions in Shannon Park, Charlotte NC 28215</div>
+    </div>
+    <div class="fade-in" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto">
+      <div class="stat-big">
+        <div class="number">2</div>
+        <div class="label">Active Listings</div>
+        <div class="sublabel">$529K – $603K · Shannon Park</div>
+      </div>
+      <div class="stat-big" style="border-color:rgba(122,79,46,.25)">
+        <div class="number">5</div>
+        <div class="label">Closed Sales</div>
+        <div class="sublabel">past 12 months · $475K – $615K</div>
+      </div>
+      <div class="stat-big">
+        <div class="number">$535K</div>
+        <div class="label">Median Closed Sale</div>
+        <div class="sublabel">avg $547,900 · 12-month window</div>
+      </div>
+      <div class="stat-big">
+        <div class="number">1</div>
+        <div class="label">Under Contract</div>
+        <div class="sublabel">1835 Shannonhouse Dr · $550,000</div>
+      </div>
+      <div class="stat-big" style="border-color:rgba(122,79,46,.25)">
+        <div class="number">102%</div>
+        <div class="label">List-to-Sale Ratio</div>
+        <div class="sublabel">avg · homes priced right sell at or above ask</div>
+      </div>
+      <div class="stat-big">
+        <div class="number">7 Days</div>
+        <div class="label">Avg Days on Market</div>
+        <div class="sublabel">closed sales · correctly priced homes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 3. MAP                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="map-section" style="background:var(--bg)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:32px">
+      <div class="section-label">Comp Map · Shannon Park</div>
+      <div class="section-title">Where the <strong>Market is Trading</strong></div>
+      <div class="section-sub">All active, under contract, and closed comparables plotted across the Shannon Park area.</div>
+    </div>
+
+    <div class="fade-in">
+      <div id="shannon-map"></div>
+
+      <!-- Legend -->
+      <div class="map-legend fade-in">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#dc2626;border-color:#991b1b"></div>
+          <span><strong style="color:var(--primary)">Subject Property</strong> — 3512 Donovan Pl</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#f97316;border-color:#c2410c"></div>
+          <span>Active Listings (2)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#7c3aed;border-color:#5b21b6"></div>
+          <span>Under Contract (1)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#2563eb;border-color:#1d4ed8"></div>
+          <span>Closed Sales (5) · past 12 months</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 4. ACTIVE COMPETITION                       -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="active" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:36px">
+      <div class="section-label">Active Listings · Shannon Park</div>
+      <div class="section-title">Active <strong>Competition</strong></div>
+      <div class="section-sub">What buyers comparing this home are also seeing right now.</div>
+    </div>
+
+    <div class="card-grid g2 fade-in">
+
+      <!-- 5315 Ruth Dr -->
+      <div class="prop-card" style="border-color:rgba(220,38,38,.2)">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#dc2626;font-weight:700;margin-bottom:8px">⚠️ Significantly Overpriced · 383 DOM</div>
+        <div class="prop-addr">5315 Ruth Drive</div>
+        <div class="prop-price" style="color:#dc2626">$603,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$345/SF primary HLA</span>
+          <span class="prop-tag tag-active">Active</span>
+          <span class="prop-tag tag-warn">383 DOM</span>
+        </div>
+        <div class="prop-details">3 bed · 2.5 bath · 1,747 SF total (1,052 SF primary HLA) · 1976 · 0.44 acres</div>
+        <div class="prop-details" style="margin-top:4px">Full brick + vinyl · ADU (695 SF separate living quarters, handicap accessible) · Detached workshop/garage</div>
+        <div class="prop-note" style="color:#dc2626;border-color:rgba(220,38,38,.15)">383 days on market. The ADU adds utility but the market has spoken clearly — this price is not justified by condition or comparable activity. Does not influence pricing strategy.</div>
+      </div>
+
+      <!-- 3524 Donovan Pl -->
+      <div class="prop-card" style="border-color:rgba(122,79,46,.2)">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">✓ More Realistically Priced · 41 DOM</div>
+        <div class="prop-addr">3524 Donovan Place #25</div>
+        <div class="prop-price">$529,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$264/SF</span>
+          <span class="prop-tag tag-active">Active · 41 DOM</span>
+        </div>
+        <div class="prop-details">4 bed · 2.5 bath · 2,002 SF · 1967 · 0.22 acres</div>
+        <div class="prop-details" style="margin-top:4px">Full brick · Remodeled tri-level · White oak LVP floors · Quartz counters · Remodeled kitchen</div>
+        <div class="prop-note">41 DOM — strong recent upgrades, priced in the realistic market range. This is the only true active comp. A superior subject property commands a premium over this price point.</div>
+      </div>
+
+    </div>
+
+    <!-- Insight -->
+    <div class="center-callout fade-in">
+      <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">The Competition Read</div>
+      <div style="font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.4rem);font-weight:500;color:var(--primary);line-height:1.5">
+        One stale, overpriced listing at <span style="color:#dc2626">$603K with 383 DOM</span>. One realistic comp at <span style="color:var(--accent)">$529K actively trading</span>. The market window for a well-positioned listing is wide open.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 5. UNDER CONTRACT                           -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="undercontract" style="background:var(--bg)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:36px">
+      <div class="section-label">Under Contract</div>
+      <div class="section-title">What's Going <strong>Pending</strong></div>
+      <div class="section-sub">Active buyer demand in the Shannon Park area right now.</div>
+    </div>
+
+    <div class="fade-in" style="max-width:540px">
+      <div class="prop-card" style="border-color:rgba(109,40,217,.2)">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#6d28d9;font-weight:700;margin-bottom:8px">🟣 Under Contract · 1 DOM</div>
+        <div class="prop-addr">1835 Shannonhouse Drive</div>
+        <div class="prop-price" style="color:#6d28d9">$550,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$205/SF</span>
+          <span class="prop-tag tag-uc">Under Contract</span>
+          <span class="prop-tag tag-dom">1 DOM</span>
+        </div>
+        <div class="prop-details">5 bed · 3.5 bath · 2,683 SF · 2026 · 0.18 acres</div>
+        <div class="prop-note" style="color:#6d28d9;border-color:rgba(109,40,217,.15)">New construction — went under contract in 1 day at $550,000. The $/SF is low due to new-build pricing dynamics and size; this is NOT a direct comparable to resale. However, it firmly establishes <strong>$550,000 as an active buyer price point</strong> in Shannon Park right now.</div>
+      </div>
+    </div>
+
+    <div class="fade-in" style="margin-top:24px;max-width:540px;padding:20px 24px;border-radius:12px;background:rgba(122,79,46,.04);border:1px solid rgba(122,79,46,.15);border-left:3px solid var(--accent)">
+      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px">The Takeaway</div>
+      <p style="font-size:.9rem;color:var(--muted);line-height:1.7">New construction ≠ direct comp. But a $550K contract in 1 day signals real buyer activity at this price point. Resale with comparable square footage and quality can command the same price — or more — with the right presentation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 6. CLOSED SALES                             -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="closed" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:36px">
+      <div class="section-label">Closed Sales · Past 12 Months · Shannon Park Area</div>
+      <div class="section-title">The <strong>True Comp Set</strong></div>
+      <div class="section-sub">5 closed transactions — the complete picture of where Shannon Park is trading.</div>
+    </div>
+
+    <div class="card-grid g3 fade-in">
+
+      <div class="prop-card" style="border-color:rgba(37,99,235,.15)">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#1d4ed8;font-weight:700;margin-bottom:6px">Highest Closed Sale</div>
+        <div class="prop-addr">5331 Coburg Avenue</div>
+        <div class="prop-price" style="color:#1d4ed8">$589,500</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$313/SF</span>
+          <span class="prop-tag tag-closed">Closed Oct 2025</span>
+          <span class="prop-tag tag-dom">11 DOM</span>
+        </div>
+        <div class="prop-details">4 bed · 2 bath · 1,882 SF · 1961 · 0.23 acres</div>
+        <div class="prop-note">100% LP · $9K concessions · Sold in 11 days at full ask</div>
+      </div>
+
+      <div class="prop-card" style="border-color:rgba(37,99,235,.15)">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#1d4ed8;font-weight:700;margin-bottom:6px">Ceiling Sale · Newest Build</div>
+        <div class="prop-addr">1900 Lakedell Drive</div>
+        <div class="prop-price" style="color:#1d4ed8">$615,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$322/SF</span>
+          <span class="prop-tag tag-closed">Closed May 2025</span>
+          <span class="prop-tag tag-dom">3 DOM</span>
+        </div>
+        <div class="prop-details">4 bed · 3 bath · 1,927 SF · 2020 · 0.48 acres</div>
+        <div class="prop-note">101% LP · $7.5K concessions · 2020 build sets the upper ceiling for Shannon Park comps</div>
+      </div>
+
+      <div class="prop-card" style="border-color:rgba(37,99,235,.15)">
+        <div class="prop-addr">3406 Erinbrook Lane</div>
+        <div class="prop-price" style="color:#1d4ed8">$535,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$285/SF</span>
+          <span class="prop-tag tag-closed">Closed Aug 2025</span>
+          <span class="prop-tag tag-dom">14 DOM</span>
+        </div>
+        <div class="prop-details">4 bed · 2.5 bath · 1,876 SF · 1966 · 0.19 acres · Split level</div>
+        <div class="prop-note">100% LP · $15K concessions · Sold at full ask in 2 weeks</div>
+      </div>
+
+      <div class="prop-card" style="border-color:rgba(37,99,235,.15)">
+        <div class="prop-addr">3538 Denson Place</div>
+        <div class="prop-price" style="color:#1d4ed8">$525,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$315/SF</span>
+          <span class="prop-tag tag-closed">Closed Jun 2025</span>
+          <span class="prop-tag tag-dom">3 DOM</span>
+        </div>
+        <div class="prop-details">3 bed · 2 bath · 1,700 SF · 1968 · 0.35 acres</div>
+        <div class="prop-note">102% LP · $5K concessions · Sold above ask in 3 days</div>
+      </div>
+
+      <div class="prop-card" style="border-color:rgba(37,99,235,.15)">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#1d4ed8;font-weight:700;margin-bottom:6px">Floor Sale · Smallest Home</div>
+        <div class="prop-addr">1611 Shannonhouse Drive</div>
+        <div class="prop-price" style="color:#1d4ed8">$475,000</div>
+        <div class="prop-meta">
+          <span class="prop-tag tag-psf">$325/SF</span>
+          <span class="prop-tag tag-closed">Closed Mar 2025</span>
+          <span class="prop-tag tag-dom">2 DOM</span>
+        </div>
+        <div class="prop-details">3 bed · 2 bath · 1,540 SF · 1961 · 0.34 acres</div>
+        <div class="prop-note">105% LP · $0 concessions · Smallest in comp set — sold 5% over ask in 2 days with zero concessions</div>
+      </div>
+
+    </div>
+
+    <!-- Closed stats bar -->
+    <div class="fade-in" style="margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <div style="text-align:center;padding:20px 16px;border-radius:12px;background:var(--white);border:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">$535K</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;letter-spacing:.06em">Median Closed</div>
+      </div>
+      <div style="text-align:center;padding:20px 16px;border-radius:12px;background:var(--white);border:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">$314.71</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;letter-spacing:.06em">Median $/SF</div>
+      </div>
+      <div style="text-align:center;padding:20px 16px;border-radius:12px;background:var(--white);border:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">7 Days</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;letter-spacing:.06em">Avg DOM</div>
+      </div>
+      <div style="text-align:center;padding:20px 16px;border-radius:12px;background:var(--white);border:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">102%</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;letter-spacing:.06em">Avg LP Ratio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 7. PRICING DYNAMICS                         -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="dynamics" style="background:var(--bg)">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:640px;margin:0 auto 40px">
+      <div class="section-label">Pricing Dynamics · $/SF Analysis</div>
+      <div class="section-title">What Shannon Park <strong>Actually Trades At</strong></div>
+      <div class="section-sub" style="margin:0 auto">The data draws a clear picture of where resale value lives — and where it tops out.</div>
+    </div>
+
+    <!-- $/SF range bar -->
+    <div class="fade-in" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 36px;margin-bottom:32px">
+      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px">Closed $/SF Range — Shannon Park Resales</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+          <div style="font-size:.8rem;color:var(--muted)">1611 Shannonhouse</div>
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
+            <div style="width:100%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.6),rgba(122,79,46,.4));border-radius:4px;display:flex;align-items:center;padding-left:12px">
+              <span style="font-size:.75rem;font-weight:600;color:#fff">$325/SF — 105% LP · 2 DOM</span>
+            </div>
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$475K</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+          <div style="font-size:.8rem;color:var(--muted)">3538 Denson Pl</div>
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
+            <div style="width:97%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.65),rgba(122,79,46,.45));border-radius:4px;display:flex;align-items:center;padding-left:12px">
+              <span style="font-size:.75rem;font-weight:600;color:#fff">$315/SF — 102% LP · 3 DOM</span>
+            </div>
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$525K</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+          <div style="font-size:.8rem;color:var(--muted)">5331 Coburg Ave</div>
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
+            <div style="width:96%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.7),rgba(122,79,46,.5));border-radius:4px;display:flex;align-items:center;padding-left:12px">
+              <span style="font-size:.75rem;font-weight:600;color:#fff">$313/SF — 100% LP · 11 DOM</span>
+            </div>
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$589.5K</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+          <div style="font-size:.8rem;color:var(--muted)">3406 Erinbrook Ln</div>
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
+            <div style="width:88%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.5),rgba(122,79,46,.3));border-radius:4px;display:flex;align-items:center;padding-left:12px">
+              <span style="font-size:.75rem;font-weight:600;color:#fff">$285/SF — 100% LP · 14 DOM</span>
+            </div>
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$535K</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+          <div style="font-size:.8rem;color:var(--muted);font-weight:600">1900 Lakedell Dr ★</div>
+          <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
+            <div style="width:100%;height:100%;background:linear-gradient(90deg,#1d4ed8,#3b82f6);border-radius:4px;display:flex;align-items:center;padding-left:12px">
+              <span style="font-size:.75rem;font-weight:700;color:#fff">$322/SF — 101% LP · 3 DOM · 2020 Build · CEILING</span>
+            </div>
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:#1d4ed8">$615K</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Key insights -->
+    <div class="card-grid g3 fade-in">
+      <div class="card">
+        <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">Resale $/SF Range</div>
+        <div style="font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--primary)">$285 – $325</div>
+        <div style="font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.5">Per square foot on resale transactions. Median sits at $313–$315/SF — a tight band driven by consistent buyer demand.</div>
+      </div>
+      <div class="card" style="border-color:rgba(122,79,46,.2)">
+        <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">Speed Signal</div>
+        <div style="font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--primary)">Under 2 Weeks</div>
+        <div style="font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.5">Homes priced right sell in under 14 days — at or above list. 4 of 5 closed comps sold in under 2 weeks. Pricing strategy is everything.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#1d4ed8;font-weight:600;margin-bottom:10px">The Ceiling</div>
+        <div style="font-family:var(--serif);font-size:1.8rem;font-weight:700;color:#1d4ed8">$615,000</div>
+        <div style="font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.5">1900 Lakedell Dr (2020 build) is the top of market. New construction advantage. Resale ceiling realistically lives at $589,500 (Coburg Ave, Oct 2025).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 8. PRICING RECOMMENDATION                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="pricing" style="background:var(--surface)">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;max-width:680px;margin:0 auto 48px">
+      <div class="section-label">Pricing Recommendation</div>
+      <div class="section-title">The <strong>Strategic List Price</strong></div>
+      <div class="section-sub" style="margin:0 auto">Two viable paths — the data supports both. The right answer depends on condition, timeline, and seller goals.</div>
+    </div>
+
+    <!-- Two options side by side -->
+    <div class="card-grid g2 fade-in" style="max-width:860px;margin:0 auto">
+
+      <!-- Recommended -->
+      <div class="price-option recommended">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <div class="opt-label" style="color:var(--accent);margin-bottom:0">Recommended</div>
+          <span style="font-size:.6rem;background:var(--accent);color:#fff;padding:2px 10px;border-radius:10px;font-weight:700;letter-spacing:.1em">★ STRATEGIC</span>
+        </div>
+        <div class="opt-price">$550,000</div>
+        <div class="opt-psf">$314/SF on ~1,750 SF · at the median</div>
+        <div style="width:32px;height:2px;background:var(--accent);border-radius:2px;margin-bottom:14px"></div>
+        <div class="opt-desc">
+          <strong style="color:var(--primary);display:block;margin-bottom:8px">Why $550,000 wins:</strong>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">→</span> Above the $535K median closed sale — not leaving money on the table</li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">→</span> Exactly at the $314/SF market median — bulletproof appraisal position</li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">→</span> Matches the under-contract price at 1835 Shannonhouse — buyer demand confirmed at this number</li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">→</span> $39K below the $589,500 Coburg Ave ceiling — built-in urgency for buyers</li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">→</span> Shannon Park's 102% avg LP ratio means this price likely closes at or above ask in under 2 weeks</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Aggressive -->
+      <div class="price-option">
+        <div class="opt-label">Aggressive</div>
+        <div class="opt-price">$575,000</div>
+        <div class="opt-psf">$329/SF on ~1,750 SF · above median</div>
+        <div style="width:32px;height:2px;background:var(--border);border-radius:2px;margin-bottom:14px"></div>
+        <div class="opt-desc">
+          <strong style="color:var(--primary);display:block;margin-bottom:8px">The case for $575,000:</strong>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--muted);font-weight:700;flex-shrink:0">→</span> Still $14,500 below the $589,500 Coburg Ave resale ceiling</li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--muted);font-weight:700;flex-shrink:0">→</span> Well below the $615K new-construction ceiling at Lakedell</li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--muted);font-weight:700;flex-shrink:0">→</span> Shannon Park's 102% avg LP ratio means a $575K list <em>could realistically close at $587K+</em></li>
+            <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--muted);font-weight:700;flex-shrink:0">⚠</span> <span>Higher risk of sitting if condition doesn't justify the premium over median. Requires strong presentation.</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom callout -->
+    <div class="fade-in" style="max-width:860px;margin:28px auto 0;padding:24px 32px;border-radius:14px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--accent)">
+      <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px">The Bottom Line</div>
+      <p style="font-size:.95rem;color:var(--muted);line-height:1.75;margin:0">
+        Shannon Park homes that are <strong style="color:var(--primary)">priced correctly sell in under 2 weeks at 100–105% of list</strong>. The comp set is decisive — 4 of 5 closed sales went under contract within 14 days. At <strong style="color:var(--accent)">$550,000</strong>, this home is positioned to be the next one. At <strong style="color:var(--primary)">$575,000</strong>, condition and presentation have to earn every dollar of that premium. Bring both numbers to the table and let the seller decide.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 9. FINAL SLIDE                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="close" style="background:var(--bg);display:flex;flex-direction:column;justify-content:center">
+  <div class="container fade-in" style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:60px;padding-bottom:60px">
+
+    <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Shannon Park · Charlotte NC</div>
+
+    <div style="font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--primary);line-height:1.1;margin-bottom:16px;max-width:680px">
+      Ready to <strong style="font-weight:700">Move Fast</strong>
+    </div>
+
+    <div style="font-family:var(--serif);font-size:clamp(1rem,2vw,1.4rem);font-weight:400;color:var(--muted);margin-bottom:32px">3512 Donovan Place · Charlotte, NC 28215</div>
+
+    <div style="width:40px;height:1px;background:var(--border);margin:0 auto 32px"></div>
+
+    <p style="font-size:1rem;color:var(--muted);max-width:580px;line-height:1.85;margin:0 auto 48px">
+      Shannon Park is one of Charlotte's most consistently active resale markets. Priced correctly at <strong style="color:var(--accent)">$550,000</strong>, this home enters the market at the median — above comparable resales, right at market $/SF, and aligned with confirmed buyer demand. The comps say: price it right and it sells in two weeks at ask or better.
+    </p>
+
+    <div style="width:60px;height:1px;background:var(--border);margin:0 auto 32px"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+      <div style="font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--primary)">Ryan Palmer</div>
+      <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Corcoran HM Properties</div>
+    </div>
+
+  </div>
+
+  <footer style="padding:24px 40px;border-top:1px solid var(--border);text-align:center">
+    <p style="font-size:.6rem;color:#bbb;letter-spacing:.12em">
+      © 2026 Ryan Palmer · Corcoran HM Properties · All Rights Reserved · Market data sourced from MLS · 3512 Donovan Place, Charlotte NC 28215
+    </p>
+  </footer>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCRIPTS                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Fade-in observer ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in,.fade-left,.fade-right').forEach(el => io.observe(el));
+
+// ── MAP ──
+const map = L.map('shannon-map', { zoomControl: true, scrollWheelZoom: false })
+  .setView([35.263, -80.766], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 19
+}).addTo(map);
+
+function makeIcon(color, label, isSubject) {
+  const size = isSubject ? 44 : 36;
+  const fontSize = isSubject ? '10px' : '9px';
+  const html = `
+    <div style="
+      position:relative;
+      width:${size}px;
+      height:${size * 1.2}px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    ">
+      <div style="
+        width:${size}px;
+        height:${size}px;
+        background:${color};
+        border-radius:50% 50% 50% 0;
+        transform:rotate(-45deg);
+        box-shadow:0 3px 12px rgba(0,0,0,.35);
+        border:2px solid rgba(255,255,255,.85);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      ">
+        <span style="
+          transform:rotate(45deg);
+          color:#fff;
+          font-size:${fontSize};
+          font-weight:800;
+          font-family:'Work Sans',sans-serif;
+          letter-spacing:0;
+          line-height:1;
+          text-align:center;
+          display:block;
+          white-space:nowrap;
+        ">${label}</span>
+      </div>
+    </div>`;
+  return L.divIcon({
+    html,
+    iconSize: [size, size * 1.2],
+    iconAnchor: [size / 2, size * 1.2],
+    popupAnchor: [0, -size * 1.1],
+    className: ''
+  });
+}
+
+const pins = [
+  {
+    lat: 35.2587, lng: -80.7628,
+    color: '#dc2626', label: '★', isSubject: true,
+    popup: '<strong>3512 Donovan Place</strong><br><span style="color:#dc2626;font-weight:700">SUBJECT PROPERTY</span><br>Shannon Park · Charlotte NC 28215'
+  },
+  {
+    lat: 35.2697, lng: -80.7685,
+    color: '#f97316', label: 'A',
+    popup: '<strong>5315 Ruth Drive</strong><br>Status: Active<br>Price: $603,000 · $345/SF primary<br>3 bed / 2.5 bath · 1,747 SF<br>DOM: 383 · ⚠️ Significantly overpriced'
+  },
+  {
+    lat: 35.2589, lng: -80.7647,
+    color: '#f97316', label: 'A',
+    popup: '<strong>3524 Donovan Place #25</strong><br>Status: Active<br>Price: $529,000 · $264/SF<br>4 bed / 2.5 bath · 2,002 SF<br>DOM: 41 · Remodeled tri-level'
+  },
+  {
+    lat: 35.2651, lng: -80.7668,
+    color: '#7c3aed', label: 'UC',
+    popup: '<strong>1835 Shannonhouse Drive</strong><br>Status: Under Contract<br>Price: $550,000 · $205/SF<br>5 bed / 3.5 bath · 2,683 SF<br>DOM: 1 · New Construction 2026'
+  },
+  {
+    lat: 35.2672, lng: -80.7634,
+    color: '#2563eb', label: 'S',
+    popup: '<strong>5331 Coburg Avenue</strong><br>Status: Closed Oct 2025<br>Price: $589,500 · $313/SF<br>4 bed / 2 bath · 1,882 SF<br>DOM: 11 · 100% LP · $9K concessions'
+  },
+  {
+    lat: 35.2575, lng: -80.7652,
+    color: '#2563eb', label: 'S',
+    popup: '<strong>3406 Erinbrook Lane</strong><br>Status: Closed Aug 2025<br>Price: $535,000 · $285/SF<br>4 bed / 2.5 bath · 1,876 SF<br>DOM: 14 · 100% LP · $15K concessions'
+  },
+  {
+    lat: 35.2556, lng: -80.7662,
+    color: '#2563eb', label: 'S',
+    popup: '<strong>3538 Denson Place</strong><br>Status: Closed Jun 2025<br>Price: $525,000 · $315/SF<br>3 bed / 2 bath · 1,700 SF<br>DOM: 3 · 102% LP · $5K concessions'
+  },
+  {
+    lat: 35.2705, lng: -80.7723,
+    color: '#2563eb', label: 'S',
+    popup: '<strong>1900 Lakedell Drive</strong><br>Status: Closed May 2025<br>Price: $615,000 · $322/SF<br>4 bed / 3 bath · 1,927 SF<br>DOM: 3 · 101% LP · 2020 build · CEILING'
+  },
+  {
+    lat: 35.2640, lng: -80.7669,
+    color: '#2563eb', label: 'S',
+    popup: '<strong>1611 Shannonhouse Drive</strong><br>Status: Closed Mar 2025<br>Price: $475,000 · $325/SF<br>3 bed / 2 bath · 1,540 SF<br>DOM: 2 · 105% LP · $0 concessions · FLOOR'
+  }
+];
+
+pins.forEach(p => {
+  const marker = L.marker([p.lat, p.lng], {
+    icon: makeIcon(p.color, p.label, p.isSubject || false)
+  }).addTo(map);
+  marker.bindPopup(`<div style="font-family:'Work Sans',sans-serif;font-size:13px;line-height:1.65;min-width:220px">${p.popup}</div>`, {
+    maxWidth: 280
+  });
+});
+</script>
+</body>
+</html>
