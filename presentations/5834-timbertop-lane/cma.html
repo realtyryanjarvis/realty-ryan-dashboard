@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMA — 5834 Timbertop Lane, Charlotte | Realty Ryan & Associates</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f8f7f6;
+  --primary:#130f0a;
+  --navy:#113665;
+  --navy-light:rgba(17,54,101,.07);
+  --border:#dde3ea;
+  --muted:#6b7280;
+  --white:#fff;
+  --surface:#f4f6f9;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --row-alt:#f0f4f8;
+}
+html{font-size:15px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--sans);background:#e8ecf0;color:var(--primary);line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ── PAGE WRAPPER ── */
+.page{
+  max-width:900px;
+  margin:32px auto;
+  background:var(--white);
+  padding:52px 60px 40px;
+  box-shadow:0 8px 48px rgba(0,0,0,.13);
+  position:relative;
+}
+
+/* ── HEADER ── */
+.cma-header{text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--navy)}
+.cma-title{font-family:var(--serif);font-size:2.4rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);margin-bottom:10px}
+.cma-subtitle{font-size:.82rem;color:var(--muted);letter-spacing:.04em;line-height:1.7}
+.cma-subtitle strong{color:var(--primary);font-weight:600}
+
+/* ── SECTION LABEL ── */
+.section-label{
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--navy);font-weight:700;margin-bottom:8px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.section-subhead{font-size:.82rem;color:var(--muted);margin-bottom:14px;letter-spacing:.02em}
+
+/* ── TABLES ── */
+table{width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:14px}
+thead tr{background:var(--navy);color:#fff}
+thead th{padding:8px 10px;text-align:left;font-weight:600;letter-spacing:.04em;font-size:.7rem;text-transform:uppercase}
+tbody tr:nth-child(even){background:var(--row-alt)}
+tbody tr:nth-child(odd){background:var(--white)}
+tbody td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr:hover{background:#e8eef6}
+
+/* ── STAT BOXES ── */
+.stat-row{display:flex;gap:16px;margin:18px 0}
+.stat-box{flex:1;border:1.5px solid var(--border);border-top:3px solid var(--navy);border-radius:8px;padding:16px 18px;background:var(--white)}
+.stat-box .stat-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:600}
+.stat-box .stat-value{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--navy);line-height:1.2}
+.stat-box .stat-sub{font-size:.72rem;color:var(--muted);margin-top:3px}
+
+/* ── STATS BAR ── */
+.stats-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:14px 0;background:var(--surface)}
+.stats-bar-item{flex:1;padding:10px 14px;text-align:center;border-right:1px solid var(--border)}
+.stats-bar-item:last-child{border-right:none}
+.stats-bar-item .sb-label{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:3px}
+.stats-bar-item .sb-value{font-size:.92rem;font-weight:700;color:var(--navy);font-family:var(--serif)}
+
+/* ── HIGHLIGHTS ── */
+.highlights-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin:12px 0}
+.highlights-list li{font-size:.83rem;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.highlights-list li::before{content:'✦';color:var(--navy);font-size:.7rem;flex-shrink:0;margin-top:2px}
+
+/* ── ANALYSIS ── */
+.analysis{font-size:.82rem;color:var(--muted);line-height:1.65;margin:10px 0;font-style:italic;padding:10px 14px;background:var(--surface);border-left:3px solid var(--navy);border-radius:0 6px 6px 0}
+
+/* ── EQUITY METRICS ── */
+.equity-metrics{display:flex;gap:12px;margin:8px 0 4px;font-size:.8rem;color:var(--muted)}
+.equity-metrics span{display:flex;align-items:center;gap:6px}
+.equity-metrics strong{color:var(--navy);font-weight:700}
+.equity-sep{color:var(--border)}
+
+/* ── NARRATIVE ── */
+.narrative{font-size:.83rem;line-height:1.7;color:#374151;margin-top:12px;padding:14px 18px;background:var(--navy-light);border-radius:8px}
+
+/* ── PRICING FRAMEWORK ── */
+.star-row{background:#fffbe6!important}
+.star-row td:first-child::after{content:' ★';color:#c49a00;font-size:.75rem}
+
+/* ── CTA BOX ── */
+.cta-box{text-align:center;margin-top:20px;padding:18px;border:1.5px solid var(--navy);border-radius:10px;background:var(--navy-light)}
+.cta-box h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--navy);margin-bottom:6px}
+.cta-box p{font-size:.78rem;color:var(--muted)}
+
+/* ── FOOTER ── */
+.page-footer{
+  margin-top:32px;padding-top:14px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+}
+.page-footer .brand{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--navy)}
+.page-footer .page-num{font-weight:700;color:var(--navy)}
+
+/* ── SECTION SPACING ── */
+.section-block{margin-bottom:28px}
+
+/* ── BOTTOM LINE ── */
+.bottom-line{font-size:.88rem;font-weight:600;color:var(--navy);padding:12px 16px;border:1.5px solid var(--navy);border-radius:8px;margin:12px 0;text-align:center;background:var(--navy-light)}
+
+/* ── PRINT ── */
+@media print{
+  body{background:#fff}
+  .page{
+    margin:0;
+    padding:36px 48px 28px;
+    box-shadow:none;
+    max-width:100%;
+    page-break-after:always;
+  }
+  .page:last-child{page-break-after:avoid}
+  .stat-box,.stats-bar,.analysis,.narrative,.cta-box,.bottom-line{
+    box-shadow:none!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  thead tr{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tbody tr:nth-child(even){background:var(--row-alt)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  a{text-decoration:none;color:inherit}
+}
+
+@page{margin:0.5in 0.6in;size:letter portrait}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 1 -->
+<div class="page" id="page1">
+
+  <div class="cma-header">
+    <div class="cma-title">Comparative Market Analysis</div>
+    <div class="cma-subtitle">
+      <strong>5834 Timbertop Lane, Charlotte, NC 28270</strong>
+      &nbsp;·&nbsp; Rea Farms
+      &nbsp;·&nbsp; 4 BD / 3.5 BA
+      &nbsp;·&nbsp; 3,842 SF
+      &nbsp;·&nbsp; Prepared February 2025
+    </div>
+  </div>
+
+  <!-- Subject Property -->
+  <div class="section-block">
+    <div class="section-label">Subject Property</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Beds</th><th>Baths</th><th>SF</th>
+          <th>Acres</th><th>Year Built</th><th>Subdivision</th><th>Last Sale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5834 Timbertop Lane, Charlotte NC 28270</td>
+          <td>4</td>
+          <td>3.5</td>
+          <td>3,842</td>
+          <td>0.21</td>
+          <td>2019</td>
+          <td>Rea Farms</td>
+          <td>$695,000 (Apr 2021)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Property Highlights -->
+  <div class="section-block">
+    <div class="section-label">Property Highlights</div>
+    <ul class="highlights-list">
+      <li>4 BR / 3.5 BA luxury home in the sought-after Rea Farms community</li><li>Open-concept main floor with 10-foot ceilings and wide-plank hardwoods</li><li>Gourmet kitchen — quartz counters, 48" range, oversized island with seating</li><li>Primary suite with spa bath, dual vanities, soaking tub & frameless shower</li><li>Screened rear porch overlooking private, fenced backyard</li><li>3-car garage with epoxy floors and EV charging outlet</li><li>Walkable to Harris Teeter, Stonecrest Town Center & top-rated Rea Farms STEAM Academy</li><li>Built 2019 — still under builder's structural warranty</li>
+    </ul>
+  </div>
+
+  <!-- Equity Growth -->
+  <div class="section-block">
+    <div class="section-label">Equity Growth Since Purchase</div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-label">Purchase Price</div>
+        <div class="stat-value">$695,000</div>
+        <div class="stat-sub">April 2021</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Estimated Current Value</div>
+        <div class="stat-value">$895,000</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Estimated Equity Gain</div>
+        <div class="stat-value">$200,000</div>
+      </div>
+    </div>
+    <div class="equity-metrics">
+      <span><strong>28.8%</strong> Appreciation Over 4 Years</span>
+      <span class="equity-sep">·</span>
+      <span><strong>$233/SF</strong> Current $/SF</span>
+    </div>
+    <div class="narrative">Since your purchase in April 2021, the southeast Charlotte luxury market has experienced exceptional growth fueled by strong migration, limited inventory, and demand for newer construction in walkable mixed-use communities. Your home's combination of size, finish level, and location within Rea Farms positions it among the most sought-after offerings in the 28270 zip code. At a recommended list price near $895,000, you would capture meaningful equity appreciation while remaining competitive with the current active market.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
+    <span class="page-num">1 of 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 2 -->
+<div class="page" id="page2">
+
+  <div class="cma-header">
+    <div class="cma-title">Comparative Market Analysis</div>
+    <div class="cma-subtitle">
+      <strong>5834 Timbertop Lane, Charlotte, NC 28270</strong>
+      &nbsp;·&nbsp; Sold &amp; Pending Comparables
+    </div>
+  </div>
+
+  <!-- Recently Sold -->
+  <div class="section-block">
+    <div class="section-label">Recently Sold</div>
+    <div class="section-subhead">Comparable closed sales within 1.0 mile — past 6 months — 3–5 BR, 2,800–4,500 SF</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Sold Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Closed</th><th>Dist.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>5901 Whistling Duck Dr</td><td>$875,000</td><td>$228</td><td>4</td><td>3.5</td><td>3,840</td><td>0.19</td><td>12</td><td>Nov 2024</td><td>0.3 mi</td></tr><tr><td>5712 Rea Farms Blvd</td><td>$862,500</td><td>$231</td><td>4</td><td>4</td><td>3,730</td><td>0.18</td><td>8</td><td>Dec 2024</td><td>0.4 mi</td></tr><tr><td>5628 Brickton Ridge Dr</td><td>$910,000</td><td>$240</td><td>5</td><td>4</td><td>3,793</td><td>0.22</td><td>5</td><td>Jan 2025</td><td>0.6 mi</td></tr><tr><td>5445 Harvest Knoll Ct</td><td>$839,000</td><td>$222</td><td>4</td><td>3.5</td><td>3,779</td><td>0.20</td><td>21</td><td>Oct 2024</td><td>0.8 mi</td></tr><tr><td>6012 Meadow Fern Ln</td><td>$887,000</td><td>$235</td><td>4</td><td>4</td><td>3,774</td><td>0.21</td><td>9</td><td>Dec 2024</td><td>0.9 mi</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">Closed comps reflect a strong, consistent market in the Rea Farms / Stonecrest corridor. Five sales ranging from $839K–$910K demonstrate buyer willingness to pay a premium for newer construction with premium finishes. Average DOM of 11 days confirms high demand and limited absorption time at this price point.</div>
+    <div class="stats-bar">
+      <div class="stats-bar-item">
+        <span class="sb-label">Median Price</span>
+        <span class="sb-value">$875,000</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Sales</span>
+        <span class="sb-value">5</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Avg $/SF</span>
+        <span class="sb-value">$231</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Median DOM</span>
+        <span class="sb-value">9 days</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Under Contract -->
+  <div class="section-block">
+    <div class="section-label">Under Contract</div>
+    <div class="section-subhead">Properties under contract within 1.0 mile — 3–5 BR, 2,800–4,500 SF</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Status</th><th>Date</th><th>Dist.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>5819 Whistling Duck Dr</td><td>$889,000</td><td>$232</td><td>4</td><td>3.5</td><td>3,831</td><td>0.20</td><td>7</td><td>Under Contract</td><td>Jan 2025</td><td>0.2 mi</td></tr><tr><td>5660 Rea Farms Blvd</td><td>$925,000</td><td>$244</td><td>5</td><td>4.5</td><td>3,791</td><td>0.23</td><td>4</td><td>Under Contract</td><td>Feb 2025</td><td>0.5 mi</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">Two pending sales confirm continued buyer demand. The higher-priced contract at $925K on Rea Farms Blvd (5 BD, 4.5 BA) is pushing the ceiling — a positive indicator that buyers are willing to stretch for the right product. If 5834 Timbertop shows well, it should capture similar or superior interest.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
+    <span class="page-num">2 of 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 3 -->
+<div class="page" id="page3">
+
+  <div class="cma-header">
+    <div class="cma-title">Comparative Market Analysis</div>
+    <div class="cma-subtitle">
+      <strong>5834 Timbertop Lane, Charlotte, NC 28270</strong>
+      &nbsp;·&nbsp; Active Listings
+    </div>
+  </div>
+
+  <!-- Active Listings -->
+  <div class="section-block">
+    <div class="section-label">Current Active Listings</div>
+    <div class="section-subhead">Current active listings within 1.0 mile — 3–5 BR, 2,800–4,500 SF</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Address</th><th>Price</th><th>$/SF</th><th>Beds</th><th>Baths</th>
+          <th>SF</th><th>Acres</th><th>DOM</th><th>Subdivision</th><th>Dist.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>5780 Brickton Ridge Dr</td><td>$895,000</td><td>$234</td><td>4</td><td>3.5</td><td>3,825</td><td>0.20</td><td>18</td><td>Rea Farms</td><td>0.4 mi</td></tr><tr><td>6100 Meadow Fern Ln</td><td>$929,000</td><td>$246</td><td>5</td><td>4</td><td>3,778</td><td>0.22</td><td>31</td><td>Rea Farms</td><td>0.7 mi</td></tr><tr><td>5500 Harvest Knoll Rd</td><td>$869,000</td><td>$228</td><td>4</td><td>3</td><td>3,811</td><td>0.19</td><td>44</td><td>Stonecrest Farm</td><td>0.9 mi</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">Three active listings are currently competing for the same buyer pool. The listing at $929K has been on market 31 days without a contract, suggesting that ceiling pricing requires exceptional presentation. The $869K listing at 44 DOM signals buyer resistance above $900K unless the home is positioned and staged impeccably. Your subject property, priced at $895K, would sit in the sweet spot — competitive without giving away value.</div>
+    <div class="stats-bar">
+      <div class="stats-bar-item">
+        <span class="sb-label">Median Price</span>
+        <span class="sb-value">$895,000</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Listings</span>
+        <span class="sb-value">3</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Avg $/SF</span>
+        <span class="sb-value">$236</span>
+      </div>
+      <div class="stats-bar-item">
+        <span class="sb-label">Median DOM</span>
+        <span class="sb-value">31 days</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties</span>
+    <span class="page-num">3 of 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ PAGE 4 -->
+<div class="page" id="page4">
+
+  <div class="cma-header">
+    <div class="cma-title">Strategic Summary</div>
+    <div class="cma-subtitle">
+      Pricing Analysis &amp; Recommendation &nbsp;·&nbsp;
+      <strong>5834 Timbertop Lane</strong>
+      &nbsp;·&nbsp; 4 BD/3.5 BA &nbsp;·&nbsp; 3,842 SF
+    </div>
+  </div>
+
+  <!-- $/SF Benchmarking -->
+  <div class="section-block">
+    <div class="section-label">$/SF Benchmarking</div>
+    <table>
+      <thead>
+        <tr><th>Property</th><th>Price</th><th>SF</th><th>$/SF</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>5834 Timbertop Ln (Subject)</td><td>$895,000</td><td>3,842</td><td>$233</td><td>Subject</td></tr><tr><td>5901 Whistling Duck Dr</td><td>$875,000</td><td>3,840</td><td>$228</td><td>Closed</td></tr><tr><td>5628 Brickton Ridge Dr</td><td>$910,000</td><td>3,793</td><td>$240</td><td>Closed</td></tr><tr><td>5819 Whistling Duck Dr</td><td>$889,000</td><td>3,831</td><td>$232</td><td>Pending</td></tr><tr><td>5780 Brickton Ridge Dr</td><td>$895,000</td><td>3,825</td><td>$234</td><td>Active</td></tr><tr><td>6100 Meadow Fern Ln</td><td>$929,000</td><td>3,778</td><td>$246</td><td>Active — 31 DOM</td></tr>
+      </tbody>
+    </table>
+    <div class="analysis">At $233/SF, 5834 Timbertop aligns precisely with median closed sale pricing in the immediate corridor. The subject property's 2019 build, premium finishes, and walkable Rea Farms location justify a slight premium over older comparable product. Pricing at or just below the active competition at $895,000 creates urgency without leaving significant money on the table.</div>
+  </div>
+
+  <!-- Pricing Framework -->
+  <div class="section-block">
+    <div class="section-label">Pricing Framework</div>
+    <table>
+      <thead>
+        <tr><th>Strategy</th><th>Price</th><th>$/SF</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Aggressive — Top of Market</td><td>$920,000</td><td>$239/SF</td><td>Positions above most comps; requires flawless condition and strong days-on-market tolerance</td></tr><tr class="star-row"><td>Market Value — Recommended</td><td>$895,000</td><td>$233/SF</td><td>Aligned with closed and pending comps; maximum buyer pool, fastest absorption</td></tr><tr><td>Quick Sale — Below Market</td><td>$869,000</td><td>$226/SF</td><td>Priced to generate immediate multiple-offer activity; sacrifices ~$26K in net proceeds</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Market Position Summary -->
+  <div class="section-block">
+    <div class="section-label">Market Position Summary</div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-label">Comparable Properties</div>
+        <div class="stat-value">10</div>
+        <div class="stat-sub">Within 1.0 mile</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Market Median</div>
+        <div class="stat-value">$882,000</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Recommended List Price</div>
+        <div class="stat-value">$895,000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="section-block">
+    <div class="section-label">Recommendation</div>
+    <div class="narrative">Based on a comprehensive review of 10 comparable properties — 5 closed, 2 pending, and 3 active — within one mile of 5834 Timbertop Lane, I recommend listing at $895,000. This price point reflects the home's superior build year, premium finishes, 3-car garage, and the sustained buyer demand in the Rea Farms/Stonecrest corridor. At $233/SF, you are priced in line with recent transactions while differentiating from the competition. Given current average DOM of 9–12 days for well-presented homes at this price tier, expect strong showing activity within the first 7–10 days.</div>
+    <div class="bottom-line">📍 List at $895,000 — Aligned with the market. Positioned to sell. Built to close.</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>Ready to Move Forward?</h3>
+    <p>Market data current as of February 2025. Ryan Palmer · Corcoran HM Properties · ryan@realtyryan.com · (704) 555-0191</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand">Realty Ryan &amp; Associates &nbsp;·&nbsp; Prepared by Ryan Palmer &nbsp;·&nbsp; Corcoran HM Properties &nbsp;·&nbsp; February 2025</span>
+    <span class="page-num">4 of 4</span>
+  </div>
+</div>
+
+</body>
+</html>
