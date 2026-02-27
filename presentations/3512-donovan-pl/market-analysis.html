@@ -776,11 +776,100 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /* No fade animations — content always visible */
-  document.querySelectorAll('.fade-in, .fade-left, .fade-right').forEach(function(el) {
-    el.style.opacity = '1';
-    el.style.transform = 'none';
+  /* No fade animations — always visible */
+  document.querySelectorAll('.fade-in,.fade-left,.fade-right').forEach(function(el){
+    el.style.opacity='1'; el.style.transform='none';
   });
+
+  /* Mobile layout fixes — override inline grid styles */
+  if (window.innerWidth <= 768) {
+    var s = document.body.style;
+
+    // Force no horizontal overflow
+    document.body.style.overflowX = 'hidden';
+    document.documentElement.style.overflowX = 'hidden';
+
+    // Fix all inline grid containers
+    document.querySelectorAll('[style*="grid-template-columns"]').forEach(function(el){
+      var st = el.getAttribute('style') || '';
+      // Bar chart rows (140px 1fr 70px) — compress
+      if (st.includes('140px 1fr 70px')) {
+        el.style.gridTemplateColumns = '100px 1fr 48px';
+        el.style.gap = '6px';
+        el.style.fontSize = '.68rem';
+      }
+      // 3-col repeat grids → 1 col
+      else if (st.includes('repeat(3') || st.includes('1fr 1fr 1fr')) {
+        el.style.gridTemplateColumns = '1fr 1fr';
+        el.style.gap = '8px';
+      }
+      // 4-col → 2-col
+      else if (st.includes('repeat(4')) {
+        el.style.gridTemplateColumns = '1fr 1fr';
+        el.style.gap = '8px';
+      }
+      // 2-col → 1 col for large content blocks
+      else if (st.includes('1fr 1fr') && !st.includes('gap:5px')) {
+        el.style.gridTemplateColumns = '1fr';
+        el.style.gap = '12px';
+      }
+      // Room dimensions 2-col small text — keep 2 col but tighten
+      else if (st.includes('gap:5px')) {
+        el.style.gap = '4px 10px';
+        el.style.fontSize = '.72rem';
+      }
+    });
+
+    // Remove max-width constraints that limit content width
+    document.querySelectorAll('[style*="max-width"]').forEach(function(el){
+      var mw = parseInt((el.style.maxWidth||'').replace('px',''));
+      if (mw > 400) { el.style.maxWidth = '100%'; }
+    });
+
+    // Remove min-width that causes horizontal scroll
+    document.querySelectorAll('[style*="min-width"]').forEach(function(el){
+      el.style.minWidth = '0';
+    });
+
+    // Tighten section padding
+    document.querySelectorAll('section').forEach(function(el){
+      el.style.padding = '32px 0';
+    });
+
+    // Container padding
+    document.querySelectorAll('.container').forEach(function(el){
+      el.style.paddingLeft = '16px';
+      el.style.paddingRight = '16px';
+      el.style.maxWidth = '100%';
+      el.style.boxSizing = 'border-box';
+    });
+
+    // Prop card padding
+    document.querySelectorAll('.prop-card').forEach(function(el){
+      el.style.padding = '12px 14px';
+    });
+
+    // Price option padding
+    document.querySelectorAll('.price-option').forEach(function(el){
+      el.style.padding = '16px';
+    });
+
+    // Bar chart container overflow
+    document.querySelectorAll('[style*="min-width:300px"]').forEach(function(el){
+      el.style.minWidth = '0';
+      el.style.width = '100%';
+    });
+
+    // Tighten section headings
+    document.querySelectorAll('.section-title').forEach(function(el){
+      el.style.fontSize = '1.5rem';
+      el.style.lineHeight = '1.2';
+    });
+
+    // Map height
+    var map = document.getElementById('shannon-map');
+    if (map) map.style.height = '240px';
+  }
 
 });
 </script>
