@@ -107,9 +107,21 @@ section>.container{width:100%}
 }
 @media(max-width:768px){
   :root{--section-gap:60px}
-  .card-grid.g2,.card-grid.g3{grid-template-columns:1fr}
+  .card-grid.g2,.card-grid.g3,.card-grid.g4{grid-template-columns:1fr}
   .price-option .opt-price{font-size:2rem}
-  #shannon-map{height:360px}
+  #shannon-map{height:300px}
+  .grid-2col{grid-template-columns:1fr!important}
+  .grid-3col{grid-template-columns:1fr 1fr!important}
+  .grid-4col{grid-template-columns:1fr 1fr!important}
+  .grid-bar{grid-template-columns:100px 1fr 60px!important;gap:8px!important}
+  .snap-section{scroll-snap-align:none!important}
+  section{min-height:auto!important;overflow:visible!important}
+  .hero{min-height:100svh}
+  .hero-content h1{font-size:2.4rem!important}
+  .section-title{font-size:1.8rem!important}
+  .stat-big .number{font-size:2.4rem!important}
+  .container{padding:0 18px!important}
+  .price-option{padding:20px!important}
 }
 @media print{
   .fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
@@ -160,12 +172,12 @@ section>.container{width:100%}
       <div class="section-title">3512 Donovan Place</div>
       <div class="section-sub">Charlotte, NC 28215 · Shannon Park · Steel tape measured floor plan</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px" class="fade-in">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px" class="fade-in grid-2col">
 
       <!-- Floor plan breakdown -->
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px">
         <div style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px">Floor Plan · Heated SF</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px" class="grid-3col">
           <div style="padding:14px;background:var(--bg);border-radius:10px;text-align:center;border:1px solid var(--border)">
             <div style="font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--accent)">1,473</div>
             <div style="font-size:.72rem;color:var(--muted);margin-top:3px">1st Floor SF</div>
@@ -203,7 +215,7 @@ section>.container{width:100%}
           <div style="font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--primary);line-height:1.4;margin-bottom:8px">Larger than every closed comp in Shannon Park</div>
           <div style="font-size:.83rem;color:var(--muted);line-height:1.7">The largest closed comp is 1900 Lakedell (1,927 SF). 3512 Donovan is <strong style="color:var(--primary)">376 SF larger</strong>.</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="grid-2col">
           <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center">
             <div style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">At $550,000</div>
             <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">$239/SF</div>
@@ -233,7 +245,7 @@ section>.container{width:100%}
       <div class="section-title">Market Snapshot — <strong>Shannon Park</strong></div>
       <div class="section-sub" style="margin:0 auto">Current market conditions in Shannon Park, Charlotte NC 28215</div>
     </div>
-    <div class="fade-in" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto">
+    <div class="fade-in grid-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto">
       <div class="stat-big">
         <div class="number">3</div>
         <div class="label">Active Listings</div>
@@ -517,7 +529,7 @@ section>.container{width:100%}
     </div>
 
     <!-- Closed stats bar -->
-    <div class="fade-in" style="margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+    <div class="fade-in grid-4col" style="margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
       <div style="text-align:center;padding:20px 16px;border-radius:12px;background:var(--white);border:1px solid var(--border)">
         <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--accent)">$490K</div>
         <div style="font-size:.75rem;color:var(--muted);margin-top:4px;letter-spacing:.06em">Median Closed</div>
@@ -554,7 +566,7 @@ section>.container{width:100%}
       <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px">Closed $/SF — Shannon Park / Shamrock Hills Resales (11 comps)</div>
       <div style="display:flex;flex-direction:column;gap:12px">
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:100%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.7),rgba(122,79,46,.5));border-radius:4px;display:flex;align-items:center;padding-left:12px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">$336/SF — 95% LP · 20 DOM</span>
@@ -563,7 +575,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$453K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:99%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.68),rgba(122,79,46,.48));border-radius:4px;display:flex;align-items:center;padding-left:12px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">$335/SF — 100% LP · 9 DOM</span>
@@ -572,7 +584,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$450K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">1611 Shannonhouse</div>
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:97%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.65),rgba(122,79,46,.45));border-radius:4px;display:flex;align-items:center;padding-left:12px">
@@ -582,7 +594,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$500K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:96%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.62),rgba(122,79,46,.42));border-radius:4px;display:flex;align-items:center;padding-left:12px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">$323/SF — 99% LP · 101 DOM · Cash</span>
@@ -591,7 +603,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$450K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted);font-weight:600">1900 Lakedell Dr ★</div>
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:96%;height:100%;background:linear-gradient(90deg,#1d4ed8,#3b82f6);border-radius:4px;display:flex;align-items:center;padding-left:12px">
@@ -601,7 +613,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:#1d4ed8">$620K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">3538 Denson Pl</div>
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:94%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.6),rgba(122,79,46,.4));border-radius:4px;display:flex;align-items:center;padding-left:12px">
@@ -611,7 +623,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$535K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">5331 Coburg Ave</div>
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:93%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.58),rgba(122,79,46,.38));border-radius:4px;display:flex;align-items:center;padding-left:12px">
@@ -621,7 +633,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$589.5K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:92%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.55),rgba(122,79,46,.35));border-radius:4px;display:flex;align-items:center;padding-left:12px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">$310/SF — 100% LP · 82 DOM · $10K conc.</span>
@@ -630,7 +642,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$490K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:84%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.5),rgba(122,79,46,.3));border-radius:4px;display:flex;align-items:center;padding-left:12px">
               <span style="font-size:.75rem;font-weight:600;color:#fff">$279/SF — 100% LP · 4 DOM</span>
@@ -639,7 +651,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$450K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">3406 Erinbrook Ln</div>
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:85%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.48),rgba(122,79,46,.28));border-radius:4px;display:flex;align-items:center;padding-left:12px">
@@ -649,7 +661,7 @@ section>.container{width:100%}
           <div style="font-size:.85rem;font-weight:700;color:var(--accent)">$535K</div>
         </div>
 
-        <div style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
+        <div class="grid-bar" style="display:grid;grid-template-columns:180px 1fr 80px;align-items:center;gap:12px">
           <div style="font-size:.8rem;color:var(--muted)">1420 Lakedell Dr</div>
           <div style="background:rgba(0,0,0,.04);border-radius:4px;height:26px;position:relative">
             <div style="width:80%;height:100%;background:linear-gradient(90deg,rgba(122,79,46,.4),rgba(122,79,46,.2));border-radius:4px;display:flex;align-items:center;padding-left:12px">
