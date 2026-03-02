@@ -59,9 +59,9 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
 .section-sub{font-size:9pt;color:var(--muted);line-height:1.6;max-width:480pt;margin-bottom:14pt}
 
 /* ── STAT ROW ── */
-.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8pt;margin-bottom:14pt}
-.stat-box{background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:10pt;text-align:center}
-.stat-box .num{font-family:var(--serif);font-size:16pt;font-weight:700;color:var(--accent)}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6pt;margin-bottom:8pt}
+.stat-box{background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:6pt 8pt;text-align:center}
+.stat-box .num{font-family:var(--serif);font-size:13pt;font-weight:700;color:var(--accent)}
 .stat-box .lbl{font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2pt}
 .stat-box .sub{font-size:7pt;color:var(--light);margin-top:1pt}
 
@@ -107,10 +107,10 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
 .star-badge{display:inline-block;font-size:6pt;background:#fff;color:#1a2740;padding:1pt 5pt;border-radius:8pt;font-weight:700;letter-spacing:.08em;margin-left:4pt;vertical-align:middle}
 
 /* ── NWF CALLOUT ── */
-.nwf-gap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1pt solid var(--border);border-radius:4pt;overflow:hidden;margin-bottom:12pt}
-.nwf-cell{padding:10pt;text-align:center;border-right:1pt solid var(--border)}
+.nwf-gap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1pt solid var(--border);border-radius:4pt;overflow:hidden;margin-bottom:6pt}
+.nwf-cell{padding:7pt;text-align:center;border-right:1pt solid var(--border)}
 .nwf-cell:last-child{border-right:none}
-.nwf-cell .n{font-family:var(--serif);font-size:16pt;font-weight:700}
+.nwf-cell .n{font-family:var(--serif);font-size:13pt;font-weight:700}
 .nwf-cell .l{font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2pt}
 .nwf-cell.red .n{color:#b91c1c}
 .nwf-cell.gold .n{color:var(--accent)}
@@ -124,16 +124,16 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
 .bar-row .bar-price{font-weight:700;color:var(--accent);text-align:right}
 
 /* ── SUBJECT BOX ── */
-.subject-box{border:2pt solid var(--accent);border-radius:6pt;padding:14pt;margin-bottom:12pt;background:rgba(122,79,46,.03)}
-.subject-title{font-family:var(--serif);font-size:14pt;font-weight:600;color:var(--text);margin-bottom:8pt}
+.subject-box{border:2pt solid var(--accent);border-radius:6pt;padding:8pt 12pt;margin-bottom:8pt;background:rgba(122,79,46,.03)}
+.subject-title{font-family:var(--serif);font-size:12pt;font-weight:600;color:var(--text);margin-bottom:5pt}
 .subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:12pt}
-.subject-specs{display:flex;flex-direction:column;gap:3pt;font-size:8pt}
+.subject-specs{display:flex;flex-direction:column;gap:2pt;font-size:7.5pt}
 .subject-spec{display:flex;gap:6pt}
 .subject-spec .k{color:var(--muted);min-width:80pt}
 .subject-spec .v{font-weight:600;color:var(--text)}
 
 /* ── CALLOUT BOX ── */
-.callout{border-left:3pt solid var(--accent);padding:10pt 14pt;background:rgba(122,79,46,.04);border-radius:0 4pt 4pt 0;margin-bottom:10pt}
+.callout{border-left:3pt solid var(--accent);padding:7pt 12pt;background:rgba(122,79,46,.04);border-radius:0 4pt 4pt 0;margin-bottom:7pt}
 .callout p{font-size:8.5pt;color:var(--muted);line-height:1.6}
 .callout strong{color:var(--text)}
 
@@ -246,7 +246,7 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
   </div>
 
   <!-- Market Stats -->
-  <div class="section-label" style="margin-top:14pt">The Point · Market Snapshot · 12 Months</div>
+  <div class="section-label" style="margin-top:8pt">The Point · Market Snapshot · 12 Months</div>
   <div class="stat-row no-break">
     <div class="stat-box">
       <div class="num">11</div>
@@ -271,8 +271,8 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
   </div>
 
   <!-- Off-Water $/SF breakdown -->
-  <div class="section-label" style="margin-top:10pt">Off-Water Comps Only · $/SF Breakdown</div>
-  <div style="border:1pt solid var(--border);border-radius:4pt;overflow:hidden;margin-bottom:10pt" class="no-break">
+  <div class="section-label" style="margin-top:6pt">Off-Water Comps Only · $/SF Breakdown</div>
+  <div style="border:1pt solid var(--border);border-radius:4pt;overflow:hidden;margin-bottom:6pt" class="no-break">
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--cream);border-bottom:1pt solid var(--border)">
       <div style="padding:6pt 10pt;font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600">Address</div>
       <div style="padding:6pt 10pt;font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:center">Sold Price</div>
@@ -280,47 +280,47 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
       <div style="padding:6pt 10pt;font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:center">$/SF</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1pt solid var(--border)">
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:500">148 Quaker Road</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center">$2,560,000</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center;color:var(--muted)">6,912 SF</div>
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$370/SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:500">148 Quaker Road</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center">$2,560,000</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center;color:var(--muted)">6,912 SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$370/SF</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1pt solid var(--border);background:rgba(248,245,240,.5)">
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:500">167 Quaker Road</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center">$2,449,000</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center;color:var(--muted)">5,451 SF</div>
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$449/SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:500">167 Quaker Road</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center">$2,449,000</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center;color:var(--muted)">5,451 SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$449/SF</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1pt solid var(--border)">
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:500">115 Brawley Harbor Pl</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center">$2,399,000</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center;color:var(--muted)">4,486 SF</div>
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$535/SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:500">115 Brawley Harbor Pl</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center">$2,399,000</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center;color:var(--muted)">4,486 SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$535/SF</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1pt solid var(--border);background:rgba(248,245,240,.5)">
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:500">123 Stonewall Beach Ln</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center">$2,365,000</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center;color:var(--muted)">8,640 SF</div>
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$274/SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:500">123 Stonewall Beach Ln</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center">$2,365,000</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center;color:var(--muted)">8,640 SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$274/SF</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1pt solid var(--border)">
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:500">178 Shelburne Place</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center">$2,250,000</div>
-      <div style="padding:7pt 10pt;font-size:8pt;text-align:center;color:var(--muted)">3,991 SF</div>
-      <div style="padding:7pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$564/SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:500">178 Shelburne Place</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center">$2,250,000</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;text-align:center;color:var(--muted)">3,991 SF</div>
+      <div style="padding:4pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$564/SF</div>
     </div>
     <!-- Summary row -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--accent)">
-      <div style="padding:8pt 10pt;font-size:8pt;font-weight:700;color:#fff">Off-Water Average</div>
-      <div style="padding:8pt 10pt;font-size:8pt;font-weight:700;color:#fff;text-align:center">$2,404,600</div>
-      <div style="padding:8pt 10pt;font-size:8pt;color:rgba(255,255,255,.7);text-align:center">—</div>
-      <div style="padding:8pt 10pt;font-size:8pt;font-weight:700;color:#fff;text-align:center">$438/SF</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;font-weight:700;color:#fff">Off-Water Average</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;font-weight:700;color:#fff;text-align:center">$2,404,600</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;color:rgba(255,255,255,.7);text-align:center">—</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;font-weight:700;color:#fff;text-align:center">$438/SF</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:rgba(122,79,46,.08);border-top:1pt solid var(--border)">
-      <div style="padding:8pt 10pt;font-size:8pt;font-weight:700;color:var(--accent)">131 The Point ★</div>
-      <div style="padding:8pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$2,790,000</div>
-      <div style="padding:8pt 10pt;font-size:8pt;color:var(--muted);text-align:center">6,178 SF</div>
-      <div style="padding:8pt 10pt;font-size:8pt;font-weight:700;color:var(--accent);text-align:center">$452/SF</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent)">131 The Point ★</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$2,790,000</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;color:var(--muted);text-align:center">6,178 SF</div>
+      <div style="padding:5pt 8pt;font-size:7.5pt;font-weight:700;color:var(--accent);text-align:center">$452/SF</div>
     </div>
   </div>
 
@@ -329,7 +329,7 @@ html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#f
   </div>
 
   <!-- NWF vs WF gap -->
-  <div class="section-label" style="margin-top:4pt">Non-Waterfront vs. Waterfront Gap</div>
+  <div class="section-label" style="margin-top:5pt">Non-Waterfront vs. Waterfront Gap</div>
   <div class="nwf-gap no-break">
     <div class="nwf-cell red">
       <div class="n">~$2.5M</div>
