@@ -100,20 +100,38 @@ section>.container{width:100%}
 .price-option .opt-desc{font-size:.82rem;color:var(--muted);line-height:1.5}
 
 /* ── RESPONSIVE ── */
-@media(min-width:768px) and (max-width:1400px){
+@media(min-width:1100px) and (max-width:1400px){
   :root{--section-gap:0px}
-  html{font-size:20px;scroll-snap-type:y mandatory}
-  section{padding:32px 0;min-height:100vh;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden}
+  html{font-size:20px}
+  section{padding:32px 0}
   .container{max-width:1000px;padding:0 48px;width:100%}
   .split{gap:36px}
   .card-grid.g4{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:768px){
+@media(min-width:768px) and (max-width:1099px){
+  :root{--section-gap:40px}
+  html{font-size:16px}
+  section{padding:48px 0}
+  .container{max-width:100%;padding:0 32px}
+  .split{gap:24px}
+  .card-grid.g3{grid-template-columns:1fr 1fr}
+  .card-grid.g4{grid-template-columns:1fr 1fr}
+}
+@media(max-width:767px){
   :root{--section-gap:60px}
   .split{grid-template-columns:1fr;gap:24px}
   .card-grid.g2,.card-grid.g3,.card-grid.g4{grid-template-columns:1fr}
   .tier-panel{padding:24px}
   .price-option .opt-price{font-size:1.6rem}
+}
+@media(max-width:1099px){
+  /* Remove scroll snap on tablet/mobile — continuous scroll */
+  html{scroll-snap-type:none}
+  section{min-height:unset!important;overflow:visible!important;scroll-snap-align:unset!important;scroll-snap-stop:unset!important}
+  /* Inline 3-col grids → 2-col on tablet */
+  [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+  /* Off-water table — allow horizontal scroll */
+  [style*="border-radius:12px;overflow:hidden"]{overflow-x:auto!important}
 }
 @media print{
   .fade-in,.fade-left,.fade-right{opacity:1!important;transform:none!important}
