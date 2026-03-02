@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>131 The Point Drive — Market Analysis · Ryan Palmer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:#7A4F2E;
+  --navy:#113665;
+  --text:#1a1a1a;
+  --muted:#666;
+  --light:#999;
+  --border:#e0d8ce;
+  --cream:#f8f5f0;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Work Sans',-apple-system,sans-serif;
+}
+html,body{font-family:var(--sans);font-size:10pt;color:var(--text);background:#fff;line-height:1.5}
+
+/* ── PAGE LAYOUT ── */
+@page{size:letter;margin:0.6in 0.65in}
+.page{width:100%;page-break-after:always;page-break-inside:avoid;padding:0}
+.page:last-child{page-break-after:auto}
+
+/* ── HEADER (every page) ── */
+.page-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5pt solid var(--accent);padding-bottom:8pt;margin-bottom:18pt}
+.page-header-left .addr{font-family:var(--serif);font-size:13pt;font-weight:600;color:var(--text)}
+.page-header-left .sub{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:2pt}
+.page-header-right{text-align:right;font-size:7.5pt;color:var(--muted)}
+.page-header-right strong{display:block;color:var(--text);font-weight:600;font-size:8pt}
+
+/* ── COVER PAGE ── */
+.cover{display:flex;flex-direction:column;justify-content:space-between;min-height:9.7in;padding:0}
+.cover-top{padding-top:1.2in;text-align:center}
+.cover-label{font-size:7.5pt;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14pt}
+.cover-title{font-family:var(--serif);font-size:40pt;font-weight:300;line-height:1.05;color:var(--text);margin-bottom:10pt}
+.cover-title strong{font-weight:700}
+.cover-address{font-family:var(--serif);font-size:16pt;color:var(--muted);margin-bottom:30pt}
+.cover-rule{width:40pt;height:1.5pt;background:var(--accent);margin:0 auto 30pt}
+.cover-details{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:420pt;margin:0 auto;border:1pt solid var(--border);border-radius:4pt;overflow:hidden}
+.cover-detail{padding:12pt;text-align:center;border-right:1pt solid var(--border)}
+.cover-detail:last-child{border-right:none}
+.cover-detail .val{font-family:var(--serif);font-size:14pt;font-weight:700;color:var(--accent)}
+.cover-detail .lbl{font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2pt}
+.cover-bottom{text-align:center;padding-bottom:0.5in;border-top:1pt solid var(--border);padding-top:16pt}
+.cover-agent{font-family:var(--serif);font-size:13pt;font-weight:600;color:var(--text)}
+.cover-agent-sub{font-size:7.5pt;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:3pt}
+.cover-agent-contact{font-size:8.5pt;color:var(--muted);margin-top:5pt}
+.cover-prepared{font-size:7.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:10pt}
+
+/* ── SECTION HEADERS ── */
+.section-label{font-size:7pt;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:4pt}
+.section-title{font-family:var(--serif);font-size:18pt;font-weight:300;line-height:1.1;margin-bottom:8pt;color:var(--text)}
+.section-title strong{font-weight:700}
+.section-sub{font-size:9pt;color:var(--muted);line-height:1.6;max-width:480pt;margin-bottom:14pt}
+
+/* ── STAT ROW ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8pt;margin-bottom:14pt}
+.stat-box{background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:10pt;text-align:center}
+.stat-box .num{font-family:var(--serif);font-size:16pt;font-weight:700;color:var(--accent)}
+.stat-box .lbl{font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2pt}
+.stat-box .sub{font-size:7pt;color:var(--light);margin-top:1pt}
+
+/* ── COMP CARDS ── */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8pt;margin-bottom:10pt}
+.comp-card{border:1pt solid var(--border);border-radius:4pt;padding:10pt;background:#fff}
+.comp-card.waterfront{border-left:3pt solid var(--navy)}
+.comp-card.nwf{border-left:3pt solid var(--accent)}
+.comp-card.active-card{border-left:3pt solid #d97706}
+.comp-addr{font-family:var(--serif);font-size:11pt;font-weight:600;color:var(--text);margin-bottom:2pt}
+.comp-price{font-family:var(--serif);font-size:13pt;font-weight:700;color:var(--accent);margin-bottom:4pt}
+.comp-tags{display:flex;gap:4pt;flex-wrap:wrap;margin-bottom:5pt}
+.comp-tag{font-size:6.5pt;letter-spacing:.08em;text-transform:uppercase;padding:2pt 6pt;border-radius:3pt;font-weight:600}
+.tag-wf{background:rgba(17,54,101,.08);color:var(--navy)}
+.tag-nwf{background:rgba(122,79,46,.08);color:var(--accent)}
+.tag-psf{background:rgba(122,79,46,.1);color:var(--accent)}
+.tag-dom{background:#f3f4f6;color:#555}
+.tag-closed{background:#f0fdf4;color:#166534}
+.tag-active{background:#fefce8;color:#854d0e}
+.comp-details{font-size:7.5pt;color:var(--muted);line-height:1.4}
+.comp-note{font-size:7pt;color:var(--light);margin-top:3pt;line-height:1.4;font-style:italic}
+
+/* ── PRICING SECTION ── */
+.pricing-box{background:#1a2740;border-radius:6pt;padding:18pt;margin-bottom:12pt}
+.pricing-box .big-price{font-family:var(--serif);font-size:36pt;font-weight:700;color:#fff;text-align:center;margin-bottom:4pt}
+.pricing-box .big-psf{font-size:9pt;color:rgba(255,255,255,.5);text-align:center;margin-bottom:12pt}
+.pricing-three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.p-opt{padding:12pt;border-radius:4pt;text-align:center}
+.p-opt.dim{background:rgba(255,255,255,.06);border:1pt solid rgba(255,255,255,.12)}
+.p-opt.bright{background:rgba(255,255,255,.12);border:2pt solid rgba(255,255,255,.5)}
+.p-opt .p-label{font-size:6.5pt;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:5pt}
+.p-opt.dim .p-label{color:rgba(255,255,255,.4)}
+.p-opt.bright .p-label{color:#fff}
+.p-opt .p-price{font-family:var(--serif);font-size:16pt;font-weight:700;margin-bottom:2pt}
+.p-opt.dim .p-price{color:rgba(255,255,255,.8)}
+.p-opt.bright .p-price{color:#fff}
+.p-opt .p-psf{font-size:7pt}
+.p-opt.dim .p-psf{color:rgba(255,255,255,.35)}
+.p-opt.bright .p-psf{color:rgba(255,255,255,.6)}
+.p-opt .p-desc{font-size:7pt;line-height:1.4;margin-top:5pt}
+.p-opt.dim .p-desc{color:rgba(255,255,255,.4)}
+.p-opt.bright .p-desc{color:rgba(255,255,255,.65)}
+.star-badge{display:inline-block;font-size:6pt;background:#fff;color:#1a2740;padding:1pt 5pt;border-radius:8pt;font-weight:700;letter-spacing:.08em;margin-left:4pt;vertical-align:middle}
+
+/* ── NWF CALLOUT ── */
+.nwf-gap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1pt solid var(--border);border-radius:4pt;overflow:hidden;margin-bottom:12pt}
+.nwf-cell{padding:10pt;text-align:center;border-right:1pt solid var(--border)}
+.nwf-cell:last-child{border-right:none}
+.nwf-cell .n{font-family:var(--serif);font-size:16pt;font-weight:700}
+.nwf-cell .l{font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2pt}
+.nwf-cell.red .n{color:#b91c1c}
+.nwf-cell.gold .n{color:var(--accent)}
+
+/* ── BAR CHART ── */
+.bar-row{display:grid;grid-template-columns:120pt 1fr 52pt;gap:6pt;align-items:center;margin-bottom:5pt;font-size:7.5pt}
+.bar-row .bar-label{color:var(--muted);font-weight:500;text-align:right}
+.bar-track{background:#f0ece6;border-radius:3pt;height:18pt;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:3pt;display:flex;align-items:center;padding-left:6pt}
+.bar-fill span{font-size:6.5pt;font-weight:600;color:#fff;white-space:nowrap}
+.bar-row .bar-price{font-weight:700;color:var(--accent);text-align:right}
+
+/* ── SUBJECT BOX ── */
+.subject-box{border:2pt solid var(--accent);border-radius:6pt;padding:14pt;margin-bottom:12pt;background:rgba(122,79,46,.03)}
+.subject-title{font-family:var(--serif);font-size:14pt;font-weight:600;color:var(--text);margin-bottom:8pt}
+.subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:12pt}
+.subject-specs{display:flex;flex-direction:column;gap:3pt;font-size:8pt}
+.subject-spec{display:flex;gap:6pt}
+.subject-spec .k{color:var(--muted);min-width:80pt}
+.subject-spec .v{font-weight:600;color:var(--text)}
+
+/* ── CALLOUT BOX ── */
+.callout{border-left:3pt solid var(--accent);padding:10pt 14pt;background:rgba(122,79,46,.04);border-radius:0 4pt 4pt 0;margin-bottom:10pt}
+.callout p{font-size:8.5pt;color:var(--muted);line-height:1.6}
+.callout strong{color:var(--text)}
+
+/* ── FOOTER ── */
+.page-footer{border-top:1pt solid var(--border);padding-top:6pt;margin-top:14pt;display:flex;justify-content:space-between;align-items:center}
+.page-footer p{font-size:6.5pt;color:var(--light)}
+
+/* ── PRINT ── */
+@media print{
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{page-break-after:always}
+  .page:last-child{page-break-after:auto}
+  .no-break{page-break-inside:avoid}
+}
+@media screen{
+  body{background:#ccc;padding:20px}
+  .page{background:#fff;width:8.5in;min-height:11in;margin:0 auto 20px;padding:0.6in 0.65in;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PAGE 1 — COVER ═══════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-top">
+      <div class="cover-prepared">Prepared exclusively for Lisa Behring</div>
+      <div class="cover-label">Comparative Market Analysis</div>
+      <div class="cover-title">131 The Point<br><strong>Drive</strong></div>
+      <div class="cover-address">Mooresville, NC 28117 · The Point</div>
+      <div class="cover-rule"></div>
+      <div class="cover-details">
+        <div class="cover-detail">
+          <div class="val">6,178 SF</div>
+          <div class="lbl">Living Area</div>
+        </div>
+        <div class="cover-detail">
+          <div class="val">4 Bed / 4+2 Bath</div>
+          <div class="lbl">Bedrooms & Baths</div>
+        </div>
+        <div class="cover-detail">
+          <div class="val">0.94 Acres</div>
+          <div class="lbl">Lot Size</div>
+        </div>
+      </div>
+      <div style="margin-top:20pt;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt;max-width:420pt;margin-left:auto;margin-right:auto">
+        <div style="background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:10pt;text-align:center">
+          <div style="font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3pt">Builder</div>
+          <div style="font-family:var(--serif);font-size:10pt;font-weight:600">Simonini Custom</div>
+        </div>
+        <div style="background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:10pt;text-align:center">
+          <div style="font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3pt">Year Built</div>
+          <div style="font-family:var(--serif);font-size:10pt;font-weight:600">2003</div>
+        </div>
+        <div style="background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:10pt;text-align:center">
+          <div style="font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3pt">Boat Slip</div>
+          <div style="font-family:var(--serif);font-size:10pt;font-weight:600">Dock H, Slip 8</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-agent">Ryan Palmer</div>
+      <div class="cover-agent-sub">Corcoran HM Properties</div>
+      <div class="cover-agent-contact">(508) 954-2159 · ryan@realtyryan.com · homes.realtyryan.com</div>
+      <div style="margin-top:10pt;font-size:7pt;color:var(--light)">Market data sourced from Canopy MLS · March 2026 · This analysis is not an appraisal.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 2 — SUBJECT PROPERTY + MARKET OVERVIEW ═══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="addr">131 The Point Drive</div>
+      <div class="sub">Subject Property · The Point, Mooresville NC</div>
+    </div>
+    <div class="page-header-right">
+      <strong>Ryan Palmer</strong>
+      Corcoran HM Properties
+    </div>
+  </div>
+
+  <!-- Subject property -->
+  <div class="section-label">Subject Property</div>
+  <div class="subject-box no-break">
+    <div class="subject-title">131 The Point Drive — Property Profile</div>
+    <div class="subject-grid">
+      <div class="subject-specs">
+        <div class="subject-spec"><span class="k">Address</span><span class="v">131 The Point Drive, Mooresville NC 28117</span></div>
+        <div class="subject-spec"><span class="k">Subdivision</span><span class="v">The Point at Lake Norman</span></div>
+        <div class="subject-spec"><span class="k">Builder</span><span class="v">Simonini Custom Homes</span></div>
+        <div class="subject-spec"><span class="k">Year Built</span><span class="v">2003</span></div>
+        <div class="subject-spec"><span class="k">Construction</span><span class="v">Full Brick Exterior</span></div>
+        <div class="subject-spec"><span class="k">Living Area</span><span class="v">6,178 SF</span></div>
+        <div class="subject-spec"><span class="k">Bedrooms / Baths</span><span class="v">4 Bed / 4 Full + 2 Half Bath</span></div>
+        <div class="subject-spec"><span class="k">Lot Size</span><span class="v">0.94 Acres</span></div>
+      </div>
+      <div class="subject-specs">
+        <div class="subject-spec"><span class="k">Views</span><span class="v">Golf Course Views</span></div>
+        <div class="subject-spec"><span class="k">Boat Slip</span><span class="v">Deeded — Dock H, Slip 8</span></div>
+        <div class="subject-spec"><span class="k">Pool</span><span class="v">Heated Pool (Simonini-built)</span></div>
+        <div class="subject-spec"><span class="k">Wine Cellar</span><span class="v">Yes</span></div>
+        <div class="subject-spec"><span class="k">Garage</span><span class="v">3-Car Attached</span></div>
+        <div class="subject-spec"><span class="k">Prior List</span><span class="v">$3,250,000 / 103 DOM (Withdrawn)</span></div>
+        <div class="subject-spec"><span class="k">Waterfront</span><span class="v">Non-Waterfront (deeded slip)</span></div>
+        <div class="subject-spec"><span class="k">Renovation</span><span class="v">Renovated finishes throughout</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Market Stats -->
+  <div class="section-label" style="margin-top:14pt">The Point · Market Snapshot · 12 Months</div>
+  <div class="stat-row no-break">
+    <div class="stat-box">
+      <div class="num">11</div>
+      <div class="lbl">Closed Sales</div>
+      <div class="sub">Under $4M · past 12 mo</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">$556/SF</div>
+      <div class="lbl">Median $/SF</div>
+      <div class="sub">All closed comps</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">95%</div>
+      <div class="lbl">Avg LP Ratio</div>
+      <div class="sub">Closed / List</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">24 Days</div>
+      <div class="lbl">Median DOM</div>
+      <div class="sub">When priced right</div>
+    </div>
+  </div>
+
+  <div class="callout no-break">
+    <p><strong>Key insight:</strong> 131 The Point is a non-waterfront home with a deeded boat slip — a rare combination. The NWF ceiling in The Point is <strong>~$2.56M</strong> (148 Quaker Road). A premium above that ceiling must be clearly justified. At <strong>$2,600,000 ($421/SF)</strong>, this home is positioned as the most compelling non-waterfront value in the subdivision — supported by Simonini build quality, heated pool, golf views, and deeded lake access.</p>
+  </div>
+
+  <!-- NWF vs WF gap -->
+  <div class="section-label" style="margin-top:4pt">Non-Waterfront vs. Waterfront Gap</div>
+  <div class="nwf-gap no-break">
+    <div class="nwf-cell red">
+      <div class="n">~$2.45M</div>
+      <div class="l">NWF Ceiling (avg top 2)</div>
+    </div>
+    <div class="nwf-cell gold">
+      <div class="n">+$150K</div>
+      <div class="l">Premium at $2.6M</div>
+    </div>
+    <div class="nwf-cell gold">
+      <div class="n">$2,600,000</div>
+      <div class="l">Recommended List Price</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>131 The Point Drive · Mooresville NC 28117 · Prepared by Ryan Palmer · Corcoran HM Properties · March 2026</p>
+    <p>Page 2</p>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 3 — ACTIVE COMPETITION ═══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="addr">Market Analysis — Active Competition</div>
+      <div class="sub">The Point at Lake Norman · Current Listings</div>
+    </div>
+    <div class="page-header-right">
+      <strong>Ryan Palmer</strong>
+      Corcoran HM Properties
+    </div>
+  </div>
+
+  <div class="section-label">Active Listings — The Point</div>
+  <div class="section-title">What <strong>Buyers Are Seeing Today</strong></div>
+  <div class="section-sub">4 active listings. All overpriced relative to recent closed sales. 131 The Point at $2.6M enters as the most competitively priced non-waterfront listing.</div>
+
+  <div class="comp-grid no-break">
+    <div class="comp-card active-card">
+      <div class="comp-addr">128 Brownstone Drive</div>
+      <div class="comp-price" style="color:#d97706">$3,895,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-psf">$630/SF</span>
+        <span class="comp-tag tag-active">Active</span>
+        <span class="comp-tag tag-dom">High DOM</span>
+      </div>
+      <div class="comp-details">5 bed · 6,178 SF · Waterfront · Lake views</div>
+      <div class="comp-note">Waterfront — different buyer pool. Not a direct comp for 131.</div>
+    </div>
+    <div class="comp-card active-card">
+      <div class="comp-addr">111 Kent Court</div>
+      <div class="comp-price" style="color:#d97706">$3,495,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-psf">$566/SF</span>
+        <span class="comp-tag tag-active">Active</span>
+      </div>
+      <div class="comp-details">5 bed · 6,174 SF · Waterfront</div>
+      <div class="comp-note">Waterfront listing. 131 priced $895K below.</div>
+    </div>
+    <div class="comp-card active-card">
+      <div class="comp-addr">106 Lightship Drive</div>
+      <div class="comp-price" style="color:#d97706">$3,299,900</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-psf">$534/SF</span>
+        <span class="comp-tag tag-active">Active</span>
+        <span class="comp-tag tag-dom">High DOM</span>
+      </div>
+      <div class="comp-details">5 bed · 6,178 SF · Waterfront · Dated interior</div>
+      <div class="comp-note">Dated interior, overpriced for condition. 131 priced $700K below.</div>
+    </div>
+    <div class="comp-card active-card">
+      <div class="comp-addr">1812 Brawley School Road</div>
+      <div class="comp-price" style="color:#d97706">$2,490,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-psf">$403/SF</span>
+        <span class="comp-tag tag-active">Active — NWF</span>
+      </div>
+      <div class="comp-details">Augusta Homes · Cedar Shake · Busy main road · Off-site boat slip</div>
+      <div class="comp-note">Only direct NWF competitor. Inferior builder, inferior location. 131 at $2.6M is $110K premium — justified by Simonini quality, full brick, heated pool, and golf views.</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:12pt">Under Contract</div>
+  <div class="comp-card" style="border-left:3pt solid #2d6a4f;margin-bottom:12pt">
+    <div class="comp-addr">105 Moors End Loop</div>
+    <div class="comp-price" style="color:#2d6a4f">$4,975,000</div>
+    <div class="comp-tags">
+      <span class="comp-tag" style="background:#f0fdf4;color:#166534">Under Contract</span>
+      <span class="comp-tag tag-psf">Waterfront</span>
+    </div>
+    <div class="comp-details">Waterfront · Under contract — confirms demand exists above $4M for true waterfront.</div>
+  </div>
+
+  <div class="callout no-break">
+    <p><strong>Competitive position:</strong> At $2,600,000, 131 The Point is the only non-waterfront listing in The Point under $2.7M. The only direct non-WF competitor (1812 Brawley) is an Augusta Homes build on a busy road at $2,490,000. 131's $110K premium is fully justified by builder quality, construction, pool, and views.</p>
+  </div>
+
+  <div class="page-footer">
+    <p>131 The Point Drive · Mooresville NC 28117 · Prepared by Ryan Palmer · Corcoran HM Properties · March 2026</p>
+    <p>Page 3</p>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 4 — CLOSED COMPS (WF) ═══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="addr">Closed Comparables — Waterfront</div>
+      <div class="sub">The Point at Lake Norman · Past 12 Months · Under $4M</div>
+    </div>
+    <div class="page-header-right">
+      <strong>Ryan Palmer</strong>
+      Corcoran HM Properties
+    </div>
+  </div>
+
+  <div class="section-label">Waterfront Closed Sales · Under $4M</div>
+  <div class="section-title">True <strong>Waterfront Comps</strong></div>
+  <div class="section-sub" style="margin-bottom:10pt">6 waterfront sales under $4M in the past 12 months. These set the upper waterfront market. 131 The Point is priced $1.1M+ below all waterfront comps.</div>
+
+  <div class="comp-grid no-break">
+    <div class="comp-card waterfront">
+      <div class="comp-addr">122 N Longfellow Lane</div>
+      <div class="comp-price">$3,990,900</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-wf">Waterfront</span>
+        <span class="comp-tag tag-psf">$646/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+        <span class="comp-tag tag-dom">17 DOM</span>
+      </div>
+      <div class="comp-details">4 bed · 6,178 SF · Lake Norman waterfront</div>
+      <div class="comp-note">95% LP · Highest comparable sale under $4M</div>
+    </div>
+    <div class="comp-card waterfront">
+      <div class="comp-addr">253 Milford Circle</div>
+      <div class="comp-price">$3,850,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-wf">Waterfront</span>
+        <span class="comp-tag tag-psf">$623/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+        <span class="comp-tag tag-dom">35 DOM</span>
+      </div>
+      <div class="comp-details">4 bed · 6,178 SF · Lake Norman waterfront</div>
+      <div class="comp-note">95% LP</div>
+    </div>
+    <div class="comp-card waterfront">
+      <div class="comp-addr">147 Shelburne Place</div>
+      <div class="comp-price">$3,750,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-wf">Waterfront</span>
+        <span class="comp-tag tag-psf">$607/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+        <span class="comp-tag tag-dom">21 DOM</span>
+      </div>
+      <div class="comp-details">4 bed · 6,178 SF · Waterfront</div>
+      <div class="comp-note">96% LP</div>
+    </div>
+    <div class="comp-card waterfront">
+      <div class="comp-addr">130 Brick Kiln Way</div>
+      <div class="comp-price">$3,730,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-wf">Waterfront</span>
+        <span class="comp-tag tag-psf">$604/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+        <span class="comp-tag tag-dom">28 DOM</span>
+      </div>
+      <div class="comp-details">4 bed · 6,178 SF · Waterfront</div>
+      <div class="comp-note">95% LP</div>
+    </div>
+    <div class="comp-card waterfront">
+      <div class="comp-addr">166 White Horse Drive</div>
+      <div class="comp-price">$3,725,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-wf">Waterfront</span>
+        <span class="comp-tag tag-psf">$603/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+        <span class="comp-tag tag-dom">14 DOM</span>
+      </div>
+      <div class="comp-details">4 bed · 6,178 SF · Waterfront</div>
+      <div class="comp-note">95% LP</div>
+    </div>
+    <div class="comp-card waterfront">
+      <div class="comp-addr">105 Grey Lady Court</div>
+      <div class="comp-price">$3,675,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-wf">Waterfront</span>
+        <span class="comp-tag tag-psf">$502/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+      </div>
+      <div class="comp-details">Waterfront · Lowest WF $/SF — 131 at $421/SF is $81/SF below the cheapest WF comp</div>
+      <div class="comp-note">94% LP · Lowest waterfront closed comp</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>131 The Point Drive · Mooresville NC 28117 · Prepared by Ryan Palmer · Corcoran HM Properties · March 2026</p>
+    <p>Page 4</p>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 5 — CLOSED COMPS (NWF) ═══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="addr">Closed Comparables — Non-Waterfront</div>
+      <div class="sub">The Point at Lake Norman · Past 12 Months</div>
+    </div>
+    <div class="page-header-right">
+      <strong>Ryan Palmer</strong>
+      Corcoran HM Properties
+    </div>
+  </div>
+
+  <div class="section-label">Non-Waterfront Closed Sales</div>
+  <div class="section-title">The <strong>NWF Ceiling</strong></div>
+  <div class="section-sub" style="margin-bottom:10pt">5 non-waterfront closed sales in the past 12 months. The ceiling is $2,560,000 (148 Quaker Road). 131 at $2.6M is priced $40K above the NWF ceiling — supported by Simonini quality and amenities.</div>
+
+  <div class="comp-grid no-break">
+    <div class="comp-card nwf">
+      <div class="comp-addr">148 Quaker Road</div>
+      <div class="comp-price">$2,560,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-nwf">NWF · Boat Slip</span>
+        <span class="comp-tag tag-psf">$414/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+      </div>
+      <div class="comp-details">Non-waterfront · Deeded boat slip · NWF ceiling #1</div>
+      <div class="comp-note">Highest non-waterfront closed in The Point. 131 is $40K above — justified by Simonini build + pool.</div>
+    </div>
+    <div class="comp-card nwf">
+      <div class="comp-addr">167 Quaker Road</div>
+      <div class="comp-price">$2,449,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-nwf">NWF · Boat Slip</span>
+        <span class="comp-tag tag-psf">$396/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+      </div>
+      <div class="comp-details">Non-waterfront · Deeded boat slip · NWF ceiling #2</div>
+      <div class="comp-note">$151K below 131's recommended price.</div>
+    </div>
+    <div class="comp-card nwf">
+      <div class="comp-addr">115 Brawley Harbor Place</div>
+      <div class="comp-price">$2,399,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-nwf">Non-WF</span>
+        <span class="comp-tag tag-psf">$388/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+      </div>
+      <div class="comp-details">Non-waterfront · The Point</div>
+      <div class="comp-note">$201K below recommended price.</div>
+    </div>
+    <div class="comp-card nwf">
+      <div class="comp-addr">123 Stonewall Beach Lane</div>
+      <div class="comp-price">$2,365,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-nwf">Non-WF</span>
+        <span class="comp-tag tag-psf">$383/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+      </div>
+      <div class="comp-details">Non-waterfront · The Point</div>
+      <div class="comp-note">$235K below recommended price.</div>
+    </div>
+    <div class="comp-card nwf" style="grid-column:1/-1">
+      <div class="comp-addr">178 Shelburne Place</div>
+      <div class="comp-price">$2,250,000</div>
+      <div class="comp-tags">
+        <span class="comp-tag tag-nwf">Non-WF</span>
+        <span class="comp-tag tag-psf">$364/SF</span>
+        <span class="comp-tag tag-closed">Closed</span>
+      </div>
+      <div class="comp-details">Non-waterfront · Lowest NWF closed · $350K below recommended price</div>
+      <div class="comp-note">Lower $/SF, smaller or lesser-quality home. Sets the NWF floor.</div>
+    </div>
+  </div>
+
+  <!-- $/SF bar chart -->
+  <div class="section-label" style="margin-top:12pt">$/SF Comparison — Non-Waterfront vs. 131 The Point</div>
+  <div class="no-break">
+    <div class="bar-row">
+      <div class="bar-label">131 @ $2.69M</div>
+      <div class="bar-track"><div class="bar-fill" style="width:86%;background:rgba(122,79,46,.6)"><span>$435/SF — Aggressive</span></div></div>
+      <div class="bar-price">$2,690,000</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">131 @ $2.6M ★</div>
+      <div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--accent)"><span>$421/SF — Recommended</span></div></div>
+      <div class="bar-price">$2,600,000</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">148 Quaker Rd</div>
+      <div class="bar-track"><div class="bar-fill" style="width:79%;background:rgba(17,54,101,.5)"><span>$414/SF — NWF Ceiling</span></div></div>
+      <div class="bar-price">$2,560,000</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">131 @ $2.45M</div>
+      <div class="bar-track"><div class="bar-fill" style="width:75%;background:rgba(122,79,46,.35)"><span>$396/SF — Quick Sale</span></div></div>
+      <div class="bar-price">$2,450,000</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">178 Shelburne</div>
+      <div class="bar-track"><div class="bar-fill" style="width:68%;background:rgba(150,150,150,.4)"><span>$364/SF — NWF Floor</span></div></div>
+      <div class="bar-price">$2,250,000</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>131 The Point Drive · Mooresville NC 28117 · Prepared by Ryan Palmer · Corcoran HM Properties · March 2026</p>
+    <p>Page 5</p>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 6 — PRICING RECOMMENDATION ═══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="addr">Pricing Recommendation</div>
+      <div class="sub">131 The Point Drive · Mooresville NC 28117</div>
+    </div>
+    <div class="page-header-right">
+      <strong>Ryan Palmer</strong>
+      Corcoran HM Properties
+    </div>
+  </div>
+
+  <div class="section-label">Recommended List Price</div>
+  <div class="pricing-box no-break">
+    <div class="big-price">$2,600,000</div>
+    <div class="big-psf">$421/SF on 6,178 SF · ★ Recommended</div>
+    <div class="pricing-three">
+      <div class="p-opt dim">
+        <div class="p-label">Aggressive</div>
+        <div class="p-price">$2,690,000</div>
+        <div class="p-psf">$435 / SF</div>
+        <div class="p-desc">Justified by Simonini build and amenities. Requires motivated buyer willing to pay above NWF ceiling.</div>
+      </div>
+      <div class="p-opt bright">
+        <div class="p-label">Market Value <span class="star-badge">★ REC</span></div>
+        <div class="p-price">$2,600,000</div>
+        <div class="p-psf">$421 / SF</div>
+        <div class="p-desc">Below $500/SF threshold. Most compelling NWF value in The Point.</div>
+      </div>
+      <div class="p-opt dim">
+        <div class="p-label">Quick Sale</div>
+        <div class="p-price">$2,450,000</div>
+        <div class="p-psf">$396 / SF</div>
+        <div class="p-desc">At the NWF ceiling. Maximum urgency. Best if timeline is priority over net proceeds.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why this price -->
+  <div class="section-label" style="margin-top:14pt">Why $2,600,000</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10pt;margin-bottom:12pt" class="no-break">
+    <div class="callout" style="margin-bottom:0">
+      <p><strong>Simonini Premium:</strong> No other NWF listing in The Point is a Simonini custom build. Full brick exterior, quality of construction that is measurably superior to Augusta Homes (the only active NWF competitor at $2,490,000).</p>
+    </div>
+    <div class="callout" style="margin-bottom:0">
+      <p><strong>Boat Slip + Pool Combo:</strong> The combination of a deeded boat slip (Dock H, Slip 8) and a Simonini-built heated pool exists nowhere else at this price point in The Point. Buyers who want lake access without WF pricing have one option — this home.</p>
+    </div>
+    <div class="callout" style="margin-bottom:0">
+      <p><strong>Clean Start:</strong> Prior list at $3,250,000 received 1 showing in 103 DOM and was withdrawn. $2,600,000 represents a decisive reset — $650K below the prior ask — that will re-engage the buyer pool immediately.</p>
+    </div>
+    <div class="callout" style="margin-bottom:0">
+      <p><strong>Positioned to Win:</strong> At $421/SF, this home is priced $81/SF below the lowest waterfront closed comp ($502/SF at 105 Grey Lady Ct) and $14/SF above the NWF ceiling (148 Quaker at $414/SF). The value story is clear and defensible.</p>
+    </div>
+  </div>
+
+  <div style="background:var(--cream);border:1pt solid var(--border);border-radius:4pt;padding:14pt;text-align:center" class="no-break">
+    <div style="font-family:var(--serif);font-size:11pt;font-style:italic;color:var(--muted);line-height:1.7;max-width:480pt;margin:0 auto">"At $2,600,000 — Simonini quality, heated pool, golf views, and a deeded boat slip — this is the most compelling non-waterfront value proposition in The Point at Lake Norman."</div>
+    <div style="margin-top:8pt;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600">Ryan Palmer · Corcoran HM Properties</div>
+  </div>
+
+  <div class="page-footer" style="margin-top:16pt">
+    <p>Market data sourced from Canopy MLS · The Point at Lake Norman, Mooresville NC 28117 · Prepared by Ryan Palmer · Corcoran HM Properties · March 2026 · This analysis is not an appraisal.</p>
+    <p>Page 6</p>
+  </div>
+</div>
+
+</body>
+</html>
