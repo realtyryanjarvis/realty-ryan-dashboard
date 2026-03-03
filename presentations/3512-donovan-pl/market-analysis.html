@@ -114,11 +114,14 @@ section>.container{width:100%}
   body{overflow-x:hidden}
   section{
     min-height:auto!important;
+    height:auto!important;
     max-height:none!important;
     overflow:visible!important;
     padding:40px 0!important;
     scroll-snap-align:none!important;
+    display:block!important;
   }
+  #close,#close *{min-height:unset!important;height:auto!important}
   section > .container,
   .container{width:100%;box-sizing:border-box;padding:0 16px!important;max-width:100%!important}
 
@@ -716,7 +719,7 @@ section>.container{width:100%}
 <!-- ═══════════════════════════════════════════ -->
 <!-- 9. FINAL SLIDE                              -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="close" style="background:var(--bg);padding:60px 0">
+<section id="close" style="background:var(--bg);padding:60px 0;min-height:unset;height:auto">
   <div class="container" style="text-align:center;padding:0 24px 48px">
     <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px">Shannon Park · Charlotte NC</div>
     <div style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.6rem);font-weight:300;color:var(--primary);line-height:1.1;margin-bottom:16px">
