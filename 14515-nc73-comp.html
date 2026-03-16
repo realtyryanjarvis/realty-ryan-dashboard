@@ -427,6 +427,26 @@ body{
   font-weight:600;
   white-space:nowrap;
   color:var(--muted);
+  width:220px;
+  min-width:160px;
+}
+/* Options table — 3-col layout: last-child is Strategy, override right-align + nowrap */
+.pricing-table.options-table td:last-child,
+.pricing-table.options-table th:last-child{
+  text-align:left;
+  white-space:normal;
+  font-family:var(--sans);
+  font-size:.82rem;
+  font-weight:400;
+  color:var(--primary);
+  width:auto;
+  min-width:0;
+}
+.pricing-table.options-table td:nth-child(2),
+.pricing-table.options-table th:nth-child(2){
+  white-space:nowrap;
+  width:110px;
+  min-width:100px;
 }
 .pricing-table tr.highlight td{
   color:var(--accent);
@@ -1149,12 +1169,7 @@ body{
     </tr>
   </table>
 
-  <table class="pricing-table" style="margin-top:18px;table-layout:fixed;width:100%">
-    <colgroup>
-      <col style="width:22%">
-      <col style="width:18%">
-      <col style="width:60%">
-    </colgroup>
+  <table class="pricing-table options-table" style="margin-top:18px">
     <tr>
       <th style="text-align:left;padding:10px 14px;background:var(--bg-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Option</th>
       <th style="text-align:left;padding:10px 14px;background:var(--bg-light);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Price</th>
