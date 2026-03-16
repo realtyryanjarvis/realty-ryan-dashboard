@@ -738,7 +738,6 @@ body{
   }
 
   /* Keep these blocks whole — never split mid-block */
-  .insight-grid,
   .stats-grid,
   .snapshot-row,
   .insight-bottom,
@@ -750,6 +749,15 @@ body{
   .stat-card,
   .callout-box,
   .pricing-table{
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
+  }
+  /* insight-grid: allow grid to flow but keep individual cards intact */
+  .insight-grid{
+    page-break-inside:auto;
+    break-inside:auto;
+  }
+  .insight-card{
     page-break-inside:avoid!important;
     break-inside:avoid!important;
   }
@@ -770,7 +778,18 @@ body{
   /* Tighten spacing in print */
   .section-header{margin-bottom:14px!important}
   .comp-card{margin-bottom:10px!important}
-  .insight-bottom{margin-bottom:16px!important}
+  .insight-bottom{margin-bottom:10px!important;padding:10px 14px!important;}
+  .insight-card{padding:8px 10px!important;}
+  .insight-card .insight-headline{font-size:.85rem!important;margin-bottom:4px!important;}
+  .insight-card .insight-body{font-size:.72rem!important;line-height:1.45!important;}
+  .insight-grid{gap:7px!important;margin-bottom:8px!important;}
+  .insight-section{margin-bottom:10px!important;}
+  .snapshot-row{gap:6px!important;margin-bottom:10px!important;}
+  .snap-card{padding:8px 10px!important;}
+  .snap-val{font-size:1.3rem!important;}
+  .snap-label{font-size:.6rem!important;}
+  .stats-grid{gap:7px!important;margin-bottom:10px!important;}
+  .subject-box{padding:12px 16px!important;margin-bottom:10px!important;}
   .comps-grid{gap:10px!important}
   .stats-grid{gap:10px!important}
   .mini-header{padding:8px 0 8px!important;margin-bottom:16px!important}
