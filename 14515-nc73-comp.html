@@ -719,7 +719,9 @@ body{
     page-break-after:always!important;
     break-after:page!important;
   }
-  /* Allow sections to break across pages — only keep individual cards intact */
+  /* ── Page break rules ── */
+
+  /* comps grids: allow grid to break across pages, but keep each card intact */
   .comps-section{
     page-break-inside:auto;
     break-inside:auto;
@@ -728,15 +730,42 @@ body{
     page-break-inside:avoid!important;
     break-inside:avoid!important;
   }
+
+  /* Section headers always stay with the content that follows */
   .section-header{
-    page-break-after:avoid;
-    break-after:avoid;
+    page-break-after:avoid!important;
+    break-after:avoid!important;
   }
+
+  /* Keep these blocks whole — never split mid-block */
   .insight-grid,
   .stats-grid,
-  .snapshot-row{
-    page-break-inside:avoid;
-    break-inside:avoid;
+  .snapshot-row,
+  .insight-bottom,
+  .final-box,
+  .lot-division-box,
+  .subject-box,
+  .summary-box,
+  .snap-card,
+  .stat-card,
+  .callout-box,
+  .pricing-table{
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
+  }
+
+  /* Section header + first paragraph should never orphan */
+  .section-header + p,
+  .section-header + .insight-bottom,
+  .section-header + .comps-grid{
+    page-break-before:avoid!important;
+    break-before:avoid!important;
+  }
+
+  /* Headings never left dangling at bottom of page */
+  h2, h3{
+    page-break-after:avoid!important;
+    break-after:avoid!important;
   }
   /* Tighten spacing in print */
   .section-header{margin-bottom:14px!important}
@@ -1153,6 +1182,7 @@ body{
   </div>
 
   <!-- Pricing Analysis Table -->
+  <div style="page-break-inside:avoid;break-inside:avoid;page-break-before:auto;">
   <div class="section-header">
     <span class="section-label">Pricing Analysis</span>
     <h2 class="serif">Three Pricing Options</h2>
@@ -1225,6 +1255,7 @@ body{
   <div class="final-box" style="margin-top:14px">
     <p>All three options are defensible. <strong>Option B ($3,490,000)</strong> is the recommendation — priced honestly within the residual range, with built-in lot division upside that validates the ask. The wide open water views are rare on Lake Norman and will do the heavy lifting. <strong>Market the estate. Show every qualified buyer the math.</strong></p>
   </div>
+  </div><!-- /pricing wrapper -->
 
 </div><!-- /doc-page 4 -->
 
