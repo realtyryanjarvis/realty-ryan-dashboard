@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14515 NC Hwy 73 — Pricing Presentation · Corcoran HM Properties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #0c2340;
+      --gold:  #c9a96e;
+      --cream: #f8f4ef;
+      --white: #ffffff;
+      --text:  #1a2a3a;
+      --muted: #6b7a8d;
+      --badge-uc:  #2563eb;
+      --badge-act: #16a34a;
+      --badge-wd:  #6b7280;
+      --badge-om:  #7c3aed;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+    /* ── Cover / Hero ── */
+    .cover {
+      background: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(201,169,110,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .cover-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 60px;
+      opacity: 0.9;
+    }
+
+    .cover-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+
+    .cover h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(248,244,239,0.65);
+      margin-bottom: 50px;
+    }
+
+    .cover-divider {
+      width: 80px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 50px;
+      opacity: 0.6;
+    }
+
+    .cover-price-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 12px;
+    }
+
+    .cover-price {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 40px;
+    }
+
+    .cover-presenter {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(248,244,239,0.55);
+      letter-spacing: 0.05em;
+      margin-top: 10px;
+    }
+
+    .cover-presenter strong {
+      color: rgba(248,244,239,0.85);
+      font-weight: 500;
+    }
+
+    /* ── Section Wrapper ── */
+    .section {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .section-full {
+      padding: 80px 0;
+    }
+
+    .section-full .section-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── Section Header ── */
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.75;
+    }
+
+    /* ── Opportunity Section ── */
+    .opportunity-bg {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .opportunity-bg .section-title { color: var(--white); }
+    .opportunity-bg .section-eyebrow { color: var(--gold); }
+    .opportunity-bg .section-lead { color: rgba(248,244,239,0.7); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,169,110,0.2);
+      border-radius: 8px;
+      padding: 28px 24px;
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      color: rgba(248,244,239,0.65);
+      line-height: 1.6;
+    }
+
+    /* ── Premium Narrative ── */
+    .premium-section {
+      background: var(--cream);
+      border-top: 3px solid var(--gold);
+    }
+
+    .premium-quote {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 36px 40px;
+      margin-top: 40px;
+    }
+
+    .premium-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--cream);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .premium-quote p:last-child { margin-bottom: 0; }
+
+    /* ── Comps ── */
+    .comps-section { background: var(--white); }
+
+    .comp-group {
+      margin-bottom: 56px;
+    }
+
+    .comp-group:last-child { margin-bottom: 0; }
+
+    .comp-group-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(12,35,64,0.1);
+    }
+
+    .comp-group-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .icon-ceiling { background: rgba(201,169,110,0.15); }
+    .icon-floor   { background: rgba(37,99,235,0.1); }
+    .icon-lesson  { background: rgba(107,114,128,0.15); }
+
+    .comp-group-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .comp-group-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .comp-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .comp-card {
+      border: 1px solid rgba(12,35,64,0.1);
+      border-radius: 8px;
+      padding: 22px 20px;
+      background: var(--cream);
+      transition: box-shadow 0.2s;
+    }
+
+    .comp-card:hover { box-shadow: 0 4px 20px rgba(12,35,64,0.08); }
+
+    .comp-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .comp-address {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.35;
+    }
+
+    .status-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-uc  { background: rgba(37,99,235,0.1);  color: var(--badge-uc); }
+    .badge-act { background: rgba(22,163,74,0.1);  color: var(--badge-act); }
+    .badge-wd  { background: rgba(107,114,128,0.1); color: var(--badge-wd); }
+    .badge-om  { background: rgba(124,58,237,0.1);  color: var(--badge-om); }
+
+    .comp-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      margin-bottom: 12px;
+    }
+
+    .comp-stat {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .comp-stat strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .comp-insight {
+      font-size: 0.83rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.55;
+      border-top: 1px solid rgba(12,35,64,0.07);
+      padding-top: 12px;
+    }
+
+    /* ── Pricing Analysis ── */
+    .pricing-section { background: var(--navy); color: var(--white); }
+    .pricing-section .section-title { color: var(--white); }
+    .pricing-section .section-eyebrow { color: var(--gold); }
+
+    .price-build {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .price-step {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      padding: 22px 28px;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+    }
+
+    .step-baseline {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(201,169,110,0.3);
+    }
+
+    .step-add {
+      background: rgba(201,169,110,0.08);
+      border-color: var(--gold);
+    }
+
+    .step-deduct {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .step-final {
+      background: var(--gold);
+      border-color: var(--gold);
+      margin-top: 16px;
+    }
+
+    .step-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .step-baseline .step-label { color: rgba(201,169,110,0.7); }
+    .step-add .step-label      { color: var(--gold); }
+    .step-deduct .step-label   { color: rgba(255,255,255,0.4); }
+    .step-final .step-label    { color: rgba(12,35,64,0.65); }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: rgba(248,244,239,0.65);
+      line-height: 1.5;
+    }
+
+    .step-final .step-desc { color: rgba(12,35,64,0.7); }
+
+    .step-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .amount-baseline { color: rgba(248,244,239,0.55); }
+    .amount-add      { color: var(--gold); }
+    .amount-deduct   { color: rgba(248,244,239,0.4); }
+    .amount-final    { color: var(--navy); font-size: 1.5rem; }
+
+    .pricing-quotes {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .pricing-quote {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,169,110,0.2);
+      border-radius: 8px;
+      padding: 28px 24px;
+    }
+
+    .pricing-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(248,244,239,0.75);
+      line-height: 1.7;
+    }
+
+    /* ── Recommendation ── */
+    .recommendation-section {
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .rec-rule {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 40px;
+    }
+
+    .rec-price {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .rec-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    .rec-rationale {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .rec-bullets {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 32px;
+      text-align: left;
+    }
+
+    .rec-bullet {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .rec-bullet::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--navy);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .footer-firm {
+      font-size: 0.8rem;
+      color: rgba(248,244,239,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: rgba(248,244,239,0.3);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Utilities ── */
+    .gold { color: var(--gold); }
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-32 { margin-top: 32px; }
+
+    /* ── Print ── */
+    @media print {
+      @page {
+        size: letter;
+        margin: 0.5in;
+      }
+
+      body {
+        font-size: 11pt;
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cover {
+        min-height: auto;
+        page-break-after: always;
+        padding: 80px 60px;
+      }
+
+      .section { padding: 40px 20px; }
+      .section-full { padding: 40px 0; }
+      .section-full .section-inner { padding: 0 20px; }
+
+      .comp-card:hover { box-shadow: none; }
+
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .comp-cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .pricing-quotes {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .opportunity-bg,
+      .pricing-section {
+        page-break-before: always;
+      }
+
+      a { text-decoration: none; color: inherit; }
+    }
+
+    @media (max-width: 680px) {
+      .section { padding: 56px 24px; }
+      .section-full .section-inner { padding: 0 24px; }
+      .pricing-quotes { grid-template-columns: 1fr; }
+      .price-step { grid-template-columns: 1fr; }
+      .step-amount { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     1. COVER
+══════════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-logo">Corcoran HM Properties &nbsp;·&nbsp; Lake Norman Luxury</div>
+
+  <div class="cover-label">Comparative Market Analysis</div>
+
+  <h1>14515 NC Hwy 73</h1>
+  <p class="cover-sub">Huntersville, NC 28078 &nbsp;·&nbsp; Waterfront Land &nbsp;·&nbsp; 2.13 Acres</p>
+
+  <div class="cover-divider"></div>
+
+  <div class="cover-price-label">Recommended List Price</div>
+  <div class="cover-price">$3,750,000</div>
+
+  <p class="cover-presenter">
+    Presented by <strong>Ryan Palmer</strong> &nbsp;·&nbsp; Corcoran HM Properties
+  </p>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     2. THE OPPORTUNITY
+══════════════════════════════════════════ -->
+<section class="section-full opportunity-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow">The Opportunity</div>
+    <h2 class="section-title">A Rare Blank Canvas on<br><em>Wide Open Water</em></h2>
+    <p class="section-lead">
+      14515 NC Hwy 73 is not simply a waterfront lot — it is the largest, flattest, most buildable piece of prime Lake Norman waterfront currently available. Wide open water views and 2.13 acres of cleared, ready land put this property in a category of its own.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌊</div>
+        <div class="feature-title">Wide Open Water Views</div>
+        <div class="feature-desc">The defining feature of this lot. Unobstructed Lake Norman views that luxury buyers pay millions to secure. Better views than the $4.49M off-market sale next door.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📐</div>
+        <div class="feature-title">2.13 Acres — Largest in the Analysis</div>
+        <div class="feature-desc">Every comp in this CMA sits on less than 1.5 acres. The subject lot is nearly 2× the nearest comparable. More land means more options, more privacy, more value.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏗️</div>
+        <div class="feature-title">Flat, Cleared & Fully Buildable</div>
+        <div class="feature-desc">Raw, cleared land ready for construction. No grade challenges, no power-line easements, no site constraints limiting the build. A true blank canvas.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚓</div>
+        <div class="feature-title">Pier-Eligible Shoreline</div>
+        <div class="feature-desc">The lot supports a private pier — none is currently installed. The right buyer can build to spec. Pier installation priced into the analysis at $150K–$200K.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏠</div>
+        <div class="feature-title">Dream Home Build Site</div>
+        <div class="feature-desc">Luxury buyers aren't purchasing land — they're purchasing the life they'll build on it. This lot delivers the water, the acreage, and the canvas to do it right.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <div class="feature-title">NC-73 Corridor — Established Demand</div>
+        <div class="feature-desc">The same road saw an off-market waterfront sale at $4.49M. Buyer demand along this corridor for premium waterfront is confirmed and growing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     3. LAKE NORMAN WATERFRONT PREMIUM
+══════════════════════════════════════════ -->
+<section class="section-full premium-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Market Intelligence</div>
+    <h2 class="section-title">Why Wide Open Water<br>Commands a Premium</h2>
+    <p class="section-lead">
+      Lake Norman waterfront is not a commodity. There is a spectrum — from lots with partial views or tree-obscured shoreline, all the way to the rare properties with wide, unobstructed open water. The gap in value between those two ends of the spectrum is measured in millions.
+    </p>
+
+    <div style="margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+      <div>
+        <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--navy); margin-bottom:12px;">The Peninsula &amp; The Point Premium</h4>
+        <p style="font-size:0.9rem; color:var(--muted); line-height:1.7;">
+          Belle Isle Drive and similar Peninsula communities carry a well-known location premium. Surrounded by trophy homes, established social cachet, and Cornelius conveniences — these lots trade at $3.7M–$3.85M on under an acre. The subject property is not in Peninsula, which is a real and honest negative in this analysis.
+        </p>
+      </div>
+      <div>
+        <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--navy); margin-bottom:12px;">But Views Are Rarer Than Zip Codes</h4>
+        <p style="font-size:0.9rem; color:var(--muted); line-height:1.7;">
+          The buyer paying $3M+ for Lake Norman frontage is buying a feeling — the morning light across open water, the sense of space, the view from a future great room. Wide open water views on this scale are genuinely rare on the lake. No zip code can manufacture that.
+        </p>
+      </div>
+    </div>
+
+    <div class="premium-quote">
+      <p>"Buyers spending $3M+ on Lake Norman are buying a lifestyle. They want wide open water, privacy, and a blank canvas to build their dream home. This lot delivers all three."</p>
+      <p>"The Peninsula and The Point command a location premium — but wide open water views are rarer than a zip code. The right buyer will pay for what they see every morning."</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     4. THE COMPS
+══════════════════════════════════════════ -->
+<section class="section-full comps-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Comparable Sales &amp; Listings</div>
+    <h2 class="section-title">The Market Speaks</h2>
+    <p class="section-lead">
+      Twelve properties across three distinct groups define the pricing envelope for 14515 NC Hwy 73 — a ceiling set by premium waterfront, a floor set by view-limited corridor lots, and market lessons from listings that misjudged their position.
+    </p>
+
+    <!-- GROUP 1: Premium Waterfront -->
+    <div class="comp-group" style="margin-top:48px;">
+      <div class="comp-group-header">
+        <div class="comp-group-icon icon-ceiling">🏆</div>
+        <div>
+          <div class="comp-group-title">Premium Waterfront — Setting the Ceiling</div>
+          <div class="comp-group-desc">Belle Isle Peninsula + NC-73 off-market · $3.7M–$4.49M</div>
+        </div>
+      </div>
+      <div class="comp-cards">
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">17005 Belle Isle Drive<br>Cornelius, NC 28031</div>
+            <span class="status-badge badge-uc">Under Contract</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$3,700,000</strong></div>
+            <div class="comp-stat">1.19 acres</div>
+            <div class="comp-stat">18 DOM</div>
+            <div class="comp-stat">Peninsula</div>
+          </div>
+          <div class="comp-insight">Peninsula premium drove rapid contract. Smaller lot than subject but Peninsula location and large water views = $3.7M. Subject has nearly 2× the land and comparable water views.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">16318 Belle Isle Drive<br>Cornelius, NC 28031</div>
+            <span class="status-badge badge-act">Active</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$3,850,000</strong></div>
+            <div class="comp-stat">0.97 acres</div>
+            <div class="comp-stat">Has pier</div>
+            <div class="comp-stat">Sloped lot</div>
+          </div>
+          <div class="comp-insight">Sloped lot is a construction negative. Subject is flat and fully buildable — a meaningful advantage. Pier on this comp adds ~$150K–200K over subject's no-pier baseline.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">14717 NC Hwy 73<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-om">Off-Market Sale</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$4,490,000</strong></div>
+            <div class="comp-stat">0.94 acres</div>
+            <div class="comp-stat">Existing home</div>
+            <div class="comp-stat">Same road</div>
+          </div>
+          <div class="comp-insight">Off-market at $4.49M confirms waterfront NC-73 demand above $4M. Existing structure adds value subject lacks — but subject has superior views and 2× the land.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GROUP 2: NC-73 Corridor -->
+    <div class="comp-group">
+      <div class="comp-group-header">
+        <div class="comp-group-icon icon-floor">📊</div>
+        <div>
+          <div class="comp-group-title">NC-73 Corridor — Establishing the Floor</div>
+          <div class="comp-group-desc">Limited or no water views · $1.1M–$1.8M</div>
+        </div>
+      </div>
+      <div class="comp-cards">
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">14701 NC Hwy 73<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-act">Active</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,800,000</strong></div>
+            <div class="comp-stat">0.63 acres</div>
+            <div class="comp-stat">110 DOM</div>
+          </div>
+          <div class="comp-insight">Smaller lot, limited water views, sitting on market. Shows non-view NC-73 lots are priced in the $1.8M range and moving slowly.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">14899 NC Hwy 73<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-uc">Under Contract</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,450,000</strong></div>
+            <div class="comp-stat">1.43 acres</div>
+            <div class="comp-stat">No views</div>
+          </div>
+          <div class="comp-insight">More acreage than several comps but no water views = $1.45M. Water views are worth millions on Lake Norman.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">14709 NC Hwy 73<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-act">Active</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,400,000</strong></div>
+            <div class="comp-stat">0.46 acres</div>
+            <div class="comp-stat">No views</div>
+          </div>
+          <div class="comp-insight">Small lot with no meaningful water views. Anchors the lower-middle range of the corridor.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">14731 NC Hwy 73<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-uc">Under Contract</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,150,000</strong></div>
+            <div class="comp-stat">0.57 acres</div>
+            <div class="comp-stat">Limited views</div>
+          </div>
+          <div class="comp-insight">Limited water views, more attainable buyer profile. Confirms view quality — not acreage alone — drives premiums.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">14799 NC Hwy 73<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-uc">Under Contract</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,150,000</strong></div>
+            <div class="comp-stat">0.57 acres</div>
+          </div>
+          <div class="comp-insight">Nearly identical to 14731. Two similar lots at the same price point confirms strong demand in this range for standard corridor land.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">15915 Beatties Ford Rd<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-act">Active</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,150,000</strong></div>
+            <div class="comp-stat">0.79 acres</div>
+            <div class="comp-stat">No water views</div>
+          </div>
+          <div class="comp-insight">Larger lot than some corridor listings but zero water views. Reinforces the floor of $1.1M–$1.15M for view-less Huntersville area land.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">15925 Beatties Ford Rd<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-uc">Under Contract</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$1,150,000</strong></div>
+            <div class="comp-stat">No water views</div>
+          </div>
+          <div class="comp-insight">Companion lot going under contract. Solid demand at $1.15M for non-view Huntersville parcels confirms the corridor floor.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GROUP 3: Market Lessons -->
+    <div class="comp-group">
+      <div class="comp-group-header">
+        <div class="comp-group-icon icon-lesson">⚠️</div>
+        <div>
+          <div class="comp-group-title">Market Lessons — What Not to Do</div>
+          <div class="comp-group-desc">Withdrawn listings that priced past the market's patience</div>
+        </div>
+      </div>
+      <div class="comp-cards">
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">15919 Sunset Drive<br>Huntersville, NC 28078</div>
+            <span class="status-badge badge-wd">Withdrawn</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$2,300,000</strong></div>
+            <div class="comp-stat">1.71 acres</div>
+            <div class="comp-stat">Power line constraints</div>
+          </div>
+          <div class="comp-insight">Power lines cutting through the lot severely limited buildable area. Constraints killed the deal. Subject has none of these issues — flat, clear, fully buildable.</div>
+        </div>
+
+        <div class="comp-card">
+          <div class="comp-card-top">
+            <div class="comp-address">7423 Norman Island Drive</div>
+            <span class="status-badge badge-wd">Withdrawn</span>
+          </div>
+          <div class="comp-stats">
+            <div class="comp-stat">0.81 acres</div>
+            <div class="comp-stat">273 DOM</div>
+            <div class="comp-stat">Overpriced</div>
+          </div>
+          <div class="comp-insight">273 days on market before withdrawal. Market rejected it clearly. Pricing discipline matters — the right price attracts the right buyer quickly.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     5. PRICING ANALYSIS
+══════════════════════════════════════════ -->
+<section class="section-full pricing-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Pricing Analysis</div>
+    <h2 class="section-title">How We Arrive at $3,750,000</h2>
+    <p class="section-lead" style="color:rgba(248,244,239,0.65);">
+      A disciplined bottom-up price build, grounded in comparable evidence and honest adjustments for what the subject has — and what it doesn't.
+    </p>
+
+    <div class="price-build">
+
+      <div class="price-step step-baseline">
+        <div>
+          <div class="step-label">Baseline · NC-73 Corridor</div>
+          <div class="step-desc">Lots 4–10 in this analysis — active and under-contract corridor land with limited or no water views. This is the floor for any Huntersville waterfront-area parcel.</div>
+        </div>
+        <div class="step-amount amount-baseline">$1.1M – $1.8M</div>
+      </div>
+
+      <div class="price-step step-add">
+        <div>
+          <div class="step-label">+ Wide Open Water Views Premium</div>
+          <div class="step-desc">Belle Isle comps confirm buyers pay $3.7M–$3.85M for quality water views on Lake Norman. The jump from a view-limited lot to a wide-open-water lot is not marginal — it is $2M+. This is the single most valuable attribute on this property.</div>
+        </div>
+        <div class="step-amount amount-add">+$2.0M+</div>
+      </div>
+
+      <div class="price-step step-add">
+        <div>
+          <div class="step-label">+ 2.13 Acres — Largest Lot in Analysis</div>
+          <div class="step-desc">At Belle Isle per-acre pricing ($3.1M/acre at 17005 Belle Isle Dr), 2.13 acres × $3.1M = $6.6M replacement value. Subject is not Peninsula — but wide open water on this scale of land is rare. Significant premium over sub-acre comps.</div>
+        </div>
+        <div class="step-amount amount-add">Significant</div>
+      </div>
+
+      <div class="price-step step-add">
+        <div>
+          <div class="step-label">+ Flat, Fully Buildable Site</div>
+          <div class="step-desc">16318 Belle Isle Dr is listed at $3.85M with a sloped lot — a known construction negative. Subject's flat, cleared, build-ready site is a meaningful positive vs. both that comp and the power-line-constrained withdrawn listing.</div>
+        </div>
+        <div class="step-amount amount-add">Positive</div>
+      </div>
+
+      <div class="price-step step-deduct">
+        <div>
+          <div class="step-label">− Not Peninsula / The Point Location</div>
+          <div class="step-desc">The subject is on NC-73 in Huntersville, not in the Peninsula or The Point communities of Cornelius or Davidson. Location cachet and surrounding luxury home density are lower. Honest and necessary adjustment.</div>
+        </div>
+        <div class="step-amount amount-deduct">–$300K–$400K</div>
+      </div>
+
+      <div class="price-step step-deduct">
+        <div>
+          <div class="step-label">− No Pier Installed</div>
+          <div class="step-desc">16318 Belle Isle Dr has an existing pier worth approximately $150K–$200K. Subject is pier-eligible but none is installed. Buyer will bear that cost and effort.</div>
+        </div>
+        <div class="step-amount amount-deduct">–$150K–$200K</div>
+      </div>
+
+      <div class="price-step step-deduct">
+        <div>
+          <div class="step-label">− Main Road Noise</div>
+          <div class="step-desc">Frontage on NC-73 means some road noise exposure. A modest but real negative for a luxury buyer seeking privacy. Mitigated by mature setback and lot depth.</div>
+        </div>
+        <div class="step-amount amount-deduct">–$100K–$150K</div>
+      </div>
+
+      <div class="price-step step-final">
+        <div>
+          <div class="step-label" style="color:rgba(12,35,64,0.65);">Net Recommendation</div>
+          <div class="step-desc" style="color:rgba(12,35,64,0.75);">Wide open water views + 2.13 acres + flat buildable site, adjusted for location, pier, and road. Supported by $3.7M–$3.85M Peninsula comps and a $4.49M off-market NC-73 sale.</div>
+        </div>
+        <div class="step-amount amount-final">$3,750,000</div>
+      </div>
+
+    </div>
+
+    <div class="pricing-quotes">
+      <div class="pricing-quote">
+        <p>"Buyers spending $3M+ on Lake Norman are buying a lifestyle. They want wide open water, privacy, and a blank canvas to build their dream home. This lot delivers all three."</p>
+      </div>
+      <div class="pricing-quote">
+        <p>"The Peninsula and The Point command a location premium — but wide open water views are rarer than a zip code. The right buyer will pay for what they see every morning."</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     6. THE RECOMMENDATION
+══════════════════════════════════════════ -->
+<section class="section recommendation-section">
+  <div class="rec-rule"></div>
+
+  <div class="section-eyebrow" style="text-align:center;">Our Recommendation</div>
+
+  <div class="rec-label">Recommended List Price</div>
+  <div class="rec-price">$3,750,000</div>
+
+  <div class="rec-rationale">
+    <p>This is the right number. It is grounded in market evidence, honest about the subject's limitations, and appropriately bold about its extraordinary strengths.</p>
+
+    <div class="rec-bullets">
+      <div class="rec-bullet">Wide open water views confirmed at $3.7M–$3.85M in Belle Isle comps</div>
+      <div class="rec-bullet">$4.49M off-market NC-73 sale confirms corridor demand above $4M</div>
+      <div class="rec-bullet">2.13 acres — the largest buildable lot in the analysis</div>
+      <div class="rec-bullet">Flat, cleared, pier-eligible — no construction constraints</div>
+      <div class="rec-bullet">Honest adjustments for location, pier, and road noise applied</div>
+      <div class="rec-bullet">Positioned to attract the serious $3M+ Lake Norman buyer immediately</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-name">Ryan Palmer</div>
+  <div class="footer-firm">Corcoran HM Properties &nbsp;·&nbsp; Lake Norman Luxury Real Estate</div>
+  <div class="footer-disclaimer">
+    This comparative market analysis is prepared for informational purposes only and does not constitute an appraisal or guarantee of value. All comparable data sourced from MLS and public records. List prices and market conditions are subject to change. © 2026 Corcoran HM Properties. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>
