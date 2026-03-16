@@ -611,13 +611,13 @@ body{
 @media print {
   @page{
     size:letter portrait;
-    margin:0.65in 0.65in 0.75in 0.65in;
+    margin:0.55in 0.55in 0.65in 0.55in;
   }
   html,body{
     background:white!important;
     padding:0!important;
     max-width:100%!important;
-    font-size:10.5pt!important;
+    font-size:9.5pt!important;
   }
   .doc-page{
     padding:0!important;
@@ -642,13 +642,18 @@ body{
     page-break-after:always!important;
     break-after:page!important;
   }
+  /* Allow sections to break across pages — only keep individual cards intact */
   .comps-section{
-    page-break-inside:avoid;
-    break-inside:avoid;
+    page-break-inside:auto;
+    break-inside:auto;
   }
   .comp-card{
     page-break-inside:avoid!important;
     break-inside:avoid!important;
+  }
+  .section-header{
+    page-break-after:avoid;
+    break-after:avoid;
   }
   .insight-grid,
   .stats-grid,
@@ -656,6 +661,13 @@ body{
     page-break-inside:avoid;
     break-inside:avoid;
   }
+  /* Tighten spacing in print */
+  .section-header{margin-bottom:14px!important}
+  .comp-card{margin-bottom:10px!important}
+  .insight-bottom{margin-bottom:16px!important}
+  .comps-grid{gap:10px!important}
+  .stats-grid{gap:10px!important}
+  .mini-header{padding:8px 0 8px!important;margin-bottom:16px!important}
   a{color:inherit!important;text-decoration:none!important}
   .screen-only{display:none!important}
 }
