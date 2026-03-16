@@ -430,23 +430,44 @@ body{
   width:220px;
   min-width:160px;
 }
-/* Options table — 3-col layout: last-child is Strategy, override right-align + nowrap */
+/* Options table — 3-col layout: override all inherited td:last-child rules */
+.pricing-table.options-table,
+.pricing-table.options-table td,
+.pricing-table.options-table th{
+  word-wrap:break-word;
+  overflow-wrap:break-word;
+}
 .pricing-table.options-table td:last-child,
-.pricing-table.options-table th:last-child{
-  text-align:left;
-  white-space:normal;
-  font-family:var(--sans);
-  font-size:.82rem;
-  font-weight:400;
-  color:var(--primary);
+.pricing-table.options-table th:last-child,
+.pricing-table.options-table tr.final td:last-child,
+.pricing-table.options-table tr.highlight td:last-child{
+  text-align:left !important;
+  white-space:normal !important;
+  font-family:var(--sans) !important;
+  font-size:.82rem !important;
+  font-weight:400 !important;
+  color:var(--primary) !important;
   width:auto;
   min-width:0;
+}
+.pricing-table.options-table tr.final td,
+.pricing-table.options-table tr.final th{
+  color:var(--accent);
+  font-weight:700;
+  font-size:.85rem;
+}
+.pricing-table.options-table td:nth-child(1){
+  width:22%;
 }
 .pricing-table.options-table td:nth-child(2),
 .pricing-table.options-table th:nth-child(2){
   white-space:nowrap;
-  width:110px;
-  min-width:100px;
+  width:14%;
+  min-width:90px;
+  text-align:left;
+  font-family:var(--serif);
+  font-size:.9rem;
+  font-weight:700;
 }
 .pricing-table tr.highlight td{
   color:var(--accent);
