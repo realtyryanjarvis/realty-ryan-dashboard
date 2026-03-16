@@ -15,7 +15,7 @@
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Work Sans',-apple-system,BlinkMacSystemFont,sans-serif;
 }
-html{scroll-behavior:smooth;font-size:18px}
+html{scroll-behavior:smooth;font-size:18px;scroll-snap-type:y mandatory;overflow-y:scroll}
 body{font-family:var(--sans);background:var(--white);color:var(--primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:18px}
 ::selection{background:var(--accent);color:#fff}
 
@@ -29,9 +29,11 @@ body{font-family:var(--sans);background:var(--white);color:var(--primary);line-h
 .fade-right.visible{opacity:1;transform:translateX(0)}
 
 /* ── SECTIONS ── */
-section{padding:var(--section-gap) 0;display:flex;align-items:center}
-section:not(.hero):not(.quote-section):not(.cta-section){min-height:100vh}
+section{padding:var(--section-gap) 0;display:flex;align-items:center;scroll-snap-align:start;scroll-snap-stop:always;min-height:100svh;position:relative}
+section:not(.hero):not(.quote-section):not(.cta-section){min-height:100svh}
 section>.container{width:100%}
+/* Content-heavy sections scroll freely within, snap at end */
+section.content-heavy{scroll-snap-stop:normal;overflow-y:auto}
 section.cream{background:var(--cream)}
 section.surface{background:var(--surface)}
 .section-label{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}
@@ -150,13 +152,47 @@ section.cream .card{background:var(--white)}
 footer{text-align:center;padding:24px;border-top:1px solid var(--border);min-height:auto!important;display:block!important}
 footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 
+/* ── SCROLL HINT BAR ── */
+.scroll-hint-bar{
+  display:none;
+  position:absolute;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  opacity:0.4;
+  pointer-events:none;
+  z-index:10;
+}
+@media(hover:none){
+  .scroll-hint-bar{display:flex}
+}
+
+/* ── iPad 768–1200px refinements ── */
+@media(max-width:1200px) and (min-width:768px){
+  html{font-size:15px}
+  .card-grid.g3,.card-grid.g4{grid-template-columns:1fr 1fr}
+  section{padding:32px 0}
+  .container{padding:0 32px}
+  .hero h1{font-size:3rem}
+  .section-title{font-size:2rem}
+  .stats-4col{grid-template-columns:1fr 1fr!important}
+  @media(orientation:portrait){
+    .split{grid-template-columns:1fr;gap:32px}
+    .split.reverse{direction:ltr}
+  }
+}
+
 /* ── iPad Air Pro 13" — each section = one full screen ── */
 @media(min-width:768px) and (max-width:1400px){
   :root{--section-gap:0px}
   html{font-size:20px}
-  section{padding:32px 0;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden}
-  section:not(.hero):not(.quote-section):not(.cta-section){min-height:100vh;min-height:100svh}
-  .hero{min-height:100svh;min-height:100vh}
+  section{padding:32px 0;min-height:100svh;display:flex;align-items:center}
+  section.content-heavy{overflow-y:auto}
+  section:not(.hero):not(.quote-section):not(.cta-section){min-height:100svh}
+  .hero{min-height:100svh}
   .container{max-width:1000px;padding:0 48px;width:100%}
   .split{gap:36px}
 
@@ -213,9 +249,8 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
   /* Hero logo */
   .hero-content img{max-height:160px!important}
 
-  /* Snap scrolling for one-section-at-a-time */
-  html{scroll-snap-type:y mandatory}
-  section{scroll-snap-align:start;scroll-snap-stop:always}
+  /* Snap scrolling already set globally; reinforce stop for non-heavy sections */
+  section:not(.content-heavy){scroll-snap-stop:always}
 }
 
 /* ── RESPONSIVE ── */
@@ -245,6 +280,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- HERO                                        -->
 <!-- ═══════════════════════════════════════════ -->
 <section class="hero" id="hero">
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
   <div class="hero-content fade-in">
     <img src="/listing-presentation-assets/Black Typelogo.png" alt="Realty Ryan & Associates" style="max-width:90%;height:auto;max-height:140px;opacity:.9;margin-bottom:28px;object-fit:contain">
     <p style="font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:14px">8 Years Selling Charlotte Real Estate · Top 1% in NC & SC</p>
@@ -262,7 +298,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- ═══════════════════════════════════════════ -->
 <!-- ABOUT RYAN                                  -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="promise">
+<section id="promise" class="content-heavy">
   <div class="container">
     <!-- Centered headshot + bio -->
     <div class="fade-in" style="text-align:center;max-width:720px;margin:0 auto">
@@ -400,6 +436,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
     </div>
     <p class="fade-in" style="text-align:center;font-size:.55rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:12px;opacity:.7">Swipe or drag to explore · Editorial photography included on every listing</p>
   </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
@@ -424,6 +461,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
           </video>
         </div>
       </div>
+      <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
       <script>
       (function(){
         var vid=document.getElementById('reel-video');
@@ -451,6 +489,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
         <div class="section-sub" style="font-size:1.15rem;line-height:1.65">Not a Zillow page. Not a template. A fully immersive, cinematic website built specifically for your listing — with lead capture, virtual tours, floor plans, and a QR code for print.</div>
         <a href="https://homes.realtyryan.com/1820parson/" target="_blank" style="display:inline-block;margin-top:24px;font-size:.95rem;font-weight:600;color:var(--white);background:var(--accent);padding:14px 32px;border-radius:8px;text-decoration:none;transition:all .2s">See a Live Example ↗</a>
       </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
       <div class="fade-left" style="display:flex;align-items:center;justify-content:center">
         <div style="width:100%;border-radius:14px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.1);border:1px solid var(--border);aspect-ratio:16/10;position:relative;background:#1a1a1a">
           <iframe src="https://homes.realtyryan.com/1820parson/" style="width:200%;height:200%;transform:scale(.5);transform-origin:top left;border:0;pointer-events:none" loading="lazy"></iframe>
@@ -478,6 +517,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       </div>
     </div>
   </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
@@ -516,6 +556,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       </div>
     </div>
   </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
 </section>
 
 <!-- FEATURED LISTINGS section removed -->
@@ -552,6 +593,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       </div>
     </div>
   </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
 </section>
 
 
@@ -559,7 +601,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- ═══════════════════════════════════════════ -->
 <!-- IDEAL BUYER                                 -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="ideal-buyer" class="cream">
+<section id="ideal-buyer" class="cream content-heavy">
   <div class="container">
     <div class="fade-in" style="text-align:center;max-width:560px;margin:0 auto;margin-bottom:28px">
       <div class="section-label">Buyer Profile</div>
@@ -666,12 +708,13 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <p style="font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--muted);line-height:1.5">"Your home doesn't need more exposure — it needs the right exposure to the right people."</p>
     </div>
   </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
 <!-- EXPOSURE + CORCORAN                         -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="exposure">
+<section id="exposure" class="content-heavy">
   <div class="container">
     <div class="fade-in" style="text-align:center;max-width:560px;margin:0 auto">
       <div style="font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;opacity:.6">Ours Is a Name That Opens Doors</div>
@@ -680,7 +723,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       <div class="section-sub" style="margin:0 auto">4,900+ agents across 40+ markets worldwide. Corcoran.com — top 0.03% of all active websites globally. Corcoran invented the market report. Today, our analysis sets the standard.</div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0" class="fade-in">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0" class="fade-in stats-4col">
       <div style="text-align:center;padding:14px 8px;background:var(--surface);border-radius:10px;border:1px solid var(--border)"><div style="font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--primary)">47.1M</div><div style="font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px">Page Views / Year</div></div>
       <div style="text-align:center;padding:14px 8px;background:var(--surface);border-radius:10px;border:1px solid var(--border)"><div style="font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--primary)">156K+</div><div style="font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px">Leads / Year</div></div>
       <div style="text-align:center;padding:14px 8px;background:var(--surface);border-radius:10px;border:1px solid var(--border)"><div style="font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--primary)">275M</div><div style="font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px">Display Impressions</div></div>
@@ -703,7 +746,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
 <!-- ═══════════════════════════════════════════ -->
 <!-- PROVEN RESULTS                              -->
 <!-- ═══════════════════════════════════════════ -->
-<section id="results" class="cream">
+<section id="results" class="cream content-heavy">
   <div class="container">
     <div class="fade-in" style="text-align:center;max-width:520px;margin:0 auto;margin-bottom:12px">
       <div class="section-label">Proven Results</div>
@@ -854,6 +897,7 @@ footer p{font-size:.65rem;color:var(--muted);letter-spacing:.1em}
       </div>
     </div>
   </div>
+  <div class="scroll-hint-bar"><div style="width:32px;height:3px;background:currentColor;border-radius:2px"></div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase">Scroll</div></div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
