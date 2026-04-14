@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realty Ryan — Presentation Template</title>
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║        REALTY RYAN — BRAND PRESENTATION TEMPLATE            ║
+  ║                                                              ║
+  ║  Brand Colors:                                               ║
+  ║    Brown:      #4A2C1F  (primary background)                 ║
+  ║    Gold:       #C9A96E  (accent, dividers, bullets)          ║
+  ║    Gold Light: #E8C98A  (subtitles, labels)                  ║
+  ║    Green:      #7AB87A  (profit/positive numbers)            ║
+  ║    White:      #FFFFFF  (body text)                          ║
+  ║    Off-White:  #F5F0EA  (surface backgrounds)                ║
+  ║                                                              ║
+  ║  Fonts:                                                      ║
+  ║    Headlines:  Cormorant Garamond (serif)                    ║
+  ║    Body/UI:    Montserrat (sans-serif)                       ║
+  ║                                                              ║
+  ║  Slide Size: 1280 × 720px (16:9)                             ║
+  ║                                                              ║
+  ║  HOW TO USE:                                                 ║
+  ║    1. Duplicate this file and rename it                      ║
+  ║    2. Edit the SLIDES section below                          ║
+  ║    3. Use the pre-built slide types:                         ║
+  ║       · slide-cover     → Title / intro slide                ║
+  ║       · slide-content   → Bullets + optional image           ║
+  ║       · slide-table     → Data / comps / pro forma table     ║
+  ║       · slide-cards     → 2×2 feature cards                  ║
+  ║       · slide-closing   → Contact / CTA slide                ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── BRAND TOKENS ── */
+:root {
+  --brown:       #4A2C1F;
+  --brown-dark:  #3a2118;
+  --brown-light: #5c3829;
+  --gold:        #C9A96E;
+  --gold-light:  #E8C98A;
+  --green:       #7AB87A;
+  --green-light: #A8D4A8;
+  --white:       #ffffff;
+  --off-white:   #f5f0ea;
+  --dim:         rgba(255,255,255,0.6);
+  --faint:       rgba(255,255,255,0.15);
+
+  --slide-w: 1280px;
+  --slide-h: 720px;
+  --pad-x:   52px;
+  --pad-y:   40px;
+}
+
+/* ── PAGE SHELL ── */
+body {
+  background: #1a1a1a;
+  font-family: 'Montserrat', sans-serif;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+.slide-label {
+  color: rgba(255,255,255,0.3);
+  font-size: .6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.slide-wrapper {
+  width: var(--slide-w);
+  height: var(--slide-h);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  flex-shrink: 0;
+}
+.print-btn {
+  position: fixed; bottom: 28px; right: 28px;
+  background: var(--brown); color: #fff;
+  border: 1px solid rgba(201,169,110,0.5);
+  padding: 10px 22px; border-radius: 24px;
+  font-size: .78rem; font-weight: 600;
+  cursor: pointer; z-index: 100;
+  letter-spacing: .5px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  font-family: 'Montserrat', sans-serif;
+}
+.print-btn:hover { background: var(--brown-light); }
+
+/* ── BASE SLIDE ── */
+.slide {
+  width: 100%; height: 100%;
+  background: var(--brown);
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+}
+.slide-number {
+  position: absolute;
+  bottom: 22px; right: 30px;
+  font-size: .55rem;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── LOGO COMPONENT ── */
+/* Usage: <div class="rr-logo"></div>  or  <div class="rr-logo center"></div> */
+.rr-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rr-logo .mark {
+  width: 44px; height: 44px;
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; letter-spacing: 1px; flex-shrink: 0;
+}
+.rr-logo .wordmark {
+  font-size: .55rem; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+.rr-logo.center { flex-direction: column; gap: 6px; text-align: center; }
+.rr-logo.center .mark { width: 54px; height: 54px; font-size: 1.3rem; }
+.rr-logo.center .wordmark { letter-spacing: 4px; font-size: .6rem; }
+
+/* Pinned positions */
+.logo-tl { position: absolute; top: 28px; left: var(--pad-x); z-index: 10; }
+.logo-tc { position: absolute; top: 28px; left: 50%; transform: translateX(-50%); z-index: 10; }
+
+/* ── DIVIDER ── */
+.gold-rule { width: 56px; height: 1px; background: var(--gold); opacity: .85; }
+.gold-rule.wide { width: 100%; opacity: .2; }
+
+/* ────────────────────────────────────────────────────────
+   SLIDE TYPE 1 — COVER
+   Usage: class="slide slide-cover"
+   ──────────────────────────────────────────────────────── */
+.slide-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px var(--pad-x);
+}
+.slide-cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(201,169,110,0.07) 0%, transparent 65%);
+}
+/* Optional: watermark lake image on right side */
+.slide-cover .lake-wash {
+  position: absolute;
+  right: 0; top: 0; bottom: 0; width: 42%;
+  background: linear-gradient(160deg, #1a3a50 0%, #2a6080 25%, #3a88aa 50%, #5aa4c0 70%);
+  overflow: hidden;
+}
+.slide-cover .lake-wash::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--brown) 0%, transparent 30%),
+              linear-gradient(180deg, rgba(74,44,31,.6) 0%, transparent 25%, transparent 75%, rgba(74,44,31,.6) 100%);
+}
+.slide-cover .cover-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 22px;
+  max-width: 680px;
+}
+.slide-cover h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem; font-weight: 500;
+  line-height: 1.2; color: #fff; letter-spacing: .3px;
+}
+.slide-cover .cover-subtitle {
+  font-size: .72rem; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--gold-light);
+}
+.slide-cover .cover-footer {
+  position: absolute; bottom: 26px; left: 0; right: 0;
+  text-align: center; font-size: .58rem;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+}
+
+/* ────────────────────────────────────────────────────────
+   SLIDE TYPE 2 — CONTENT (headline + bullets + optional visual)
+   Usage: class="slide slide-content"
+   ──────────────────────────────────────────────────────── */
+.slide-content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.slide-content.two-col { grid-template-columns: 1fr 1fr; }
+.slide-content .slide-header {
+  grid-column: 1 / -1;
+  padding: var(--pad-y) var(--pad-x) 18px;
+  padding-top: 64px; /* leave room for logo */
+  border-bottom: 1px solid var(--faint);
+  display: flex; align-items: flex-end; gap: 20px;
+}
+.slide-content .slide-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 400; color: #fff;
+}
+.slide-content .slide-body {
+  padding: 28px var(--pad-x);
+  display: flex; flex-direction: column; justify-content: center; gap: 12px;
+}
+
+/* Bullet list */
+.rr-bullets { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.rr-bullets li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: .8rem; color: rgba(255,255,255,.9); line-height: 1.45;
+}
+.rr-bullets li::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 6px;
+}
+.rr-bullets.arrows li::before { content: '→'; background: none; color: var(--gold); font-size: .8rem; margin-top: 0; width: auto; height: auto; border-radius: 0; }
+.rr-bullets.checks li::before { content: '✓'; background: none; color: var(--green-light); font-size: .8rem; margin-top: 0; width: auto; height: auto; border-radius: 0; }
+
+/* Visual panel (right side) */
+.slide-visual {
+  position: relative; overflow: hidden;
+}
+.slide-visual .lake-fill {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #1a3a50 0%, #2a6080 25%, #3a88aa 50%, #5aa4c0 70%);
+}
+.slide-visual::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--brown) 0%, transparent 20%);
+}
+
+/* ────────────────────────────────────────────────────────
+   SLIDE TYPE 3 — TABLE
+   Usage: class="slide slide-table"
+   ──────────────────────────────────────────────────────── */
+.slide-table {
+  display: flex; flex-direction: column;
+  padding: var(--pad-y) var(--pad-x);
+  gap: 16px;
+}
+.slide-table .slide-header {
+  padding-top: 28px; /* below logo */
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--faint);
+  display: flex; align-items: flex-end;
+}
+.slide-table .slide-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 400; color: #fff;
+}
+
+/* Table styles */
+.rr-table { width: 100%; border-collapse: collapse; }
+.rr-table th {
+  text-align: left; padding: 10px 14px;
+  font-size: .58rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+.rr-table th.r { text-align: right; }
+.rr-table td {
+  padding: 12px 14px;
+  font-size: .8rem; color: rgba(255,255,255,.88);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  vertical-align: middle;
+}
+.rr-table td.r { text-align: right; font-variant-numeric: tabular-nums; }
+.rr-table td.bold { font-weight: 600; color: #fff; }
+.rr-table td.gold { color: var(--gold-light); font-weight: 600; }
+.rr-table td.green { color: var(--green-light); font-weight: 700; }
+.rr-table tr.total-row td {
+  border-top: 2px solid rgba(255,255,255,.2);
+  border-bottom: none; font-weight: 700; font-size: .88rem;
+}
+.rr-table tr.section-row td {
+  background: rgba(255,255,255,.04);
+  font-size: .58rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gold);
+  font-weight: 600; padding: 7px 14px; border-bottom: none;
+}
+.table-footnote {
+  font-size: .62rem; color: rgba(255,255,255,.45);
+  font-style: italic; line-height: 1.5; padding: 0 2px;
+}
+
+/* ────────────────────────────────────────────────────────
+   SLIDE TYPE 4 — CARDS (2×2 grid)
+   Usage: class="slide slide-cards"
+   ──────────────────────────────────────────────────────── */
+.slide-cards {
+  display: flex; flex-direction: column;
+  padding: var(--pad-y) var(--pad-x);
+  gap: 18px;
+}
+.slide-cards .slide-header {
+  padding-top: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--faint);
+}
+.slide-cards .slide-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 400; color: #fff;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px; flex: 1;
+}
+.rr-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  padding: 22px 24px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.rr-card .card-icon {
+  font-size: 1.4rem; line-height: 1; margin-bottom: 4px;
+}
+.rr-card .card-title {
+  font-size: .82rem; font-weight: 600; color: #fff; letter-spacing: .2px;
+}
+.rr-card .card-body {
+  font-size: .72rem; color: var(--dim); line-height: 1.55;
+}
+.rr-card .card-stat {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 600; color: var(--gold-light);
+  line-height: 1; margin-top: 4px;
+}
+.rr-card .card-stat-label {
+  font-size: .58rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: rgba(255,255,255,.45);
+}
+.rr-card.accent { border-color: var(--gold); background: rgba(201,169,110,.08); }
+.rr-card.green  { border-color: var(--green); background: rgba(122,184,122,.07); }
+
+/* ────────────────────────────────────────────────────────
+   SLIDE TYPE 5 — CLOSING / CONTACT
+   Usage: class="slide slide-closing"
+   ──────────────────────────────────────────────────────── */
+.slide-closing {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 60px var(--pad-x);
+}
+.slide-closing .lake-wash {
+  position: absolute;
+  right: 0; top: 0; bottom: 0; width: 42%;
+  background: linear-gradient(160deg, #1a3a50 0%, #2a6080 25%, #3a88aa 50%, #5aa4c0 70%);
+  overflow: hidden;
+}
+.slide-closing .lake-wash::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--brown) 0%, transparent 30%),
+              linear-gradient(180deg, rgba(74,44,31,.6) 0%, transparent 25%, transparent 75%, rgba(74,44,31,.6) 100%);
+}
+.slide-closing .closing-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 20px; max-width: 680px;
+}
+.slide-closing h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 500;
+  line-height: 1.25; color: #fff;
+}
+.closing-steps { display: flex; flex-direction: column; gap: 8px; text-align: left; width: 100%; max-width: 440px; }
+.closing-steps li { list-style: none; display: flex; gap: 10px; font-size: .78rem; color: rgba(255,255,255,.8); }
+.closing-steps li::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+.contact-block { display: flex; flex-direction: column; gap: 6px; align-items: center; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.15); width: 100%; }
+.contact-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 500; color: #fff; }
+.contact-details { font-size: .66rem; letter-spacing: 1.5px; color: var(--gold-light); display: flex; gap: 0; flex-wrap: wrap; justify-content: center; }
+.contact-details span { padding: 0 10px; border-right: 1px solid rgba(255,255,255,.2); }
+.contact-details span:last-child { border-right: none; }
+
+/* ── PRINT ── */
+@media print {
+  body { background: none; padding: 0; gap: 0; }
+  .slide-wrapper { page-break-after: always; box-shadow: none; }
+  .slide-label, .print-btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">📄 Print / Save PDF</button>
+
+<!-- ════════════════════════════════════════════════════════
+     HOW TO ADD SLIDES
+     Copy any block below, paste it where you want, edit text.
+     ════════════════════════════════════════════════════════ -->
+
+
+<!-- ══ COVER SLIDE ══════════════════════════════════════ -->
+<div class="slide-label">Slide 1 — Cover</div>
+<div class="slide-wrapper">
+<div class="slide slide-cover">
+  <div class="lake-wash"></div>
+  <div class="cover-content">
+    <div class="rr-logo center"><div class="mark">HR</div><div class="wordmark">Realty Ryan</div></div>
+    <div class="gold-rule"></div>
+    <h1>Your Presentation Title Goes Here</h1>
+    <div class="gold-rule"></div>
+    <div class="cover-subtitle">Property Address &nbsp;•&nbsp; City, NC &nbsp;•&nbsp; Key Detail</div>
+  </div>
+  <div class="cover-footer">Prepared for [Client Name] — [Month Year]</div>
+  <div class="slide-number">01 / 00</div>
+</div>
+</div>
+
+
+<!-- ══ CONTENT SLIDE (bullets only) ════════════════════ -->
+<div class="slide-label">Slide 2 — Content (Bullets)</div>
+<div class="slide-wrapper">
+<div class="slide slide-content">
+  <div class="logo-tl"><div class="rr-logo"><div class="mark">HR</div><div class="wordmark">Realty Ryan</div></div></div>
+  <div class="slide-header">
+    <h2>Section Title</h2>
+  </div>
+  <div class="slide-body">
+    <ul class="rr-bullets">
+      <li>Bullet point one — key feature or data point</li>
+      <li>Bullet point two — supporting detail</li>
+      <li>Bullet point three — supporting detail</li>
+      <li>Bullet point four — supporting detail</li>
+      <li>Bullet point five — supporting detail</li>
+      <li>Bullet point six — supporting detail</li>
+    </ul>
+  </div>
+  <div class="slide-number">02 / 00</div>
+</div>
+</div>
+
+
+<!-- ══ CONTENT SLIDE (bullets + visual) ════════════════ -->
+<div class="slide-label">Slide 3 — Content (Bullets + Visual)</div>
+<div class="slide-wrapper">
+<div class="slide slide-content two-col">
+  <div class="logo-tl"><div class="rr-logo"><div class="mark">HR</div><div class="wordmark">Realty Ryan</div></div></div>
+  <div class="slide-header">
+    <h2>Section Title</h2>
+  </div>
+  <div class="slide-body">
+    <ul class="rr-bullets">
+      <li>Bullet point one</li>
+      <li>Bullet point two</li>
+      <li>Bullet point three</li>
+      <li>Bullet point four</li>
+      <li>Bullet point five</li>
+    </ul>
+  </div>
+  <div class="slide-visual">
+    <!-- Replace .lake-fill with an <img> tag for real photos -->
+    <div class="lake-fill"></div>
+  </div>
+  <div class="slide-number">03 / 00</div>
+</div>
+</div>
+
+
+<!-- ══ TABLE SLIDE ══════════════════════════════════════ -->
+<div class="slide-label">Slide 4 — Table / Comps / Data</div>
+<div class="slide-wrapper">
+<div class="slide slide-table">
+  <div class="logo-tl"><div class="rr-logo"><div class="mark">HR</div><div class="wordmark">Realty Ryan</div></div></div>
+  <div class="slide-header">
+    <h2>Comparable Sales</h2>
+  </div>
+  <table class="rr-table">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th class="r">Sale Price</th>
+        <th class="r">Sq Ft</th>
+        <th class="r">$/SF</th>
+        <th class="r">DOM</th>
+        <th class="r">Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">123 Example Drive, Charlotte</td>
+        <td class="r green">$1,250,000</td>
+        <td class="r">4,200</td>
+        <td class="r">$298</td>
+        <td class="r">12</td>
+        <td class="r">2025</td>
+      </tr>
+      <tr>
+        <td class="bold">456 Sample Lane, Charlotte</td>
+        <td class="r green">$1,175,000</td>
+        <td class="r">3,900</td>
+        <td class="r">$301</td>
+        <td class="r">8</td>
+        <td class="r">2025</td>
+      </tr>
+      <tr>
+        <td class="bold">789 Template Blvd, Charlotte</td>
+        <td class="r green">$1,340,000</td>
+        <td class="r">4,500</td>
+        <td class="r">$298</td>
+        <td class="r">21</td>
+        <td class="r">2024</td>
+      </tr>
+      <tr class="total-row">
+        <td>Average</td>
+        <td class="r gold">$1,255,000</td>
+        <td class="r">4,200</td>
+        <td class="r gold">$299</td>
+        <td class="r">14</td>
+        <td class="r">—</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="table-footnote">Source: Canopy MLS · Data as of [Date] · All sales within 1-mile radius, similar condition</div>
+  <div class="slide-number">04 / 00</div>
+</div>
+</div>
+
+
+<!-- ══ CARDS SLIDE ══════════════════════════════════════ -->
+<div class="slide-label">Slide 5 — Feature Cards</div>
+<div class="slide-wrapper">
+<div class="slide slide-cards">
+  <div class="logo-tl"><div class="rr-logo"><div class="mark">HR</div><div class="wordmark">Realty Ryan</div></div></div>
+  <div class="slide-header">
+    <h2>Why List With Ryan</h2>
+  </div>
+  <div class="cards-grid">
+    <div class="rr-card accent">
+      <div class="card-icon">📸</div>
+      <div class="card-title">Professional Photography & Video</div>
+      <div class="card-body">Cinematic listing video, drone footage, and magazine-quality photography — standard on every listing.</div>
+    </div>
+    <div class="rr-card">
+      <div class="card-stat">$0</div>
+      <div class="card-stat-label">Out-of-Pocket Marketing Cost</div>
+      <div class="card-body">All marketing costs covered — photography, staging consult, digital ads, print, and syndication.</div>
+    </div>
+    <div class="rr-card">
+      <div class="card-stat">14</div>
+      <div class="card-stat-label">Avg Days on Market</div>
+      <div class="card-body">Listings priced and marketed correctly move fast. Average DOM of 14 days vs market average of 31.</div>
+    </div>
+    <div class="rr-card green">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">Corcoran HM Properties</div>
+      <div class="card-body">Backed by the #1 luxury real estate brand — global reach, local expertise, white-glove service.</div>
+    </div>
+  </div>
+  <div class="slide-number">05 / 00</div>
+</div>
+</div>
+
+
+<!-- ══ CLOSING / CONTACT SLIDE ══════════════════════════ -->
+<div class="slide-label">Slide 6 — Closing / Contact</div>
+<div class="slide-wrapper">
+<div class="slide slide-closing">
+  <div class="lake-wash"></div>
+  <div class="closing-content">
+    <div class="rr-logo center"><div class="mark">HR</div><div class="wordmark">Realty Ryan</div></div>
+    <div class="gold-rule"></div>
+    <h1>Ready to Get Started?</h1>
+    <ul class="closing-steps">
+      <li>Next step one</li>
+      <li>Next step two</li>
+      <li>Next step three</li>
+    </ul>
+    <div class="contact-block">
+      <div class="contact-name">Ryan Palmer</div>
+      <div class="contact-details">
+        <span>508.954.2159</span>
+        <span>ryanpalmer@hmproperties.com</span>
+        <span>@realty.ryan</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">06 / 00</div>
+</div>
+</div>
+
+
+</body>
+</html>
