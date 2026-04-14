@@ -38,9 +38,8 @@ body{background:#111;font-family:'Montserrat',sans-serif;padding:40px 20px;displ
 .rule{width:50px;height:1px;background:var(--go);opacity:.8}
 
 /* LAKE WASH */
-.lw-bg{position:absolute;right:0;top:0;bottom:0;width:40%;overflow:hidden}
-.lw-bg .lf{width:100%;height:100%;background:linear-gradient(160deg,#1a3a50 0%,#2a6080 25%,#3a88aa 50%,#5aa4c0 70%,#8ec4d8 90%)}
-.lw-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--br) 0%,transparent 28%),linear-gradient(180deg,rgba(74,44,31,.65) 0%,transparent 22%,transparent 78%,rgba(74,44,31,.65) 100%)}
+.lw-bg{display:none}
+.lw-bg .lf{display:none}
 
 /* ───── SLIDE 1 — COVER ───── */
 #s1{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px var(--px)}
