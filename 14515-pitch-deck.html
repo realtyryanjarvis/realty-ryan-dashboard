@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14515 NC Hwy 73 — Luxury Builder Pitch Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brown: #4A2C1F;
+  --brown-dark: #3a2118;
+  --brown-light: #5c3829;
+  --gold: #C9A96E;
+  --gold-light: #e8c98a;
+  --white: #ffffff;
+  --off-white: #f5f0ea;
+  --green: #7ab87a;
+  --green-light: #a8d4a8;
+  --text-dim: rgba(255,255,255,0.6);
+  --slide-w: 1280px;
+  --slide-h: 720px;
+}
+
+body {
+  background: #1a1a1a;
+  font-family: 'Montserrat', sans-serif;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+.slide-wrapper {
+  position: relative;
+  width: var(--slide-w);
+  height: var(--slide-h);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* ── LOGO ── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mark {
+  width: 44px;
+  height: 44px;
+  border: 2px solid rgba(255,255,255,0.85);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+.logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .55rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+.logo.center { flex-direction: column; gap: 6px; text-align: center; }
+.logo.center .logo-mark { width: 52px; height: 52px; font-size: 1.3rem; }
+.logo.center .logo-text { letter-spacing: 4px; font-size: .6rem; }
+
+/* ── SLIDE BASE ── */
+.slide {
+  width: 100%;
+  height: 100%;
+  background: var(--brown);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+}
+
+.slide-number {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  font-size: .6rem;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ───────────────────────────────────── SLIDE 1 ── */
+#s1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 80px;
+}
+#s1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(201,169,110,0.08) 0%, transparent 65%),
+              radial-gradient(ellipse at 20% 80%, rgba(74,44,31,0.4) 0%, transparent 60%);
+}
+#s1 .watermark {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 45%;
+  background: linear-gradient(90deg, var(--brown) 0%, rgba(74,44,31,0.3) 40%, rgba(74,44,31,0.05) 100%);
+}
+#s1 .watermark-img {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 45%;
+  background: linear-gradient(135deg, #3a6080 0%, #2a7faa 30%, #4a9cc0 60%, #7ab8d4 80%, #a0ccdd 100%);
+  opacity: 0.18;
+}
+#s1 .watermark-lake {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 45%;
+  overflow: hidden;
+}
+#s1 .watermark-lake::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--brown) 0%, transparent 35%),
+              linear-gradient(180deg, rgba(74,44,31,0.5) 0%, transparent 30%, transparent 70%, rgba(74,44,31,0.5) 100%);
+}
+#s1 .watermark-lake .lake-fill {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(160deg, #1a3a50 0%, #2a6080 25%, #3a88aa 50%, #5aa4c0 70%, #8ec4d8 90%),
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px);
+  position: relative;
+}
+#s1 .watermark-lake .lake-fill::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(0deg, rgba(255,220,150,0.12) 0%, transparent 100%);
+}
+#s1 .watermark-lake .lake-fill::after {
+  content: '';
+  position: absolute;
+  top: 30%; left: 10%; right: 10%;
+  height: 2px;
+  background: rgba(255,220,150,0.15);
+  border-radius: 50%;
+  box-shadow: 0 20px 0 rgba(255,220,150,0.08), 0 45px 0 rgba(255,220,150,0.05);
+}
+#s1 .content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 700px;
+}
+#s1 .divider { width: 60px; height: 1px; background: var(--gold); opacity: 0.8; }
+#s1 h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #fff;
+  letter-spacing: .5px;
+}
+#s1 .subtitle {
+  font-size: .72rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 400;
+}
+#s1 .footer {
+  position: absolute;
+  bottom: 28px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: .6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+#s1 .top-logo { margin-bottom: 8px; }
+
+/* ───────────────────────────────────── SLIDE 2 ── */
+#s2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+}
+#s2 .header {
+  grid-column: 1 / -1;
+  padding: 40px 52px 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+#s2 .header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: .5px;
+}
+#s2 .left-col {
+  padding: 36px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#s2 .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+#s2 .bullet-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: .8rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: .3px;
+}
+#s2 .bullet-list li::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+#s2 .right-col {
+  position: relative;
+  overflow: hidden;
+}
+#s2 .right-col .lake-scene {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #1a3a50 0%, #2a6080 25%, #3a88aa 50%, #5aa4c0 70%);
+  position: relative;
+}
+#s2 .right-col .lake-scene::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 35%;
+  background: linear-gradient(0deg, #c8b89a 0%, #d4c4a0 30%, transparent 100%);
+}
+#s2 .right-col .lake-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--brown) 0%, transparent 20%),
+              linear-gradient(180deg, rgba(74,44,31,0.3) 0%, transparent 20%);
+}
+#s2 .right-col .photo-label {
+  position: absolute;
+  bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  font-size: .55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  z-index: 2;
+  white-space: nowrap;
+}
+#s2 .shoreline-badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  z-index: 3;
+  background: rgba(74,44,31,0.85);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 10px 16px;
+  text-align: center;
+}
+#s2 .shoreline-badge .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1;
+}
+#s2 .shoreline-badge .lbl {
+  font-size: .52rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-top: 2px;
+}
+
+/* ───────────────────────────────────── SLIDE 3 ── */
+#s3 { padding: 40px 52px; display: flex; flex-direction: column; gap: 20px; }
+#s3 .header { display: flex; align-items: flex-end; gap: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+#s3 .header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 400; color: #fff; }
+#s3 .subtitle { font-size: .68rem; letter-spacing: 1.5px; color: var(--gold-light); font-weight: 400; max-width: 680px; margin-top: -10px; }
+#s3 .split-diagram {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+#s3 .lot-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 20px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 160px;
+}
+#s3 .lot-box .lot-label {
+  font-size: .6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+#s3 .lot-box .lot-size {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+}
+#s3 .lot-box .lot-detail {
+  font-size: .65rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+#s3 .lot-box.result {
+  border-color: var(--gold);
+  background: rgba(201,169,110,0.08);
+}
+#s3 .arrow-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+#s3 .arrow-label {
+  font-size: .55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+#s3 .arrow {
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1;
+}
+#s3 .two-lots { display: flex; flex-direction: column; gap: 10px; }
+#s3 .right-bullets { display: flex; flex-direction: column; justify-content: center; gap: 12px; flex: 1; padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.1); }
+#s3 .right-bullets li {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .75rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.4;
+}
+#s3 .right-bullets li::before { content: '▸'; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+/* ───────────────────────────────────── SLIDE 4 ── */
+#s4 { padding: 40px 52px; display: flex; flex-direction: column; gap: 20px; }
+#s4 .header { display: flex; align-items: flex-end; gap: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+#s4 .header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; color: #fff; }
+.comp-table { width: 100%; border-collapse: collapse; }
+.comp-table th {
+  text-align: left;
+  font-size: .6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  font-weight: 500;
+}
+.comp-table td {
+  padding: 14px 16px;
+  font-size: .82rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.9);
+}
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table .price { color: var(--green-light); font-weight: 600; font-variant-numeric: tabular-nums; }
+.comp-table .addr { font-weight: 500; }
+.table-note {
+  font-size: .65rem;
+  color: rgba(255,255,255,0.5);
+  font-style: italic;
+  margin-top: 4px;
+  padding: 0 4px;
+  line-height: 1.5;
+}
+
+/* ───────────────────────────────────── SLIDE 5 & 6 ── */
+.pro-forma { padding: 36px 52px; display: flex; flex-direction: column; gap: 16px; }
+.pro-forma .header { display: flex; align-items: flex-end; gap: 32px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.pro-forma .header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: #fff; line-height: 1.2; }
+.pf-table { width: 100%; border-collapse: collapse; }
+.pf-table th {
+  text-align: right;
+  font-size: .58rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  font-weight: 500;
+}
+.pf-table th:first-child { text-align: left; }
+.pf-table td {
+  padding: 11px 16px;
+  font-size: .78rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.85);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.pf-table td:first-child { text-align: left; font-weight: 500; color: #fff; }
+.pf-table tr.profit-row td {
+  color: var(--green-light);
+  font-weight: 700;
+  font-size: .88rem;
+  border-top: 2px solid rgba(122,184,122,0.3);
+  border-bottom: none;
+}
+.pf-table tr.profit-row td:first-child { color: var(--green-light); }
+.pf-table tr.section-header td {
+  background: rgba(255,255,255,0.04);
+  font-size: .6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  padding: 8px 16px;
+  border-bottom: none;
+}
+.pf-table .col-header-row th { background: rgba(255,255,255,0.03); }
+
+/* ───────────────────────────────────── SLIDE 7 ── */
+#s7 { padding: 40px 52px; display: flex; flex-direction: column; gap: 24px; }
+#s7 .header { display: flex; align-items: flex-end; gap: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+#s7 .header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 400; color: #fff; }
+#s7 .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+#s7 .term-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 22px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+#s7 .term-card .check {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(122,184,122,0.2);
+  border: 1.5px solid var(--green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: .75rem;
+  color: var(--green-light);
+  margin-top: 1px;
+}
+#s7 .term-card .term-text strong {
+  display: block;
+  font-size: .82rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+#s7 .term-card .term-text span {
+  font-size: .72rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.5;
+}
+#s7 .cta-bar {
+  background: linear-gradient(90deg, rgba(201,169,110,0.15) 0%, rgba(201,169,110,0.05) 100%);
+  border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 8px;
+  padding: 16px 24px;
+  font-size: .78rem;
+  color: var(--gold-light);
+  font-style: italic;
+  text-align: center;
+  letter-spacing: .3px;
+}
+
+/* ───────────────────────────────────── SLIDE 8 ── */
+#s8 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 80px;
+}
+#s8::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 75% 50%, rgba(201,169,110,0.08) 0%, transparent 65%);
+}
+#s8 .watermark-lake {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 42%;
+  overflow: hidden;
+}
+#s8 .watermark-lake::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--brown) 0%, transparent 30%),
+              linear-gradient(180deg, rgba(74,44,31,0.6) 0%, transparent 25%, transparent 75%, rgba(74,44,31,0.6) 100%);
+}
+#s8 .watermark-lake .lake-fill {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #1a3a50 0%, #2a6080 25%, #3a88aa 50%, #5aa4c0 70%, #8ec4d8 90%);
+}
+#s8 .content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 720px;
+}
+#s8 .divider { width: 60px; height: 1px; background: var(--gold); opacity: 0.8; }
+#s8 h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.3rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #fff;
+}
+#s8 .next-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  width: 100%;
+  max-width: 480px;
+}
+#s8 .next-steps li {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  font-size: .78rem;
+  color: rgba(255,255,255,0.8);
+}
+#s8 .next-steps li::before { content: '→'; color: var(--gold); }
+#s8 .contact-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  width: 100%;
+}
+#s8 .contact-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+}
+#s8 .contact-details {
+  font-size: .68rem;
+  letter-spacing: 1.5px;
+  color: var(--gold-light);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#s8 .contact-details span::before { content: '·'; margin-right: 16px; color: rgba(255,255,255,0.3); }
+#s8 .contact-details span:first-child::before { display: none; }
+
+/* shared header logo placement */
+.slide-logo-tl { position: absolute; top: 28px; left: 40px; z-index: 10; }
+.slide-logo-tc { position: absolute; top: 28px; left: 50%; transform: translateX(-50%); z-index: 10; }
+
+/* print controls */
+.print-btn {
+  position: fixed; bottom: 28px; right: 28px;
+  background: #4A2C1F; color: #fff;
+  border: 1px solid rgba(201,169,110,0.5);
+  padding: 10px 22px; border-radius: 24px;
+  font-size: .78rem; font-weight: 600;
+  cursor: pointer; z-index: 100;
+  letter-spacing: .5px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  font-family: 'Montserrat', sans-serif;
+}
+.print-btn:hover { background: #5c3829; }
+
+.slide-label {
+  color: rgba(255,255,255,0.3);
+  font-size: .65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+@media print {
+  body { background: none; padding: 0; gap: 0; }
+  .slide-wrapper { page-break-after: always; box-shadow: none; }
+  .slide-label, .print-btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Print / Save PDF</button>
+
+<!-- ══════════════════════════════════════════ SLIDE 1 ══ -->
+<div class="slide-label">Slide 1 — Title</div>
+<div class="slide-wrapper">
+<div class="slide" id="s1">
+  <div class="watermark-lake"><div class="lake-fill"></div></div>
+  <div class="content">
+    <div class="top-logo"><div class="logo center"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+    <div class="divider"></div>
+    <h1>Prime ~2 Acre Lake Norman<br>Waterfront Spec Home Opportunity</h1>
+    <div class="divider"></div>
+    <div class="subtitle">14515 NC Hwy 73 &nbsp;•&nbsp; Huntersville, NC &nbsp;•&nbsp; 1.94 Acres | 234 ft Shoreline</div>
+  </div>
+  <div class="footer">Prepared for Luxury Builders &nbsp;—&nbsp; April 2026</div>
+  <div class="slide-number">01 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 2 ══ -->
+<div class="slide-label">Slide 2 — Property Highlights</div>
+<div class="slide-wrapper">
+<div class="slide" id="s2">
+  <div class="slide-logo-tl"><div class="logo"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+  <div class="header" style="padding-top:52px">
+    <h2>Property Highlights</h2>
+  </div>
+  <div class="left-col">
+    <ul class="bullet-list">
+      <li>1.94 Acres Waterfront</li>
+      <li>234 ft Prime Shoreline</li>
+      <li>Naturally Occurring Sandy Beach</li>
+      <li>Sweeping 5-Mile Big-Water Views</li>
+      <li>Sunrise Orientation</li>
+      <li>Flat, Build-Ready Site</li>
+      <li>Between Two Distinguished Estate Homes</li>
+      <li>Low Boat Traffic</li>
+      <li>No HOA (CC&amp;Rs Only)</li>
+      <li>Pier Previously Approved</li>
+    </ul>
+  </div>
+  <div class="right-col">
+    <div class="lake-scene">
+      <div class="shoreline-badge">
+        <div class="num">234 ft</div>
+        <div class="lbl">Prime Shoreline</div>
+      </div>
+    </div>
+    <div class="photo-label">Lake Norman Waterfront — 14515 NC Hwy 73</div>
+  </div>
+  <div class="slide-number">02 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 3 ══ -->
+<div class="slide-label">Slide 3 — Lot Split Opportunity</div>
+<div class="slide-wrapper">
+<div class="slide" id="s3">
+  <div class="slide-logo-tl"><div class="logo"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+  <div class="header" style="padding-top:52px">
+    <h2>Rare Lot-Split Opportunity</h2>
+  </div>
+  <div class="subtitle">Originally Two Separate Parcels — Can Be Replatted Back into Two Lots (Lot 1A + Lot 3A)</div>
+  <div class="split-diagram">
+    <div class="lot-box">
+      <div class="lot-label">Before</div>
+      <div class="lot-size">1.94 ac</div>
+      <div class="lot-detail">Single Parcel<br>~234 ft Shoreline<br>$3.3M Acquisition</div>
+    </div>
+    <div class="arrow-block">
+      <div class="arrow-label">Replat</div>
+      <div class="arrow">→</div>
+    </div>
+    <div class="two-lots">
+      <div class="lot-box result">
+        <div class="lot-label">Lot 1A — After</div>
+        <div class="lot-size">~0.97 ac</div>
+        <div class="lot-detail">~117 ft Shoreline<br>Land Cost ~$1.65M</div>
+      </div>
+      <div class="lot-box result">
+        <div class="lot-label">Lot 3A — After</div>
+        <div class="lot-size">~0.97 ac</div>
+        <div class="lot-detail">~117 ft Shoreline<br>Land Cost ~$1.65M</div>
+      </div>
+    </div>
+    <ul class="right-bullets">
+      <li>Acquire entire property ~$3.3M</li>
+      <li>Land cost only ~$1.65M per lot</li>
+      <li>Build two luxury homes at comp size</li>
+      <li>Significantly higher total profit potential</li>
+      <li>Each lot comparable to $5.5M–$7.67M comps</li>
+    </ul>
+  </div>
+  <div class="slide-number">03 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 4 ══ -->
+<div class="slide-label">Slide 4 — Development Comps</div>
+<div class="slide-wrapper">
+<div class="slide" id="s4">
+  <div class="slide-logo-tl"><div class="logo"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+  <div class="header" style="padding-top:52px">
+    <h2>Strong Development Comps — Largo Place, Cornelius</h2>
+  </div>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Sale Price</th>
+        <th>Lot Size</th>
+        <th>Shoreline</th>
+        <th>Year</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="addr">17811 Largo Place, Cornelius</td>
+        <td class="price">$6,550,000</td>
+        <td>.51 ac</td>
+        <td>~115 ft</td>
+        <td>2023</td>
+        <td>Listed</td>
+      </tr>
+      <tr>
+        <td class="addr">17819 Largo Place, Cornelius</td>
+        <td class="price">$7,670,000</td>
+        <td>.65 ac</td>
+        <td>~130 ft</td>
+        <td>2024</td>
+        <td>Closed</td>
+      </tr>
+      <tr>
+        <td class="addr">17815 Largo Place, Cornelius</td>
+        <td class="price">$5,450,000</td>
+        <td>.64 ac</td>
+        <td>~128 ft</td>
+        <td>2024</td>
+        <td>Sold</td>
+      </tr>
+      <tr>
+        <td class="addr">18601 Bluff Point Rd, Cornelius</td>
+        <td class="price">$5,500,000</td>
+        <td>.64 ac</td>
+        <td>~125 ft</td>
+        <td>2025</td>
+        <td>Sold</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="table-note">All comps on much smaller lots (~100–130 ft shoreline) — yet achieved $5.45M–$7.67M. Your two lots would each be comparable or larger in shoreline frontage.</div>
+  <div class="slide-number">04 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 5 ══ -->
+<div class="slide-label">Slide 5 — Two-Lot Split Pro Forma</div>
+<div class="slide-wrapper">
+<div class="slide pro-forma" id="s5">
+  <div class="slide-logo-tl"><div class="logo"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+  <div class="header" style="padding-top:52px">
+    <h2>Financial Pro Forma — Two-Lot Split Scenario<br><span style="font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.6)">(Highest Profit Path)</span></h2>
+  </div>
+  <table class="pf-table">
+    <thead>
+      <tr class="col-header-row">
+        <th style="text-align:left">Item</th>
+        <th>Conservative</th>
+        <th>Mid-Range</th>
+        <th>Premium</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="section-header"><td colspan="4">Per Lot (×2)</td></tr>
+      <tr>
+        <td>Land Cost (per lot)</td>
+        <td>$1,650,000</td>
+        <td>$1,650,000</td>
+        <td>$1,650,000</td>
+      </tr>
+      <tr>
+        <td>Build Cost — 6,500 sf</td>
+        <td>$2,925,000 <span style="color:rgba(255,255,255,0.4);font-size:.68rem">($450/sf)</span></td>
+        <td>$3,575,000 <span style="color:rgba(255,255,255,0.4);font-size:.68rem">($550/sf)</span></td>
+        <td>$4,225,000 <span style="color:rgba(255,255,255,0.4);font-size:.68rem">($650/sf)</span></td>
+      </tr>
+      <tr>
+        <td>Total Cost Per Home</td>
+        <td>$4,575,000</td>
+        <td>$5,225,000</td>
+        <td>$5,875,000</td>
+      </tr>
+      <tr>
+        <td>Projected Sell Price</td>
+        <td>$5,500,000</td>
+        <td>$6,500,000</td>
+        <td>$7,500,000</td>
+      </tr>
+      <tr class="profit-row">
+        <td>Gross Profit Per Home</td>
+        <td>$925,000</td>
+        <td>$1,275,000</td>
+        <td>$1,625,000</td>
+      </tr>
+      <tr class="profit-row">
+        <td>Total Gross Profit (2 Homes)</td>
+        <td>$1,850,000</td>
+        <td>$2,550,000</td>
+        <td>$3,250,000</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="slide-number">05 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 6 ══ -->
+<div class="slide-label">Slide 6 — Single Grand Estate Pro Forma</div>
+<div class="slide-wrapper">
+<div class="slide pro-forma" id="s6">
+  <div class="slide-logo-tl"><div class="logo"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+  <div class="header" style="padding-top:52px">
+    <h2>Financial Pro Forma — Single Grand Estate Scenario<br><span style="font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.6)">(Prestige / Trophy Build)</span></h2>
+  </div>
+  <table class="pf-table">
+    <thead>
+      <tr class="col-header-row">
+        <th style="text-align:left">Item</th>
+        <th>Conservative</th>
+        <th>Mid-Range</th>
+        <th>Premium</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Land Acquisition</td>
+        <td>$3,300,000</td>
+        <td>$3,300,000</td>
+        <td>$3,300,000</td>
+      </tr>
+      <tr>
+        <td>Build Cost — 7,500–8,000 sf</td>
+        <td>$3,750,000 <span style="color:rgba(255,255,255,0.4);font-size:.68rem">($500/sf)</span></td>
+        <td>$4,800,000 <span style="color:rgba(255,255,255,0.4);font-size:.68rem">($600/sf)</span></td>
+        <td>$5,600,000 <span style="color:rgba(255,255,255,0.4);font-size:.68rem">($700/sf)</span></td>
+      </tr>
+      <tr>
+        <td>Total Project Cost</td>
+        <td>$7,050,000</td>
+        <td>$8,100,000</td>
+        <td>$8,900,000</td>
+      </tr>
+      <tr>
+        <td>Projected Sell Price</td>
+        <td>$8,500,000</td>
+        <td>$10,000,000</td>
+        <td>$12,000,000</td>
+      </tr>
+      <tr class="profit-row">
+        <td>Gross Profit</td>
+        <td>$1,450,000</td>
+        <td>$1,900,000</td>
+        <td>$3,100,000</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="table-note" style="margin-top:8px">Entire 1.94-acre site + 234 ft shoreline positions this as one of the most significant estate opportunities on Lake Norman.</div>
+  <div class="slide-number">06 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 7 ══ -->
+<div class="slide-label">Slide 7 — Flexible Seller Terms</div>
+<div class="slide-wrapper">
+<div class="slide" id="s7">
+  <div class="slide-logo-tl"><div class="logo"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div></div>
+  <div class="header" style="padding-top:52px">
+    <h2>Flexible Seller Terms — Builder Friendly</h2>
+  </div>
+  <div class="terms-grid">
+    <div class="term-card">
+      <div class="check">✓</div>
+      <div class="term-text">
+        <strong>No Rush to Sell</strong>
+        <span>Seller is patient — no pressure to close on an artificial timeline.</span>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="check">✓</div>
+      <div class="term-text">
+        <strong>Extended Close (60–90+ Days)</strong>
+        <span>Ample time to complete due diligence, surveys, and preliminary plans.</span>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="check">✓</div>
+      <div class="term-text">
+        <strong>Permit Before You Close</strong>
+        <span>Complete all planning, design &amp; permitting at virtually zero holding cost before closing.</span>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="check">✓</div>
+      <div class="term-text">
+        <strong>Dramatically Reduced Risk</strong>
+        <span>Close only when permits are secured — your capital is protected until you're ready to build.</span>
+      </div>
+    </div>
+  </div>
+  <div class="cta-bar">"You secure the permits. You close on confidence. This is how smart builders win on waterfront."</div>
+  <div class="slide-number">07 / 08</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDE 8 ══ -->
+<div class="slide-label">Slide 8 — Next Steps & Contact</div>
+<div class="slide-wrapper">
+<div class="slide" id="s8">
+  <div class="watermark-lake"><div class="lake-fill"></div></div>
+  <div class="content">
+    <div class="logo center"><div class="logo-mark">HR</div><div class="logo-text">Realty Ryan</div></div>
+    <div class="divider"></div>
+    <h1>Let's Build the Next Lake Norman<br>Waterfront Success Story Together</h1>
+    <ul class="next-steps">
+      <li>Schedule a private site walk</li>
+      <li>Review full survey &amp; preliminary plans</li>
+      <li>Discuss partnership on spec build(s)</li>
+    </ul>
+    <div class="contact-block">
+      <div class="contact-name">Ryan Palmer</div>
+      <div class="contact-details">
+        <span>508.954.2159</span>
+        <span>ryanpalmer@hmproperties.com</span>
+        <span>@realty.ryan</span>
+        <span>www.14515nc.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">08 / 08</div>
+</div>
+</div>
+
+</body>
+</html>
