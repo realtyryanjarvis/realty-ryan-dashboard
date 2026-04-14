@@ -6,6 +6,7 @@
 <title>14515 NC Hwy 73 — Builder Opportunity | Realty Ryan</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+/* Griffon Light → Cormorant Garamond 300 (primary/display) | Nimbus Sans → Montserrat 400 (body/secondary) */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --br:#4A2C1F;--brd:#3a2118;--brm:#5c3829;
@@ -13,175 +14,116 @@
   --gn:#7AB87A;--gnl:#A8D4A8;
   --rd:#E07070;--wh:#fff;
   --dm:rgba(255,255,255,.6);--ft:rgba(255,255,255,.1);
-  --W:1280px;--H:720px;--px:52px;--py:36px
+  --W:1280px;--H:720px;--px:52px;--py:34px;
+  --ff-primary:'Cormorant Garamond',Georgia,serif;  /* Griffon Light stand-in */
+  --ff-body:'Montserrat',Helvetica,sans-serif        /* Nimbus Sans stand-in */
 }
-body{background:#111;font-family:'Montserrat',sans-serif;padding:40px 20px;display:flex;flex-direction:column;gap:48px;align-items:center}
+body{background:#111;font-family:var(--ff-body);padding:40px 20px;display:flex;flex-direction:column;gap:48px;align-items:center}
 .deck-title,.slide-label{color:rgba(255,255,255,.2);font-size:.55rem;letter-spacing:4px;text-transform:uppercase;text-align:center}
 .slide-wrapper{width:var(--W);height:var(--H);box-shadow:0 24px 80px rgba(0,0,0,.7);flex-shrink:0}
-.slide{width:100%;height:100%;background:var(--br);position:relative;overflow:hidden;color:#fff;font-family:'Montserrat',sans-serif}
-.sn{position:absolute;bottom:18px;right:26px;font-size:.5rem;letter-spacing:2px;color:rgba(255,255,255,.2)}
+.slide{width:100%;height:100%;background:var(--br);position:relative;overflow:hidden;color:#fff;font-family:var(--ff-body)}
+.sn-badge{position:absolute;bottom:16px;right:24px;font-size:.48rem;letter-spacing:2px;color:rgba(255,255,255,.18);font-family:var(--ff-body)}
+.rr-logo{position:absolute;top:22px;left:var(--px);z-index:10}
+.rr-logo img{height:36px;width:auto;opacity:.92}
+.rr-logo-c{position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:10}
+.rr-logo-c img{height:44px;width:auto;opacity:.92}
 
-/* LOGO */
-.logo{display:flex;align-items:center;gap:9px}
-.logo .lm{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:#fff;flex-shrink:0}
-.logo .lw{font-size:.5rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.8)}
-.logo.lg{flex-direction:column;gap:6px;text-align:center}
-.logo.lg .lm{width:52px;height:52px;font-size:1.2rem}
-.logo.lg .lw{letter-spacing:4px;font-size:.56rem}
-.tl{position:absolute;top:24px;left:var(--px);z-index:10}
-.tc{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:10}
+/* HEADER ROW */
+.hrow{padding:58px var(--px) 10px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:flex-end;justify-content:space-between}
+.hrow h2{font-family:var(--ff-primary);font-size:2.1rem;font-weight:300;color:#fff;line-height:1.1;letter-spacing:.01em}
+.hrow .htag{font-size:.56rem;letter-spacing:1.5px;color:var(--gl);white-space:nowrap;padding-bottom:3px;font-family:var(--ff-body)}
+.gold-rule{width:44px;height:1px;background:var(--go);opacity:.7;margin:8px 0 12px}
 
-/* SHARED HEADER */
-.sh{padding-top:56px;padding-bottom:12px;border-bottom:1px solid var(--ft);display:flex;align-items:flex-end;justify-content:space-between}
-.sh h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:400;color:#fff;line-height:1.1}
-.sh .tag{font-size:.58rem;letter-spacing:1.5px;color:var(--gl);white-space:nowrap;padding-bottom:4px}
-.rule{width:50px;height:1px;background:var(--go);opacity:.8}
+/* SHARED GRID */
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:9px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.card.gold{border-color:rgba(201,169,110,.5);background:rgba(201,169,110,.08)}
+.card.green{border-color:rgba(122,184,122,.3);background:rgba(122,184,122,.07)}
+.card.warn{border-color:rgba(224,112,112,.3);background:rgba(224,112,112,.06)}
+.cv{font-family:var(--ff-primary);font-size:2rem;font-weight:400;color:var(--gl);line-height:1}
+.cv.sm{font-size:1.5rem}
+.ct2{font-size:.72rem;font-weight:600;color:#fff;line-height:1.25;font-family:var(--ff-body)}
+.cd2{font-size:.6rem;color:var(--dm);line-height:1.5;font-family:var(--ff-body)}
+.csrc{font-size:.5rem;color:rgba(255,255,255,.3);font-style:italic;margin-top:2px}
+.insight-bar{background:rgba(122,184,122,.08);border:1px solid rgba(122,184,122,.22);border-radius:8px;padding:10px 18px;display:flex;align-items:center;gap:10px}
+.insight-bar span{font-size:.68rem;color:var(--gnl);line-height:1.5}
+.insight-bar span strong{color:#fff}
+.warn-bar{background:rgba(201,169,110,.07);border:1px solid rgba(201,169,110,.2);border-radius:8px;padding:10px 18px}
+.warn-bar p{font-size:.64rem;color:rgba(255,255,255,.65);line-height:1.6}
+.warn-bar p strong{color:var(--gl)}
 
-/* LAKE WASH */
-.lw-bg{display:none}
-.lw-bg .lf{display:none}
+/* COMP TABLE */
+.ctbl{width:100%;border-collapse:collapse;font-family:var(--ff-body)}
+.ctbl th{text-align:left;padding:7px 10px;font-size:.5rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.1)}
+.ctbl th.r{text-align:right}
+.ctbl td{padding:8px 10px;font-size:.72rem;color:rgba(255,255,255,.82);border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+.ctbl td.r{text-align:right;font-variant-numeric:tabular-nums}
+.ctbl td.b{font-weight:600;color:#fff}
+.ctbl td.gn{color:var(--gnl);font-weight:700}
+.ctbl td.go{color:var(--gl);font-weight:600}
+.ctbl td.rd{color:var(--rd)}
+.ctbl td.dim{color:rgba(255,255,255,.4);font-size:.64rem}
+.pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:.5rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.pill.sold{background:rgba(122,184,122,.2);color:var(--gnl);border:1px solid rgba(122,184,122,.3)}
+.pill.uc{background:rgba(201,169,110,.2);color:var(--gl);border:1px solid rgba(201,169,110,.3)}
+.pill.act{background:rgba(224,112,112,.15);color:var(--rd);border:1px solid rgba(224,112,112,.3)}
+.pill.priv{background:rgba(168,168,255,.15);color:#c0c0ff;border:1px solid rgba(168,168,255,.3)}
+.ctbl tr.subj-row td{background:rgba(201,169,110,.1);border-top:1.5px solid rgba(201,169,110,.4);border-bottom:1.5px solid rgba(201,169,110,.4)}
 
-/* ───── SLIDE 1 — COVER ───── */
-#s1{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px var(--px)}
-#s1::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 78% 50%,rgba(201,169,110,.08) 0%,transparent 60%)}
-#s1 .cc{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:640px}
-#s1 .eyebrow{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--gl)}
-#s1 h1{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:500;line-height:1.15;color:#fff}
-#s1 .sub{font-size:.68rem;letter-spacing:1.5px;color:var(--dm);font-weight:300}
-#s1 .stats{display:flex;gap:28px;align-items:center;padding:4px 0}
-#s1 .stat .sv{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--gl);line-height:1}
-#s1 .stat .sl{font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
-#s1 .sdiv{width:1px;height:32px;background:rgba(255,255,255,.12)}
-#s1 .footer{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25)}
-#s1 .source-badge{position:absolute;bottom:22px;left:var(--px);font-size:.48rem;color:rgba(255,255,255,.2);letter-spacing:1px}
+/* PRO FORMA TABLE */
+.pftbl{width:100%;border-collapse:collapse;font-family:var(--ff-body)}
+.pftbl th{padding:7px 11px;font-size:.5rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.1);text-align:right}
+.pftbl th:first-child{text-align:left}
+.pftbl td{padding:8px 11px;font-size:.74rem;color:rgba(255,255,255,.82);border-bottom:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums}
+.pftbl td:first-child{text-align:left;color:#fff}
+.pftbl tr.pf-sec td{font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--go);font-weight:700;background:rgba(255,255,255,.03);padding:5px 11px;border-bottom:none}
+.pftbl tr.pf-dim td{color:rgba(255,255,255,.45);font-size:.68rem}
+.pftbl tr.pf-sell td{color:var(--gl);font-weight:600}
+.pftbl tr.pf-profit td{color:var(--gnl);font-weight:700;font-size:.85rem;border-top:1.5px solid rgba(122,184,122,.25);border-bottom:none}
+.pftbl tr.pf-profit td:first-child{color:var(--gnl)}
+.pftbl tr.pf-roi td{font-size:.7rem;font-weight:700;padding-bottom:6px;border-bottom:none;color:var(--gnl)}
+.pftbl tr.pf-roi td:first-child{color:rgba(255,255,255,.35);font-weight:400;font-size:.58rem}
+.pfnote{font-size:.57rem;color:rgba(255,255,255,.3);font-style:italic;padding:1px 0}
 
-/* ───── SLIDE 2 — THE MARKET ───── */
-#s2{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:14px}
-#s2 .market-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1}
-#s2 .mc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:7px}
-#s2 .mc.gold{border-color:var(--go);background:rgba(201,169,110,.1)}
-#s2 .mc .mv{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:600;color:var(--gl);line-height:1}
-#s2 .mc .mt{font-size:.72rem;font-weight:600;color:#fff;line-height:1.3}
-#s2 .mc .md{font-size:.62rem;color:var(--dm);line-height:1.5}
-#s2 .mc .ms{font-size:.52rem;color:rgba(255,255,255,.35);font-style:italic;margin-top:2px}
-#s2 .insight{background:rgba(122,184,122,.08);border:1px solid rgba(122,184,122,.25);border-radius:8px;padding:11px 18px;display:flex;align-items:center;gap:12px}
-#s2 .insight span{font-size:.7rem;color:var(--gnl);line-height:1.5}
-#s2 .insight span strong{color:#fff}
+/* BOTTOM STAT STRIP */
+.stat-strip{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:11px 20px;display:flex;justify-content:space-around;align-items:center}
+.ss-item{text-align:center}
+.ss-v{font-family:var(--ff-primary);font-size:1.45rem;font-weight:400;line-height:1}
+.ss-v.gn{color:var(--gnl)}
+.ss-v.go{color:var(--gl)}
+.ss-l{font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-top:2px;font-family:var(--ff-body)}
+.ss-div{width:1px;height:34px;background:rgba(255,255,255,.09)}
 
-/* ───── SLIDE 3 — SCARCITY ───── */
-#s3{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:14px}
-#s3 .sc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1}
-#s3 .sc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden}
-#s3 .sc.gold{border-color:var(--go);background:rgba(201,169,110,.08)}
-#s3 .sc .sn2{font-family:'Cormorant Garamond',serif;font-size:2.3rem;font-weight:600;color:var(--gl);line-height:1}
-#s3 .sc .st{font-size:.72rem;font-weight:600;color:#fff}
-#s3 .sc .sd{font-size:.62rem;color:var(--dm);line-height:1.5}
-#s3 .sc .si{position:absolute;bottom:10px;right:14px;font-size:1.5rem;opacity:.12}
-#s3 .bottom{background:linear-gradient(90deg,rgba(201,169,110,.12),rgba(201,169,110,.03));border:1px solid rgba(201,169,110,.22);border-radius:8px;padding:11px 20px;font-size:.7rem;color:var(--gl);font-style:italic;text-align:center}
+/* RISK GRID */
+.risk-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:12px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.risk-row .rl{font-size:.62rem;font-weight:700;color:var(--rd);white-space:nowrap;font-family:var(--ff-body)}
+.risk-row .rr2{font-size:.62rem;font-weight:700;color:var(--gnl);white-space:nowrap;font-family:var(--ff-body)}
+.risk-row .rm strong{display:block;font-size:.68rem;color:#fff;margin-bottom:2px;font-family:var(--ff-body)}
+.risk-row .rm span{font-size:.58rem;color:var(--dm);line-height:1.4;font-family:var(--ff-body)}
 
-/* ───── SLIDE 4 — COMPS ───── */
-#s4{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:12px}
-.ct{width:100%;border-collapse:collapse}
-.ct th{text-align:left;padding:8px 12px;font-size:.54rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.38);border-bottom:1px solid rgba(255,255,255,.12)}
-.ct th.r{text-align:right}
-.ct td{padding:10px 12px;font-size:.77rem;color:rgba(255,255,255,.87);border-bottom:1px solid rgba(255,255,255,.05)}
-.ct td.r{text-align:right;font-variant-numeric:tabular-nums}
-.ct td.b{font-weight:600;color:#fff}
-.ct td.gn{color:var(--gnl);font-weight:700}
-.ct td.go{color:var(--gl);font-weight:600}
-.ct tr.subj td{background:rgba(201,169,110,.1);border-top:1px solid rgba(201,169,110,.3);border-bottom:1px solid rgba(201,169,110,.3)}
-.ct tr.subj td.gn{font-size:.85rem}
-.tfoot{font-size:.6rem;color:rgba(255,255,255,.35);font-style:italic;line-height:1.5;padding:2px}
-.ib{background:rgba(122,184,122,.08);border:1px solid rgba(122,184,122,.22);border-radius:8px;padding:11px 16px;display:flex;align-items:center;gap:10px}
-.ib .ii{font-size:1.1rem;flex-shrink:0}
-.ib .it{font-size:.68rem;color:var(--gnl);line-height:1.5}
-.ib .it strong{color:#fff}
+/* TIMELINE */
+.tl-track{display:flex;align-items:flex-start}
+.tl-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
+.tl-step:not(:last-child)::after{content:'';position:absolute;top:17px;left:calc(50% + 18px);right:calc(-50% + 18px);height:2px;background:rgba(255,255,255,.1)}
+.tl-dot{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:.8rem;background:var(--br);z-index:1;margin-bottom:8px}
+.tl-dot.on{border-color:var(--go);background:rgba(201,169,110,.12)}
+.tl-mo{font-size:.53rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gl);margin-bottom:2px;font-family:var(--ff-body)}
+.tl-name{font-size:.68rem;font-weight:600;color:#fff;text-align:center;margin-bottom:2px;font-family:var(--ff-body)}
+.tl-desc{font-size:.56rem;color:var(--dm);text-align:center;line-height:1.4;max-width:118px;font-family:var(--ff-body)}
 
-/* ───── SLIDES 5 & 6 — PRO FORMA ───── */
-.pf{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:12px}
-.pft{width:100%;border-collapse:collapse}
-.pft th{padding:8px 12px;font-size:.54rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.38);border-bottom:1px solid rgba(255,255,255,.12);text-align:right}
-.pft th:first-child{text-align:left}
-.pft td{padding:9px 12px;font-size:.76rem;color:rgba(255,255,255,.82);border-bottom:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums}
-.pft td:first-child{text-align:left;color:#fff}
-.pft tr.sec td{background:rgba(255,255,255,.04);font-size:.54rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--go);font-weight:600;padding:5px 12px;border-bottom:none}
-.pft tr.tcost td{color:rgba(255,255,255,.55);font-size:.72rem}
-.pft tr.sell td{color:var(--gl);font-weight:600}
-.pft tr.profit td{color:var(--gnl);font-weight:700;font-size:.88rem;border-top:2px solid rgba(122,184,122,.25);border-bottom:none}
-.pft tr.profit td:first-child{color:var(--gnl)}
-.pft tr.roi td{font-size:.7rem;font-weight:700;padding-bottom:8px;border-bottom:none}
-.pft tr.roi td:first-child{color:rgba(255,255,255,.4);font-weight:400;font-size:.6rem}
-.pf .fnote{font-size:.58rem;color:rgba(255,255,255,.3);font-style:italic;padding:2px}
+/* COVER / CLOSE */
+.hero-center{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:60px var(--px);position:relative;z-index:2}
+.hero-center .eyebrow{font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--gl);font-family:var(--ff-body)}
+.hero-center h1{font-family:var(--ff-primary);font-size:2.85rem;font-weight:300;line-height:1.15;color:#fff;letter-spacing:.02em}
+.hero-center .sub{font-size:.66rem;letter-spacing:1.5px;color:var(--dm);font-weight:300;font-family:var(--ff-body)}
+.hero-center .stats{display:flex;gap:24px;align-items:center;padding:4px 0}
+.hero-stat .sv{font-family:var(--ff-primary);font-size:1.65rem;font-weight:400;color:var(--gl);line-height:1}
+.hero-stat .sl{font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:2px;font-family:var(--ff-body)}
+.sdiv{width:1px;height:30px;background:rgba(255,255,255,.12)}
+.hero-center .conf{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);font-family:var(--ff-body)}
 
-/* ───── SLIDE 7 — RISK ───── */
-#s7{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:14px}
-#s7 .rg{display:grid;grid-template-columns:1fr 1fr;gap:11px;flex:1}
-#s7 .rr{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:14px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
-#s7 .rr .rb{font-size:.68rem;font-weight:700;color:var(--rd);white-space:nowrap}
-#s7 .rr .ra{font-size:.68rem;font-weight:700;color:var(--gnl);text-align:right;white-space:nowrap}
-#s7 .rr .rd strong{display:block;font-size:.72rem;color:#fff;margin-bottom:3px}
-#s7 .rr .rd span{font-size:.6rem;color:var(--dm);line-height:1.4}
-#s7 .vb{background:rgba(122,184,122,.09);border:1px solid rgba(122,184,122,.28);border-radius:8px;padding:12px 20px;display:flex;align-items:center;gap:12px}
-#s7 .vb .vi{font-size:1.3rem}
-#s7 .vb .vt{font-size:.7rem;color:var(--gnl);line-height:1.55}
-#s7 .vb .vt strong{color:#fff}
-
-/* ───── SLIDE 8 — LAND BASIS ───── */
-#s8{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:14px}
-#s8 .lg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1}
-#s8 .lc{border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:7px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04)}
-#s8 .lc.best{border-color:var(--go);background:rgba(201,169,110,.09)}
-#s8 .lc .lt{font-size:.52rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--go);margin-bottom:2px}
-#s8 .lc .lh{font-size:.8rem;font-weight:600;color:#fff;line-height:1.3}
-#s8 .lc .sep{height:1px;background:rgba(255,255,255,.07);margin:4px 0}
-#s8 .lc .lr{display:flex;justify-content:space-between;align-items:baseline}
-#s8 .lc .lk{font-size:.6rem;color:var(--dm)}
-#s8 .lc .lv{font-size:.74rem;font-weight:600;font-variant-numeric:tabular-nums}
-#s8 .lc .lv.gn{color:var(--gnl)}
-#s8 .lc .lv.go{color:var(--gl)}
-#s8 .lc .lv.rd{color:var(--rd)}
-#s8 .bm{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:11px 20px;display:flex;justify-content:space-between;align-items:center}
-#s8 .bmi{text-align:center}
-#s8 .bmi .bv{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;line-height:1}
-#s8 .bmi .bv.gn{color:var(--gnl)}
-#s8 .bmi .bv.go{color:var(--gl)}
-#s8 .bmi .bl{font-size:.52rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:2px}
-#s8 .bmd{width:1px;height:38px;background:rgba(255,255,255,.1)}
-
-/* ───── SLIDE 9 — TIMELINE ───── */
-#s9{padding:var(--py) var(--px);display:flex;flex-direction:column;gap:16px}
-#s9 .tl{display:flex;align-items:flex-start;gap:0;flex:1}
-#s9 .ts{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
-#s9 .ts:not(:last-child)::after{content:'';position:absolute;top:18px;left:calc(50% + 18px);right:calc(-50% + 18px);height:2px;background:rgba(255,255,255,.1)}
-#s9 .td{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:.85rem;background:rgba(74,44,31,.8);z-index:1;margin-bottom:10px}
-#s9 .td.on{border-color:var(--go);background:rgba(201,169,110,.15)}
-#s9 .ti{font-size:.56rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gl);margin-bottom:3px}
-#s9 .tn{font-size:.72rem;font-weight:600;color:#fff;text-align:center;margin-bottom:3px}
-#s9 .tt{font-size:.58rem;color:var(--dm);text-align:center;line-height:1.4;max-width:120px}
-#s9 .tf{background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.18);border-radius:8px;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
-#s9 .tfi{text-align:center}
-#s9 .tfi .tv{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--gl);line-height:1}
-#s9 .tfi .tl2{font-size:.52rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:2px}
-#s9 .tfd{width:1px;height:36px;background:rgba(255,255,255,.1)}
-
-/* ───── SLIDE 10 — CLOSE ───── */
-#s10{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px var(--px)}
-#s10::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 78% 50%,rgba(201,169,110,.07) 0%,transparent 60%)}
-#s10 .cc{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:16px;max-width:720px}
-#s10 h1{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:500;line-height:1.2;color:#fff}
-#s10 .body{font-size:.7rem;color:rgba(255,255,255,.6);line-height:1.65;max-width:560px}
-#s10 .ns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;width:100%}
-#s10 .nc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:14px 16px;display:flex;flex-direction:column;gap:5px}
-#s10 .nc .ni{font-size:1.2rem}
-#s10 .nc .nt{font-size:.7rem;font-weight:600;color:#fff}
-#s10 .nc .nd{font-size:.6rem;color:var(--dm);line-height:1.4}
-#s10 .contact{display:flex;flex-direction:column;gap:5px;align-items:center;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);width:100%}
-#s10 .cn{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;color:#fff}
-#s10 .cd{font-size:.62rem;letter-spacing:1.5px;color:var(--gl);display:flex;gap:0;flex-wrap:wrap;justify-content:center}
-#s10 .cd span{padding:0 10px;border-right:1px solid rgba(255,255,255,.18)}
-#s10 .cd span:last-child{border-right:none}
-
-.print-btn{position:fixed;bottom:28px;right:28px;background:var(--br);color:#fff;border:1px solid rgba(201,169,110,.5);padding:10px 24px;border-radius:24px;font-size:.78rem;font-weight:600;cursor:pointer;z-index:100;letter-spacing:.5px;box-shadow:0 4px 20px rgba(0,0,0,.5);font-family:'Montserrat',sans-serif}
+.print-btn{position:fixed;bottom:28px;right:28px;background:var(--br);color:#fff;border:1px solid rgba(201,169,110,.5);padding:10px 24px;border-radius:24px;font-size:.78rem;font-weight:600;cursor:pointer;z-index:100;letter-spacing:.5px;box-shadow:0 4px 20px rgba(0,0,0,.5);font-family:var(--ff-body)}
 .print-btn:hover{background:var(--brm)}
 @media print{body{background:none;padding:0;gap:0}.slide-wrapper{page-break-after:always;box-shadow:none}.slide-label,.deck-title,.print-btn{display:none}}
 </style>
@@ -190,446 +132,435 @@ body{background:#111;font-family:'Montserrat',sans-serif;padding:40px 20px;displ
 <button class="print-btn" onclick="window.print()">📄 Print / Save PDF</button>
 <div class="deck-title">14515 NC Hwy 73 — Confidential Builder Opportunity · Realty Ryan · April 2026</div>
 
-<!-- ══ SLIDE 1 — COVER ══════════════════════════════════════════════════ -->
-<div class="slide-label">01 — Cover</div>
-<div class="slide-wrapper"><div class="slide" id="s1">
-  <div class="lw-bg"><div class="lf"></div></div>
-  <div class="cc">
-    <img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:60px;width:auto;opacity:.95">
-    <div class="rule"></div>
+<!-- ══ SLIDE 01 — COVER ══════════════════════════════════════════════════ -->
+<div class="slide-label">01 · Cover</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo-c"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div class="hero-center">
     <div class="eyebrow">Confidential Builder Opportunity · Lake Norman, NC</div>
+    <div style="width:44px;height:1px;background:var(--go);margin:6px 0"></div>
     <h1>The Last Great<br>Waterfront Lot on<br>Lake Norman's South Shore</h1>
-    <div class="sub">14515 NC Hwy 73 · Huntersville, NC 28078 · 14 Miles from Uptown Charlotte</div>
-    <div class="stats">
-      <div class="stat"><div class="sv">1.94</div><div class="sl">Acres</div></div>
+    <div class="sub" style="margin-top:4px">14515 NC Hwy 73 · Huntersville, NC 28078 · 14 Miles from Uptown Charlotte</div>
+    <div class="stats" style="margin-top:10px">
+      <div class="hero-stat"><div class="sv">1.94</div><div class="sl">Acres</div></div>
       <div class="sdiv"></div>
-      <div class="stat"><div class="sv">234 ft</div><div class="sl">Shoreline</div></div>
+      <div class="hero-stat"><div class="sv">234 ft</div><div class="sl">Shoreline</div></div>
       <div class="sdiv"></div>
-      <div class="stat"><div class="sv">~$3.3M</div><div class="sl">Ask Price</div></div>
+      <div class="hero-stat"><div class="sv">~$3.3M–$3.7M</div><div class="sl">Ask Price Range</div></div>
       <div class="sdiv"></div>
-      <div class="stat"><div class="sv">$5.5M–$7.7M</div><div class="sl">Comp Range</div></div>
+      <div class="hero-stat"><div class="sv">$7M–$9M</div><div class="sl">Est. Finished Value</div></div>
     </div>
   </div>
-  <div class="footer">Prepared exclusively for luxury builders · April 2026 · Confidential</div>
-  <div class="sn">01 / 10</div>
+  <div class="hero-center"><div class="conf">Prepared exclusively for luxury builders · Ryan Palmer · Corcoran HM Properties · April 2026</div></div>
+  <div class="sn-badge">01 / 10</div>
 </div></div>
 
-<!-- ══ SLIDE 2 — THE MARKET RIGHT NOW ══════════════════════════════════ -->
-<div class="slide-label">02 — The Market Right Now</div>
-<div class="slide-wrapper"><div class="slide" id="s2">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
-  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:14px;height:100%">
-    <div class="sh"><h2>The Market Is Telling You to Move Now</h2><div class="tag">Verified Market Data · 2025–2026</div></div>
-    <div class="market-grid" style="flex:1;padding-bottom:14px">
-      <div class="mc gold">
-        <div class="mv">118%</div>
-        <div class="mt">10-Year Home Appreciation<br>in Huntersville, NC</div>
-        <div class="md">8.11% avg annual appreciation — ranking Huntersville in the <strong>top 20% of all communities nationally</strong> for real estate investment returns.</div>
-        <div class="ms">Source: NeighborhoodScout</div>
-      </div>
-      <div class="mc gold">
-        <div class="mv">$797K</div>
-        <div class="mt">Median Home Value<br>in Cornelius, NC</div>
-        <div class="md">Cornelius sits among the <strong>most expensive real estate in all of America</strong> — not just NC. The luxury buyer pool is deep, proven, and growing.</div>
-        <div class="ms">Source: NeighborhoodScout</div>
-      </div>
-      <div class="mc">
-        <div class="mv">$9M</div>
-        <div class="mt">Charlotte Home Sale<br>December 2025</div>
-        <div class="md">3rd highest single-family sale price ever recorded in the Charlotte metro. <strong>Luxury buyers at the $7M–$10M level are active right now</strong> — closing deals.</div>
-        <div class="ms">Source: Charlotte Observer, Dec 2025</div>
-      </div>
-      <div class="mc">
-        <div class="mv">520 mi</div>
-        <div class="mt">Lake Norman Shoreline —<br>Nearly All Developed</div>
-        <div class="md">North Carolina's largest lake — 50 sq miles, 33,000+ acres. Yet <strong>virtually no buildable waterfront parcels ≥1 acre remain</strong> on the south shore. Supply = zero.</div>
-        <div class="ms">Source: Wikipedia / Duke Energy</div>
-      </div>
-      <div class="mc">
-        <div class="mv">14 mi</div>
-        <div class="mt">From Uptown Charlotte —<br>25-Minute Commute</div>
-        <div class="md">Charlotte is the <strong>#1 fastest-growing major metro in the Southeast</strong>. Corporate relocations (Honeywell, Red Ventures, Centene) are filling the luxury buyer pipeline continuously.</div>
-        <div class="ms">Source: Wikipedia / US Census</div>
-      </div>
-      <div class="mc">
-        <div class="mv">117%</div>
-        <div class="mt">10-Year Appreciation<br>in Cornelius, NC</div>
-        <div class="md">Appreciation that <strong>more than doubled home values</strong> over 10 years — and waterfront luxury outpaced the average by a significant multiplier each year.</div>
-        <div class="ms">Source: NeighborhoodScout</div>
-      </div>
-    </div>
-    <div class="insight"><span>💡 <strong>The bottom line:</strong> Charlotte's luxury market is breaking records. The buyer for a $6.5M–$7.5M Lake Norman waterfront home is not hypothetical — they are closing $9M deals in Charlotte <em>right now</em>. Your job is to build the product. The demand is already there.</span></div>
-  </div>
-  <div class="sn">02 / 10</div>
-</div></div>
-
-<!-- ══ SLIDE 3 — SCARCITY ═══════════════════════════════════════════════ -->
-<div class="slide-label">03 — The Scarcity Case</div>
-<div class="slide-wrapper"><div class="slide" id="s3">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
-  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:14px;height:100%">
-    <div class="sh"><h2>This Lot Cannot Be Replicated — Ever</h2><div class="tag">14515 NC Hwy 73 · Huntersville NC 28078</div></div>
-    <div class="sc-grid" style="flex:1">
-      <div class="sc gold">
-        <div class="sn2">1.94</div>
-        <div class="st">Acres — 3× Larger Than Any Comp</div>
-        <div class="sd">Every comparable sold on .51–.65 acres. This parcel is nearly 3× larger — giving you a true grand estate canvas or the chance to split into two premium lots, each still larger than the comps.</div>
-        <div class="si">📐</div>
-      </div>
-      <div class="sc gold">
-        <div class="sn2">234 ft</div>
-        <div class="st">Shoreline — Nearly Double Any Comp</div>
-        <div class="sd">Comparable homes averaged ~115–130 ft of shoreline. More frontage = wider water views, bigger dock, larger beach, higher $/SF at sale. This lot delivers what buyers pay a premium for.</div>
-        <div class="si">🌊</div>
-      </div>
-      <div class="sc">
-        <div class="sn2">Natural</div>
-        <div class="st">Sandy Beach — Impossible to Add</div>
-        <div class="sd">A naturally occurring sandy beach on Lake Norman is extraordinarily rare. You cannot manufacture this amenity — it either exists or it doesn't. It's listed as a headline feature at every price point.</div>
-        <div class="si">🏖️</div>
-      </div>
-      <div class="sc">
-        <div class="sn2">Flat</div>
-        <div class="st">Grade — Save $150K–$250K in Site Work</div>
-        <div class="sd">Most Lake Norman waterfront lots are steeply sloped, requiring extensive grading, retaining walls, and blasting. This lot is flat and build-ready — that's $150K–$250K straight to your bottom line before you pour a foundation.</div>
-        <div class="si">🏗️</div>
-      </div>
-      <div class="sc">
-        <div class="sn2">5 mi</div>
-        <div class="st">Big-Water Views — Sunrise Orientation</div>
-        <div class="sd">Positioned on the open south shore of an "inland sea" — sweeping, unobstructed big-water views across the widest stretch of the lake. East-facing for sunrise. Low boat traffic. Peak Lake Norman experience.</div>
-        <div class="si">🌅</div>
-      </div>
-      <div class="sc">
-        <div class="sn2">No HOA</div>
-        <div class="st">CC&Rs Only — Full Design Freedom</div>
-        <div class="sd">No HOA approval delays, design committees, or architectural review boards. Build what wins on the market — not what a committee approves. Pier previously approved by FERC; approval history transfers with the land.</div>
-        <div class="si">⚓</div>
-      </div>
-    </div>
-    <div class="bottom">"When this lot sells, there is no comparable replacement anywhere on Lake Norman's south shore. This is a one-time market event."</div>
-  </div>
-  <div class="sn">03 / 10</div>
-</div></div>
-
-<!-- ══ SLIDE 4 — COMPS ══════════════════════════════════════════════════ -->
-<div class="slide-label">04 — Comparable Sales</div>
-<div class="slide-wrapper"><div class="slide" id="s4">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
+<!-- ══ SLIDE 02 — WORK BACKWARDS FROM VALUE ════════════════════════════ -->
+<div class="slide-label">02 · Pricing Philosophy</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
   <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:12px;height:100%">
-    <div class="sh"><h2>The Market Has Already Proven the Exit Price</h2><div class="tag">Comparable Closed Sales · Cornelius &amp; Huntersville</div></div>
-    <table class="ct">
+    <div class="hrow"><h2>Work Backwards From Value</h2><div class="htag">How Sophisticated Land Is Priced · Builder Framework</div></div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:16px;flex:1;padding-bottom:14px">
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div class="card gold">
+          <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">The Right Way to Price Land</div>
+          <div style="font-family:var(--ff-primary);font-size:1.05rem;font-weight:300;color:#fff;line-height:1.55">Start with what a finished luxury lakefront estate would sell for. Subtract the cost to build it. What remains is what the land is worth.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+          <div class="card">
+            <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.38);font-family:var(--ff-body)">Step 1</div>
+            <div class="cv sm">$7M–$9M</div>
+            <div class="ct2">Finished Home Value</div>
+            <div class="cd2">Realistic exit for a custom estate on this site. Highway frontage & no Peninsula neighborhood apply a meaningful discount vs. $11M–$15M+ Peninsula comps.</div>
+          </div>
+          <div class="card">
+            <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.38);font-family:var(--ff-body)">Step 2</div>
+            <div class="cv sm" style="color:var(--rd)">– $4.5M</div>
+            <div class="ct2">Build + Site Cost</div>
+            <div class="cd2">$2.5M–$5M to build · $400K–$600K site work · Adjustments: no pier, no enclave neighborhood, excess raw acreage above 1 ac.</div>
+          </div>
+        </div>
+        <div class="card green">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(122,184,122,.6);font-family:var(--ff-body)">Step 3 — Residual Land Value</div>
+          <div class="cv">$3.05M–$4.0M</div>
+          <div class="ct2">What the Land Is Worth</div>
+          <div class="cd2">Three pricing options: $3,350,000 (move it) · $3,490,000 (target) · $3,700,000 (aspirational). All defensible from the top down.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px;justify-content:center">
+        <div class="card">
+          <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">The Peninsula Ceiling</div>
+          <div class="cv sm">$11.5M</div>
+          <div class="ct2">16716 Belle Isle Dr — Sold 2024</div>
+          <div class="cd2">7,209 sf home · 1.44 acres · 365 ft shoreline · sandy beach · established Peninsula enclave. That's the ceiling. Highway frontage and lack of neighborhood apply a discount — but the builder captures that discount as margin.</div>
+          <div class="csrc">Source: Canopy MLS · Closed 2024</div>
+        </div>
+        <div class="card">
+          <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">This Buyer Exists</div>
+          <div class="cv sm" style="font-size:1.1rem;color:#fff">Privacy + Views<br>Over Prestige ZIP</div>
+          <div class="cd2">The right buyer is building a $7M–$9M estate — roughly $3.5M for land and $4M+ to build. They chose privacy and wide-open water over a prestigious zip code. That buyer exists. Working backwards: the math lands squarely on $3.05M–$4.0M in residual land value.</div>
+        </div>
+        <div class="warn-bar">
+          <p><strong>⚠️ NC-73 Expansion Context:</strong> NC Hwy 73 is slated for corridor expansion — near-term construction noise, long-term rising land values and accelerated development. The lot's depth and setback provide meaningful buffer. A sophisticated buyer factors both.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sn-badge">02 / 10</div>
+</div></div>
+
+<!-- ══ SLIDE 03 — THE MARKET ════════════════════════════════════════════ -->
+<div class="slide-label">03 · The Market Right Now</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:12px;height:100%">
+    <div class="hrow"><h2>The Market Is Telling You to Move Now</h2><div class="htag">Verified Market Data · 2024–2026</div></div>
+    <div class="g3" style="flex:1;padding-bottom:4px">
+      <div class="card gold">
+        <div class="cv">118%</div>
+        <div class="ct2">10-Year Appreciation · Huntersville, NC</div>
+        <div class="cd2">8.11% avg annual — <strong>top 20% of all US communities</strong>. Higher than 70% of all NC towns. This is a structurally appreciating market, not a cycle play.</div>
+        <div class="csrc">Source: NeighborhoodScout</div>
+      </div>
+      <div class="card gold">
+        <div class="cv">$797K</div>
+        <div class="ct2">Median Home Value · Cornelius, NC</div>
+        <div class="cd2">Cornelius ranks among the <strong>most expensive real estate markets in America</strong>. The luxury buyer pool here is deep, proven, and continuously replenished by Charlotte's corporate growth.</div>
+        <div class="csrc">Source: NeighborhoodScout</div>
+      </div>
+      <div class="card">
+        <div class="cv">$11.5M</div>
+        <div class="ct2">16716 Belle Isle Dr · Closed 2024</div>
+        <div class="cd2">3rd-highest Charlotte-area waterfront transaction in recent history. 18 days to contract. Proves <strong>buyers at $10M+ are active on Lake Norman right now</strong> — not hypothetical.</div>
+        <div class="csrc">Source: Canopy MLS · Confirmed Closed</div>
+      </div>
+      <div class="card">
+        <div class="cv">18 days</div>
+        <div class="ct2">Days to Contract · Belle Isle Comp</div>
+        <div class="cd2">The fastest comp in this analysis. Waterfront luxury inventory is so scarce that the right product finds a buyer in under 3 weeks. <strong>Absorption risk is minimal</strong> when you build to market.</div>
+        <div class="csrc">Source: Canopy MLS</div>
+      </div>
+      <div class="card">
+        <div class="cv">14 mi</div>
+        <div class="ct2">From Uptown Charlotte · 25-Min Drive</div>
+        <div class="cd2">Charlotte is the <strong>#1 fastest-growing major metro in the Southeast</strong>. Honeywell, Red Ventures, Centene, and dozens of C-suite relocators are continuously filling the luxury buyer pipeline.</div>
+        <div class="csrc">Source: US Census / Charlotte Chamber</div>
+      </div>
+      <div class="card">
+        <div class="cv">520 mi</div>
+        <div class="ct2">Lake Norman Shoreline — Fully Developed</div>
+        <div class="cd2">North Carolina's largest lake — 50+ sq miles. Yet <strong>virtually zero buildable waterfront parcels ≥1 acre remain</strong> on the south shore. The era of new Lake Norman waterfront is over.</div>
+        <div class="csrc">Source: Wikipedia / Duke Energy</div>
+      </div>
+    </div>
+    <div class="insight-bar"><span>💡 <strong>The bottom line:</strong> A $11.5M home sold in 18 days on Lake Norman in 2024. Charlotte is growing faster than any comparable metro. And there are no more buildable waterfront lots of this scale. You don't need to predict demand — the market has already proven it.</span></div>
+  </div>
+  <div class="sn-badge">03 / 10</div>
+</div></div>
+
+<!-- ══ SLIDE 04 — COMPARABLE SALES ════════════════════════════════════ -->
+<div class="slide-label">04 · Comparable Sales</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:10px;height:100%">
+    <div class="hrow"><h2>The Market Has Already Proven the Exit Price</h2><div class="htag">Canopy MLS · Off-Market · April 2026</div></div>
+    <table class="ctbl">
       <thead>
         <tr>
-          <th>Address</th>
-          <th class="r">Sale Price</th>
-          <th class="r">Lot Size</th>
-          <th class="r">Shoreline</th>
-          <th class="r">Home SF</th>
-          <th class="r">$/SF</th>
-          <th class="r">DOM</th>
-          <th class="r">Year</th>
+          <th>Address</th><th>Status</th><th class="r">Price</th><th class="r">Lot</th><th class="r">Home SF</th><th class="r">Shore/Notes</th><th class="r">DOM</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="b">17819 Largo Place, Cornelius</td>
-          <td class="gn r">$7,670,000</td><td class="r">.65 ac</td><td class="r">~130 ft</td><td class="r">7,200</td><td class="go r">$1,065/sf</td><td class="r">21 days</td><td class="r">2024</td>
+          <td class="b">16716 Belle Isle Dr, Cornelius</td>
+          <td><span class="pill sold">SOLD 2024</span></td>
+          <td class="gn r">$11,500,000</td><td class="r">1.44 ac</td><td class="r">7,209 sf</td><td class="r go">365 ft · Sandy Beach · Peninsula</td><td class="r">18</td>
         </tr>
         <tr>
-          <td class="b">17811 Largo Place, Cornelius</td>
-          <td class="gn r">$6,550,000</td><td class="r">.51 ac</td><td class="r">~115 ft</td><td class="r">6,800</td><td class="go r">$963/sf</td><td class="r">14 days</td><td class="r">2023</td>
+          <td class="b">14717 NC Hwy 73, Huntersville</td>
+          <td><span class="pill priv">PRIVATE</span></td>
+          <td class="gn r">$4,490,000</td><td class="r">0.94 ac</td><td class="r">Renovated Res.</td><td class="r">Same Road · Less Water View</td><td class="r">—</td>
         </tr>
         <tr>
-          <td class="b">17815 Largo Place, Cornelius</td>
-          <td class="gn r">$5,450,000</td><td class="r">.64 ac</td><td class="r">~128 ft</td><td class="r">6,200</td><td class="go r">$879/sf</td><td class="r">18 days</td><td class="r">2024</td>
+          <td class="b">16318 Belle Isle Dr, Cornelius</td>
+          <td><span class="pill act">ACTIVE</span></td>
+          <td class="r">$3,850,000</td><td class="r">0.97 ac</td><td class="r">4,148 sf</td><td class="r rd">Peninsula · Sloped · 192 DOM</td><td class="rd r">192</td>
         </tr>
         <tr>
-          <td class="b">18601 Bluff Point Rd, Cornelius</td>
-          <td class="gn r">$5,500,000</td><td class="r">.64 ac</td><td class="r">~125 ft</td><td class="r">6,500</td><td class="go r">$846/sf</td><td class="r">12 days</td><td class="r">2025</td>
+          <td class="b">17005 Belle Isle Dr, Cornelius</td>
+          <td><span class="pill uc">UNDER CONTRACT</span></td>
+          <td class="go r">$3,700,000</td><td class="r">1.19 ac</td><td class="r">Raw Land</td><td class="r">Cul-de-sac · Estate Neighbors · Peninsula</td><td class="r">18</td>
         </tr>
-        <tr class="subj">
-          <td class="b">⭐ 14515 NC Hwy 73 — Two-Lot Split (each lot)</td>
-          <td class="gn r">$6.5M–$7.7M each</td><td class="r">.97 ac</td><td class="r">~117 ft</td><td class="r">6,500–7,000</td><td class="go r">$929–$1,100/sf</td><td class="r">—</td><td class="r">2026</td>
+        <tr>
+          <td class="b">17112 Green Dolphin Ln, Cornelius</td>
+          <td><span class="pill sold">SOLD</span></td>
+          <td class="gn r">$3,315,000</td><td class="r">1.04 ac</td><td class="r">5,711 sf</td><td class="r">Peninsula · Flat · Has Pier</td><td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="dim">14701 NC Hwy 73 (raw lot, ltd views)</td>
+          <td><span class="pill act">ACTIVE</span></td>
+          <td class="r dim">$1,800,000</td><td class="r dim">0.63 ac</td><td class="r dim">Raw Land</td><td class="r dim">Limited Water Views · Corridor Floor</td><td class="rd r dim">110+</td>
+        </tr>
+        <tr>
+          <td class="dim">14709 NC Hwy 73 (raw lot, no views)</td>
+          <td><span class="pill act">ACTIVE</span></td>
+          <td class="r dim">$1,400,000</td><td class="r dim">0.46 ac</td><td class="r dim">Raw Land</td><td class="r dim">No Meaningful Views · Corridor Floor</td><td class="rd r dim">110+</td>
+        </tr>
+        <tr class="subj-row">
+          <td class="b">⭐ 14515 NC Hwy 73 — Subject Property</td>
+          <td><span class="pill uc">FOR SALE</span></td>
+          <td class="go r">$3.35M–$3.70M</td><td class="r">1.94 ac</td><td class="r">Raw Land</td><td class="r go">234 ft · Sandy Beach · Wide Open Water</td><td class="r">—</td>
         </tr>
       </tbody>
     </table>
-    <div class="tfoot">All comps sourced from Canopy MLS. DOM = Days on Market from list to contract. $/SF based on finished home square footage.</div>
-    <div class="ib">
-      <div class="ii">💡</div>
-      <div class="it"><strong>The critical math:</strong> Every comp sold on a lot that is smaller, has less shoreline, no sandy beach, and no lot-split potential. Your two split lots would each be <strong>50% larger</strong> than the top comp — yet acquired at just <strong>$1.65M per lot</strong>. The market already proved $5.45M–$7.67M on inferior lots. The delta is yours to capture.</div>
-    </div>
-    <div class="sn">04 / 10</div>
+    <div class="pfnote" style="padding:0">Corridor floor (14701/14709): 110+ days at $1.4M–$1.8M with limited/no views and ⅓ the acreage. Subject commands a significant premium on every attribute. Improved properties (Green Dolphin, Belle Isle 16318) included as value ceiling reference only.</div>
+    <div class="insight-bar" style="margin-top:2px"><span>💡 <strong>Key insight:</strong> The same-road private sale at $4.49M (14717 NC-73) confirms strong buyer demand on this exact corridor at the top of market. The subject is raw land priced <em>below</em> an improved, less-water-facing neighbor — and is larger on every meaningful metric.</span></div>
   </div>
+  <div class="sn-badge">04 / 10</div>
 </div></div>
 
-<!-- ══ SLIDE 5 — TWO LOT PRO FORMA ════════════════════════════════════ -->
-<div class="slide-label">05 — Two-Lot Split Pro Forma</div>
-<div class="slide-wrapper"><div class="slide pf" id="s5">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
-  <div class="sh"><h2>Scenario A — Two-Lot Split &nbsp;<span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;color:rgba(255,255,255,.5)">(Recommended · Maximum ROI)</span></h2></div>
-  <table class="pft">
-    <thead>
-      <tr><th style="text-align:left">Item</th><th>Conservative</th><th>Mid-Range ⭐</th><th>Premium</th></tr>
-    </thead>
-    <tbody>
-      <tr class="sec"><td colspan="4">Per Lot — Build Two Homes (figures below are per home)</td></tr>
-      <tr><td>Land Cost (per lot — $3.3M ÷ 2)</td><td>$1,650,000</td><td>$1,650,000</td><td>$1,650,000</td></tr>
-      <tr><td>Site Prep, Permits &amp; Utilities</td><td>$80,000</td><td>$80,000</td><td>$80,000</td></tr>
-      <tr><td>Build — 6,500 sf</td><td>$2,925,000 <span style="font-size:.62rem;color:rgba(255,255,255,.3)">@$450</span></td><td>$3,575,000 <span style="font-size:.62rem;color:rgba(255,255,255,.3)">@$550</span></td><td>$4,225,000 <span style="font-size:.62rem;color:rgba(255,255,255,.3)">@$650</span></td></tr>
-      <tr><td>Carrying / Financing Cost (est.)</td><td>$120,000</td><td>$150,000</td><td>$180,000</td></tr>
-      <tr class="tcost"><td>Total Cost Per Home</td><td>$4,775,000</td><td>$5,455,000</td><td>$6,135,000</td></tr>
-      <tr class="sell"><td>Projected Sale Price Per Home</td><td>$5,500,000</td><td>$6,700,000</td><td>$7,700,000</td></tr>
-      <tr class="profit"><td>Net Profit Per Home</td><td>$725,000</td><td>$1,245,000</td><td>$1,565,000</td></tr>
-      <tr class="profit"><td>Total Net Profit — Both Homes</td><td>$1,450,000</td><td>$2,490,000</td><td>$3,130,000</td></tr>
-      <tr class="roi"><td>ROI on Total Capital Deployed</td><td style="color:var(--gnl)">15.2%</td><td style="color:var(--gnl)">22.8%</td><td style="color:var(--gnl)">25.5%</td></tr>
-    </tbody>
-  </table>
-  <div class="pf fnote">⭐ Mid-range scenario projects at $550/sf build cost — consistent with recent Lake Norman luxury spec builds. All comps achieved $846–$1,065/sf in finished value. Conservative scenario still delivers strong double-digit ROI.</div>
-  <div class="sn">05 / 10</div>
-</div></div>
-
-<!-- ══ SLIDE 6 — SINGLE ESTATE PRO FORMA ══════════════════════════════ -->
-<div class="slide-label">06 — Single Estate Pro Forma</div>
-<div class="slide-wrapper"><div class="slide" id="s6">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
+<!-- ══ SLIDE 05 — SCARCITY ══════════════════════════════════════════════ -->
+<div class="slide-label">05 · The Scarcity Case</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
   <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:12px;height:100%">
-    <div class="sh"><h2>Scenario B — Single Grand Estate &nbsp;<span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;color:rgba(255,255,255,.5)">(Trophy Build · Generational)</span></h2></div>
-    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;flex:1">
+    <div class="hrow"><h2>This Lot Cannot Be Replicated — Ever</h2><div class="htag">14515 NC Hwy 73 · Site Attributes</div></div>
+    <div class="g3" style="flex:1;padding-bottom:4px">
+      <div class="card gold">
+        <div class="cv">1.94 ac</div>
+        <div class="ct2">Largest Lot in This Analysis</div>
+        <div class="cd2">The subject is 1.5×–4× larger than every comparable. Two-lot split potential puts each new parcel at ~.97 acres — still larger than any Peninsula comp that sold at $3.3M–$3.7M.</div>
+      </div>
+      <div class="card gold">
+        <div class="cv">234 ft</div>
+        <div class="ct2">Shoreline — Rare Wide-Water View Attribute</div>
+        <div class="cd2">The CMA identifies "Wide Open Water" as the <strong>rarest view attribute on Lake Norman</strong>. The Belle Isle $11.5M comp had 365 ft — but Peninsula pricing. Subject delivers the view without Peninsula premium in land cost.</div>
+      </div>
+      <div class="card">
+        <div class="cv" style="font-size:1.4rem">Natural</div>
+        <div class="ct2">Sandy Beach — Cannot Be Added</div>
+        <div class="cd2">A naturally occurring sandy beach on Lake Norman is extraordinarily rare. The $11.5M Belle Isle comp cited its sandy beach as a headline driver. You cannot manufacture this. It exists here.</div>
+      </div>
+      <div class="card">
+        <div class="cv" style="font-size:1.4rem">Flat</div>
+        <div class="ct2">Fully Buildable Grade — Save $150K–$250K</div>
+        <div class="cd2">Most Lake Norman waterfront is steeply sloped — requiring grading, retaining walls, blasting. The 16318 Belle Isle comp is <em>sloped</em> and has sat 192 days at $3.85M. Flat + build-ready is a genuine advantage.</div>
+      </div>
+      <div class="card">
+        <div class="cv" style="font-size:1.4rem">Cleared</div>
+        <div class="ct2">Pier-Eligible · No Pier Installed</div>
+        <div class="cd2">Pier-eligible means the buyer can add one — at their spec and timeline. No existing structure to remove. Cleared and buildable from day one. Pier approval history in the corridor transfers with the corridor context.</div>
+      </div>
+      <div class="card">
+        <div class="cv" style="font-size:1.4rem">No HOA</div>
+        <div class="ct2">CC&Rs Only — Full Design Freedom</div>
+        <div class="cd2">No HOA approval delays, architectural review boards, or committee sign-off on design. Build what wins the market — not what a committee allows. Zero timeline drag from association bureaucracy.</div>
+      </div>
+    </div>
+    <div class="warn-bar"><p><strong>Buyer Psychology Note:</strong> Raw acreage above 1 acre does not command a straight-line premium in this market — luxury lakefront buyers want an intimate estate site, not a field to maintain. The two-lot split is the optimal solution: two premium estates, each sized right, each selling to a different buyer.</p></div>
+  </div>
+  <div class="sn-badge">05 / 10</div>
+</div></div>
+
+<!-- ══ SLIDE 06 — TWO-LOT PRO FORMA ════════════════════════════════════ -->
+<div class="slide-label">06 · Two-Lot Split Pro Forma</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:10px;height:100%">
+    <div class="hrow"><h2>Scenario A — Two-Lot Split &nbsp;<span style="font-family:var(--ff-primary);font-weight:300;font-size:1.5rem;color:rgba(255,255,255,.45)">(Recommended · Maximum Profit)</span></h2></div>
+    <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:18px;flex:1;padding-bottom:12px">
       <div>
-        <table class="pft">
-          <thead><tr><th style="text-align:left">Item</th><th>Conservative</th><th>Premium</th></tr></thead>
+        <div style="font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);margin-bottom:7px;font-family:var(--ff-body)">Per Home — Build Two Identical Luxury Estates</div>
+        <table class="pftbl">
+          <thead><tr><th style="text-align:left">Item</th><th>Conservative</th><th>Mid-Range ⭐</th><th>Premium</th></tr></thead>
           <tbody>
-            <tr><td>Land Acquisition</td><td>$3,300,000</td><td>$3,300,000</td></tr>
-            <tr><td>Site Prep &amp; Utilities</td><td>$120,000</td><td>$150,000</td></tr>
-            <tr><td>Build — 8,000 sf</td><td>$4,000,000 <span style="font-size:.6rem;color:rgba(255,255,255,.3)">@$500</span></td><td>$5,600,000 <span style="font-size:.6rem;color:rgba(255,255,255,.3)">@$700</span></td></tr>
-            <tr><td>Pier, Beach &amp; Dock</td><td>$200,000</td><td>$400,000</td></tr>
-            <tr><td>Carrying / Financing</td><td>$200,000</td><td>$300,000</td></tr>
-            <tr class="tcost pft"><td>Total Project Cost</td><td>$7,820,000</td><td>$9,750,000</td></tr>
-            <tr class="sell pft"><td>Projected Sale Price</td><td>$9,500,000</td><td>$13,000,000+</td></tr>
-            <tr class="profit pft"><td>Net Profit</td><td>$1,680,000</td><td>$3,250,000+</td></tr>
-            <tr class="roi pft"><td>ROI</td><td style="color:var(--gnl)">21.5%</td><td style="color:var(--gnl)">33.3%+</td></tr>
+            <tr><td>Land per lot ($3.49M ÷ 2)</td><td>$1,745,000</td><td>$1,745,000</td><td>$1,745,000</td></tr>
+            <tr><td>Site Prep, Permits & Utilities</td><td>$80,000</td><td>$80,000</td><td>$80,000</td></tr>
+            <tr><td>Build — 6,500 sf</td><td class="dim">$2,925K @$450</td><td>$3,575,000</td><td class="dim">$4,225K @$650</td></tr>
+            <tr><td>Site Work (flat lot advantage)</td><td>$100,000</td><td>$150,000</td><td>$200,000</td></tr>
+            <tr><td>Carry / Financing</td><td>$100,000</td><td>$130,000</td><td>$180,000</td></tr>
+            <tr class="pf-dim"><td>Total Cost Per Home</td><td>$4,950,000</td><td>$5,680,000</td><td>$6,430,000</td></tr>
+            <tr class="pf-sell"><td>Projected Sale Price Per Home</td><td>$6,000,000</td><td>$7,500,000</td><td>$9,000,000</td></tr>
+            <tr class="pf-profit"><td>Net Profit Per Home</td><td>$1,050,000</td><td>$1,820,000</td><td>$2,570,000</td></tr>
+            <tr class="pf-profit"><td>Total Net Profit — Both Homes</td><td>$2,100,000</td><td>$3,640,000</td><td>$5,140,000</td></tr>
+            <tr class="pf-roi"><td>ROI on Total Capital Deployed</td><td style="color:var(--gnl)">21.2%</td><td style="color:var(--gnl)">32.1%</td><td style="color:var(--gnl)">40.0%</td></tr>
           </tbody>
         </table>
       </div>
-      <div style="display:flex;flex-direction:column;gap:11px;justify-content:center">
-        <div style="background:rgba(201,169,110,.09);border:1px solid var(--go);border-radius:9px;padding:15px 18px;display:flex;flex-direction:column;gap:6px">
-          <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go)">Why $9.5M+ Is Defensible</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gl);line-height:1">234 ft Shore</div>
-          <div style="font-size:.62rem;color:var(--dm);line-height:1.5">No comparable Lake Norman home offers 1.94 acres + 234 ft shoreline + natural beach + 5-mile views. The $9M sale in Charlotte (Dec 2025) proves buyers at this level are active right now.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;justify-content:center">
+        <div class="card gold">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">Why the Split Works</div>
+          <div class="cd2" style="color:rgba(255,255,255,.75)">Each split lot is ~.97 acres — still larger than every Peninsula comp that sold at $3.3M–$3.7M. You acquire at <strong>$1.75M per lot</strong> and sell estates that comp at <strong>$7M–$9M</strong>. The math is undeniable.</div>
         </div>
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:15px 18px;display:flex;flex-direction:column;gap:6px">
-          <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go)">Natural Beach Premium</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gl);line-height:1">~$500K</div>
-          <div style="font-size:.62rem;color:var(--dm);line-height:1.5">Comparable waterfront homes with an artificially created beach add $300K–$500K to listing value. A <em>naturally occurring</em> beach is nearly impossible to replicate anywhere on the lake.</div>
+        <div class="card">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">Same-Road Proof Point</div>
+          <div class="cv sm">$4.49M</div>
+          <div class="cd2">14717 NC-73 (private sale) — improved home, less water view, 0.94 ac. Your raw land is priced below an inferior neighbor — and you get to build the home that commands the premium.</div>
         </div>
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:15px 18px;display:flex;flex-direction:column;gap:6px">
-          <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go)">Charlotte Luxury Market</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gl);line-height:1">Record Sales</div>
-          <div style="font-size:.62rem;color:var(--dm);line-height:1.5">The 3rd-highest Charlotte sale ever closed December 2025. Top of market Lake Norman estates have transacted at $10M–$15M in Mooresville/Sherrills Ford for comparable or lesser lots.</div>
+        <div class="card green">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(122,184,122,.6);font-family:var(--ff-body)">Flat Grade Savings</div>
+          <div class="cv sm">$150K–$250K</div>
+          <div class="cd2">Straight to your bottom line vs. sloped lots. The 192-day stale comp (Belle Isle 16318) is sloped — market is telling you what it values.</div>
         </div>
       </div>
     </div>
-    <div class="sn">06 / 10</div>
+    <div class="pfnote">⭐ Mid-range scenario: $550/sf build cost, $7.5M exit per home. Conservative scenario at $6M exit delivers strong returns and is fully supported by active UC comps ($3.7M raw land on Peninsula → implies $6M+ improved value). Premium assumes estate-level finishes at $9M — supported by the $11.5M comp less Peninsula premium.</div>
   </div>
+  <div class="sn-badge">06 / 10</div>
 </div></div>
 
-<!-- ══ SLIDE 7 — RISK ELIMINATION ═════════════════════════════════════ -->
-<div class="slide-label">07 — Every Risk, Eliminated</div>
-<div class="slide-wrapper"><div class="slide" id="s7">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
-  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:14px;height:100%">
-    <div class="sh"><h2>Every Builder Risk — Eliminated</h2><div class="tag">The Permit-Before-Close Structure</div></div>
-    <div class="rg" style="flex:1">
-      <div class="rr">
-        <div class="rb">❌ RISK</div>
-        <div class="rd"><strong>Permits Denied After Closing</strong><span>Builder closes, spends $3.3M, then can't build. Capital locked in an unbuildable lot.</span></div>
-        <div class="ra">✅ SOLVED</div>
+<!-- ══ SLIDE 07 — SINGLE ESTATE PRO FORMA ══════════════════════════════ -->
+<div class="slide-label">07 · Single Estate Pro Forma</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:12px;height:100%">
+    <div class="hrow"><h2>Scenario B — Single Grand Estate &nbsp;<span style="font-family:var(--ff-primary);font-weight:300;font-size:1.5rem;color:rgba(255,255,255,.45)">(Trophy Build · Full 1.94 Acres)</span></h2></div>
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:18px;flex:1;padding-bottom:12px">
+      <div>
+        <table class="pftbl">
+          <thead><tr><th style="text-align:left">Item</th><th>Conservative</th><th>Premium</th></tr></thead>
+          <tbody>
+            <tr><td>Land Acquisition</td><td>$3,490,000</td><td>$3,490,000</td></tr>
+            <tr><td>Site Prep, Utilities & Permits</td><td>$150,000</td><td>$200,000</td></tr>
+            <tr><td>Build — 7,500 sf</td><td class="dim">$3,750K @$500</td><td class="dim">$5,250K @$700</td></tr>
+            <tr><td>Pier, Beach & Dock Improvements</td><td>$200,000</td><td>$500,000</td></tr>
+            <tr><td>Carry / Financing (18 mo)</td><td>$220,000</td><td>$380,000</td></tr>
+            <tr class="pf-dim"><td>Total Project Cost</td><td>$7,810,000</td><td>$9,820,000</td></tr>
+            <tr class="pf-sell"><td>Projected Sale Price</td><td>$9,000,000</td><td>$11,500,000</td></tr>
+            <tr class="pf-profit"><td>Net Profit</td><td>$1,190,000</td><td>$1,680,000</td></tr>
+            <tr class="pf-roi"><td>ROI</td><td style="color:var(--gnl)">15.2%</td><td style="color:var(--gnl)">17.1%</td></tr>
+          </tbody>
+        </table>
+        <div class="pfnote" style="margin-top:8px">Conservative: $9M exit matches CMA top-down residual range for highway-frontage waterfront. Premium: $11.5M matches the 16716 Belle Isle Dr closed comp — achievable with 365-ft shore and Peninsula address. Subject's 234 ft shore and open water supports $9M–$11M with right finishes and marketing.</div>
       </div>
-      <div class="rr">
-        <div class="rb">❌ RISK</div>
-        <div class="rd"><strong>Exit Price Not Supported by Market</strong><span>Build a $6M home you can't sell at target — margin destroyed by carrying costs.</span></div>
-        <div class="ra">✅ SOLVED</div>
-      </div>
-      <div class="rr">
-        <div class="rb">❌ RISK</div>
-        <div class="rd"><strong>Hidden Site Costs After Close</strong><span>Unexpected grading, wetlands, or utility issues blow the budget post-closing.</span></div>
-        <div class="ra">✅ SOLVED</div>
-      </div>
-      <div class="rr">
-        <div class="rb">❌ RISK</div>
-        <div class="rd"><strong>Pressure to Close Too Fast</strong><span>30-day window forces capital deployment before design, permits, or due diligence are complete.</span></div>
-        <div class="ra">✅ SOLVED</div>
-      </div>
-      <div class="rr">
-        <div class="rb">❌ RISK</div>
-        <div class="rd"><strong>HOA Kills Design Vision</strong><span>Association rules, approval delays, and committee reviews strip profitability and slow timeline.</span></div>
-        <div class="ra">✅ SOLVED</div>
-      </div>
-      <div class="rr">
-        <div class="rb">❌ RISK</div>
-        <div class="rd"><strong>Slow Absorption / Home Sits on Market</strong><span>Waterfront luxury home sits 90–180 days. Carrying costs at $10K–$20K/month erode every dollar of profit.</span></div>
-        <div class="ra">✅ SOLVED</div>
+      <div style="display:flex;flex-direction:column;gap:10px;justify-content:center">
+        <div class="card gold">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">The $11.5M Proof</div>
+          <div class="cv sm">Belle Isle · 2024</div>
+          <div class="cd2">7,209 sf · 1.44 ac · 365 ft shore · sandy beach · Peninsula address. <strong>Sold in 18 days at $11.5M.</strong> The subject lacks Peninsula address (discount applied) but matches the beach, exceeds the acreage, and can match the build quality.</div>
+          <div class="csrc">Source: Canopy MLS · Confirmed</div>
+        </div>
+        <div class="card">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">Wide Open Water Premium</div>
+          <div class="cv sm" style="color:#fff">Rarest Attribute</div>
+          <div class="cd2">The CMA calls "Wide Open Water" the rarest view attribute on Lake Norman. The right buyer — building a $9M estate and choosing views over prestige — pays up for what cannot be replicated anywhere else on the south shore.</div>
+        </div>
+        <div class="card green">
+          <div style="font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(122,184,122,.6);font-family:var(--ff-body)">Charlotte $9M Buyer — Active</div>
+          <div class="cv sm">$9M+</div>
+          <div class="cd2">A $9M home sold in Charlotte in December 2025 — 3rd highest ever in the metro. The buyer for this estate is not hypothetical. They are closing deals right now.</div>
+        </div>
       </div>
     </div>
-    <div class="vb">
-      <div class="vi">🔐</div>
-      <div class="vt">
-        <strong>The seller allows 60–90+ days at virtually zero holding cost to complete all planning, permitting, and design work before a single dollar closes.</strong> You close only when permits are in hand and the path is clear. Comparable homes on Lake Norman sold in 12–21 days — absorption risk is minimal. This structure eliminates every meaningful builder risk.
-      </div>
-    </div>
-    <div class="sn">07 / 10</div>
   </div>
+  <div class="sn-badge">07 / 10</div>
 </div></div>
 
-<!-- ══ SLIDE 8 — LAND BASIS ════════════════════════════════════════════ -->
-<div class="slide-label">08 — Land Basis Analysis</div>
-<div class="slide-wrapper"><div class="slide" id="s8">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
-  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:14px;height:100%">
-    <div class="sh"><h2>The Land Basis Works — Here's the Proof</h2><div class="tag">Industry Standard: Land = 20–30% of Final Sale Price</div></div>
-    <div class="lg3" style="flex:1">
-      <div class="lc">
-        <div class="lt">Scenario A — Single Estate</div>
-        <div class="lh">1.94-Acre Grand Estate<br>One Trophy Home</div>
-        <div class="sep"></div>
-        <div class="lr"><span class="lk">Land Cost</span><span class="lv">$3,300,000</span></div>
-        <div class="lr"><span class="lk">All-In Project Cost</span><span class="lv">$7,820,000</span></div>
-        <div class="lr"><span class="lk">Projected Sale Price</span><span class="lv go">$9,500,000</span></div>
-        <div class="lr"><span class="lk">Land as % of Sale</span><span class="lv gn">34.7%</span></div>
-        <div class="lr"><span class="lk">Net Profit</span><span class="lv gn">$1,680,000+</span></div>
-        <div class="lr"><span class="lk">ROI</span><span class="lv gn">21.5%</span></div>
+<!-- ══ SLIDE 08 — MARKET SIGNALS ═══════════════════════════════════════ -->
+<div class="slide-label">08 · Market Signals</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:12px;height:100%">
+    <div class="hrow"><h2>Sophisticated Capital Is Already Moving</h2><div class="htag">NC-73 Corridor · April 2026</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;padding-bottom:12px">
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body);padding-top:2px">🚦 NC-73 Highway Expansion — Dual Signal</div>
+        <div class="card warn" style="flex:0">
+          <div class="ct2">⚠️ Near-Term: Construction Noise</div>
+          <div class="cd2">NC Hwy 73 is slated for corridor expansion. For a private estate buyer, increased traffic and near-term construction activity are real considerations. The lot's depth and setback provide meaningful buffer — and this warrants transparent disclosure.</div>
+        </div>
+        <div class="card green" style="flex:1">
+          <div class="ct2">✅ Long-Term: Rising Values + Developer Pressure</div>
+          <div class="cd2" style="line-height:1.65">Highway expansions consistently signal long-term corridor growth: improved access, rising land values, and increased development pressure in adjacent areas. <strong>This is a tailwind for appreciation and eventual exit.</strong> A builder buying today is ahead of the infrastructure curve — not behind it. Developer assemblage activity (see right) confirms sophisticated capital is already making this bet.</div>
+        </div>
       </div>
-      <div class="lc best">
-        <div class="lt">⭐ Scenario B — Two-Lot Split</div>
-        <div class="lh">Two Luxury Homes<br>Maximum Profit Path</div>
-        <div class="sep"></div>
-        <div class="lr"><span class="lk">Land Per Lot</span><span class="lv">$1,650,000</span></div>
-        <div class="lr"><span class="lk">All-In Per Home</span><span class="lv">$5,455,000</span></div>
-        <div class="lr"><span class="lk">Sale Per Home</span><span class="lv go">$6,700,000</span></div>
-        <div class="lr"><span class="lk">Land as % of Sale</span><span class="lv gn">24.6% ✓</span></div>
-        <div class="lr"><span class="lk">Total Net Profit (2x)</span><span class="lv gn">$2,490,000</span></div>
-        <div class="lr"><span class="lk">ROI</span><span class="lv gn">22.8%</span></div>
-      </div>
-      <div class="lc">
-        <div class="lt">Benchmark — Largo Place Comps</div>
-        <div class="lh">Comparable Closed Sales<br>Cornelius Waterfront 2023–2025</div>
-        <div class="sep"></div>
-        <div class="lr"><span class="lk">Est. Land Cost</span><span class="lv">$1.2M–$1.8M</span></div>
-        <div class="lr"><span class="lk">Est. Build Cost</span><span class="lv">$3.5M–$4.5M</span></div>
-        <div class="lr"><span class="lk">Closed Sale Range</span><span class="lv go">$5.45M–$7.67M</span></div>
-        <div class="lr"><span class="lk">Land as % of Sale</span><span class="lv gn">22–28%</span></div>
-        <div class="lr"><span class="lk">Lot Size</span><span class="lv rd">.51–.65 ac (3× smaller)</span></div>
-        <div class="lr"><span class="lk">Days on Market</span><span class="lv gn">12–21 days</span></div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div style="font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body);padding-top:2px">🏗️ Developer Assemblage — Smart Money Is Here</div>
+        <div class="card gold">
+          <div class="ct2">5 Parcels Under Contract · One Buyer</div>
+          <div class="cd2">14731, 14799 & 14899 NC Hwy 73 and 15915, 15925 Beatties Ford Rd — all under contract with the <strong>same developer buyer</strong> assembling land for a development project ahead of the NC-73 expansion.</div>
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)">
+            <div style="font-size:.62rem;color:#fff;font-weight:600;margin-bottom:4px">What This Means for You</div>
+            <div class="cd2">A sophisticated developer is spending millions acquiring this corridor right now. They see what's coming. They are not buying for today's value — they are buying for tomorrow's. <strong>The window to act before that premium is priced in is now.</strong></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ct2">Active Corridor Floor — Context</div>
+          <div class="cd2">The only other active raw lot listings on NC-73 are 14701 ($1.8M, 0.63 ac, limited views, 110+ DOM) and 14709 ($1.4M, 0.46 ac, no views, 110+ DOM). Subject has nearly <strong>5× the acreage</strong> and <strong>wide open water</strong> — priced at $3.35M–$3.70M. The corridor floor confirms the subject's premium is fully justified.</div>
+        </div>
       </div>
     </div>
-    <div class="bm">
-      <div class="bmi"><div class="bv gn">24.6%</div><div class="bl">Land Basis (2-Lot Split)</div></div>
-      <div class="bmd"></div>
-      <div class="bmi"><div class="bv gn">12–21 days</div><div class="bl">Avg DOM on Comps</div></div>
-      <div class="bmd"></div>
-      <div class="bmi"><div class="bv go">118%</div><div class="bl">10-Yr Appreciation<br>Huntersville</div></div>
-      <div class="bmd"></div>
-      <div class="bmi"><div class="bv gn">$846–$1,065</div><div class="bl">$/SF Comp Sale Prices</div></div>
-      <div class="bmd"></div>
-      <div class="bmi"><div class="bv gn">22.8%</div><div class="bl">Projected ROI<br>(Mid-Range)</div></div>
-      <div class="bmd"></div>
-      <div class="bmi"><div class="bv go">$0</div><div class="bl">Required Site<br>Grading Cost</div></div>
-    </div>
-    <div class="sn">08 / 10</div>
+    <div class="insight-bar"><span>💡 <strong>The builder's edge:</strong> You are not speculating on demand — demand is proven. You are not speculating on the corridor — a developer is already paying to assemble it. You are buying the <em>premium lot</em> in a corridor where infrastructure investment is coming, waterfront scarcity is absolute, and Charlotte's luxury market is breaking records.</span></div>
   </div>
+  <div class="sn-badge">08 / 10</div>
 </div></div>
 
-<!-- ══ SLIDE 9 — TIMELINE ══════════════════════════════════════════════ -->
-<div class="slide-label">09 — Path to Profit</div>
-<div class="slide-wrapper"><div class="slide" id="s9">
-  <div class="tl"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:38px;width:auto;opacity:.95"></div>
-  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:16px;height:100%">
-    <div class="sh"><h2>Path to Profit — 24 to 30 Months</h2><div class="tag">From Handshake to Closing Check</div></div>
-    <div class="tl" style="flex:1;padding:10px 0">
-      <div class="ts">
-        <div class="td on">🤝</div>
-        <div class="ti">Month 0</div>
-        <div class="tn">LOI &amp; Agreement</div>
-        <div class="tt">Execute LOI. Negotiate permit-before-close terms. Zero capital deployed.</div>
-      </div>
-      <div class="ts">
-        <div class="td on">📐</div>
-        <div class="ti">Month 1–3</div>
-        <div class="tn">Design &amp; Plat</div>
-        <div class="tt">Architect engaged. Replat survey filed if splitting. Soil &amp; utility studies complete.</div>
-      </div>
-      <div class="ts">
-        <div class="td on">📋</div>
-        <div class="ti">Month 2–4</div>
-        <div class="tn">Permits Secured</div>
-        <div class="tt">Building permits approved. FERC/dock confirmed. All at zero carry cost.</div>
-      </div>
-      <div class="ts">
-        <div class="td">💰</div>
-        <div class="ti">Month 3–5</div>
-        <div class="tn">Close on Land</div>
-        <div class="tt">Close only with permits in hand. Capital deployed with full confidence.</div>
-      </div>
-      <div class="ts">
-        <div class="td">🏗️</div>
-        <div class="ti">Month 5–18</div>
-        <div class="tn">Construction</div>
-        <div class="tt">Build one or two homes. Phased construction possible on lot split.</div>
-      </div>
-      <div class="ts">
-        <div class="td">🏡</div>
-        <div class="ti">Month 16–22</div>
-        <div class="tn">Pre-Market &amp; List</div>
-        <div class="tt">Pre-market to qualified buyers before completion. Target 12–21 day absorption per comps.</div>
-      </div>
-      <div class="ts">
-        <div class="td">🏆</div>
-        <div class="ti">Month 22–30</div>
-        <div class="tn">Close &amp; Exit</div>
-        <div class="tt">$1.45M–$3.1M net profit. Reinvest. Repeat.</div>
-      </div>
+<!-- ══ SLIDE 09 — RISK + TIMELINE ══════════════════════════════════════ -->
+<div class="slide-label">09 · Risk Eliminated + Timeline</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div style="padding:0 var(--px);display:flex;flex-direction:column;gap:11px;height:100%">
+    <div class="hrow"><h2>Every Builder Risk Eliminated · Clear Path to Exit</h2></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="risk-row"><div class="rl">❌ RISK</div><div class="rm"><strong>Permits Denied After Closing</strong><span>Capital locked in an unbuildable lot after $3.5M deployed.</span></div><div class="rr2">✅ SOLVED</div></div>
+      <div class="risk-row"><div class="rl">❌ RISK</div><div class="rm"><strong>Exit Price Not Supported</strong><span>Build a $7M home you can't move — carrying costs destroy margin.</span></div><div class="rr2">✅ SOLVED</div></div>
+      <div class="risk-row"><div class="rl">❌ RISK</div><div class="rm"><strong>Hidden Site Costs</strong><span>Unexpected grading, wetlands, or utility issues blow the budget.</span></div><div class="rr2">✅ SOLVED</div></div>
+      <div class="risk-row"><div class="rl">❌ RISK</div><div class="rm"><strong>Slow Absorption</strong><span>Home sits 90–180 days. $15K/month carrying cost destroys profit.</span></div><div class="rr2">✅ SOLVED</div></div>
     </div>
-    <div class="tf">
-      <div class="tfi"><div class="tv">$0</div><div class="tl2">Carry Cost During Permits</div></div>
-      <div class="tfd"></div>
-      <div class="tfi"><div class="tv">60–90+ Days</div><div class="tl2">Pre-Close Planning Window</div></div>
-      <div class="tfd"></div>
-      <div class="tfi"><div class="tv">12–21 Days</div><div class="tl2">Expected Absorption (Comps)</div></div>
-      <div class="tfd"></div>
-      <div class="tfi"><div class="tv">$2.49M</div><div class="tl2">Mid-Range Net Profit (2-Lot)</div></div>
-      <div class="tfd"></div>
-      <div class="tfi"><div class="tv">24–30 mo</div><div class="tl2">Full Cycle to Exit</div></div>
+    <div class="insight-bar" style="padding:9px 16px"><span style="font-size:.64rem"><strong>Permit-before-close structure:</strong> Seller allows 60–90+ days to complete design, permitting, and due diligence before a single dollar closes. You close only when permits are in hand. Comparable homes absorbed in <strong>18 days</strong>. This structure eliminates every meaningful builder risk.</span></div>
+    <div style="padding:6px 0 2px;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);font-family:var(--ff-body)">Path to Profit — 24 to 30 Months</div>
+    <div class="tl-track" style="padding-bottom:10px">
+      <div class="tl-step"><div class="tl-dot on">🤝</div><div class="tl-mo">Month 0</div><div class="tl-name">LOI & Agreement</div><div class="tl-desc">Execute LOI. Negotiate permit-before-close. Zero capital deployed.</div></div>
+      <div class="tl-step"><div class="tl-dot on">📐</div><div class="tl-mo">Month 1–3</div><div class="tl-name">Design & Plat</div><div class="tl-desc">Architect engaged. Replat if splitting. Soil & utility studies done.</div></div>
+      <div class="tl-step"><div class="tl-dot on">📋</div><div class="tl-mo">Month 2–4</div><div class="tl-name">Permits Secured</div><div class="tl-desc">Building permits approved. All at zero carry cost.</div></div>
+      <div class="tl-step"><div class="tl-dot">💰</div><div class="tl-mo">Month 3–5</div><div class="tl-name">Close on Land</div><div class="tl-desc">Close with permits in hand. Capital deployed with full confidence.</div></div>
+      <div class="tl-step"><div class="tl-dot">🏗️</div><div class="tl-mo">Month 5–18</div><div class="tl-name">Construction</div><div class="tl-desc">Build. Phased construction on lot split is possible.</div></div>
+      <div class="tl-step"><div class="tl-dot">🏡</div><div class="tl-mo">Month 16–22</div><div class="tl-name">Pre-Market</div><div class="tl-desc">Pre-market to qualified buyers. Target 18-day absorption per comps.</div></div>
+      <div class="tl-step"><div class="tl-dot">🏆</div><div class="tl-mo">Month 22–30</div><div class="tl-name">Exit</div><div class="tl-desc">$2.1M–$5.1M net profit. Reinvest. Repeat.</div></div>
     </div>
-    <div class="sn">09 / 10</div>
+    <div class="stat-strip">
+      <div class="ss-item"><div class="ss-v go">$0</div><div class="ss-l">Carry During Permits</div></div>
+      <div class="ss-div"></div>
+      <div class="ss-item"><div class="ss-v go">18 days</div><div class="ss-l">Absorption on Top Comp</div></div>
+      <div class="ss-div"></div>
+      <div class="ss-item"><div class="ss-v gn">$3.64M</div><div class="ss-l">Mid-Range Net (2-Lot)</div></div>
+      <div class="ss-div"></div>
+      <div class="ss-item"><div class="ss-v gn">32%</div><div class="ss-l">Mid-Range ROI</div></div>
+      <div class="ss-div"></div>
+      <div class="ss-item"><div class="ss-v go">24–30 mo</div><div class="ss-l">Full Cycle to Exit</div></div>
+    </div>
   </div>
+  <div class="sn-badge">09 / 10</div>
 </div></div>
 
 <!-- ══ SLIDE 10 — CLOSE ════════════════════════════════════════════════ -->
-<div class="slide-label">10 — Next Steps</div>
-<div class="slide-wrapper"><div class="slide" id="s10">
-  <div class="lw-bg"><div class="lf"></div></div>
-  <div class="cc">
-    <img src="assets/rr-logo-white.jpg" alt="Realty Ryan" style="height:60px;width:auto;opacity:.95">
-    <div class="rule"></div>
+<div class="slide-label">10 · Next Steps</div>
+<div class="slide-wrapper"><div class="slide">
+  <div class="rr-logo-c"><img src="assets/rr-logo-white.jpg" alt="Realty Ryan"></div>
+  <div class="hero-center">
+    <div class="eyebrow">Confidential · Builder Opportunity · Lake Norman, NC</div>
+    <div style="width:44px;height:1px;background:var(--go);margin:8px 0"></div>
     <h1>The Deal Won't Wait.<br>Neither Should You.</h1>
-    <div class="body">A 1.94-acre Lake Norman south shore waterfront lot. 234 ft of prime shoreline. A natural sandy beach. Flat grade. No HOA. 14 miles from Charlotte's booming luxury market. Proven comps at $5.45M–$7.67M on <em>smaller, inferior</em> lots. Seller is patient — but this won't be available forever. The question isn't whether the deal works. The math is undeniable. The question is whether you act before someone else does.</div>
-    <div class="ns">
-      <div class="nc"><div class="ni">🚶</div><div class="nt">Walk the Site</div><div class="nd">See the beach, the views, the grade. This property sells itself in person. Schedule a private walk.</div></div>
-      <div class="nc"><div class="ni">📋</div><div class="nt">Review the Survey</div><div class="nd">Full survey, plat history, FERC approval records, and preliminary plans available immediately.</div></div>
-      <div class="nc"><div class="ni">📞</div><div class="nt">Structure Your Offer</div><div class="nd">Seller is flexible on close timeline. Let's design terms that fit how you build — and protect your capital.</div></div>
+    <div style="font-size:.7rem;color:rgba(255,255,255,.6);line-height:1.7;max-width:620px;font-family:var(--ff-body)">
+      1.94 acres. 234 ft of prime shoreline. A natural sandy beach. Flat, build-ready grade. Wide open water — the rarest attribute on Lake Norman. A same-road private sale at $4.49M proves buyer demand. A $11.5M comp sold in 18 days. Developer capital is assembling the corridor. The seller is patient — but this won't be available forever.
     </div>
-    <div class="contact">
-      <div class="cn">Ryan Palmer · Corcoran HM Properties</div>
-      <div class="cd">
-        <span>508.954.2159</span>
-        <span>ryanpalmer@hmproperties.com</span>
-        <span>@realty.ryan</span>
-        <span>www.14515nc.com</span>
+    <div class="g3" style="width:100%;margin-top:6px">
+      <div class="card" style="text-align:center"><div style="font-size:1.3rem;margin-bottom:4px">🚶</div><div class="ct2">Walk the Site</div><div class="cd2">See the beach, the views, the grade. This property sells itself in person.</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:1.3rem;margin-bottom:4px">📋</div><div class="ct2">Review the Survey</div><div class="cd2">Full survey, plat, FERC history, and preliminary plans available now.</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:1.3rem;margin-bottom:4px">📞</div><div class="ct2">Structure Your Offer</div><div class="cd2">Seller flexible on close timeline. Let's design terms that protect your capital.</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);width:100%">
+      <div style="font-family:var(--ff-primary);font-size:1.4rem;font-weight:300;color:#fff;letter-spacing:.02em">Ryan Palmer · Corcoran HM Properties</div>
+      <div style="font-size:.62rem;letter-spacing:1.5px;color:var(--gl);display:flex;gap:0;flex-wrap:wrap;justify-content:center;font-family:var(--ff-body)">
+        <span style="padding:0 12px;border-right:1px solid rgba(255,255,255,.18)">508.954.2159</span>
+        <span style="padding:0 12px;border-right:1px solid rgba(255,255,255,.18)">ryanpalmer@hmproperties.com</span>
+        <span style="padding:0 12px;border-right:1px solid rgba(255,255,255,.18)">@realty.ryan</span>
+        <span style="padding:0 12px">www.14515nc.com</span>
       </div>
     </div>
   </div>
-  <div class="sn">10 / 10</div>
+  <div class="sn-badge">10 / 10</div>
 </div></div>
 
 </body>
